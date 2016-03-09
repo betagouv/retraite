@@ -1,0 +1,55 @@
+<div class='test-form'>
+    
+    <div class='form-group row'>
+        <label class='control-label'>Checklist à tester :</label>
+        <select ng-model='data.regimeLiquidateur' class='form-control'>
+            <option value='CNAV'>CNAV</option>
+            <option value='MSA'>MSA</option>
+            <option value='RSI'>RSI</option>
+        </select>
+
+        <label class='control-label'>Département :</label>
+        <select ng-options='departement as departement for departement in departements' ng-model='data.departement' class='form-control xxx-select' ></select>
+    </div>
+
+    <div class='form-group row'>
+        <label class='control-label'>Liste des régimes :</label>
+        <div class='display-inline' ng-dropdown-multiselect="" options="regimes" selected-model="data.regimes" group-by="type" extra-settings='multiselectRegimesSettings' translation-texts='multiselectRegimesTexts'></div>
+    </div>
+
+    <div class='well'>
+        <div class='form-group row'>
+            <label class='col-sm-3 control-label'>Départ de départ :</label>
+            <div class='col-sm-9'>
+                <select ng-options='mois.value as mois.label for mois in listeMoisAvecPremier' ng-model='data.departMois' class='form-control xxx-select' ></select>
+                <select ng-options='annee as annee for annee in listeAnneesDepart' ng-model='data.departAnnee' class='form-control xxx-select' ></select>
+            </div>
+        </div>
+
+        <div class='form-group row'>
+            <label class='col-sm-3 control-label'>Options :</label>
+            <div class='col-sm-9'>
+                <div>
+                    <div class='checkbox-regime'>
+                        <input type='checkbox' ng-model="data.parcoursDemat" > Dématérialisé
+                    </div>
+                </div>
+                <div>
+                    <div class='checkbox-regime'>
+                        <input type='checkbox' ng-model="data.carriereACompleter" disabled> <span disabled>Carrière à compléter</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class=''>
+        <button ng-click='test()' class="btn btn-success" type="button">Tester la checklist non publiée</button>
+    </div>
+
+</div>
+
+<hr/>
+
+<div ng-bind-html='userChecklistHtml'>
+</div>

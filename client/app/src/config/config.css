@@ -1,0 +1,145 @@
+body.config {
+    padding-top: 165px;
+}
+    
+.config-header {
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 66px;
+    z-index: 1030;
+    max-width: 900px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 15px;
+    padding-left: 15px;
+    min-height: 50px;
+    background-color: white;
+}
+
+.label-published {
+    display: block;
+    width: 100%;
+}
+
+.config-buttons {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.config-buttons button {
+    margin-top: 10px;
+    margin-left: 5px;
+}
+
+.config-buttons a {
+    text-decoration: none;
+    color: white;
+}
+
+ul.config-list {
+	text-align: center;
+	margin-top: 50px;
+}
+
+ul.config-list li {
+	list-style: none;
+    display: inline-block;
+
+    width: 100px;
+    height: 100px;
+    padding-top: 36px;
+    margin: 30px;
+
+	color: #337ab7;
+    cursor: pointer;
+
+	border: solid 1px #337ab7;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}
+
+ul.config-list > li:hover {
+	background-color: #337ab7;
+	color: white;
+}
+
+ul.config-list li .label {
+    position: relative;
+    top: 22px;
+    left: 34px;
+}
+
+.configListeChapitres {
+    overflow-y: auto;
+}
+
+.condition-editable {
+    cursor: pointer;
+}
+
+.condition-not-editable {
+    cursor: default;
+}
+
+.chapitre-title {
+    display: inline-block;
+    max-width: 675px;
+}
+
+.chapitre-btn {
+    float: right;
+    margin-left: 5px;
+}
+
+.ngdialog-content .form-control {
+    width: auto;
+}
+
+.notes-in-chapitre-title, .description-in-chapitre-title {
+    font-style: italic;
+    font-size: 16px;
+}
+
+.notes-in-chapitre-title {
+    color: lightgrey;
+}
+
+.display-inline {
+    display: inline;
+}
+
+/* Editeur HTML */
+
+.ta-scroll-window.form-control {
+    min-height: 145px;
+    height: 145px;
+}
+
+/* Sous-menu dropdown */
+
+.dropdown-submenu{position:relative;}
+.dropdown-submenu>.dropdown-menu{top:0;left:100%;margin-top:-6px;margin-left:-1px;-webkit-border-radius:0 6px 6px 6px;-moz-border-radius:0 6px 6px 6px;border-radius:0 6px 6px 6px;}
+.dropdown-submenu:hover>.dropdown-menu{display:block;}
+.dropdown-submenu>a:after{display:block;content:" ";float:right;width:0;height:0;border-color:transparent;border-style:solid;border-width:5px 0 5px 5px;border-left-color:#cccccc;margin-top:5px;margin-right:-10px;}
+.dropdown-submenu:hover>a:after{border-left-color:#ffffff;}
+.dropdown-submenu.pull-left{float:none;}.dropdown-submenu.pull-left>.dropdown-menu{left:-100%;margin-left:10px;-webkit-border-radius:6px 0 6px 6px;-moz-border-radius:6px 0 6px 6px;border-radius:6px 0 6px 6px;}
+
+/* Surchage de xeditable */
+
+.editable-click, a.editable-click,
+.editable-click:hover, a.editable-click:hover {
+    text-decoration: none;
+    color: inherit;
+    border-bottom: none;
+}
+
+.editable-input.editable-has-buttons {
+    width: 500px;
+}
+
+span[disabled] {
+    color: #ccc;
+}

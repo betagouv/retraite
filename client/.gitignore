@@ -1,0 +1,8 @@
+.DS_Store
+/.tmp
+/app/lib
+/node_modules/
+**/js/constants.js
+/www
+/coverage
+/report

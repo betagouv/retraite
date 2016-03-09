@@ -1,0 +1,94 @@
+<div>
+    Configuration du délai à afficher pour le chapitre :
+</div>
+<div>
+    Type :
+    <select ng-model='value.type' class='form-control'>
+        <option value="AUCUN">Aucun</option>
+        <option value="DESQUE">Dès que possible</option>
+        <option value="AUPLUS">Au plus tard ...</option>
+        <option value="ENTRE">Entre ... et ...</option>
+        <option value="APARTIR">A partir de ...</option>
+    </select>
+</div>
+<div ng-show="value.type === 'AUPLUS'">
+    Au plus tard
+    <select ng-model='value.min' class='form-control'>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+    </select>
+    <select ng-model='value.unite' class='form-control'>
+        <option value="MOIS">Mois</option>
+        <option value="ANNEES">Année</option>
+    </select>
+    avant la date de départ prévue
+</div>
+<div ng-show="value.type === 'ENTRE'">
+    Entre
+    <select ng-model='value.min' class='form-control'>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+    </select>
+    et
+    <select ng-model='value.max' class='form-control'>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+    </select>
+    <select ng-model='value.unite' class='form-control'>
+        <option value="MOIS">Mois</option>
+        <option value="ANNEES">Année</option>
+    </select>
+    avant date de départ prévue
+</div>
+<div ng-show="value.type === 'APARTIR'">
+    A partir de 
+    <select ng-model='value.min' class='form-control'>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+    </select>
+    <select ng-model='value.unite' class='form-control'>
+        <option value="MOIS">Mois</option>
+        <option value="ANNEES">Année</option>
+    </select>
+    avant la date de départ prévue
+</div>

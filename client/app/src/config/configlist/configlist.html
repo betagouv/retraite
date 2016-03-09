@@ -1,0 +1,12 @@
+<h1 class='text-center'>Bienvenue sur la configuration de l'Outil d'Orientation Retraite</h1>
+
+<h2 class='text-center'>Quelle check-list souhaitez-vous éditer ?</h2>
+
+<ul class='config-list'>
+    <li ng-repeat='checklist in checklists' ui-sref="edit({clid:checklist.nom})">
+        {{checklist.nom}}
+        <br/>
+        <div ng-if='checklist.modifiedButNotPublished' class='label label-warning'>Non publiée</div>
+        <div ng-if='!checklist.modifiedButNotPublished' class='label label-success'>Publiée</div>
+    </li>
+</ul>

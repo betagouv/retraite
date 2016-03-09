@@ -1,0 +1,45 @@
+body {
+    padding: 0;
+    padding-top: 85px;
+    font-size: 18px;
+}
+
+.panel-heading {
+    cursor: pointer;
+    padding: 2px 15px;
+}
+
+.panel-heading a {
+    color: #ddd;
+}
+
+.panel-body, .panel-body a {
+    color: black;
+}
+
+.show-details {
+    float: left;
+}
+
+.delai {
+    text-align: right;
+    font-style: italic;
+}
+
+.infos {
+    font-style: italic;
+}
+
+.precision {
+    font-style: italic;    
+}
+
+.panel-body > div {
+    margin-bottom: 10px;
+}
+
+/* toaster */
+#toast-container > div {
+    /*width: 700px;*/
+    opacity: 1.0;
+}

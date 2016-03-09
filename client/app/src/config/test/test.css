@@ -1,0 +1,12 @@
+.test-form .form-control {
+    width: auto;
+}
+
+.test-form input[type=text].form-control {
+    width: 140px;
+}
+
+.checkbox-regime {
+    display: inline-block;
+    margin-right: 20px;
+}
