@@ -1,0 +1,15 @@
+# Application dependencies
+
+require:
+    - play
+    - crud
+    - org.apache.commons -> commons-lang3 3.4
+    - org.mockito -> mockito-all 1.10.19
+    - org.easytesting -> fest-assert 1.4
+    - info.cukes -> cucumber-java 1.2.4
+    - info.cukes -> cucumber-junit 1.2.4
+    - com.github.jknack -> handlebars 4.0.2
+    - com.sendgrid -> sendgrid-java 2.2.2
+    - play -> pdf 0.9
+    - com.itextpdf -> itextpdf 5.5.8
+    - com.itextpdf.tool -> xmlworker 5.5.8 

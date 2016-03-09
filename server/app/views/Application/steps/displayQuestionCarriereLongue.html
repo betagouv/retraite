@@ -1,0 +1,49 @@
+#{extends 'step.html' /}
+
+#{set 'moreScripts'}
+    #{script 'displayQuestionCarriereLongue.js'/}
+#{/set}
+
+<div class="contenu question marg-top col-sm-12">
+	<div class="col-sm-1"></div>
+	<div class="col-sm-10">
+	
+		<br/>
+		
+		Vous avez renseigné une date de départ à un âge inférieur à l'âge légal (
+		<a href='http://www.msa.fr/lfr/retraite/conditions-age-depart-taux-plein' target='_blank'>Cliquez ici pour plus de détails</a>
+		).
+		
+		<br/>
+		<br/>
+	
+		Si vous avez obtenu une attestation de situation carrières longues, cochez la case suivante puis cliquez sur "Etape suivante" :
+	
+	    <span class='col-sm-12 text-center choice'>	
+	        <label class='label-for-question-choice label-carriere-longue'><input type="checkbox" class='questions-choice' name='CARRIERE_LONGUE'/>J'ai mon attestation carrières longues</label>
+		</span>
+		
+		<br/><br/><br/>
+		
+		Sinon, vous devez vérifier que vous relevez d'un des dispositifs permettant ce départ anticipé. 
+		
+		<br/><br/>
+		
+		Veuillez consulter les règles concernant ces dispositifs ici (TODO). 
+		
+		<br/><br/>
+		
+		Veuillez ensuite contacter un conseiller au XXX (TODO) afin d'être guidé dans vos démarches.
+		
+	</div><!--fin contenu-->
+	<div class="col-sm-1"></div>
+</div>
+
+<div class="form-group row col-sm-12">
+	<div class="col-sm-6">
+		<a href="javascript:history.go(-1)" class="btn btn-success btn-precedente marg-bottom">Etape précédente</a>
+	</div>
+	<div class="col-sm-6 text-right">
+		<input class="btn btn-success btn-next" value="Étape suivante" type="submit">
+	</div>
+</div>

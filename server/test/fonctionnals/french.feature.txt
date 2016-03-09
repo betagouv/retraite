@@ -1,0 +1,19 @@
+# language: fr
+Fonctionnalité: Workflow après l'écran d'accueil
+ 
+  Scénario: Affiliation unique CNAV
+    Soit Une personne avec l'affilitation CNAV
+    Lorsque On choisit sa checklist
+    Alors La checklist CNAV est sélectionnée
+ 
+  Scénario: Affiliation unique MSA
+    Soit Une personne avec l'affilitation MSA
+    Lorsque On choisit sa checklist
+    Alors La checklist MSA est sélectionnée
+ 
+   Scénario: Affiliation unique RSI
+    Soit Une personne avec l'affilitation RSI
+    Lorsque On choisit sa checklist
+    Alors La checklist RSI est sélectionnée
+ 
+ 

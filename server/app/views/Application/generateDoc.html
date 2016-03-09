@@ -1,0 +1,67 @@
+#{set 'moreStyles'}
+	#{stylesheet 'doc.css' /}
+#{/set}
+
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+<div class="col-sm-12">
+
+<h1>Checklist : ${checklist.nom}</h1>
+
+#{list items:checklist.chapitres, as:'chapitre' }
+    <h2>${chapitre_index} - ${chapitre.titre}</h2>
+    
+    <div class='chapitre'>
+	    <div class='conditions'>
+		    #{list items:chapitre.conditions, as:'condition' }
+		    	<p>${condition}</p>
+			#{/list}
+	    </div>
+	    
+	    <div class='delai'>
+	    	<p>Délai : ${chapitre.delai}</p>
+	    </div>
+	    
+	    <div class='textIntro'>
+	    	${chapitre.texteIntro?.raw()}
+	    </div>
+	    
+	    #{if chapitre.parcoursDematDifferent}
+	    	
+	    	<h3>Parcours canaux traditionnels</h3>
+		    <div class='parcours'>
+		    	${chapitre.parcours?.raw()}
+		    </div>
+	    	
+	    	<h3>Parcours dématérialisé</h3>
+		    <div class='parcours'>
+		    	${chapitre.parcoursDemat?.raw()}
+		    </div>
+	    	
+	    #{/if}
+	    #{else}
+	    	
+	    	<h3>Parcours</h3>
+		    <div class='parcours'>
+		    	${chapitre.parcours?.raw()}
+		    </div>
+	    	
+	    #{/else}
+
+	    <div class='texteComplementaire'>
+	    	${chapitre.texteComplementaire?.raw()}
+	    </div>
+	    
+	    #{if chapitre.notes}
+		    <div class='notes'>
+		    	<h3>Notes</h3>
+		    	${chapitre.notes?.raw()}
+		    </div>
+	    #{/if}
+	    
+    </div>
+    
+#{/list}
+
+</div>

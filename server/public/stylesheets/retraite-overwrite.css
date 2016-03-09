@@ -1,0 +1,47 @@
+
+/* Styles ajoutés */
+
+.titre-intro-checklist {
+	margin: 42px auto 10px;
+	color: #0b6ba8;
+	font-family: "Roboto", "Arial", "Helvetica", sans-serif;
+    font-weight: bold;
+    font-size: 3.2rem;
+}
+
+label.label-carriere-longue {
+	display: inline-block;
+	font-weight: bold;
+    margin-top: 20px;
+}
+
+/* Styles surchargés */
+
+body .container .contenu {
+	/*margin: 0;*/
+}
+
+.chemin-pendule {
+	color: #0b6ba8;
+	font-size: 1.2em;
+	width: 40px;
+	height: 80px;
+	padding-left: 0;
+}
+
+.chemin-pendule-trait {
+	background: url("../img/sprites/chemin-pendule.png") repeat-y 9px;
+}
+
+.chemin-pendule span {
+	background-color: #f5f5f5;
+}
+
+body .container.information .delai {
+	text-align: left;
+	padding-bottom: 0px;
+}
+
+body .container.information .contenu .bg-box h3 {
+	margin: 0;
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>#{get 'title' /}</title>
+        <meta charset="${_response_encoding}">
+	    <meta name="viewport" content="width=device-width">
+
+		<!-- injector:bowercss -->
+		<link rel="stylesheet" href="/public/libs/bootstrap-css/css/bootstrap.min.css">
+		<!-- endinjector -->
+		<link rel="stylesheet" href="/public/libs/jquery-ui/themes/base/jquery-ui.css">
+        
+        #{stylesheet 'style.css' /}
+        #{stylesheet 'retraite-overwrite.css' /}
+
+        <!--<link rel="shortcut icon" type="image/png" href="http://recette-retraite.sgmap.fr/public/images/favicon.png">-->
+        
+        #{get 'moreStyles' /}
+    </head>
+
+    <header class="entete col-sm-12">
+        <div class="title">
+        	<a href="/">
+	            <h1>Mes démarches retraite</h1>
+	            <h2>pas à pas</h2>
+            </a>
+        </div>
+    </header>
+
+
+    <body>
+
+        <div class="container padding-bottom #{get 'pageCssClass' /}">
+
+            <div class="wrapper">
+
+					#{doLayout /}
+	
+    		</div><!--fin wrapper-->
+
+		</div><!--fin container-->
+
+
+		<div class="col-sm-12 contenu">
+		    <footer role="contentinfo">
+		        <div class="wrapper-inner">
+		            <nav class="footer-right col-sm-7">
+		                <ul>
+		                    <li><a target="_blank" href="https://www.lassuranceretraite.fr/portail-info/accueil"><img src="/public/img/sprites/logo_cnav.png" title="cnav" alt="l'assurance retraite"></a></li>
+		                    <li><a target="_blank" href="http://www.msa.fr/lfr"><img src="/public/img/sprites/logo_MSA.png" title="MSA" alt="santé famille retraite services"></a></li>
+		                    <li><a target="_blank" href="https://www.rsi.fr/"><img src="/public/img/sprites/logo_rsi.png" title="rsi" alt="régime social des indépendants"></a></li>
+		                </ul>
+		            </nav>
+		            <nav class="footer-nav col-sm-5">
+		                <ul>
+		                    <li>| <a href="#">Contact</a> |</li>
+		                    <li><a href="#">Mentions légales</a> |</li>
+		                </ul>
+		            </nav>
+		
+		        </div>
+		    </footer>
+		</div>
+
+
+		<!-- injector:bowerjs -->
+		<script src="/public/libs/jquery/dist/jquery.js"></script>
+		<script src="/public/libs/jquery.maskedinput/dist/jquery.maskedinput.js"></script>
+		<script src="/public/libs/bootstrap-css/js/bootstrap.min.js"></script>
+		<script src="/public/libs/jquery-ui/jquery-ui.js"></script>
+		<!-- endinjector -->
+
+        #{get 'moreScripts' /}
+
+    </body>
+    
+	#{if gacode}
+		
+		<script>
+		
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			
+			ga('create', '${gacode}', 'auto');
+			ga('send', 'pageview');
+
+		</script>
+	    
+	#{/if}
+
+</html>
+

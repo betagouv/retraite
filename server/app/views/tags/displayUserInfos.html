@@ -1,0 +1,24 @@
+#{set pageCssClass:'information' /}
+
+<div class="contenu col-sm-12">
+	<div class="question">
+		<h2>Mes informations :</h2>
+		<div class="bg-box">
+			<ul class="sanspuce col-sm-5 text-right">
+				<li>Document produit le :</li>
+				<li>Nom de naissance :</li>
+				#{if _data.hidden_departMois && _data.hidden_departAnnee}
+					<li>Date de départ envisagée :</li>
+				#{/if}
+			</ul>
+			<ul class="sanspuce col-right col-sm-5">
+				<li>${_data.dateGeneration}</li>
+				<li>${_data.hidden_nom}</li>
+				#{if _data.hidden_departMois && _data.hidden_departAnnee}
+					<li>#{dateDepart data:_data /}</li>
+				#{/if}
+			</ul>
+		</div>
+		<!--fin bg-box-->
+	</div>
+</div>

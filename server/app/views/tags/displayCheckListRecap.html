@@ -1,0 +1,71 @@
+#{if _data.isPDF}
+	%{ throw new Exception("Tag non prévu pour le PDF !")}%
+#{/if}
+
+#{if _data.userChecklist}
+
+	<div class="titre-intro-checklist col-sm-12 text-center">
+			Pour partir à la retraite le #{dateDepart data:_data /},
+			<br/>
+			téléchargez la liste de vos démarches.
+	</div>
+
+	<div class="col-sm-12 ">
+		<div class="col-sm-1"></div>
+		<div class="col-sm-11">
+			<p class="bouton">
+				<button class="btn record">Sauvegarder, Imprimer</button>
+				<button class="btn mail">M'envoyer par courriel</button>
+			</p>
+		</div>
+	</div>
+
+	<div class="contenu col-sm-12">
+		<div class="question">
+			<h2>Récapitulatif de mes démarches pas à pas</h2>
+			<div class="bg-box">
+
+				#{list items:_data.userChecklist.chapitres, as:'chapitre'}
+					<div class="col-sm-12">
+						<div class="col-sm-1"></div>
+						<div class="col-sm-1 chemin-pendule delai
+							#{if !chapitre_isLast} 
+								chemin-pendule-trait
+							#{/if} 
+						">
+							<!-- 
+							<span class="glyphicon glyphicon-time" aria-hidden="true">&nbsp;</span>
+							 -->
+							<span class="add-on calendar">&nbsp;</span>
+						</div>
+						<div class="col-sm-9">
+							<div class="delai">
+								${chapitre.delai}
+							</div>
+							<div class="">
+								<h3>${chapitre.titre}</h3>
+							</div>
+						</div>
+						<div class="col-sm-1"></div>
+					</div>
+				#{/list}
+
+				<div class="col-sm-12 ">
+					<div class="col-sm-1"></div>
+					<div class="col-sm-11">
+						<p class="bouton">
+							<button class="btn record">Sauvegarder, Imprimer</button>
+							<button class="btn mail">M'envoyer par courriel</button>
+						</p>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	
+	#{displayUserInfos data:_data /}
+	
+	#{displayInterlocuteurs data:_data /}
+	
+#{/if}

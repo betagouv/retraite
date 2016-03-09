@@ -1,0 +1,51 @@
+#{extends 'step.html' /}
+
+#{set 'moreScripts'}
+    #{script 'displayDepartureDate.js'/}
+#{/set}
+
+<div class="contenu question marg-top col-sm-12">
+	<div class="col-sm-1"></div>
+	<div class="col-sm-10">
+	
+		<h2>A quelle date avez-vous prévu de prendre votre retraite ?</h2>
+	
+		<div class='choice'>
+
+			<label class='label-for-question-choice'>
+				<input type="radio" name='postData.departInconnu' value='false' checked /> Je prévois de partir au : 
+
+			    <select name='postData.departMois' class='form-control xxx-select' required >
+			       	#{list items:data.listeMoisAvecPremier, as:'mois'}
+			           	<option value='${mois.value}'>${mois.text}</option>
+			        #{/list}
+			    </select>
+			    <select name='postData.departAnnee' class='form-control xxx-select' required >
+			       	#{list items:data.listeAnneesDepart, as:'annee'}
+			           	<option>${annee}</option>
+			        #{/list}
+			    </select>
+			
+				<br/>
+				
+			</label>
+			
+			<label class='label-for-question-choice'>
+				<input type="radio" name='postData.departInconnu' value='true'/> Je ne sais pas
+			</label>
+			
+		</div>
+	
+	</div><!--fin contenu-->
+	<div class="col-sm-1"></div>
+</div>
+
+<div class="form-group row col-sm-12">
+	<div class="col-sm-6">
+		<a href="javascript:history.go(-1)" class="btn btn-success btn-precedente marg-bottom">Etape précédente</a>
+	</div>
+	<div class="col-sm-6 text-right">
+		<input class="btn btn-success btn-next" value="Étape suivante" type="submit">
+	</div>
+</div>
+

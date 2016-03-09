@@ -1,0 +1,19 @@
+{
+  "name": "sgmap-retraite-server",
+  "version": "0.0.1",
+  "authors": [
+    "xnopre <xnopre@gmail.com>"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery.maskedinput": "jquery-maskedinput#~1.4.1",
+    "bootstrap-css": "^3.3.6",
+    "jquery-ui": "^1.11.4"
+  }
+}

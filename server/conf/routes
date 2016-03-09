@@ -1,0 +1,50 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Ignore favicon requests
+GET     /favicon.ico                            404
+
+# Map static resources from the /app/public folder to the /public path
+
+GET     /local/ 								staticDir:../client/app/
+GET     /local/js/								staticDir:../client/app/js
+GET     /local/views/							staticDir:../client/app/views
+GET     /local/css/								staticDir:../client/app/css
+GET     /local/fonts/							staticDir:../client/app/fonts
+
+GET     /proto/exploit/lib/                     staticDir:../client/lib/
+GET     /proto/exploit/                         staticDir:../client/exploit/
+GET     /proto/config/lib/                      staticDir:../client/lib/
+GET     /proto/config/                          staticDir:../client/config/
+GET     /proto                                  staticDir:../client/app/
+
+GET     /config                                 staticDir:www/
+
+GET     /public/								staticDir:/public/
+
+# Secure routes
+
+POST        /login          					Secure.authenticate
+GET         /logout         					Secure.logout
+
+# API REST
+
+# CheckLists
+GET     /api/checklist							ApiRestChecklists.getChecklists
+GET     /api/checklist/{name}					ApiRestChecklists.getChecklist
+POST    /api/checklist							ApiRestChecklists.createChecklist
+PUT     /api/checklist/{id}						ApiRestChecklists.updateChecklist
+DELETE  /api/checklist/{id}						ApiRestChecklists.deleteChecklist
+
+# API WebServices
+GET		/api/inforetraite						ApiInfoRetraite.get
+GET		/api/checklistpublish					ApiChecklistPublish.get
+
+# Catch all
+*       /{controller}/{action}                  {controller}.{action}
+
+*       /admin                                  module:crud
+
+GET     /                                       Application.process
+POST    /                                       Application.process

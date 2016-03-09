@@ -1,0 +1,60 @@
+#{extends 'step.html' /}
+
+#{set 'moreScripts'}
+    #{script 'displayCheckList.js'/}
+#{/set}
+
+#{if data.errorMessage}
+	<p>${data.errorMessage}</p>
+#{/if}
+
+
+#{displayCheckList data:data /}
+
+<div class="form-group row col-sm-12">
+	<div class="col-sm-6">
+		<a href="javascript:history.go(-1)" class="btn btn-success btn-precedente marg-bottom">Etape précédente</a>
+	</div>
+	<div class="col-sm-6 text-right"></div>
+</div>
+
+<div class='hiddeninfos  col-sm-12'>
+	<br/>
+	<br/>
+	<br/>
+	Régimes détectés : ${data.hidden_regimes}
+	<br/>
+	Attestation carrière longue : ${data.hidden_attestationCarriereLongue}
+	<br/>
+	Liste sélectionnée : ${data.userChecklist.nom}
+	<br/>
+	Réponses aux questions pour déterminer le liquidateur : ${data.hidden_liquidateurReponseJsonStr}
+	<br/>
+	<br/>
+</div>
+<!--fin hiddeninfos-->
+
+<div class="modal fade" id="DialogSendEMail" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Envoyer par courriel</h4>
+			</div>
+			<div id='divEmail' class="modal-body">
+				<div class='form-group row'>
+				    <label for='email' class='col-sm-6 control-label'>Votre adresse de courriel :</label>
+				    <div class='col-sm-6'>
+				        <input type='text' class='form-control' id='email' name='postData.email' required />
+				    </div>
+				</div>
+				<div class='form-group row'>
+				    <label id="emailMissing" class='col-sm-12 hidden control-label'>Vous devez saisir votre adresse de courriel !</label>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button id='validSendMail' type="button" class="btn btn-success" >Envoyer</button>
+			</div>
+		</div>
+	</div>
+</div>

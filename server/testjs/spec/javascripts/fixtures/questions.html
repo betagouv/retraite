@@ -1,0 +1,45 @@
+<div id='q1' class='question'>
+	Êtes-vous dans l'une ou plusieurs des situations suivantes ?
+	<div class='question-infos'>Plusieurs choix possibles</div>
+	<div class='choice'>
+		<input type="checkbox" class='questions-choice' condition-key="condition1" value="INDEP_AVANT_73" /> J'ai exerc&eacute; une activit&eacute;
+		d'ind&eacute;pendant (artisan ou commer&ccedil;ant) avant 1973
+	</div>
+	<div class='choice'>
+		<input type="checkbox" class='questions-choice' condition-key="condition1" value="INVALIDITE_RSI" />Je re&ccedil;ois une pension
+		d'invalidit&eacute; vers&eacute;e par le RSI
+	</div>
+	<div class='choice'>
+		<input type="checkbox" class='questions-choice' condition-key="condition1" value="AUCUNE" />Aucune de ces situations
+	</div>
+</div>
+<div id='q2' class='question' condition-key='condition1' condition-value='AUCUNE'>
+	Quelle est votre derni&egrave;re activit&eacute; exerc&eacute;e ?
+	<div class='choice'>
+		<input type="radio" class='questions-choice' class='questions-choice' condition-key="condition2" name="reponses[condition2]" value="NSA" />Chef d'exploitation ou
+		d'entreprise agricole
+	</div>
+	<div class='choice'>
+		<input type="radio" class='questions-choice' condition-key="condition2" name="reponses[condition2]" value="SA" />Salari&eacute; agricole
+	</div>
+	<div class='choice'>
+		<input type="radio" class='questions-choice' condition-key="condition2" name="reponses[condition2]" value="DEUX_ACTIVITES" />Deux de ces
+		activit&eacute;s en m&ecirc;me temps
+	</div>
+</div>
+<div id='q3' class='question' condition-key='condition2' condition-value='DEUX_ACTIVITES'>
+	Quel est l'organisme qui vous rembourse vos frais de sant&eacute; ?
+	<div class='choice'>
+		<input type="radio" class='questions-choice' condition-key=condition3 name="reponses[ORGA_FRAIS_SANTE_RSI_MSA]" value="RSI" />RSI
+	</div>
+	<div class='choice'>
+		<input type="radio" class='questions-choice' condition-key=condition3 name="reponses[ORGA_FRAIS_SANTE_RSI_MSA]" value="MSA" />MSA
+	</div>
+</div>
+
+<div class="form-group row etape col-sm-12">
+    <div class="col-sm-6"></div>
+    <div class="col-sm-6 text-right">
+        <input class="btn btn-success btn-next" value="Étape suivante" type="submit">
+    </div>
+</div>
