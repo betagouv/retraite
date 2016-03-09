@@ -1,0 +1,43 @@
+Checklist(cnav):
+    nom: CNAV
+
+Checklist(rsi):
+    nom: RSI
+    published: false
+
+Checklist(rsi-published):
+    nom: RSI
+    published: true
+
+Checklist(msa):
+    nom: MSA
+
+# Les chapitres sont rattachés à leur Checklist par code, à partir du début de leur titre
+# car sinon, @OrderColumn pose problème avec une erreur d'index null
+
+Chapitre(rsi1):
+    titre: RSI chapitre 1
+    delai:
+        type: ENTRE
+        min: 1
+        max: 3
+        unite: MOIS
+
+Chapitre(rsi2):
+    titre: RSI chapitre 2
+
+Condition(delai1):
+    chapitre: rsi1
+    props:
+        type        : "delai"
+        plusOuMoins : "moins"
+        nombre      : "3"
+        unite       : "annees"
+
+Condition(delai2):
+    chapitre: rsi1
+    props:
+        type        : "delai"
+        plusOuMoins : "plus"
+        nombre      : "7"
+        unite       : "mois"

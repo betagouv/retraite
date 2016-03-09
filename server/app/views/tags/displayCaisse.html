@@ -1,0 +1,36 @@
+<h3>${_caisse.nom}</h3>
+
+<div class="row text-left">
+	<div class="col-xs-12">
+		
+		*{ Site internet }*
+		
+		#{if _caisse.site}
+			<span class="glyphicon glyphicon-cloud">&nbsp;</span>
+			<a href='${_caisse.site}' target='_blank'>${_caisse.site}</a>
+		#{/if}
+		
+		*{ Téléphone }*
+		
+		#{if _caisse.telephone}
+			<span class="telephone"></span>
+			${_caisse.telephone}<br/>
+		#{/if}
+
+		*{ Adresse postale }*
+		
+		<span class="enveloppe"></span>
+		${_caisse.adresse1}<br/>
+		#{if _caisse.adresse2}
+			${_caisse.adresse2}<br/>
+		#{/if}
+		#{if _caisse.adresse3}
+			${_caisse.adresse3}<br/>
+		#{/if}
+		#{if _caisse.adresse4}
+			${_caisse.adresse4}<br/>
+		#{/if}
+	</div>
+</div>
+
+

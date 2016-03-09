@@ -1,0 +1,76 @@
+#{extends 'main.html' /}
+#{set title:'Tests âges départ' /}
+
+<h1>Tests âges départ</h1>
+
+<h2>Périodes de départ à la retraite</h2>
+
+<table class='validations-caisses'>
+	<tr>
+		<td><b>Né après le</b></td>
+		<td><b>Age légal de départ</b></td>
+		<td><b>Age du taux plein</b></td>
+	</tr>
+
+	#{list items:listPeriodesDepartLegal, as:'periodeDepartLegal'}
+		<tr>
+			<td>${periodeDepartLegal.dateNaissanceDebut ? periodeDepartLegal.dateNaissanceDebut : "Avant"}</td>
+			<td>
+				${periodeDepartLegal.ageDepartLegal.annees} ans
+				#{if periodeDepartLegal.ageDepartLegal.mois} 
+					et ${periodeDepartLegal.ageDepartLegal.mois} mois
+				#{/if} 
+			</td>
+			<td>
+				${periodeDepartLegal.ageTauxPlein.annees} ans 
+				#{if periodeDepartLegal.ageTauxPlein.mois} 
+					et ${periodeDepartLegal.ageTauxPlein.mois} mois
+				#{/if} 
+			</td>
+		</tr>
+	#{/list}
+
+</table>
+
+<br/>
+
+<h2>Exemples de départs à la retraite</h2>
+
+<table class='validations-caisses'>
+	<tr>
+		<td><b>Né le</b></td>
+		<td><b>Date seuil (début)</b></td>
+		<td><b>Age légal de départ</b></td>
+		<td><b>Age du taux plein</b></td>
+	</tr>
+
+	#{list items:listTestsAgeDepart, as:'testAgeDepart'}
+		<tr>
+			<td>${testAgeDepart.dateNaissance}</td>
+			<td>${testAgeDepart.periodeDepartLegal.dateNaissanceDebut}</td>
+			<td>
+				${testAgeDepart.periodeDepartLegal.ageDepartLegal.annees} ans
+				#{if testAgeDepart.periodeDepartLegal.ageDepartLegal.mois} 
+					et ${testAgeDepart.periodeDepartLegal.ageDepartLegal.mois} mois
+				#{/if} 
+			</td>
+			<td>
+				${testAgeDepart.periodeDepartLegal.ageTauxPlein.annees} ans 
+				#{if testAgeDepart.periodeDepartLegal.ageTauxPlein.mois} 
+					et ${testAgeDepart.periodeDepartLegal.ageTauxPlein.mois} mois
+				#{/if} 
+			</td>
+		</tr>
+	#{/list}
+
+</table>
+
+<!-- 
+<div class='form-group row'>
+    <label for='nom' class='col-sm-4 control-label'>Nom de naissance :</label>
+    <div class='col-sm-8'>
+        <input type='text' class='form-control' id='nom' name='postData.nom' value='' required />
+    </div>
+</div>
+ -->
+

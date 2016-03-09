@@ -1,0 +1,78 @@
+#{if _data.userChecklist}
+
+	<div class="contenu col-sm-12">
+		<div class="question">
+			<h2 style='padding-bottom: 50px;'>${_data.hidden_nir.startsWith('1') ? 'M.' : 'Mme'} ${_data.hidden_nom}, pour partir à la retraite le #{dateDepart data:_data /},
+				<br/>
+				récupérez la liste de vos démarches.</h2>
+			<div class="bg-box">
+
+				#{if !_data.isPDF}
+					<div class="col-sm-12 ">
+						<div class="col-sm-1"></div>
+						<div class="col-sm-11">
+							<p class="bouton">
+								<button class="btn record">Télécharger en PDF</button>
+								<button class="btn mail">M'envoyer par courriel</button>
+							</p>
+						</div>
+					</div>
+				#{/if}
+
+				#{list items:_data.userChecklist.chapitres, as:'chapitre'}
+					<div class="col-sm-12">
+						<div class="col-sm-1"></div>
+						<div id="chap${chapitre_index}" class="panel panel-primary box-white col-sm-10">
+							<div class="img_bg">
+								#{if !_data.isPDF}
+									<div class="carre">${chapitre_index}</div>
+									<h3>${chapitre.titre}</h3>
+								#{/if}
+								#{if _data.isPDF}
+									<h3>${chapitre_index} - ${chapitre.titre}</h3>
+								#{/if}
+							</div>
+							<div class="panel-heading">
+								<div class="delai">
+									#{if chapitre.delai}
+										<span class="add-on calendar"></span>${chapitre.delai}
+									#{/if}
+								</div>
+							</div>
+							<div id="panel-details-${chapitre_index}" class="panel-body panel-details">
+						        <div class=''>${chapitre.texteIntro?.raw()}</div>
+						        <div class=''>${chapitre.parcours?.raw()}</div>
+						        <div class=''>${chapitre.texteComplementaire?.raw()}</div>
+								#{if chapitre_index == 99}
+									<ul class="filet-left sanspuce">
+										<li><span class="bold">Exemple de texte</span> pouvant être mis en 
+										évidence, à voir comment dans l'outil de config...</li>
+									</ul>
+								#{/if}
+							</div>
+						</div>
+						<div class="col-sm-1"></div>
+					</div>
+				#{/list}
+
+				#{if !_data.isPDF}
+					<div class="col-sm-12 ">
+						<div class="col-sm-1"></div>
+						<div class="col-sm-11">
+							<p class="bouton">
+								<button class="btn record">Télécharger en PDF</button>
+								<button class="btn mail">M'envoyer par courriel</button>
+							</p>
+						</div>
+					</div>
+				#{/if}
+
+			</div>
+		</div>
+	</div>
+	
+	#{displayUserInfos data:_data /}
+	
+	#{displayInterlocuteurs data:_data /}
+	
+#{/if}

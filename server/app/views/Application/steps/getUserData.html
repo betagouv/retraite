@@ -1,0 +1,100 @@
+#{set pageCssClass:'home' /}
+
+#{extends 'step.html' /}
+
+#{set 'moreScripts'}
+    #{script 'getUserData.js'/}
+#{/set}
+
+<div class="col-sm-12">
+	<div class="col-sm-1"></div>
+	<div class="contenu col-sm-10">
+	
+		<div  class="contenu-image">
+		
+			<div class="col-sm-12">
+				<h2 class='error'>${data.errorMessage}</h2>
+            </div><!--fin-->
+			
+		    <div class="form-group row col-sm-12">
+		        <label for="nom" class="col-sm-5 control-label">Nom de naissance :</label>
+		        <div class="col-sm-7">
+		            <input class="form-control" id="nom" name="postData.nom" value='${data.hidden_nom}' required="" type="text">
+		        </div>
+		    </div>
+		
+		    <div class="form-group row col-sm-12">
+		        <label for="nom" class="col-sm-5 control-label form-group">Date de naissance :</label>
+		        <div class="col-sm-4">
+		            <input class="form-control my-date" id="naissance" name="postData.naissance" value='${data.hidden_naissance}' required="" type="text">
+		        </div>
+		        <span class="col-sm-3">
+		        	(jj/mm/aaaa)
+		        </span>
+		    </div>
+		
+		    <div class="form-group row col-sm-12">
+		        <label for="nom" class="col-sm-5 control-label">N° de sécurité sociale :</label>
+		        <div class="col-sm-5">
+		            <input id="nir" name="postData.nir" value='${data.hidden_nir}'  class="form-control" required="" type="text">
+		        </div>
+		    </div>
+		
+		    <div class="form-group row col-sm-12">
+		        <label for="dep" class="col-sm-5 control-label">Département de résidence :</label>
+		        <div class="col-sm-6">
+		            <!--<span class="select-wrapper"> </span>-->
+		                <select name="postData.departement" class="form-control xxx-select">
+				        	#{list items:data.departements, as:'departement'}
+				            	<option value='${departement.numero}'>${departement.numero} - ${departement.nom}</option>
+				            #{/list}
+		                </select>
+		        </div>
+		        <div class="col-sm-2"></div>
+		    </div>
+		
+		    <div class="form-group row etape col-sm-12">
+				<div class="col-sm-6">
+					<a href="javascript:history.go(-1)" class="btn btn-success btn-precedente marg-bottom">Etape précédente</a>
+				</div>
+		        <div class="col-sm-6 text-right">
+		            <input class="btn btn-success btn-next" value="Étape suivante" type="submit">
+		        </div>
+		    </div>
+		
+		</div><!--fin contenu -image-->
+	
+	</div><!--fin contenu-->
+	<div class="col-sm-1"></div>
+</div>
+
+#{if isTest}
+
+	*{ Données de tests }*
+	
+	<div class="col-sm-12">
+		<div class="col-sm-1"></div>
+		<div class="contenu col-sm-10">
+		
+			<i>CANCAVA & ORGANIC = RSI</i>
+			<table>
+				<tr>
+					<td>Nom</td>
+					<td>NIR</td>
+					<td>Régimes</td>
+					<td>Utiliser</td>
+				</tr>
+			   	#{list items:data.fakeData, as:'aFakeData'}
+					<tr>
+						<td>${aFakeData.nom}</td>
+						<td>${aFakeData.nir}</td>
+						<td>${aFakeData.regimes}</td>
+						<td><button class='btn btn-success' onclick='RetraiteGetUserData.fillForm("${aFakeData.nom}","${aFakeData.nir}");return false;'><span class="glyphicon glyphicon-play"></span></button></td>
+					</tr>
+			    #{/list}
+			</table>
+			
+		</div>
+		<div class="col-sm-1"></div>
+	</div>
+#{/if}

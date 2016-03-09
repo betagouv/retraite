@@ -1,0 +1,38 @@
+#{extends 'main.html' /}
+#{set title:'Listes des caisses' /}
+
+#{set 'moreStyles'}
+	#{stylesheet 'validations-caisses.css' /}
+#{/set}
+
+<table class='validations-caisses'>
+	<tr>
+		<td>Département</td>
+		<td>CNAV</td>
+		<td>MSA</td>
+		<td>RSI</td>
+	</tr>
+	
+	#{list items:data, as:'dataParDepartement'}
+	
+		<tr>
+			<td nowrap>${dataParDepartement.departement.nom}</td>
+			<td nowrap>
+				#{if dataParDepartement.caisseCNAV}
+					#{displayCaisse caisse:dataParDepartement.caisseCNAV /}
+				#{/if}
+			</td>
+			<td nowrap>
+				#{if dataParDepartement.caisseMSA}
+					#{displayCaisse caisse:dataParDepartement.caisseMSA /}
+				#{/if}
+			</td>
+			<td nowrap>
+				#{if dataParDepartement.caisseRSI}
+					#{displayCaisse caisse:dataParDepartement.caisseRSI /}
+				#{/if}
+			</td>
+		</tr>
+	
+	#{/list}
+</table>

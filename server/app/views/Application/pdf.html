@@ -1,0 +1,32 @@
+<html>
+    <head>
+
+		<!-- NE PAS INTEGRER BOOTSTRAP POUR LE MOMENT... (pb génération PDF) -->
+		
+		<!-- injector:bowercss -->
+		<link rel="stylesheet" href="/public/libs/bootstrap-css/css/bootstrap.min.css">
+		<!-- endinjector -->
+
+
+		#{stylesheet 'style.css' /}
+        #{stylesheet 'retraite-overwrite.css' /}
+		
+    </head>
+
+
+    <body>
+
+        <div class="container padding-bottom information">
+
+            <div class="wrapper">
+
+				#{displayCheckList data:data /}
+	
+    		</div><!--fin wrapper-->
+
+		</div><!--fin container-->
+
+
+    </body>
+</html>
+

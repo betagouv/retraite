@@ -1,0 +1,142 @@
+'use strict';
+
+describe('getUserData', function () {
+
+	beforeEach(function () {
+		jasmine.getFixtures().fixturesPath = 'base/testjs/spec/javascripts/fixtures';
+		loadFixtures('getUserData.html'); 
+		RetraiteGetUserData.initJquery(); 
+	});
+
+	
+	describe('fillForm', function () {
+		it('should fill the form with specified data', function () {
+			
+			expect($('#nom').val()).toEqual("");
+			expect($('#naissance').val()).toEqual("");
+			expect($('#nir').val()).toEqual("");
+			
+			RetraiteGetUserData.fillForm("mon nom", "mon nir");
+			
+			expect($('#nom').val()).toEqual("mon nom");
+			expect($('#naissance').val().length).toEqual("xx/xx/xxxx".length);
+			expect($('#nir').val()).toEqual("mon nir");
+		});
+	});
+
+	describe('next Button management', function () {
+		
+		it('should be disabled initialy', function () {
+			expectNextButtonIsDisabled();
+		});
+		
+		it('should be disabled if name is too short', function () {
+			
+			fillNom("GI");
+			fillNaissance("01/01/1901");
+			fillNir("1223344555666");
+			
+			expectNextButtonIsDisabled();
+		});
+		
+		it('should be disabled if naissance is too short', function () {
+			
+			fillNom("TOTO");
+			fillNaissance("01/01/01");
+			fillNir("1223344555666");
+			
+			expectNextButtonIsDisabled();
+		});
+		
+		it('should be disabled if nir is too short', function () {
+			
+			fillNom("TOTO");
+			fillNaissance("01/01/1901");
+			fillNir("122334");
+			
+			expectNextButtonIsDisabled();
+		});
+		
+	    it('should be enabled if all fields are filled', function () {
+
+	    	fillNom("TOTO");
+	    	fillNaissance("01/01/1901");
+	    	fillNir("1223344555666");
+			
+	    	expectNextButtonIsEnabled();
+	    });
+
+	});
+	
+	/*function addOnEventAndExpectNextButtonIsEnabled(done) {
+    	$(document).on('Retraite:getUserData:diplayUpdated', function() {
+			// Il faut se désabonner de l'évènement pour éviter le mélange entre chaque TU
+			$(document).off('Retraite:getUserData:diplayUpdated');
+			expectNextButtonIsEnabled(); 
+			done();
+		}); 
+	}
+	
+	function addOnEventAndExpectNextButtonIsDisabled(done) {
+		$(document).on('Retraite:getUserData:diplayUpdated', function() {
+			// Il faut se désabonner de l'évènement pour éviter le mélange entre chaque TU
+			$(document).off('Retraite:getUserData:diplayUpdated');
+			expectNextButtonIsDisabled(); 
+			done();
+		}); 
+	}*/
+	
+    function expectNextButtonIsDisabled() {
+    	expect($(".btn-next").attr("disabled")).toEqual("disabled");
+    }
+
+    function expectNextButtonIsEnabled() {
+    	expect($(".btn-next").attr("disabled")).toBeUndefined(); 
+    }
+    
+    function fillNom(nom) {
+    	fillField('nom', nom, true);
+    }
+    
+    function fillNaissance(naissance) {
+    	fillField('naissance', naissance);
+    }
+    
+    function fillNir(nir) {
+    	fillField('nir', nir);
+    }
+    
+    function fillField(id, text, fillFieldWithText) {
+    	for(var i = 0; i < text.length; i++) {
+    		var code = text.charCodeAt(i);
+    		sendKeydownEvent(id, code);
+    		sendKeypressEvent(id, code, fillFieldWithText);
+    		sendKeyupEvent(id, code);
+    	}
+    }
+    
+    function sendKeydownEvent(id, code) {
+    	sendKeyEvent(id, code, 'keydown');
+    }
+    
+    function sendKeyupEvent(id, code) {
+    	sendKeyEvent(id, code, 'keyup');
+    }
+    
+    function sendKeypressEvent(id, code, fillFieldWithText) {
+    	sendKeyEvent(id, code, 'keypress');
+    	if (fillFieldWithText) {
+    		var $field = $('#'+id);
+    		$field.val($field.val()+String.fromCharCode(code));
+    	}
+    }
+    
+    function sendKeyEvent(id, code, typeEvent) {
+    	var e = jQuery.Event(typeEvent);
+    	e.which = code;
+    	e.keyCode = code;
+    	var $field = $('#'+id);
+    	$field.trigger(e);
+    }
+    
+});
