@@ -38,9 +38,7 @@ public class InfoRetraiteBdd implements InfoRetraite {
 	}
 
 	private FakeData find(final String name, final String nir) {
-		final FakeData fakeData = FakeData.find(name.trim(), nir.replace(" ", ""));
-		// Temporaire : si pas de données, on répond : CNAV + RSI
-		return fakeData == null ? createFakeData(name, nir, "CNAV,RSI") : fakeData;
+		return FakeData.find(name.trim(), nir.replace(" ", ""));
 	}
 
 	private FakeData createFakeData(final String name, final String nir, final String regimes) {
