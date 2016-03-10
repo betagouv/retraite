@@ -246,6 +246,9 @@ angular.module('SgmapRetraiteConfig').controller('EditCtrl',
         if (delai.type === 'APARTIR') {
             return "A partir de "+delai.min+" "+(delai.unite === 'MOIS' ? "mois" : (delai.min === 1 ? "année" : "années"));
         }
+        if (delai.type === 'SIMPLE') {
+            return "A "+delai.min+" "+(delai.unite === 'MOIS' ? "mois" : (delai.min === 1 ? "année" : "années"));
+        }
         return "Inconnu : "+JSON.stringify(delai);
     };
     

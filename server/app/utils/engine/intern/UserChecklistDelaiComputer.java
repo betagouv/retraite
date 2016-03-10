@@ -8,6 +8,7 @@ import static models.Delai.Type.APARTIR;
 import static models.Delai.Type.AUCUN;
 import static models.Delai.Type.AUPLUS;
 import static models.Delai.Type.ENTRE;
+import static models.Delai.Type.SIMPLE;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -42,6 +43,9 @@ public class UserChecklistDelaiComputer {
 		}
 		if (delai.type == APARTIR) {
 			return aPartir(delai, dateDepart);
+		}
+		if (delai.type == SIMPLE) {
+			return simple(delai, dateDepart);
 		}
 		return "Dès que possible";
 	}
@@ -100,6 +104,15 @@ public class UserChecklistDelaiComputer {
 			return "Dès que possible";
 		}
 		return "A partir de " + FORMAT_MONTH_NAME.format(calendar.getTime()) + " " + calendar.get(Calendar.YEAR);
+	}
+
+	private String simple(final Delai delai, final MonthAndYear dateDepart) {
+		final GregorianCalendar calendar = createCalendarForDateDepart(dateDepart);
+		calendar.add(getCalendarField(delai.unite), -delai.min);
+		if (calendar.getTime().getTime() <= dateProvider.getCurrentDate().getTime()) {
+			return "Dès que possible";
+		}
+		return "En " + FORMAT_MONTH_NAME.format(calendar.getTime()) + " " + calendar.get(Calendar.YEAR);
 	}
 
 	private boolean sameMinAndMax(final Delai delai) {

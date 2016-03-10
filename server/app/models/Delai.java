@@ -8,7 +8,7 @@ import javax.persistence.Enumerated;
 public class Delai {
 
 	public static enum Type {
-		AUCUN, DESQUE, AUPLUS, ENTRE, APARTIR
+		AUCUN, DESQUE, AUPLUS, ENTRE, APARTIR, SIMPLE
 	};
 
 	public static enum Unite {

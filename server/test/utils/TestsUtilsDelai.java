@@ -36,6 +36,13 @@ public class TestsUtilsDelai {
 		return delai;
 	}
 
+	public static Delai createDelaiSimple(final int min, final Unite unite) {
+		final Delai delai = createDelai(Delai.Type.SIMPLE);
+		delai.min = min;
+		delai.unite = unite;
+		return delai;
+	}
+
 	public static Delai createDelai(final Type type) {
 		final Delai delai = new Delai();
 		delai.type = type;
