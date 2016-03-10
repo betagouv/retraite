@@ -826,6 +826,43 @@ describe('EditCtrl', function () {
         
         });
         
+        describe('APARTIR', function () {
+            
+            it('should generate human string with mois', function () {
+                var delai = {
+                    type: 'SIMPLE',
+                    min: 3,
+                    //max: 1,
+                    unite: 'MOIS'
+                };
+                var str = $scope.delaiToHumanStr(delai);
+                expect(str).toEqual("A 3 mois");
+            });
+        
+            it('should generate human string with année', function () {
+                var delai = {
+                    type: 'SIMPLE',
+                    min: 4,
+                    max: 1,
+                    unite: 'ANNEES'
+                };
+                var str = $scope.delaiToHumanStr(delai);
+                expect(str).toEqual("A 4 années");
+            });
+        
+            it('should generate human string with année', function () {
+                var delai = {
+                    type: 'SIMPLE',
+                    min: 1,
+                    max: 1,
+                    unite: 'ANNEES'
+                };
+                var str = $scope.delaiToHumanStr(delai);
+                expect(str).toEqual("A 1 année");
+            });
+        
+        });
+        
     });
 
     describe('isEditable', function () {

@@ -8,6 +8,7 @@ import static utils.TestsUtilsDelai.createDelaiAuPlus;
 import static utils.TestsUtilsDelai.createDelaiAucun;
 import static utils.TestsUtilsDelai.createDelaiDesQuePossible;
 import static utils.TestsUtilsDelai.createDelaiEntre;
+import static utils.TestsUtilsDelai.createDelaiSimple;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -41,5 +42,9 @@ public class ConverterDelaiTest {
 		assertThat(converterDelai.convert(createDelaiAPartir(1, MOIS))).isEqualTo("A partir de 1 mois avant la date de départ prévue");
 		assertThat(converterDelai.convert(createDelaiAPartir(3, ANNEES))).isEqualTo("A partir de 3 années avant la date de départ prévue");
 		assertThat(converterDelai.convert(createDelaiAPartir(1, ANNEES))).isEqualTo("A partir de 1 année avant la date de départ prévue");
+
+		assertThat(converterDelai.convert(createDelaiSimple(3, MOIS))).isEqualTo("A 3 mois avant la date de départ prévue");
+		assertThat(converterDelai.convert(createDelaiSimple(3, ANNEES))).isEqualTo("A 3 années avant la date de départ prévue");
+		assertThat(converterDelai.convert(createDelaiSimple(1, ANNEES))).isEqualTo("A 1 année avant la date de départ prévue");
 	}
 }

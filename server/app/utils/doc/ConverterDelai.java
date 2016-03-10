@@ -22,6 +22,9 @@ public class ConverterDelai {
 		case APARTIR:
 			return "A partir de " + delai.min + " " + (delai.unite == Unite.MOIS ? "mois" : (delai.min == 1 ? "année" : "années"))
 					+ " avant la date de départ prévue";
+		case SIMPLE:
+			return "A " + delai.min + " " + (delai.unite == Unite.MOIS ? "mois" : (delai.min == 1 ? "année" : "années"))
+					+ " avant la date de départ prévue";
 		}
 		throw new IllegalArgumentException("Unexpected type '" + delai.type + "' for delai");
 	}

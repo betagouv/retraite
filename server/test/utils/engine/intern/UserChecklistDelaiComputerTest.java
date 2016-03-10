@@ -5,6 +5,7 @@ import static models.Delai.Type.AUCUN;
 import static models.Delai.Type.AUPLUS;
 import static models.Delai.Type.DESQUE;
 import static models.Delai.Type.ENTRE;
+import static models.Delai.Type.SIMPLE;
 import static models.Delai.Unite.MOIS;
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -207,6 +208,28 @@ public class UserChecklistDelaiComputerTest {
 	@Test
 	public void a_partir_de_1_mois_sans_chgt_annee_depasse() {
 		final Delai delai = new Delai(APARTIR, 1, 1, MOIS);
+		final MonthAndYear dateDepart = new MonthAndYear("03", "2016");
+
+		final String result = userChecklistDelaiComputer.compute(delai, dateDepart);
+
+		assertThat(result).isEqualTo("Dès que possible");
+	}
+
+	// "A x mois/années"
+
+	@Test
+	public void a_1_mois_sans_chgt_annee() {
+		final Delai delai = new Delai(SIMPLE, 1, 1, MOIS);
+		final MonthAndYear dateDepart = new MonthAndYear("03", "2017");
+
+		final String result = userChecklistDelaiComputer.compute(delai, dateDepart);
+
+		assertThat(result).isEqualTo("En février 2017");
+	}
+
+	@Test
+	public void a_1_mois_sans_chgt_annee_depasse() {
+		final Delai delai = new Delai(SIMPLE, 1, 1, MOIS);
 		final MonthAndYear dateDepart = new MonthAndYear("03", "2016");
 
 		final String result = userChecklistDelaiComputer.compute(delai, dateDepart);
