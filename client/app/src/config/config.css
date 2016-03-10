@@ -143,3 +143,14 @@ ul.config-list li .label {
 span[disabled] {
     color: #ccc;
 }
+
+/* Couleurs pour identifier le site en cours prod/recette/localhost */
+
+.appid-localhost {
+    background-color: rgba(95, 158, 160, 0.31);
+}
+
+.appid-localhost {
+    background-color: rgba(255, 127, 80, 0.38);
+}
+
