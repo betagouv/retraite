@@ -23,6 +23,9 @@ if [ -n "$(git diff --exit-code)" ]; then
 fi
 
 # Génération de l'application cliente
+echo
+echo "Génération de l'application cliente..."
+echo
 cd client
 grunt build
 
