@@ -25,6 +25,11 @@ fi
 # Génération de l'application cliente
 cd client
 grunt build
+
+if [ $? != 0 ]; then
+    exit $?
+fi
+
 cd ..
 
 # Copie de l'application client dans le serveur
