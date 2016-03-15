@@ -38,18 +38,14 @@ fi
 
 cd ..
 
+# Tag Git
+git tag "deploy_$ENV_$(date +%Y-%m-%d_%H-%M-%S)"
+
 # Copie de l'application client dans le serveur
 rm -rf server/www/*
 cp -R client/www/ server/www
 
 cd server
-
-# Commit Git
-git status
-read -p "Une touche pour continuer ..."
-git add .
-git commit -am "deploy_$ENV_$(date +%Y-%m-%d_%H-%M-%S)"
-git tag "deploy_$ENV_$(date +%Y-%m-%d_%H-%M-%S)"
 
 # Deploiement
 rsync -rv --exclude-from=rsync.exclude.txt --delete . $REMOTE_USER@vm_retraite:/home/$REMOTE_DIR/retraite
