@@ -39,6 +39,8 @@ fi
 cd ..
 
 # Tag Git
+echo "deploy_$ENV_$(date +%Y-%m-%d_%H-%M-%S)"
+exit
 git tag "deploy_$ENV_$(date +%Y-%m-%d_%H-%M-%S)"
 
 # Copie de l'application client dans le serveur
