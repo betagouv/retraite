@@ -42,7 +42,6 @@ public class RetraiteEngineFactory {
 				 */
 				new CalculateurRegimeAlignes(),
 				new QuestionsLiquidateurBuilder(),
-				new QuestionsComplementairesBuilder(),
 				new DaoFakeData(),
 				new AgeCalculator(
 						dateProvider),
@@ -62,6 +61,7 @@ public class RetraiteEngineFactory {
 														new UserChecklistVarsProvider(),
 														new VariablesReplacerMustache())),
 										new CaisseDao())),
-						dateProvider, new CalculateurRegimeAlignes()));
+						dateProvider, new CalculateurRegimeAlignes()),
+				new DisplayerAdditionalQuestions(new QuestionsComplementairesBuilder()));
 	}
 }

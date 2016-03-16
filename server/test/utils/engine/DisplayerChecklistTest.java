@@ -86,7 +86,7 @@ public class DisplayerChecklistTest {
 		when(userChecklistGeneratorMock.generate(same(userChecklistGenerationData), eq(liquidateurReponse))).thenReturn(userChecklistMock);
 		final RenderData renderData = new RenderData();
 
-		displayerChecklist.display(postData, renderData);
+		displayerChecklist.fillData(postData, renderData);
 
 		assertThat(renderData.hidden_step).isEqualTo("displayCheckList");
 		assertThat(renderData.hidden_complementReponseJsonStr).isEqualTo(complementReponseJsonStr);
@@ -113,7 +113,7 @@ public class DisplayerChecklistTest {
 		postData.hidden_regimes = "CNAV,xxx";
 		final RenderData renderData = new RenderData();
 
-		displayerChecklist.display(postData, renderData);
+		displayerChecklist.fillData(postData, renderData);
 
 		assertThat(renderData.hidden_step).isEqualTo("displayCheckList");
 		assertThat(renderData.userChecklist).isNull();

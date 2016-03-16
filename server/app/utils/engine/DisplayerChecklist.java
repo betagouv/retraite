@@ -35,7 +35,7 @@ public class DisplayerChecklist {
 		this.calculateurRegimeAlignes = calculateurRegimeAlignes;
 	}
 
-	public void display(final PostData data, final RenderData renderData) {
+	public void fillData(final PostData data, final RenderData renderData) {
 		final RegimeAligne[] regimesAlignes = calculateurRegimeAlignes.getRegimesAlignes(data.hidden_regimes);
 		final LiquidateurReponses liquidateurReponses = LiquidateurReponses.retrieveLiquidateurReponsesFromJson(data.hidden_liquidateurReponseJsonStr);
 		final ComplementReponses complementReponses = ComplementReponses.retrieveComplementReponsesFromJson(data.complementReponseJsonStr);
