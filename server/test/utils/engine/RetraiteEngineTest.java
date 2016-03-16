@@ -3,12 +3,12 @@ package utils.engine;
 import static java.util.Arrays.asList;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.fail;
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isA;
 import static org.mockito.Matchers.same;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static utils.JsonUtils.toJson;
 import static utils.engine.data.enums.ComplementQuestionDescriptor.ACCORD_INFO_RELEVE_CARRIERE;
@@ -51,7 +51,6 @@ import utils.engine.intern.UserChecklistGenerationDataBuilder;
 import utils.engine.intern.UserChecklistGenerator;
 import utils.engine.utils.AgeCalculator;
 import utils.engine.utils.AgeLegalEvaluator;
-import utils.engine.utils.DateProvider;
 import utils.wsinforetraite.InfoRetraiteReal;
 import utils.wsinforetraite.InfoRetraiteResult;
 import utils.wsinforetraite.InfoRetraiteResult.InfoRetraiteResultRegime;
@@ -73,10 +72,11 @@ public class RetraiteEngineTest {
 	private InfoRetraiteReal infoRetraiteMock;
 	private CalculateurRegimeAlignes calculateurRegimeAlignesMock;
 	private UserChecklistGenerationDataBuilder userChecklistGenerationDataBuilderMock;
-	private UserChecklistGenerator checklistProviderMock;
+	private UserChecklistGenerator userChecklistGeneratorMock;
 	private QuestionComplementairesEvaluator questionComplementairesEvaluatorMock;
 	private AgeCalculator ageCalculatorMock;
 	private AgeLegalEvaluator ageLegalEvaluatorMock;
+	private DisplayerChecklist displayerChecklist;
 
 	private RetraiteEngine retraiteEngine;
 
@@ -90,7 +90,7 @@ public class RetraiteEngineTest {
 		infoRetraiteMock = mock(InfoRetraiteReal.class);
 		when(infoRetraiteMock.retrieveRegimes("DUPONT", "1 50 12 18 123 456", "1/2/3")).thenReturn(allRegimes);
 
-		checklistProviderMock = mock(UserChecklistGenerator.class);
+		userChecklistGeneratorMock = mock(UserChecklistGenerator.class);
 
 		calculateurRegimeAlignesMock = mock(CalculateurRegimeAlignes.class);
 
@@ -113,11 +113,11 @@ public class RetraiteEngineTest {
 		ageLegalEvaluatorMock = mock(AgeLegalEvaluator.class);
 		when(ageLegalEvaluatorMock.isAgeLegal("1/2/3", "11", "2017")).thenReturn(true);
 
-		final DateProvider dateProviderFake = new DateProviderFake(23, 12, 2015);
+		displayerChecklist = mock(DisplayerChecklist.class);
 
-		retraiteEngine = new RetraiteEngine(departementsProvider, infoRetraiteMock, checklistProviderMock, calculateurRegimeAlignesMock,
-				questionsLiquidateurBuilderMock, questionsComplementairesBuilderMock, daoFakeDataMock, userChecklistGenerationDataBuilderMock,
-				questionComplementairesEvaluatorMock, ageCalculatorMock, ageLegalEvaluatorMock, dateProviderFake);
+		retraiteEngine = new RetraiteEngine(departementsProvider, infoRetraiteMock, calculateurRegimeAlignesMock,
+				questionsLiquidateurBuilderMock, questionsComplementairesBuilderMock, daoFakeDataMock, ageCalculatorMock, ageLegalEvaluatorMock,
+				displayerChecklist);
 	}
 
 	@Test
@@ -471,11 +471,12 @@ public class RetraiteEngineTest {
 		when(questionComplementairesEvaluatorMock.isParcoursDemat(complementReponse)).thenReturn(true);
 		when(userChecklistGenerationDataBuilderMock.build(eq(dateDepart), eq("973"), eq(regimes), eq(regimesAlignes), eq(liquidateurReponse),
 				eq(complementReponse), eq(true), eq(true), eq(true))).thenReturn(userChecklistGenerationData);
-		when(checklistProviderMock.generate(same(userChecklistGenerationData), eq(liquidateurReponse))).thenReturn(userChecklistMock);
+		when(userChecklistGeneratorMock.generate(same(userChecklistGenerationData), eq(liquidateurReponse))).thenReturn(userChecklistMock);
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
 
-		assertThat(renderData.hidden_step).isEqualTo("displayCheckList");
+		verify(displayerChecklist).display(isA(PostData.class), isA(RenderData.class));
+		assertThat(renderData.hidden_step).isNull();
 		assertThat(renderData.hidden_nom).isEqualTo("DUPONT");
 		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
 		assertThat(renderData.hidden_nir).isEqualTo("1 50 12 18 123 456");
@@ -486,33 +487,6 @@ public class RetraiteEngineTest {
 		assertThat(renderData.hidden_departMois).isEqualTo("11");
 		assertThat(renderData.hidden_departAnnee).isEqualTo("2017");
 		assertThat(renderData.hidden_attestationCarriereLongue).isTrue();
-		assertThat(renderData.userChecklist).isSameAs(userChecklistMock);
-		assertThat(renderData.dateGeneration).isEqualTo("23/12/2015");
-	}
-
-	@Test
-	public void step_display_checklist_error() {
-
-		// Step : displayAdditionalQuestions --> displayCheckList
-
-		final UserChecklistGenerationData userChecklistGenerationData = UserChecklistGenerationData.create().get();
-
-		when(calculateurRegimeAlignesMock.getRegimesAlignes(anyString())).thenReturn(new RegimeAligne[] { CNAV });
-		when(userChecklistGenerationDataBuilderMock.build(any(MonthAndYear.class), any(String.class), any(Regime[].class), any(RegimeAligne[].class),
-				any(LiquidateurReponses.class), any(ComplementReponses.class), eq(false), eq(true), eq(true))).thenReturn(userChecklistGenerationData);
-
-		// Simulation Exception
-		doThrow(new RetraiteException("xxx")).when(checklistProviderMock).generate(any(UserChecklistGenerationData.class), any(LiquidateurReponses.class));
-
-		final PostData postData = new PostData();
-		postData.hidden_step = "displayAdditionalQuestions";
-		postData.hidden_regimes = "CNAV,xxx";
-
-		final RenderData renderData = retraiteEngine.processToNextStep(postData);
-
-		assertThat(renderData.hidden_step).isEqualTo("displayCheckList");
-		assertThat(renderData.userChecklist).isNull();
-		assertThat(renderData.errorMessage).isEqualTo("Désolé, impossible de déterminer le régime liquidateur...");
 	}
 
 	// Méthodes privées
@@ -524,7 +498,7 @@ public class RetraiteEngineTest {
 		return departements;
 	}
 
-	private UserChecklist createUserChecklist() {
+	static UserChecklist createUserChecklist() {
 		return new UserChecklist();
 	}
 
@@ -535,14 +509,14 @@ public class RetraiteEngineTest {
 		return questions;
 	}
 
-	private LiquidateurReponses createLiquidateurReponses() {
+	static LiquidateurReponses createLiquidateurReponses() {
 		final LiquidateurReponses liquidateurReponses = new LiquidateurReponses();
 		liquidateurReponses.getReponses().put(CHEF_EXPLOITATION_AGRICOLE, asList(NON));
 		liquidateurReponses.getReponses().put(DERN_ACT_SA_CONJOINT_AUTRE_DOUBLE, asList(CONJOINT));
 		return liquidateurReponses;
 	}
 
-	private ComplementReponses createComplementReponses() {
+	static ComplementReponses createComplementReponses() {
 		final ComplementReponses complementReponses = new ComplementReponses();
 		complementReponses.getReponses().put(CONSULT_RELEVE_CARRIERE, asList(NON));
 		complementReponses.getReponses().put(ACCORD_INFO_RELEVE_CARRIERE, asList(NON));
