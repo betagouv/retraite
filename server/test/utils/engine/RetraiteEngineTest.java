@@ -6,6 +6,7 @@ import static org.junit.Assert.fail;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
+import static org.mockito.Matchers.isNull;
 import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -75,17 +76,18 @@ public class RetraiteEngineTest {
 	private QuestionComplementairesEvaluator questionComplementairesEvaluatorMock;
 	private AgeCalculator ageCalculatorMock;
 	private AgeLegalEvaluator ageLegalEvaluatorMock;
-	private DisplayerAdditionalQuestions displayerAdditionalQuestions;
-	private DisplayerChecklist displayerChecklist;
+	private DisplayerDepartureDate displayerDepartureDateMock;
+	private DisplayerAdditionalQuestions displayerAdditionalQuestionsMock;
+	private DisplayerChecklist displayerChecklistMock;
 
 	private RetraiteEngine retraiteEngine;
 
 	@Before
 	public void setUp() throws Exception {
-		final StepFormsDataProvider departementsProvider = mock(StepFormsDataProvider.class);
-		when(departementsProvider.getListDepartements()).thenReturn(departementsMock);
-		when(departementsProvider.getListMoisAvecPremier()).thenReturn(listeMoisAvecPremierMock);
-		when(departementsProvider.getListAnneesDepart()).thenReturn(listeAnneesDepartMock);
+		final StepFormsDataProvider stepFormsDataProvider = mock(StepFormsDataProvider.class);
+		when(stepFormsDataProvider.getListDepartements()).thenReturn(departementsMock);
+		when(stepFormsDataProvider.getListMoisAvecPremier()).thenReturn(listeMoisAvecPremierMock);
+		when(stepFormsDataProvider.getListAnneesDepart()).thenReturn(listeAnneesDepartMock);
 
 		infoRetraiteMock = mock(InfoRetraiteReal.class);
 		when(infoRetraiteMock.retrieveRegimes("DUPONT", "1 50 12 18 123 456", "1/2/3")).thenReturn(allRegimes);
@@ -110,12 +112,13 @@ public class RetraiteEngineTest {
 		ageLegalEvaluatorMock = mock(AgeLegalEvaluator.class);
 		when(ageLegalEvaluatorMock.isAgeLegal("1/2/3", "11", "2017")).thenReturn(true);
 
-		displayerAdditionalQuestions = mock(DisplayerAdditionalQuestions.class);
-		displayerChecklist = mock(DisplayerChecklist.class);
+		displayerDepartureDateMock = mock(DisplayerDepartureDate.class);
+		displayerAdditionalQuestionsMock = mock(DisplayerAdditionalQuestions.class);
+		displayerChecklistMock = mock(DisplayerChecklist.class);
 
-		retraiteEngine = new RetraiteEngine(departementsProvider, infoRetraiteMock, calculateurRegimeAlignesMock,
-				questionsLiquidateurBuilderMock, daoFakeDataMock, ageCalculatorMock, ageLegalEvaluatorMock, displayerChecklist,
-				displayerAdditionalQuestions);
+		retraiteEngine = new RetraiteEngine(stepFormsDataProvider, infoRetraiteMock, calculateurRegimeAlignesMock,
+				questionsLiquidateurBuilderMock, daoFakeDataMock, ageCalculatorMock, ageLegalEvaluatorMock, displayerDepartureDateMock,
+				displayerAdditionalQuestionsMock, displayerChecklistMock);
 	}
 
 	@Test
@@ -260,14 +263,11 @@ public class RetraiteEngineTest {
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
 
-		assertThat(renderData.hidden_step).isEqualTo("displayDepartureDate");
+		verify(displayerDepartureDateMock).fillData(isA(PostData.class), isA(RenderData.class), eq(allRegimes));
 		assertThat(renderData.hidden_nom).isEqualTo("DUPONT");
 		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
 		assertThat(renderData.hidden_nir).isEqualTo("1 50 12 18 123 456");
 		assertThat(renderData.hidden_departement).isEqualTo("65");
-		assertThat(renderData.hidden_regimes).isEqualTo(allRegimes);
-		assertThat(renderData.listeMoisAvecPremier).isSameAs(listeMoisAvecPremierMock);
-		assertThat(renderData.listeAnneesDepart).isSameAs(listeAnneesDepartMock);
 	}
 
 	@Test
@@ -311,7 +311,7 @@ public class RetraiteEngineTest {
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
 
-		assertThat(renderData.hidden_step).isEqualTo("displayDepartureDate");
+		verify(displayerDepartureDateMock).fillData(isA(PostData.class), isA(RenderData.class), (String) isNull());
 		assertThat(renderData.hidden_nom).isEqualTo("DUPONT");
 		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
 		assertThat(renderData.hidden_nir).isEqualTo("1 50 12 18 123 456");
@@ -396,7 +396,7 @@ public class RetraiteEngineTest {
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
 
-		verify(displayerAdditionalQuestions).fillData(isA(PostData.class), isA(RenderData.class));
+		verify(displayerAdditionalQuestionsMock).fillData(isA(PostData.class), isA(RenderData.class));
 		assertThat(renderData.hidden_nom).isEqualTo("DUPONT");
 		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
 		assertThat(renderData.hidden_nir).isEqualTo("1 50 12 18 123 456");
@@ -427,7 +427,7 @@ public class RetraiteEngineTest {
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
 
-		verify(displayerAdditionalQuestions).fillData(isA(PostData.class), isA(RenderData.class));
+		verify(displayerAdditionalQuestionsMock).fillData(isA(PostData.class), isA(RenderData.class));
 		assertThat(renderData.hidden_nom).isEqualTo("DUPONT");
 		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
 		assertThat(renderData.hidden_nir).isEqualTo("1 50 12 18 123 456");
@@ -471,7 +471,7 @@ public class RetraiteEngineTest {
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
 
-		verify(displayerChecklist).fillData(isA(PostData.class), isA(RenderData.class));
+		verify(displayerChecklistMock).fillData(isA(PostData.class), isA(RenderData.class));
 		assertThat(renderData.hidden_step).isNull();
 		assertThat(renderData.hidden_nom).isEqualTo("DUPONT");
 		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");

@@ -47,7 +47,8 @@ public class RetraiteEngineFactory {
 						dateProvider),
 				new AgeLegalEvaluator(
 						new PeriodeDepartLegalDao()),
-				new DisplayerChecklist(
+				new DisplayerDepartureDate(new StepFormsDataProvider(dateProvider)),
+				new DisplayerAdditionalQuestions(new QuestionsComplementairesBuilder()), new DisplayerChecklist(
 						new QuestionComplementairesEvaluator(),
 						new UserChecklistGenerationDataBuilder(liquidateurReponsesEvaluator),
 						new UserChecklistGenerator(
@@ -61,7 +62,6 @@ public class RetraiteEngineFactory {
 														new UserChecklistVarsProvider(),
 														new VariablesReplacerMustache())),
 										new CaisseDao())),
-						dateProvider, new CalculateurRegimeAlignes()),
-				new DisplayerAdditionalQuestions(new QuestionsComplementairesBuilder()));
+						dateProvider, new CalculateurRegimeAlignes()));
 	}
 }
