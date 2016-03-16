@@ -20,6 +20,7 @@ import static utils.engine.data.enums.QuestionChoiceValue.CONJOINT;
 import static utils.engine.data.enums.QuestionChoiceValue.NON;
 import static utils.engine.data.enums.RegimeAligne.CNAV;
 import static utils.engine.data.enums.RegimeAligne.MSA;
+import static utils.engine.data.enums.RegimeAligne.RSI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +64,6 @@ public class RetraiteEngineTest {
 	private final List<ValueAndText> listeMoisAvecPremierMock = asList(vet("1", "1er Janvier"), vet("12", "1er Décembre"));
 	private final List<String> listeAnneesDepartMock = asList("2015", "2016");
 	private final List<QuestionLiquidateur> questionsLiquidateur = createQuestionsLiquidateur();
-	private final List<QuestionComplementaire> questionsComplementaire = createQuestionsComplementaires();
 	private final LiquidateurReponses liquidateurReponse = createLiquidateurReponses();
 	private final String liquidateurReponseJsonStr = toJson(liquidateurReponse.getReponses());
 	private final ComplementReponses complementReponse = createComplementReponses();
@@ -98,6 +98,7 @@ public class RetraiteEngineTest {
 
 		final QuestionsLiquidateurBuilder questionsLiquidateurBuilderMock = mock(QuestionsLiquidateurBuilder.class);
 		when(questionsLiquidateurBuilderMock.buildQuestions(new RegimeAligne[] { CNAV, MSA })).thenReturn(questionsLiquidateur);
+		when(questionsLiquidateurBuilderMock.buildQuestions(new RegimeAligne[] { CNAV, MSA, RSI })).thenReturn(questionsLiquidateur);
 
 		final DaoFakeData daoFakeDataMock = mock(DaoFakeData.class);
 		when(daoFakeDataMock.findAll()).thenReturn(fakeDataMock);
@@ -271,7 +272,7 @@ public class RetraiteEngineTest {
 	}
 
 	@Test
-	public void step_display_liquidateur_questions() {
+	public void step_display_liquidateur_questions_si_2_regimes() {
 
 		// Step : getUserData --> displayLiquidateurQuestions
 
@@ -283,6 +284,31 @@ public class RetraiteEngineTest {
 		postData.departement = "65";
 
 		when(calculateurRegimeAlignesMock.getRegimesAlignes(anyString())).thenReturn(new RegimeAligne[] { CNAV, MSA });
+
+		final RenderData renderData = retraiteEngine.processToNextStep(postData);
+
+		assertThat(renderData.hidden_step).isEqualTo("displayLiquidateurQuestions");
+		assertThat(renderData.hidden_nom).isEqualTo("DUPONT");
+		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
+		assertThat(renderData.hidden_nir).isEqualTo("1 50 12 18 123 456");
+		assertThat(renderData.hidden_departement).isEqualTo("65");
+		assertThat(renderData.hidden_regimes).isEqualTo(allRegimes);
+		assertThat(renderData.questionsLiquidateur).isSameAs(questionsLiquidateur);
+	}
+
+	@Test
+	public void step_display_liquidateur_questions_si_3_regimes() {
+
+		// Step : getUserData --> displayLiquidateurQuestions
+
+		final PostData postData = new PostData();
+		postData.hidden_step = "getUserData";
+		postData.nom = "DUPONT";
+		postData.naissance = "1/2/3";
+		postData.nir = "1 50 12 18 123 456";
+		postData.departement = "65";
+
+		when(calculateurRegimeAlignesMock.getRegimesAlignes(anyString())).thenReturn(new RegimeAligne[] { CNAV, MSA, RSI });
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
 
