@@ -41,12 +41,12 @@ public class RetraiteEngineFactory {
 				 * new InfoRetraiteReal( new InfoRetraiteDecoder(), new InfoRetraiteConnector(new WsUtils())),
 				 */
 				new CalculateurRegimeAlignes(),
-				new QuestionsLiquidateurBuilder(),
 				new DaoFakeData(),
 				new AgeCalculator(
 						dateProvider),
 				new AgeLegalEvaluator(
 						new PeriodeDepartLegalDao()),
+				new DisplayerLiquidateurQuestions(new QuestionsLiquidateurBuilder()),
 				new DisplayerDepartureDate(new StepFormsDataProvider(dateProvider)),
 				new DisplayerAdditionalQuestions(new QuestionsComplementairesBuilder()), new DisplayerChecklist(
 						new QuestionComplementairesEvaluator(),

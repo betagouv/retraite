@@ -12,7 +12,6 @@ import utils.engine.data.CommonExchangeData;
 import utils.engine.data.RenderData;
 import utils.engine.data.enums.RegimeAligne;
 import utils.engine.intern.CalculateurRegimeAlignes;
-import utils.engine.intern.QuestionsLiquidateurBuilder;
 import utils.engine.intern.StepFormsDataProvider;
 import utils.engine.utils.AgeCalculator;
 import utils.engine.utils.AgeLegalEvaluator;
@@ -24,10 +23,10 @@ public class RetraiteEngine {
 	private final StepFormsDataProvider stepFormsDataProvider;
 	private final InfoRetraite infoRetraite;
 	private final CalculateurRegimeAlignes calculateurRegimeAlignes;
-	private final QuestionsLiquidateurBuilder questionsLiquidateurBuilder;
 	private final DaoFakeData daoFakeData;
 	private final AgeCalculator ageCalculator;
 	private final AgeLegalEvaluator ageLegalEvaluator;
+	private final DisplayerLiquidateurQuestions displayerLiquidateurQuestions;
 	private final DisplayerDepartureDate displayerDepartureDate;
 	private final DisplayerAdditionalQuestions displayerAdditionalQuestions;
 	private final DisplayerChecklist displayerChecklist;
@@ -36,10 +35,10 @@ public class RetraiteEngine {
 			final StepFormsDataProvider stepFormsDataProvider,
 			final InfoRetraite infoRetraite,
 			final CalculateurRegimeAlignes calculateurRegimeAlignes,
-			final QuestionsLiquidateurBuilder questionsLiquidateurBuilder,
 			final DaoFakeData daoFakeData,
 			final AgeCalculator ageCalculator,
 			final AgeLegalEvaluator ageLegalEvaluator,
+			final DisplayerLiquidateurQuestions displayerLiquidateurQuestions,
 			final DisplayerDepartureDate displayerDepartureDate,
 			final DisplayerAdditionalQuestions displayerAdditionalQuestions,
 			final DisplayerChecklist displayerChecklist) {
@@ -47,10 +46,10 @@ public class RetraiteEngine {
 		this.stepFormsDataProvider = stepFormsDataProvider;
 		this.infoRetraite = infoRetraite;
 		this.calculateurRegimeAlignes = calculateurRegimeAlignes;
-		this.questionsLiquidateurBuilder = questionsLiquidateurBuilder;
 		this.daoFakeData = daoFakeData;
 		this.ageCalculator = ageCalculator;
 		this.ageLegalEvaluator = ageLegalEvaluator;
+		this.displayerLiquidateurQuestions = displayerLiquidateurQuestions;
 		this.displayerDepartureDate = displayerDepartureDate;
 		this.displayerAdditionalQuestions = displayerAdditionalQuestions;
 		this.displayerChecklist = displayerChecklist;
@@ -86,7 +85,8 @@ public class RetraiteEngine {
 				return displaySortieAucunRegimeDeBaseAligne(renderData);
 			}
 			if (regimesAlignes.length >= 2) {
-				return displayLiquidateurQuestions(data, renderData, regimes, regimesAlignes);
+				displayerLiquidateurQuestions.fillData(data, renderData, regimes, regimesAlignes);
+				return renderData;
 			}
 			displayerDepartureDate.fillData(data, renderData, regimes);
 		} else if (data.hidden_step.equals("displayLiquidateurQuestions")) {
@@ -172,17 +172,6 @@ public class RetraiteEngine {
 		} catch (final NoSuchFieldException e) {
 			return null;
 		}
-	}
-
-	private RenderData displayLiquidateurQuestions(final PostData data, final RenderData renderData, final String regimes,
-			final RegimeAligne[] regimesAlignes) {
-		renderData.hidden_nom = data.nom;
-		renderData.hidden_naissance = data.naissance;
-		renderData.hidden_nir = data.nir;
-		renderData.hidden_step = "displayLiquidateurQuestions";
-		renderData.hidden_regimes = regimes;
-		renderData.questionsLiquidateur = questionsLiquidateurBuilder.buildQuestions(regimesAlignes);
-		return renderData;
 	}
 
 	private Object firstNotNull(final Object... objects) {

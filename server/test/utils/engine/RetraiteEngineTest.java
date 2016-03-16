@@ -37,7 +37,6 @@ import utils.engine.data.Departement;
 import utils.engine.data.LiquidateurReponses;
 import utils.engine.data.MonthAndYear;
 import utils.engine.data.QuestionComplementaire;
-import utils.engine.data.QuestionLiquidateur;
 import utils.engine.data.RenderData;
 import utils.engine.data.UserChecklist;
 import utils.engine.data.UserChecklistGenerationData;
@@ -46,7 +45,6 @@ import utils.engine.data.enums.Regime;
 import utils.engine.data.enums.RegimeAligne;
 import utils.engine.intern.CalculateurRegimeAlignes;
 import utils.engine.intern.QuestionComplementairesEvaluator;
-import utils.engine.intern.QuestionsLiquidateurBuilder;
 import utils.engine.intern.StepFormsDataProvider;
 import utils.engine.intern.UserChecklistGenerationDataBuilder;
 import utils.engine.intern.UserChecklistGenerator;
@@ -63,7 +61,6 @@ public class RetraiteEngineTest {
 	private final String allRegimes = "CNAV,CCMSA,AGIRC ARRCO";
 	private final List<ValueAndText> listeMoisAvecPremierMock = asList(vet("1", "1er Janvier"), vet("12", "1er Décembre"));
 	private final List<String> listeAnneesDepartMock = asList("2015", "2016");
-	private final List<QuestionLiquidateur> questionsLiquidateur = createQuestionsLiquidateur();
 	private final LiquidateurReponses liquidateurReponse = createLiquidateurReponses();
 	private final String liquidateurReponseJsonStr = toJson(liquidateurReponse.getReponses());
 	private final ComplementReponses complementReponse = createComplementReponses();
@@ -76,6 +73,7 @@ public class RetraiteEngineTest {
 	private QuestionComplementairesEvaluator questionComplementairesEvaluatorMock;
 	private AgeCalculator ageCalculatorMock;
 	private AgeLegalEvaluator ageLegalEvaluatorMock;
+	private DisplayerLiquidateurQuestions displayerLiquidateurQuestionsMock;
 	private DisplayerDepartureDate displayerDepartureDateMock;
 	private DisplayerAdditionalQuestions displayerAdditionalQuestionsMock;
 	private DisplayerChecklist displayerChecklistMock;
@@ -96,10 +94,6 @@ public class RetraiteEngineTest {
 
 		calculateurRegimeAlignesMock = mock(CalculateurRegimeAlignes.class);
 
-		final QuestionsLiquidateurBuilder questionsLiquidateurBuilderMock = mock(QuestionsLiquidateurBuilder.class);
-		when(questionsLiquidateurBuilderMock.buildQuestions(new RegimeAligne[] { CNAV, MSA })).thenReturn(questionsLiquidateur);
-		when(questionsLiquidateurBuilderMock.buildQuestions(new RegimeAligne[] { CNAV, MSA, RSI })).thenReturn(questionsLiquidateur);
-
 		final DaoFakeData daoFakeDataMock = mock(DaoFakeData.class);
 		when(daoFakeDataMock.findAll()).thenReturn(fakeDataMock);
 
@@ -113,12 +107,13 @@ public class RetraiteEngineTest {
 		ageLegalEvaluatorMock = mock(AgeLegalEvaluator.class);
 		when(ageLegalEvaluatorMock.isAgeLegal("1/2/3", "11", "2017")).thenReturn(true);
 
+		displayerLiquidateurQuestionsMock = mock(DisplayerLiquidateurQuestions.class);
 		displayerDepartureDateMock = mock(DisplayerDepartureDate.class);
 		displayerAdditionalQuestionsMock = mock(DisplayerAdditionalQuestions.class);
 		displayerChecklistMock = mock(DisplayerChecklist.class);
 
 		retraiteEngine = new RetraiteEngine(stepFormsDataProvider, infoRetraiteMock, calculateurRegimeAlignesMock,
-				questionsLiquidateurBuilderMock, daoFakeDataMock, ageCalculatorMock, ageLegalEvaluatorMock, displayerDepartureDateMock,
+				daoFakeDataMock, ageCalculatorMock, ageLegalEvaluatorMock, displayerLiquidateurQuestionsMock, displayerDepartureDateMock,
 				displayerAdditionalQuestionsMock, displayerChecklistMock);
 	}
 
@@ -287,13 +282,11 @@ public class RetraiteEngineTest {
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
 
-		assertThat(renderData.hidden_step).isEqualTo("displayLiquidateurQuestions");
+		verify(displayerLiquidateurQuestionsMock).fillData(isA(PostData.class), isA(RenderData.class), isA(String.class), isA(RegimeAligne[].class));
 		assertThat(renderData.hidden_nom).isEqualTo("DUPONT");
 		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
 		assertThat(renderData.hidden_nir).isEqualTo("1 50 12 18 123 456");
 		assertThat(renderData.hidden_departement).isEqualTo("65");
-		assertThat(renderData.hidden_regimes).isEqualTo(allRegimes);
-		assertThat(renderData.questionsLiquidateur).isSameAs(questionsLiquidateur);
 	}
 
 	@Test
@@ -306,19 +299,15 @@ public class RetraiteEngineTest {
 		postData.nom = "DUPONT";
 		postData.naissance = "1/2/3";
 		postData.nir = "1 50 12 18 123 456";
-		postData.departement = "65";
 
 		when(calculateurRegimeAlignesMock.getRegimesAlignes(anyString())).thenReturn(new RegimeAligne[] { CNAV, MSA, RSI });
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
 
-		assertThat(renderData.hidden_step).isEqualTo("displayLiquidateurQuestions");
+		verify(displayerLiquidateurQuestionsMock).fillData(isA(PostData.class), isA(RenderData.class), isA(String.class), isA(RegimeAligne[].class));
 		assertThat(renderData.hidden_nom).isEqualTo("DUPONT");
 		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
 		assertThat(renderData.hidden_nir).isEqualTo("1 50 12 18 123 456");
-		assertThat(renderData.hidden_departement).isEqualTo("65");
-		assertThat(renderData.hidden_regimes).isEqualTo(allRegimes);
-		assertThat(renderData.questionsLiquidateur).isSameAs(questionsLiquidateur);
 	}
 
 	@Test
@@ -522,13 +511,6 @@ public class RetraiteEngineTest {
 
 	static UserChecklist createUserChecklist() {
 		return new UserChecklist();
-	}
-
-	private List<QuestionLiquidateur> createQuestionsLiquidateur() {
-		final ArrayList<QuestionLiquidateur> questions = new ArrayList<>();
-		questions.add(new QuestionLiquidateur());
-		questions.add(new QuestionLiquidateur());
-		return questions;
 	}
 
 	static LiquidateurReponses createLiquidateurReponses() {
