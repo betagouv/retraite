@@ -28,6 +28,7 @@ public class RetraiteEngine {
 	private final DaoFakeData daoFakeData;
 	private final AgeCalculator ageCalculator;
 	private final AgeLegalEvaluator ageLegalEvaluator;
+	private final DisplayerDepartureDate displayerDepartureDate;
 	private final DisplayerAdditionalQuestions displayerAdditionalQuestions;
 	private final DisplayerChecklist displayerChecklist;
 
@@ -39,8 +40,9 @@ public class RetraiteEngine {
 			final DaoFakeData daoFakeData,
 			final AgeCalculator ageCalculator,
 			final AgeLegalEvaluator ageLegalEvaluator,
-			final DisplayerChecklist displayerChecklist,
-			final DisplayerAdditionalQuestions displayerAdditionalQuestions) {
+			final DisplayerDepartureDate displayerDepartureDate,
+			final DisplayerAdditionalQuestions displayerAdditionalQuestions,
+			final DisplayerChecklist displayerChecklist) {
 
 		this.stepFormsDataProvider = stepFormsDataProvider;
 		this.infoRetraite = infoRetraite;
@@ -49,8 +51,9 @@ public class RetraiteEngine {
 		this.daoFakeData = daoFakeData;
 		this.ageCalculator = ageCalculator;
 		this.ageLegalEvaluator = ageLegalEvaluator;
-		this.displayerChecklist = displayerChecklist;
+		this.displayerDepartureDate = displayerDepartureDate;
 		this.displayerAdditionalQuestions = displayerAdditionalQuestions;
+		this.displayerChecklist = displayerChecklist;
 	}
 
 	public RenderData processToNextStep(final PostData data) {
@@ -85,9 +88,9 @@ public class RetraiteEngine {
 			if (regimesAlignes.length == 2) {
 				return displayLiquidateurQuestions(data, renderData, regimes, regimesAlignes);
 			}
-			return displayDepartureDateWithoutLiquidateurQuestions(data, renderData, regimes);
+			displayerDepartureDate.fillData(data, renderData, regimes);
 		} else if (data.hidden_step.equals("displayLiquidateurQuestions")) {
-			return displayDepartureDateWithLiquidateurQuestions(renderData, data);
+			displayerDepartureDate.fillData(data, renderData, null);
 		} else if (data.hidden_step.equals("displayDepartureDate")) {
 			if (data.departInconnu) {
 				return displaySortieDepartInconnu(renderData);
@@ -179,27 +182,6 @@ public class RetraiteEngine {
 		renderData.hidden_step = "displayLiquidateurQuestions";
 		renderData.hidden_regimes = regimes;
 		renderData.questionsLiquidateur = questionsLiquidateurBuilder.buildQuestions(regimesAlignes);
-		return renderData;
-	}
-
-	private RenderData displayDepartureDateWithLiquidateurQuestions(final RenderData renderData, final PostData data) {
-		return displayDepartureDate(data, renderData, data.liquidateurReponseJsonStr, null);
-	}
-
-	private RenderData displayDepartureDateWithoutLiquidateurQuestions(final PostData data, final RenderData renderData, final String regimes) {
-		return displayDepartureDate(data, renderData, null, regimes);
-	}
-
-	private RenderData displayDepartureDate(final PostData data, final RenderData renderData, final String liquidateurReponseJsonStr, final String regimes) {
-		renderData.hidden_step = "displayDepartureDate";
-		if (liquidateurReponseJsonStr != null) {
-			renderData.hidden_liquidateurReponseJsonStr = liquidateurReponseJsonStr;
-		}
-		if (regimes != null) {
-			renderData.hidden_regimes = regimes;
-		}
-		renderData.listeMoisAvecPremier = stepFormsDataProvider.getListMoisAvecPremier();
-		renderData.listeAnneesDepart = stepFormsDataProvider.getListAnneesDepart();
 		return renderData;
 	}
 
