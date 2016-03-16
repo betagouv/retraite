@@ -12,7 +12,6 @@ import utils.engine.data.CommonExchangeData;
 import utils.engine.data.RenderData;
 import utils.engine.data.enums.RegimeAligne;
 import utils.engine.intern.CalculateurRegimeAlignes;
-import utils.engine.intern.QuestionsComplementairesBuilder;
 import utils.engine.intern.QuestionsLiquidateurBuilder;
 import utils.engine.intern.StepFormsDataProvider;
 import utils.engine.utils.AgeCalculator;
@@ -27,9 +26,9 @@ public class RetraiteEngine {
 	private final CalculateurRegimeAlignes calculateurRegimeAlignes;
 	private final QuestionsLiquidateurBuilder questionsLiquidateurBuilder;
 	private final DaoFakeData daoFakeData;
-	private final QuestionsComplementairesBuilder questionsComplementairesBuilder;
 	private final AgeCalculator ageCalculator;
 	private final AgeLegalEvaluator ageLegalEvaluator;
+	private final DisplayerAdditionalQuestions displayerAdditionalQuestions;
 	private final DisplayerChecklist displayerChecklist;
 
 	public RetraiteEngine(
@@ -37,21 +36,21 @@ public class RetraiteEngine {
 			final InfoRetraite infoRetraite,
 			final CalculateurRegimeAlignes calculateurRegimeAlignes,
 			final QuestionsLiquidateurBuilder questionsLiquidateurBuilder,
-			final QuestionsComplementairesBuilder questionsComplementairesBuilder,
 			final DaoFakeData daoFakeData,
 			final AgeCalculator ageCalculator,
 			final AgeLegalEvaluator ageLegalEvaluator,
-			final DisplayerChecklist displayerChecklist) {
+			final DisplayerChecklist displayerChecklist,
+			final DisplayerAdditionalQuestions displayerAdditionalQuestions) {
 
 		this.stepFormsDataProvider = stepFormsDataProvider;
 		this.infoRetraite = infoRetraite;
 		this.calculateurRegimeAlignes = calculateurRegimeAlignes;
 		this.questionsLiquidateurBuilder = questionsLiquidateurBuilder;
-		this.questionsComplementairesBuilder = questionsComplementairesBuilder;
 		this.daoFakeData = daoFakeData;
 		this.ageCalculator = ageCalculator;
 		this.ageLegalEvaluator = ageLegalEvaluator;
 		this.displayerChecklist = displayerChecklist;
+		this.displayerAdditionalQuestions = displayerAdditionalQuestions;
 	}
 
 	public RenderData processToNextStep(final PostData data) {
@@ -96,15 +95,16 @@ public class RetraiteEngine {
 			if (!ageLegalEvaluator.isAgeLegal(data.hidden_naissance, data.departMois, data.departAnnee)) {
 				return displayQuestionCarriereLongue(renderData, data.departMois, data.departAnnee);
 			}
-			return displayAdditionalQuestions(renderData, data.departMois, data.departAnnee);
+			displayerAdditionalQuestions.fillData(data, renderData);
 		} else if (data.hidden_step.equals("displayQuestionCarriereLongue")) {
-			return displayAdditionalQuestionsAvecCarriereLongue(data, renderData);
+			renderData.hidden_attestationCarriereLongue = true;
+			displayerAdditionalQuestions.fillData(data, renderData);
 		} else if (data.hidden_step.equals("displayAdditionalQuestions") || data.hidden_step.equals("displayCheckList")) {
-			displayerChecklist.display(data, renderData);
-			return renderData;
+			displayerChecklist.fillData(data, renderData);
 		} else {
 			throw new RetraiteException("Situation anormale : l'étape '" + data.hidden_step + "' pour le traitement");
 		}
+		return renderData;
 	}
 
 	private RenderData displaySortieTropJeune(final RenderData renderData) {
@@ -210,19 +210,6 @@ public class RetraiteEngine {
 			}
 		}
 		return null;
-	}
-
-	private RenderData displayAdditionalQuestionsAvecCarriereLongue(final PostData data, final RenderData renderData) {
-		renderData.hidden_attestationCarriereLongue = true;
-		return displayAdditionalQuestions(renderData, data.hidden_departMois, data.hidden_departAnnee);
-	}
-
-	private RenderData displayAdditionalQuestions(final RenderData renderData, final String departMois, final String departAnnee) {
-		renderData.hidden_step = "displayAdditionalQuestions";
-		renderData.hidden_departMois = departMois;
-		renderData.hidden_departAnnee = departAnnee;
-		renderData.questionsComplementaires = questionsComplementairesBuilder.buildQuestions();
-		return renderData;
 	}
 
 }
