@@ -85,7 +85,7 @@ public class RetraiteEngine {
 			if (regimesAlignes.length == 0) {
 				return displaySortieAucunRegimeDeBaseAligne(renderData);
 			}
-			if (regimesAlignes.length == 2) {
+			if (regimesAlignes.length >= 2) {
 				return displayLiquidateurQuestions(data, renderData, regimes, regimesAlignes);
 			}
 			displayerDepartureDate.fillData(data, renderData, regimes);
