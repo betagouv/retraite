@@ -10,7 +10,6 @@ import utils.engine.intern.ChecklistNameSelector;
 import utils.engine.intern.LiquidateurReponsesEvaluator;
 import utils.engine.intern.QuestionComplementairesEvaluator;
 import utils.engine.intern.QuestionsComplementairesBuilder;
-import utils.engine.intern.QuestionsLiquidateurBuilder;
 import utils.engine.intern.StepFormsDataProvider;
 import utils.engine.intern.UserChecklistChapitreComputer;
 import utils.engine.intern.UserChecklistChapitreFilter;
@@ -46,7 +45,7 @@ public class RetraiteEngineFactory {
 						dateProvider),
 				new AgeLegalEvaluator(
 						new PeriodeDepartLegalDao()),
-				new DisplayerLiquidateurQuestions(new QuestionsLiquidateurBuilder()),
+				new DisplayerLiquidateurQuestions(),
 				new DisplayerDepartureDate(new StepFormsDataProvider(dateProvider)),
 				new DisplayerAdditionalQuestions(new QuestionsComplementairesBuilder()), new DisplayerChecklist(
 						new QuestionComplementairesEvaluator(),

@@ -1,28 +1,28 @@
-#{list items:_questions, as:'questionLiquidateur'}
-	<div class="contenu question ${questionLiquidateur_isFirst ? 'marg-top' : ''} col-sm-12"
-		#{if questionLiquidateur.condition}
-			condition-key='${questionLiquidateur.condition.key}'
-			condition-value='${questionLiquidateur.condition.value}'
+#{list items:_questions, as:'question'}
+	<div class="contenu question ${question_isFirst ? 'marg-top' : ''} col-sm-12"
+		#{if question.condition}
+			condition-key='${question.condition.key}'
+			condition-value='${question.condition.value}'
 		#{/if}
-		#{if !questionLiquidateur_isFirst}
+		#{if !question_isFirst}
 			style='display: none;'
 		#{/if}
 	>
 		<div class="col-sm-1"></div>
 		<div class='col-sm-10'>
-		   	<h2 class="titre">${questionLiquidateur.type.title}</h2>
-			#{if questionLiquidateur.type.questionType.toString() != "SIMPLE"}
+		   	<h2 class="titre">${question.type.title}</h2>
+			#{if question.type.questionType.toString() != "SIMPLE"}
 	   			<div class='question-infos'>
 	   				<h4>Plusieurs choix possibles</h4>
 	   			</div>
 			#{/if}
-			#{list items:questionLiquidateur.type.questionChoices, as:'choice'}
+			#{list items:question.type.questionChoices, as:'choice'}
 				<div class='choice'>
-					#{if questionLiquidateur.type.questionType.toString() == "SIMPLE"}
-			   			<label class='label-for-question-choice'><input type="radio" class='questions-choice' condition-key="${questionLiquidateur.type}" name="reponses[${questionLiquidateur.type}]" value="${choice.value}" />${choice.text}</label>
+					#{if question.type.questionType.toString() == "SIMPLE"}
+			   			<label class='label-for-question-choice'><input type="radio" class='questions-choice' condition-key="${question.type}" name="reponses[${question.type}]" value="${choice.value}" />${choice.text}</label>
 					#{/if}
 					#{else}
-			   			<label class='label-for-question-choice'><input type="checkbox" class='questions-choice' condition-key="${questionLiquidateur.type}" value="${choice.value}" />${choice.text}</label>
+			   			<label class='label-for-question-choice'><input type="checkbox" class='questions-choice' condition-key="${question.type}" value="${choice.value}" />${choice.text}</label>
 					#{/else}
 				</div>
 			#{/list}
