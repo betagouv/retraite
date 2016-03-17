@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_A;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_B;
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_C;
 import static utils.engine.data.enums.QuestionChoiceValue.CONJOINT_INDEP;
 import static utils.engine.data.enums.QuestionChoiceValue.DEUX_ACTIVITES;
 import static utils.engine.data.enums.QuestionChoiceValue.INDEP;
@@ -16,6 +17,7 @@ import static utils.engine.data.enums.QuestionChoiceValue.SALARIE;
 import static utils.engine.data.enums.RegimeAligne.CNAV;
 import static utils.engine.data.enums.RegimeAligne.MSA;
 import static utils.engine.data.enums.RegimeAligne.RSI;
+import static utils.engine.data.enums.UserStatus.STATUS_NSA;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +26,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import controllers.data.PostData;
-import utils.engine.data.QuestionASolved;
 import utils.engine.data.QuestionChoice;
+import utils.engine.data.RegimeLiquidateurAndUserStatus;
 import utils.engine.data.RenderData;
 import utils.engine.data.enums.QuestionChoiceValue;
 import utils.engine.data.enums.RegimeAligne;
@@ -38,6 +40,7 @@ public class DisplayerLiquidateurQuestionsTest {
 	private final String regimes = "CNAV,CCMSA,AGIRC ARRCO";
 
 	private SolverQuestionA solverQuestionAMock;
+	private SolverQuestionB solverQuestionBMock;
 
 	private DisplayerLiquidateurQuestions displayerLiquidateurQuestions;
 
@@ -48,9 +51,13 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		solverQuestionAMock = mock(SolverQuestionA.class);
 		when(solverQuestionAMock.solve(any(RegimeAligne[].class), anyString()))
-				.thenReturn(new QuestionASolved());
+				.thenReturn(new RegimeLiquidateurAndUserStatus());
 
-		displayerLiquidateurQuestions = new DisplayerLiquidateurQuestions(solverQuestionAMock);
+		solverQuestionBMock = mock(SolverQuestionB.class);
+		when(solverQuestionBMock.solve(any(RegimeAligne[].class), anyString()))
+				.thenReturn(new RegimeLiquidateurAndUserStatus());
+
+		displayerLiquidateurQuestions = new DisplayerLiquidateurQuestions(solverQuestionAMock, solverQuestionBMock);
 	}
 
 	@Test
@@ -98,17 +105,17 @@ public class DisplayerLiquidateurQuestionsTest {
 		// Step : QUESTION_A --> QUESTION_B avec DEUX_ACTIVITES
 
 		postData.hidden_liquidateurStep = "QUESTION_A";
-		postData.liquidateurReponseJsonStr = "[\"INDEP_AVANT_73\"]";
+		postData.liquidateurReponseJsonStr = "[\"NSA\"]";
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { MSA, RSI };
 
 		when(solverQuestionAMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
-				.thenReturn(new QuestionASolved(RegimeAligne.MSA, UserStatus.NSA));
+				.thenReturn(new RegimeLiquidateurAndUserStatus(null, STATUS_NSA));
 
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
 
 		assertThat(renderData.hidden_liquidateurStep).isEqualTo("QUESTION_B");
-		assertThat(renderData.hidden_liquidateur).isEqualTo("MSA");
-		assertThat(renderData.hidden_userStatus).isEqualTo("NSA");
+		assertThat(renderData.hidden_liquidateur).isNull();
+		assertThat(renderData.hidden_userStatus).isEqualTo("STATUS_NSA");
 		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_B);
 		assertThat(choicesValues(renderData.questionLiquidateur.choices)).containsOnly(NSA, SA, INDEP, CONJOINT_INDEP, DEUX_ACTIVITES);
 	}
@@ -129,9 +136,51 @@ public class DisplayerLiquidateurQuestionsTest {
 	}
 
 	@Test
-	public void test_no_more_question() {
+	public void test_question_C_apres_question_A_si_RSI_et_regime_liquidateur_determine() {
+
+		// Step : QUESTION_A --> QUESTION_C (= pas de QUESTION_B si régime liquidateur déterminé)
+
+		postData.hidden_liquidateurStep = "QUESTION_A";
+		postData.liquidateurReponseJsonStr = "[\"NSA\"]";
+		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { RSI };
+
+		when(solverQuestionAMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
+				.thenReturn(new RegimeLiquidateurAndUserStatus(RegimeAligne.MSA, UserStatus.STATUS_NSA));
+
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+
+		assertThat(renderData.hidden_liquidateurStep).isEqualTo("QUESTION_C");
+		assertThat(renderData.hidden_liquidateur).isEqualTo("MSA");
+		assertThat(renderData.hidden_userStatus).isEqualTo("STATUS_NSA");
+		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_C);
+		assertThat(choicesValues(renderData.questionLiquidateur.choices)).isNull();
+	}
+
+	@Test
+	public void test_question_C_apres_question_B_si_RSI() {
+
+		// Step : QUESTION_B --> QUESTION_C
 
 		postData.hidden_liquidateurStep = "QUESTION_B";
+		postData.liquidateurReponseJsonStr = "[\"INDEP\"]";
+		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { RSI };
+
+		when(solverQuestionBMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
+				.thenReturn(new RegimeLiquidateurAndUserStatus(RegimeAligne.RSI, UserStatus.STATUS_CHEF));
+
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+
+		assertThat(renderData.hidden_liquidateurStep).isEqualTo("QUESTION_C");
+		assertThat(renderData.hidden_liquidateur).isEqualTo("RSI");
+		assertThat(renderData.hidden_userStatus).isEqualTo("STATUS_CHEF");
+		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_C);
+		assertThat(choicesValues(renderData.questionLiquidateur.choices)).isNull();
+	}
+
+	@Test
+	public void test_no_more_question() {
+
+		postData.hidden_liquidateurStep = "QUESTION_C";
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { CNAV };
 
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
@@ -140,6 +189,9 @@ public class DisplayerLiquidateurQuestionsTest {
 	}
 
 	private List<QuestionChoiceValue> choicesValues(final List<QuestionChoice> choices) {
+		if (choices == null) {
+			return null;
+		}
 		final ArrayList<QuestionChoiceValue> choicesValues = new ArrayList<>();
 		for (final QuestionChoice questionChoice : choices) {
 			choicesValues.add(questionChoice.getValue());

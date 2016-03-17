@@ -4,12 +4,12 @@ import static org.fest.assertions.Assertions.assertThat;
 import static utils.engine.data.enums.RegimeAligne.CNAV;
 import static utils.engine.data.enums.RegimeAligne.MSA;
 import static utils.engine.data.enums.RegimeAligne.RSI;
-import static utils.engine.data.enums.UserStatus.NSA;
+import static utils.engine.data.enums.UserStatus.STATUS_NSA;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import utils.engine.data.QuestionASolved;
+import utils.engine.data.RegimeLiquidateurAndUserStatus;
 import utils.engine.data.enums.QuestionChoiceValue;
 import utils.engine.data.enums.RegimeAligne;
 import utils.engine.data.enums.UserStatus;
@@ -34,7 +34,7 @@ public class SolverQuestionATest {
 				.andAnswer(QuestionChoiceValue.NSA)
 				.callSolver()
 				.assertLiquidateurIs(CNAV)
-				.andStateIs(NSA);
+				.andStateIs(STATUS_NSA);
 
 		// Réponse E2 = SA
 
@@ -64,7 +64,7 @@ public class SolverQuestionATest {
 				.andAnswer(QuestionChoiceValue.NSA)
 				.callSolver()
 				.assertLiquidateurIs(RegimeAligne.RSI)
-				.andStateIs(UserStatus.NSA);
+				.andStateIs(UserStatus.STATUS_NSA);
 
 		// Réponse E2 = SA
 
@@ -94,7 +94,7 @@ public class SolverQuestionATest {
 				.andAnswer(QuestionChoiceValue.NSA)
 				.callSolver()
 				.assertLiquidateurIs(null)
-				.andStateIs(UserStatus.NSA);
+				.andStateIs(UserStatus.STATUS_NSA);
 
 		// Réponse E2 = SA
 
@@ -121,7 +121,7 @@ public class SolverQuestionATest {
 
 		private final RegimeAligne[] regimes;
 		private String liquidateurReponseJsonStr;
-		private QuestionASolved solved;
+		private RegimeLiquidateurAndUserStatus solved;
 
 		public TestContext(final RegimeAligne[] regimes) {
 			this.regimes = regimes;
