@@ -25,4 +25,9 @@ public class RegimeLiquidateurAndUserStatus {
 		return status;
 	}
 
+	@Override
+	public String toString() {
+		return "RegimeLiquidateurAndUserStatus[regimeLiquidateur=" + regimeLiquidateur + ", status=" + status + "]";
+	}
+
 }

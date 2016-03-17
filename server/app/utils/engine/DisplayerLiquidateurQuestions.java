@@ -7,7 +7,9 @@ import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_C;
 import static utils.engine.data.enums.QuestionChoiceValue.CONJOINT_INDEP;
 import static utils.engine.data.enums.QuestionChoiceValue.DEUX_ACTIVITES;
 import static utils.engine.data.enums.QuestionChoiceValue.INDEP;
+import static utils.engine.data.enums.QuestionChoiceValue.INVALIDITE_RSI;
 import static utils.engine.data.enums.QuestionChoiceValue.NSA;
+import static utils.engine.data.enums.QuestionChoiceValue.PENIBILITE;
 import static utils.engine.data.enums.QuestionChoiceValue.SA;
 import static utils.engine.data.enums.QuestionChoiceValue.SALARIE;
 import static utils.engine.data.enums.RegimeAligne.CNAV;
@@ -58,23 +60,30 @@ public class DisplayerLiquidateurQuestions {
 		}
 		if (isBefore(previousStep, QUESTION_B) && renderData.hidden_liquidateur == null) {
 			renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_B;
-			renderData.questionLiquidateur.choices = generateSpecificChoicesForQuestionB(QUESTION_B, regimesAlignes);
+			renderData.questionLiquidateur.choices = generateSpecificChoicesForQuestionB(regimesAlignes);
 			return;
 		}
 		if (previousStep == QUESTION_B) {
-			final RegimeLiquidateurAndUserStatus solved = solverQuestionB.solve(regimesAlignes, data.liquidateurReponseJsonStr);
+			final RegimeLiquidateurAndUserStatus solved = solverQuestionB.solve(data.liquidateurReponseJsonStr);
 			renderData.hidden_liquidateur = toStringOrNull(solved.getRegimeLiquidateur());
 			renderData.hidden_userStatus = toStringOrNull(solved.getStatus());
 		}
 		if (isBefore(previousStep, QUESTION_C)) {
 			renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_C;
+			if (isRsiLiquidateur(data, renderData)) {
+				renderData.questionLiquidateur.choices = generateSpecificChoicesForQuestionC();
+			}
 			return;
 		}
 
 		// Sinon, on ne fait rien, renderData.hidden_liquidateurStep=null indique qu'il n'y a plus de questions
 	}
 
-	private List<QuestionChoice> generateSpecificChoicesForQuestionB(final LiquidateurQuestionDescriptor2 questionDesc, final RegimeAligne[] regimesAlignes) {
+	private boolean isRsiLiquidateur(final PostData data, final RenderData renderData) {
+		return RSI.toString().equals(data.hidden_liquidateur) || RSI.toString().equals(renderData.hidden_liquidateur);
+	}
+
+	private List<QuestionChoice> generateSpecificChoicesForQuestionB(final RegimeAligne[] regimesAlignes) {
 		if (contains(regimesAlignes, MSA, RSI, CNAV)) {
 			// Pas de filtre
 			return null;
@@ -82,22 +91,29 @@ public class DisplayerLiquidateurQuestions {
 		final List<QuestionChoice> choices = new ArrayList<>();
 		int cumulableChoices = 0;
 		if (contains(regimesAlignes, CNAV)) {
-			choices.add(questionDesc.getChoice(SALARIE));
+			choices.add(QUESTION_B.getChoice(SALARIE));
 			cumulableChoices += 1;
 		}
 		if (contains(regimesAlignes, RSI)) {
-			choices.add(questionDesc.getChoice(INDEP));
-			choices.add(questionDesc.getChoice(CONJOINT_INDEP));
+			choices.add(QUESTION_B.getChoice(INDEP));
+			choices.add(QUESTION_B.getChoice(CONJOINT_INDEP));
 			cumulableChoices += 1;
 		}
 		if (contains(regimesAlignes, MSA)) {
-			choices.add(questionDesc.getChoice(NSA));
-			choices.add(questionDesc.getChoice(SA));
+			choices.add(QUESTION_B.getChoice(NSA));
+			choices.add(QUESTION_B.getChoice(SA));
 			cumulableChoices += 2;
 		}
 		if (cumulableChoices >= 2) {
-			choices.add(questionDesc.getChoice(DEUX_ACTIVITES));
+			choices.add(QUESTION_B.getChoice(DEUX_ACTIVITES));
 		}
+		return choices;
+	}
+
+	private List<QuestionChoice> generateSpecificChoicesForQuestionC() {
+		final List<QuestionChoice> choices = new ArrayList<>();
+		choices.add(QUESTION_C.getChoice(INVALIDITE_RSI));
+		choices.add(QUESTION_C.getChoice(PENIBILITE));
 		return choices;
 	}
 

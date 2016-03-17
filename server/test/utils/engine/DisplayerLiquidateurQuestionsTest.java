@@ -11,7 +11,9 @@ import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_C;
 import static utils.engine.data.enums.QuestionChoiceValue.CONJOINT_INDEP;
 import static utils.engine.data.enums.QuestionChoiceValue.DEUX_ACTIVITES;
 import static utils.engine.data.enums.QuestionChoiceValue.INDEP;
+import static utils.engine.data.enums.QuestionChoiceValue.INVALIDITE_RSI;
 import static utils.engine.data.enums.QuestionChoiceValue.NSA;
+import static utils.engine.data.enums.QuestionChoiceValue.PENIBILITE;
 import static utils.engine.data.enums.QuestionChoiceValue.SA;
 import static utils.engine.data.enums.QuestionChoiceValue.SALARIE;
 import static utils.engine.data.enums.RegimeAligne.CNAV;
@@ -54,7 +56,7 @@ public class DisplayerLiquidateurQuestionsTest {
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
 
 		solverQuestionBMock = mock(SolverQuestionB.class);
-		when(solverQuestionBMock.solve(any(RegimeAligne[].class), anyString()))
+		when(solverQuestionBMock.solve(anyString()))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
 
 		displayerLiquidateurQuestions = new DisplayerLiquidateurQuestions(solverQuestionAMock, solverQuestionBMock);
@@ -81,7 +83,7 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		assertThat(renderData.hidden_liquidateurStep).isEqualTo("QUESTION_A");
 		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_A);
-		assertThat(renderData.questionLiquidateur.choices).isNull();
+		assertThat(choicesValues(renderData.questionLiquidateur.choices)).isNull();
 	}
 
 	@Test
@@ -165,7 +167,49 @@ public class DisplayerLiquidateurQuestionsTest {
 		postData.liquidateurReponseJsonStr = "[\"INDEP\"]";
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { RSI };
 
-		when(solverQuestionBMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
+		when(solverQuestionBMock.solve(postData.liquidateurReponseJsonStr))
+				.thenReturn(new RegimeLiquidateurAndUserStatus());
+
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+
+		assertThat(renderData.hidden_liquidateurStep).isEqualTo("QUESTION_C");
+		assertThat(renderData.hidden_liquidateur).isNull();
+		assertThat(renderData.hidden_userStatus).isNull();
+		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_C);
+		assertThat(choicesValues(renderData.questionLiquidateur.choices)).isNull();
+	}
+
+	@Test
+	public void test_question_C_apres_question_B_avec_filtre_si_RSI_liquidateur_depuis_ancienne_question() {
+
+		// Step : QUESTION_B --> QUESTION_C
+
+		postData.hidden_liquidateurStep = "QUESTION_B";
+		postData.liquidateurReponseJsonStr = "[\"INDEP\"]";
+		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { RSI };
+		postData.hidden_liquidateur = "RSI";
+
+		when(solverQuestionBMock.solve(postData.liquidateurReponseJsonStr))
+				.thenReturn(new RegimeLiquidateurAndUserStatus());
+
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+
+		assertThat(renderData.hidden_liquidateurStep).isEqualTo("QUESTION_C");
+		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_C);
+		assertThat(choicesValues(renderData.questionLiquidateur.choices)).containsOnly(INVALIDITE_RSI, PENIBILITE);
+	}
+
+	@Test
+	public void test_question_C_apres_question_B_avec_filtre_si_RSI_liquidateur_depuis_derniere_question() {
+
+		// Step : QUESTION_B --> QUESTION_C
+
+		postData.hidden_liquidateurStep = "QUESTION_B";
+		postData.liquidateurReponseJsonStr = "[\"INDEP\"]";
+		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { RSI };
+		postData.hidden_liquidateur = null;
+
+		when(solverQuestionBMock.solve(postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus(RegimeAligne.RSI, UserStatus.STATUS_CHEF));
 
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
@@ -174,7 +218,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		assertThat(renderData.hidden_liquidateur).isEqualTo("RSI");
 		assertThat(renderData.hidden_userStatus).isEqualTo("STATUS_CHEF");
 		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_C);
-		assertThat(choicesValues(renderData.questionLiquidateur.choices)).isNull();
+		assertThat(choicesValues(renderData.questionLiquidateur.choices)).containsOnly(INVALIDITE_RSI, PENIBILITE);
 	}
 
 	@Test

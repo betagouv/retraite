@@ -1,8 +1,14 @@
 package utils.engine.data.enums;
 
+import static utils.engine.data.enums.QuestionChoiceValue.CONJOINT_INDEP;
+import static utils.engine.data.enums.QuestionChoiceValue.DEUX_ACTIVITES;
+import static utils.engine.data.enums.QuestionChoiceValue.INDEP;
 import static utils.engine.data.enums.QuestionChoiceValue.INDEP_AVANT_73;
 import static utils.engine.data.enums.QuestionChoiceValue.INVALIDITE_RSI;
+import static utils.engine.data.enums.QuestionChoiceValue.NSA;
 import static utils.engine.data.enums.QuestionChoiceValue.PENIBILITE;
+import static utils.engine.data.enums.QuestionChoiceValue.SA;
+import static utils.engine.data.enums.QuestionChoiceValue.SALARIE;
 import static utils.engine.data.enums.QuestionType.MULTIPLE;
 import static utils.engine.data.enums.QuestionType.SIMPLE;
 
@@ -15,20 +21,20 @@ public enum LiquidateurQuestionDescriptor2 {
 	QUESTION_A(
 		"Au cours de votre carrière, avez-vous été ?",
 			SIMPLE,
-			choice("Chef d'exploitation ou d'entreprise agricole", QuestionChoiceValue.NSA),
-			choice("Salarié agricole", QuestionChoiceValue.SA),
-			choice("Les deux", QuestionChoiceValue.DEUX_ACTIVITES)
+			choice("Chef d'exploitation ou d'entreprise agricole", NSA),
+			choice("Salarié agricole", SA),
+			choice("Les deux", DEUX_ACTIVITES)
 	),
 
 	QUESTION_B(
 		"Quelle est votre activité actuelle ou la dernière activité que vous avez exercée ?",
 			SIMPLE,
-			choice("Salarié (non agricole)", QuestionChoiceValue.SALARIE),
-			choice("Chef d'exploitation", QuestionChoiceValue.NSA),
-			choice("Salarié agricole", QuestionChoiceValue.SA),
-			choice("Artisan ou commerçant", QuestionChoiceValue.INDEP),
-			choice("Conjoint collaborateur d'un artisan commerçant", QuestionChoiceValue.CONJOINT_INDEP),
-			choice("Deux activités en même temps", QuestionChoiceValue.DEUX_ACTIVITES)
+			choice("Salarié (non agricole)", SALARIE),
+			choice("Chef d'exploitation", NSA),
+			choice("Salarié agricole", SA),
+			choice("Artisan ou commerçant", INDEP),
+			choice("Conjoint collaborateur d'un artisan commerçant", CONJOINT_INDEP),
+			choice("Deux activités en même temps", DEUX_ACTIVITES)
 	),
 
 	QUESTION_C(
