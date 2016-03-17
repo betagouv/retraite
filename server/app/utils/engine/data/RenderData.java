@@ -18,7 +18,9 @@ public class RenderData extends CommonExchangeData {
 	// Temporaire pour afficher les DataRegime tant qu'on ne peut pas interroger le WS info-retraite
 	public List<FakeData> fakeData;
 
-	public List<QuestionLiquidateur> questionsLiquidateur;
+	// public List<QuestionLiquidateur> questionsLiquidateur;
+
+	public QuestionLiquidateur2 questionLiquidateur = new QuestionLiquidateur2();
 
 	public List<QuestionComplementaire> questionsComplementaires;
 

@@ -66,7 +66,7 @@ public class RetraiteEngine {
 			return displayWelcome(renderData);
 		}
 
-		copyHiddenFields(renderData, data);
+		copyHiddenFields(data, renderData);
 
 		if (data.hidden_step.equals("welcome")) {
 			return displayGetUserData(renderData);
@@ -90,7 +90,11 @@ public class RetraiteEngine {
 			}
 			displayerDepartureDate.fillData(data, renderData, regimes);
 		} else if (data.hidden_step.equals("displayLiquidateurQuestions")) {
-			displayerDepartureDate.fillData(data, renderData, null);
+			final RegimeAligne[] regimesAlignes = calculateurRegimeAlignes.getRegimesAlignes(data.hidden_regimes);
+			displayerLiquidateurQuestions.fillData(data, renderData, data.hidden_regimes, regimesAlignes);
+			if (renderData.hidden_liquidateurStep == null) {
+				displayerDepartureDate.fillData(data, renderData, null);
+			}
 		} else if (data.hidden_step.equals("displayDepartureDate")) {
 			if (data.departInconnu) {
 				return displaySortieDepartInconnu(renderData);
@@ -149,11 +153,11 @@ public class RetraiteEngine {
 		return renderData;
 	}
 
-	private void copyHiddenFields(final RenderData renderData, final PostData data) {
+	private void copyHiddenFields(final PostData data, final RenderData renderData) {
 		try {
 			for (final Field field : CommonExchangeData.class.getFields()) {
 				final String fieldName = field.getName();
-				if (fieldName.startsWith("hidden_") && !fieldName.equals("hidden_step")) {
+				if (fieldName.startsWith("hidden_") && !fieldName.toLowerCase().contains("step")) {
 					final Object hiddenData = field.get(data);
 					final Object noHiddenData = tryToGetNoHiddenData(data, fieldName);
 					field.set(renderData, firstNotNull(noHiddenData, hiddenData));

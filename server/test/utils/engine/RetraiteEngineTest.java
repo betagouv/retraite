@@ -3,13 +3,16 @@ package utils.engine;
 import static java.util.Arrays.asList;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Matchers.isNull;
 import static org.mockito.Matchers.same;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 import static utils.JsonUtils.toJson;
 import static utils.engine.data.enums.ComplementQuestionDescriptor.ACCORD_INFO_RELEVE_CARRIERE;
@@ -27,6 +30,8 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import controllers.data.PostData;
 import models.FakeData;
@@ -302,12 +307,48 @@ public class RetraiteEngineTest {
 
 		when(calculateurRegimeAlignesMock.getRegimesAlignes(anyString())).thenReturn(new RegimeAligne[] { CNAV, MSA, RSI });
 
+		retraiteEngine.processToNextStep(postData);
+
+		verify(displayerLiquidateurQuestionsMock).fillData(isA(PostData.class), isA(RenderData.class), isA(String.class), isA(RegimeAligne[].class));
+	}
+
+	@Test
+	public void step_display_liquidateur_questions_next_step() {
+
+		// Step : displayLiquidateurQuestions --> displayLiquidateurQuestions
+
+		final PostData postData = new PostData();
+		postData.hidden_step = "displayLiquidateurQuestions";
+		postData.hidden_liquidateurStep = null;
+		postData.hidden_nom = "DUPONT";
+		postData.hidden_naissance = "1/2/3";
+		postData.hidden_nir = "1 50 12 18 123 456";
+		postData.hidden_regimes = "d,e";
+		postData.hidden_departement = "973";
+		postData.liquidateurReponseJsonStr = liquidateurReponseJsonStr;
+
+		when(calculateurRegimeAlignesMock.getRegimesAlignes(anyString())).thenReturn(new RegimeAligne[] { CNAV, MSA, RSI });
+
+		doAnswer(new Answer<Void>() {
+			@Override
+			public Void answer(final InvocationOnMock invocation) throws Throwable {
+				final RenderData renderData = invocation.getArgumentAt(1, RenderData.class);
+				renderData.hidden_liquidateurStep = "QUESTION_A";
+				return null;
+			}
+		}).when(displayerLiquidateurQuestionsMock).fillData(any(PostData.class), any(RenderData.class), any(String.class),
+				any(RegimeAligne[].class));
+
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
 
 		verify(displayerLiquidateurQuestionsMock).fillData(isA(PostData.class), isA(RenderData.class), isA(String.class), isA(RegimeAligne[].class));
+		verifyZeroInteractions(displayerDepartureDateMock);
 		assertThat(renderData.hidden_nom).isEqualTo("DUPONT");
 		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
 		assertThat(renderData.hidden_nir).isEqualTo("1 50 12 18 123 456");
+		assertThat(renderData.hidden_departement).isEqualTo("973");
+		assertThat(renderData.hidden_regimes).isEqualTo("d,e");
+		assertThat(renderData.hidden_liquidateurReponseJsonStr).isEqualTo(liquidateurReponseJsonStr);
 	}
 
 	@Test
@@ -317,12 +358,23 @@ public class RetraiteEngineTest {
 
 		final PostData postData = new PostData();
 		postData.hidden_step = "displayLiquidateurQuestions";
+		postData.hidden_liquidateurStep = "QUESTION_B";
 		postData.hidden_nom = "DUPONT";
 		postData.hidden_naissance = "1/2/3";
 		postData.hidden_nir = "1 50 12 18 123 456";
 		postData.hidden_regimes = "d,e";
 		postData.hidden_departement = "973";
 		postData.liquidateurReponseJsonStr = liquidateurReponseJsonStr;
+
+		doAnswer(new Answer<Void>() {
+			@Override
+			public Void answer(final InvocationOnMock invocation) throws Throwable {
+				final RenderData renderData = invocation.getArgumentAt(1, RenderData.class);
+				// renderData.hidden_liquidateurStep = null;// Plus de question
+				return null;
+			}
+		}).when(displayerLiquidateurQuestionsMock).fillData(any(PostData.class), any(RenderData.class), any(String.class),
+				any(RegimeAligne[].class));
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
 
