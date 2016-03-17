@@ -23,17 +23,19 @@ describe('questions', function () {
     			// Il faut se désabonner de l'évènement pour éviter le mélange entre chaque TU
     			$(document).off('Retraite:questions:diplayUpdated');
     			expectNextButtonIsEnabled(); 
+    			expect($("input#reponseJsonStr").val()).toEqual("[\"INDEP_AVANT_73\"]");
     			done();
     		}); 
         });
         
-        it('should be disabled if question 1 is checked and question 2 is visible and not checked', function (done) {
+        /*it('should be disabled if question 1 is checked and question 2 is visible and not checked', function (done) {
         	
         	$('[value=AUCUNE]').trigger( "click" );
         	
         	$(document).on('Retraite:questions:diplayUpdated', function() {
         		$(document).off('Retraite:questions:diplayUpdated');
         		expectNextButtonIsDisabled(); 
+        		expect($("input#reponseJsonStr").val()).toEqual("{\"condition1\":[\"AUCUNE\"]}");
         		done();
         	}); 
         });
@@ -46,9 +48,10 @@ describe('questions', function () {
     		$(document).on('Retraite:questions:diplayUpdated', function() {
     			$(document).off('Retraite:questions:diplayUpdated');
     			expectNextButtonIsEnabled(); 
+    			expect($("input#reponseJsonStr").val()).toEqual("{\"condition1\":[\"AUCUNE\"],\"condition2\":[\"SA\"]}");
     			done();
     		});
-        });
+        });*/
         
     });
     

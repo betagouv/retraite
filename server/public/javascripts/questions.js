@@ -16,43 +16,15 @@ var RetraiteQuestions = {};
 		return areAllVisibleQuestionWithAnswer; 
 	}
 	
-	var updateDisplayQuestions = function() {
-		
-		var currentValues = {};
-		
-		var mustShowQuestion = function($divQuestion) {
-			var key = $divQuestion.attr('condition-key');
-			var value = $divQuestion.attr('condition-value');
-			if (key && value) {
-				if ($.inArray(value, currentValues[key]) != -1) {
-					return true;
-				} else {
-					return false;
-				}
-			}
-			return true;
-		};
-
-		var storeValuesForThisQuestion = function($divQuestion) {
-			var $inputsChecked = $divQuestion.find('input:checked');
-			$inputsChecked.each(function() {
-				var key = $(this).attr('condition-key');
-				var value = $(this).val();
-				currentValues[key] = currentValues[key] || [];				
-				currentValues[key].push(value);				
-			});
-			$("input#reponseJsonStr").val(JSON.stringify(currentValues));
-		};
-		
-		$('div.question').each(function() {
-			var $divQuestion = $(this);
-			if (mustShowQuestion($divQuestion)) {
-				$divQuestion.show();
-				storeValuesForThisQuestion($divQuestion);
-			} else {
-				$divQuestion.hide();
-			}
+	var updateHiddenDataForResponses = function() {
+		var $divQuestion = $('div.question');
+		var $inputsChecked = $divQuestion.find('input:checked');
+		var currentValues = [];
+		$inputsChecked.each(function() {
+			var value = $(this).val();
+			currentValues.push(value);				
 		});
+		$("input#reponseJsonStr").val(JSON.stringify(currentValues));
 		
 	};
 	
@@ -65,8 +37,8 @@ var RetraiteQuestions = {};
 		}
 	}
 		
-	function updateDisplay() {
-		updateDisplayQuestions();
+	function updateDisplayAndData() {
+		updateHiddenDataForResponses();
 		updateNextButtonState();
 		$(document).trigger('Retraite:questions:diplayUpdated');
 	}
@@ -74,10 +46,10 @@ var RetraiteQuestions = {};
 	function initJquery() {
 		$('input.questions-choice').click(function() {
 			// Il faut désynchroniser pour être sûr que les états 'checked' soient fixés (notamment dans le cadre des TU)
-			setTimeout(updateDisplay, 0);
+			setTimeout(updateDisplayAndData, 0);
 		});
 		
-		updateDisplay();
+		updateDisplayAndData();
 	}
 
 	RetraiteQuestions.areAllVisibleQuestionWithAnswer = areAllVisibleQuestionWithAnswer;

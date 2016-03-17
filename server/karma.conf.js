@@ -44,7 +44,6 @@ module.exports = function (config) {
             'public/javascripts/getUserData.js',
             'public/javascripts/questions.js',
             'testjs/displayQuestionCarriereLongue.spec.js',
-            'testjs/getUserData.spec.js',
             'testjs/questions.spec.js',
             <!-- endinjector -->
             

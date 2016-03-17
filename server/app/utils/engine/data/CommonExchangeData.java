@@ -14,5 +14,7 @@ public class CommonExchangeData {
 	public String hidden_departAnnee;
 	public boolean hidden_attestationCarriereLongue;
 	public String hidden_liquidateurStep;
+	public String hidden_liquidateur;
+	public String hidden_userStatus;
 
 }
