@@ -9,7 +9,7 @@ public class EngineUtils {
 			return false;
 		}
 		for (final RegimeAligne regimeToSearch : regimesToSearch) {
-			if (!isRegime(regimesAlignes, regimeToSearch)) {
+			if (!contains(regimesAlignes, regimeToSearch)) {
 				return false;
 			}
 
@@ -17,13 +17,24 @@ public class EngineUtils {
 		return true;
 	}
 
-	private static boolean isRegime(final RegimeAligne[] regimesAlignes, final RegimeAligne regimeToSearch) {
-		for (final RegimeAligne regimeAligne : regimesAlignes) {
-			if (regimeAligne == regimeToSearch) {
-				return true;
+	public static boolean contains(final RegimeAligne[] regimesAlignes, final RegimeAligne regimeAligneToSearch) {
+		if (regimesAlignes != null) {
+			for (final RegimeAligne regimeAligne : regimesAlignes) {
+				if (regimeAligne == regimeAligneToSearch) {
+					return true;
+				}
 			}
 		}
 		return false;
+	}
+
+	public static boolean contains(final RegimeAligne[] regimesAlignes, final RegimeAligne... regimesAligneToSearch) {
+		for (final RegimeAligne regimeAligneToSearch : regimesAligneToSearch) {
+			if (!contains(regimesAlignes, regimeAligneToSearch)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 }
