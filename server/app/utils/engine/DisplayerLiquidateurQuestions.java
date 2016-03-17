@@ -3,6 +3,7 @@ package utils.engine;
 import static utils.engine.EngineUtils.contains;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_A;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_B;
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_C;
 import static utils.engine.data.enums.QuestionChoiceValue.CONJOINT_INDEP;
 import static utils.engine.data.enums.QuestionChoiceValue.DEUX_ACTIVITES;
 import static utils.engine.data.enums.QuestionChoiceValue.INDEP;
@@ -17,8 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import controllers.data.PostData;
-import utils.engine.data.QuestionASolved;
 import utils.engine.data.QuestionChoice;
+import utils.engine.data.RegimeLiquidateurAndUserStatus;
 import utils.engine.data.RenderData;
 import utils.engine.data.enums.LiquidateurQuestionDescriptor2;
 import utils.engine.data.enums.RegimeAligne;
@@ -26,9 +27,11 @@ import utils.engine.data.enums.RegimeAligne;
 public class DisplayerLiquidateurQuestions {
 
 	private final SolverQuestionA solverQuestionA;
+	private final SolverQuestionB solverQuestionB;
 
-	public DisplayerLiquidateurQuestions(final SolverQuestionA solverQuestionA) {
+	public DisplayerLiquidateurQuestions(final SolverQuestionA solverQuestionA, final SolverQuestionB solverQuestionB) {
 		this.solverQuestionA = solverQuestionA;
+		this.solverQuestionB = solverQuestionB;
 	}
 
 	public void fillData(final PostData data, final RenderData renderData, final String regimes, final RegimeAligne[] regimesAlignes) {
@@ -43,20 +46,29 @@ public class DisplayerLiquidateurQuestions {
 	private void processNextStep(final PostData data, final RenderData renderData, final String regimes, final RegimeAligne[] regimesAlignes) {
 		final LiquidateurQuestionDescriptor2 previousStep = getStep(data.hidden_liquidateurStep);
 		if (isBefore(previousStep, QUESTION_A)) {
-			if (EngineUtils.contains(regimesAlignes, RegimeAligne.MSA)) {
-				renderData.hidden_liquidateurStep = "A";
+			if (contains(regimesAlignes, RegimeAligne.MSA)) {
 				renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_A;
 				return;
 			}
 		}
-		if (isBefore(previousStep, QUESTION_B)) {
-			final QuestionASolved questionASolved = solverQuestionA.solve(regimesAlignes, data.liquidateurReponseJsonStr);
-			renderData.hidden_liquidateur = toStringOrNull(questionASolved.getRegimeLiquidateur());
-			renderData.hidden_userStatus = toStringOrNull(questionASolved.getStatus());
-
-			renderData.hidden_liquidateurStep = "B";
+		if (previousStep == QUESTION_A) {
+			final RegimeLiquidateurAndUserStatus solved = solverQuestionA.solve(regimesAlignes, data.liquidateurReponseJsonStr);
+			renderData.hidden_liquidateur = toStringOrNull(solved.getRegimeLiquidateur());
+			renderData.hidden_userStatus = toStringOrNull(solved.getStatus());
+		}
+		if (isBefore(previousStep, QUESTION_B) && renderData.hidden_liquidateur == null) {
 			renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_B;
 			renderData.questionLiquidateur.choices = generateSpecificChoicesForQuestionB(QUESTION_B, regimesAlignes);
+			return;
+		}
+		if (previousStep == QUESTION_B) {
+			final RegimeLiquidateurAndUserStatus solved = solverQuestionB.solve(regimesAlignes, data.liquidateurReponseJsonStr);
+			renderData.hidden_liquidateur = toStringOrNull(solved.getRegimeLiquidateur());
+			renderData.hidden_userStatus = toStringOrNull(solved.getStatus());
+		}
+		if (isBefore(previousStep, QUESTION_C)) {
+			renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_C;
+			return;
 		}
 
 		// Sinon, on ne fait rien, renderData.hidden_liquidateurStep=null indique qu'il n'y a plus de questions

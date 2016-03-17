@@ -1,5 +1,9 @@
 package utils.engine.data.enums;
 
+import static utils.engine.data.enums.QuestionChoiceValue.INDEP_AVANT_73;
+import static utils.engine.data.enums.QuestionChoiceValue.INVALIDITE_RSI;
+import static utils.engine.data.enums.QuestionChoiceValue.PENIBILITE;
+import static utils.engine.data.enums.QuestionType.MULTIPLE;
 import static utils.engine.data.enums.QuestionType.SIMPLE;
 
 import utils.engine.data.QuestionChoice;
@@ -25,6 +29,14 @@ public enum LiquidateurQuestionDescriptor2 {
 			choice("Artisan ou commerçant", QuestionChoiceValue.INDEP),
 			choice("Conjoint collaborateur d'un artisan commerçant", QuestionChoiceValue.CONJOINT_INDEP),
 			choice("Deux activités en même temps", QuestionChoiceValue.DEUX_ACTIVITES)
+	),
+
+	QUESTION_C(
+		"Êtes-vous dans l'une ou plusieurs des situations suivantes ?",
+			MULTIPLE,
+			choice("J'ai exercé une activité d'indépendant avant 1973", INDEP_AVANT_73),
+			choice("Je reçois une pension d'invalidité versée par le RSI", INVALIDITE_RSI),
+			choice("Je souhaite bénéficier du dispositif de retraite pour pénibilité", PENIBILITE)
 	);
 
 	// @formatter:on
