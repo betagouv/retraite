@@ -5,10 +5,15 @@ import static utils.engine.data.enums.QuestionChoiceValue.DEUX_ACTIVITES;
 import static utils.engine.data.enums.QuestionChoiceValue.INDEP;
 import static utils.engine.data.enums.QuestionChoiceValue.INDEP_AVANT_73;
 import static utils.engine.data.enums.QuestionChoiceValue.INVALIDITE_RSI;
+import static utils.engine.data.enums.QuestionChoiceValue.NON;
 import static utils.engine.data.enums.QuestionChoiceValue.NSA;
+import static utils.engine.data.enums.QuestionChoiceValue.OUI;
 import static utils.engine.data.enums.QuestionChoiceValue.PENIBILITE;
 import static utils.engine.data.enums.QuestionChoiceValue.SA;
 import static utils.engine.data.enums.QuestionChoiceValue.SALARIE;
+import static utils.engine.data.enums.QuestionChoiceValue.SANTE_CPAM;
+import static utils.engine.data.enums.QuestionChoiceValue.SANTE_MSA;
+import static utils.engine.data.enums.QuestionChoiceValue.SANTE_RSI;
 import static utils.engine.data.enums.QuestionMandatoryOrOptionnal.MANDATORY;
 import static utils.engine.data.enums.QuestionMandatoryOrOptionnal.OPTIONNAL;
 import static utils.engine.data.enums.QuestionType.MULTIPLE;
@@ -48,6 +53,31 @@ public enum LiquidateurQuestionDescriptor2 {
 			choice("J'ai exercé une activité d'indépendant avant 1973", INDEP_AVANT_73),
 			choice("Je reçois une pension d'invalidité versée par le RSI", INVALIDITE_RSI),
 			choice("Je souhaite bénéficier du dispositif de retraite pour pénibilité", PENIBILITE)
+	),
+
+	QUESTION_D(
+		"Quel est l'organisme qui vous rembourse vos fais de santé ?",
+			SIMPLE,
+			MANDATORY,
+			choice("CPAM", SANTE_CPAM),
+			choice("MSA", SANTE_MSA),
+			choice("RSI", SANTE_RSI)
+	),
+
+	QUESTION_E(
+		"Etes-vous actuellement chef d'exploitation ou d'entreprise agricole ?",
+			SIMPLE,
+			MANDATORY,
+			choice("Oui", OUI),
+			choice("Non", NON)
+	),
+
+	QUESTION_F(
+		"Etes-vous actuellement chef d'entreprise ?",
+			SIMPLE,
+			MANDATORY,
+			choice("Oui", OUI),
+			choice("Non", NON)
 	);
 
 	// @formatter:on

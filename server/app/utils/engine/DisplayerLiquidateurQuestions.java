@@ -4,6 +4,7 @@ import static utils.engine.EngineUtils.contains;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_A;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_B;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_C;
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_D;
 import static utils.engine.data.enums.QuestionChoiceValue.CONJOINT_INDEP;
 import static utils.engine.data.enums.QuestionChoiceValue.DEUX_ACTIVITES;
 import static utils.engine.data.enums.QuestionChoiceValue.INDEP;
@@ -12,6 +13,9 @@ import static utils.engine.data.enums.QuestionChoiceValue.NSA;
 import static utils.engine.data.enums.QuestionChoiceValue.PENIBILITE;
 import static utils.engine.data.enums.QuestionChoiceValue.SA;
 import static utils.engine.data.enums.QuestionChoiceValue.SALARIE;
+import static utils.engine.data.enums.QuestionChoiceValue.SANTE_CPAM;
+import static utils.engine.data.enums.QuestionChoiceValue.SANTE_MSA;
+import static utils.engine.data.enums.QuestionChoiceValue.SANTE_RSI;
 import static utils.engine.data.enums.RegimeAligne.CNAV;
 import static utils.engine.data.enums.RegimeAligne.MSA;
 import static utils.engine.data.enums.RegimeAligne.RSI;
@@ -75,6 +79,14 @@ public class DisplayerLiquidateurQuestions {
 		}
 		if (previousStep == QUESTION_C) {
 			callQuestionSolverAndStoreResult(data, renderData, regimesAlignes, questionSolverC);
+			if (renderData.ecranSortie != null) {
+				return;
+			}
+		}
+		if (isBefore(previousStep, QUESTION_D)) {
+			renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_D;
+			renderData.questionLiquidateur.choices = generateSpecificChoicesForQuestionD(regimesAlignes);
+			return;
 		}
 
 		// Sinon, on ne fait rien, renderData.hidden_liquidateurStep=null indique qu'il n'y a plus de questions
@@ -123,6 +135,24 @@ public class DisplayerLiquidateurQuestions {
 		final List<QuestionChoice> choices = new ArrayList<>();
 		choices.add(QUESTION_C.getChoice(INVALIDITE_RSI));
 		choices.add(QUESTION_C.getChoice(PENIBILITE));
+		return choices;
+	}
+
+	private List<QuestionChoice> generateSpecificChoicesForQuestionD(final RegimeAligne[] regimesAlignes) {
+		if (contains(regimesAlignes, MSA, RSI, CNAV)) {
+			// Pas de filtre
+			return null;
+		}
+		final List<QuestionChoice> choices = new ArrayList<>();
+		if (contains(regimesAlignes, CNAV)) {
+			choices.add(QUESTION_D.getChoice(SANTE_CPAM));
+		}
+		if (contains(regimesAlignes, RSI)) {
+			choices.add(QUESTION_D.getChoice(SANTE_RSI));
+		}
+		if (contains(regimesAlignes, MSA)) {
+			choices.add(QUESTION_D.getChoice(SANTE_MSA));
+		}
 		return choices;
 	}
 
