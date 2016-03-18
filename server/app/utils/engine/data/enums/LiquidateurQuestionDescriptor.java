@@ -10,18 +10,18 @@ import static utils.engine.data.enums.ChecklistSelector.SELECT_RSI_INVALIDITE;
 import static utils.engine.data.enums.QuestionChoiceValue.AUTRE;
 import static utils.engine.data.enums.QuestionChoiceValue.CONJOINT;
 import static utils.engine.data.enums.QuestionChoiceValue.CONJOINT_INDEP;
-import static utils.engine.data.enums.QuestionChoiceValue.CPAM;
+import static utils.engine.data.enums.QuestionChoiceValue.SANTE_CPAM;
 import static utils.engine.data.enums.QuestionChoiceValue.DEUX_ACTIVITES;
 import static utils.engine.data.enums.QuestionChoiceValue.HORS_TERRITOIRE_FRANCAIS;
 import static utils.engine.data.enums.QuestionChoiceValue.INDEP;
 import static utils.engine.data.enums.QuestionChoiceValue.INDEP_AVANT_73;
 import static utils.engine.data.enums.QuestionChoiceValue.INVALIDITE_RSI;
-import static utils.engine.data.enums.QuestionChoiceValue.MSA;
+import static utils.engine.data.enums.QuestionChoiceValue.SANTE_MSA;
 import static utils.engine.data.enums.QuestionChoiceValue.NON;
 import static utils.engine.data.enums.QuestionChoiceValue.NSA;
 import static utils.engine.data.enums.QuestionChoiceValue.OUI;
 import static utils.engine.data.enums.QuestionChoiceValue.PENIBILITE;
-import static utils.engine.data.enums.QuestionChoiceValue.RSI;
+import static utils.engine.data.enums.QuestionChoiceValue.SANTE_RSI;
 import static utils.engine.data.enums.QuestionChoiceValue.SA;
 import static utils.engine.data.enums.QuestionType.MULTIPLE;
 import static utils.engine.data.enums.QuestionType.SIMPLE;
@@ -51,15 +51,15 @@ public enum LiquidateurQuestionDescriptor implements QuestionDescriptor {
 	ORGA_FRAIS_SANTE_CPAM_MSA(
 		"Quel est l'organisme qui vous rembourse vos frais de santé ?",
 			SIMPLE,
-			choice("CPAM/ Assurance maladie", CPAM, SELECT_CNAV),
-			choice("MSA", MSA, SELECT_MSA)
+			choice("CPAM/ Assurance maladie", SANTE_CPAM, SELECT_CNAV),
+			choice("MSA", SANTE_MSA, SELECT_MSA)
 	),
 
 	ORGA_FRAIS_SANTE_CPAM_RSI(
 			"Quel est l'organisme qui vous rembourse vos frais de santé ?",
 			SIMPLE,
-			choice("CPAM", CPAM, SELECT_CNAV),
-			choice("RSI", RSI, SELECT_RSI)
+			choice("CPAM", SANTE_CPAM, SELECT_CNAV),
+			choice("RSI", SANTE_RSI, SELECT_RSI)
 			),
 
 	DERN_ACT_INDEP_CONJOINT_AUTRE(
@@ -105,8 +105,8 @@ public enum LiquidateurQuestionDescriptor implements QuestionDescriptor {
 	ORGA_FRAIS_SANTE_RSI_MSA(
 		"Quel est l'organisme qui vous rembourse vos frais de santé ?",
 			SIMPLE,
-			choice("RSI", RSI, SELECT_RSI),
-			choice("MSA", MSA, SELECT_MSA)
+			choice("RSI", SANTE_RSI, SELECT_RSI),
+			choice("MSA", SANTE_MSA, SELECT_MSA)
 			);
 
 	// @formatter:on

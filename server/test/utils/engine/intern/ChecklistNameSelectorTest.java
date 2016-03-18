@@ -9,7 +9,7 @@ import static utils.engine.data.enums.LiquidateurQuestionDescriptor.DIVERSES_SIT
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor.DIVERSES_SITUATIONS_RSI_MSA;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor.ORGA_FRAIS_SANTE_CPAM_RSI;
 import static utils.engine.data.enums.QuestionChoiceValue.AUTRE;
-import static utils.engine.data.enums.QuestionChoiceValue.CPAM;
+import static utils.engine.data.enums.QuestionChoiceValue.SANTE_CPAM;
 import static utils.engine.data.enums.QuestionChoiceValue.DEUX_ACTIVITES;
 import static utils.engine.data.enums.QuestionChoiceValue.HORS_TERRITOIRE_FRANCAIS;
 import static utils.engine.data.enums.QuestionChoiceValue.INDEP;
@@ -102,7 +102,7 @@ public class ChecklistNameSelectorTest {
 		final LiquidateurReponses liquidateurReponses = new LiquidateurReponses();
 		liquidateurReponses.getReponses().put(DIVERSES_SITUATIONS_CNAV_RSI, asList(HORS_TERRITOIRE_FRANCAIS, AUTRE));
 		liquidateurReponses.getReponses().put(DERN_ACT_INDEP_CONJOINT_AUTRE, asList(DEUX_ACTIVITES));
-		liquidateurReponses.getReponses().put(ORGA_FRAIS_SANTE_CPAM_RSI, asList(CPAM));
+		liquidateurReponses.getReponses().put(ORGA_FRAIS_SANTE_CPAM_RSI, asList(SANTE_CPAM));
 
 		assertThat(checklistNameSelector.select(regimes(CNAV, RSI), liquidateurReponses)).isEqualTo(ChecklistName.CNAV);
 	}

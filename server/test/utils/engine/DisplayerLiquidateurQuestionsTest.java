@@ -9,6 +9,7 @@ import static utils.engine.data.enums.EcranSortie.ECRAN_SORTIE_PENIBILITE;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_A;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_B;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_C;
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_D;
 import static utils.engine.data.enums.QuestionChoiceValue.CONJOINT_INDEP;
 import static utils.engine.data.enums.QuestionChoiceValue.DEUX_ACTIVITES;
 import static utils.engine.data.enums.QuestionChoiceValue.INDEP;
@@ -17,6 +18,8 @@ import static utils.engine.data.enums.QuestionChoiceValue.NSA;
 import static utils.engine.data.enums.QuestionChoiceValue.PENIBILITE;
 import static utils.engine.data.enums.QuestionChoiceValue.SA;
 import static utils.engine.data.enums.QuestionChoiceValue.SALARIE;
+import static utils.engine.data.enums.QuestionChoiceValue.SANTE_MSA;
+import static utils.engine.data.enums.QuestionChoiceValue.SANTE_RSI;
 import static utils.engine.data.enums.RegimeAligne.CNAV;
 import static utils.engine.data.enums.RegimeAligne.MSA;
 import static utils.engine.data.enums.RegimeAligne.RSI;
@@ -248,9 +251,53 @@ public class DisplayerLiquidateurQuestionsTest {
 	}
 
 	@Test
-	public void test_no_more_question() {
+	public void test_question_D_apres_question_C_pas_de_filtre_si_3_regimes() {
+
+		// Step : QUESTION_C --> QUESTION_D
 
 		postData.hidden_liquidateurStep = "QUESTION_C";
+		postData.liquidateurReponseJsonStr = "[]";
+		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { CNAV, MSA, RSI };
+		postData.hidden_liquidateur = null;
+
+		when(solverQuestionCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
+				.thenReturn(new RegimeLiquidateurAndUserStatus());
+
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+
+		assertThat(renderData.hidden_liquidateurStep).isEqualTo("QUESTION_D");
+		assertThat(renderData.hidden_liquidateur).isNull();
+		assertThat(renderData.hidden_userStatus).isNull();
+		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_D);
+		assertThat(choicesValues(renderData.questionLiquidateur.choices)).isNull();
+	}
+
+	@Test
+	public void test_question_D_apres_question_C_avec_filtre_si_2_regimes() {
+
+		// Step : QUESTION_C --> QUESTION_D
+
+		postData.hidden_liquidateurStep = "QUESTION_C";
+		postData.liquidateurReponseJsonStr = "[]";
+		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { MSA, RSI };
+		postData.hidden_liquidateur = null;
+
+		when(solverQuestionCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
+				.thenReturn(new RegimeLiquidateurAndUserStatus());
+
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+
+		assertThat(renderData.hidden_liquidateurStep).isEqualTo("QUESTION_D");
+		assertThat(renderData.hidden_liquidateur).isNull();
+		assertThat(renderData.hidden_userStatus).isNull();
+		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_D);
+		assertThat(choicesValues(renderData.questionLiquidateur.choices)).containsOnly(SANTE_MSA, SANTE_RSI);
+	}
+
+	@Test
+	public void test_no_more_question() {
+
+		postData.hidden_liquidateurStep = "QUESTION_D";
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { CNAV };
 
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
