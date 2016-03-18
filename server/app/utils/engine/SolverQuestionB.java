@@ -1,6 +1,6 @@
 package utils.engine;
 
-import static utils.engine.data.enums.QuestionChoiceValue.getFromJsonArray;
+import static utils.engine.data.enums.QuestionChoiceValue.getFirstFromJsonArray;
 import static utils.engine.data.enums.RegimeAligne.CNAV;
 import static utils.engine.data.enums.RegimeAligne.MSA;
 import static utils.engine.data.enums.RegimeAligne.RSI;
@@ -15,7 +15,7 @@ import utils.engine.data.enums.QuestionChoiceValue;
 public class SolverQuestionB {
 
 	public RegimeLiquidateurAndUserStatus solve(final String liquidateurReponseJsonStr) {
-		final QuestionChoiceValue choiceValue = getFromJsonArray(liquidateurReponseJsonStr);
+		final QuestionChoiceValue choiceValue = getFirstFromJsonArray(liquidateurReponseJsonStr);
 		switch (choiceValue) {
 		case SALARIE:
 			return new RegimeLiquidateurAndUserStatus(CNAV, null);

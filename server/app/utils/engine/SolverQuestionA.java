@@ -1,7 +1,7 @@
 package utils.engine;
 
 import static utils.engine.EngineUtils.contains;
-import static utils.engine.data.enums.QuestionChoiceValue.getFromJsonArray;
+import static utils.engine.data.enums.QuestionChoiceValue.getFirstFromJsonArray;
 import static utils.engine.data.enums.RegimeAligne.CNAV;
 import static utils.engine.data.enums.RegimeAligne.MSA;
 import static utils.engine.data.enums.RegimeAligne.RSI;
@@ -16,7 +16,7 @@ import utils.engine.data.enums.RegimeAligne;
 public class SolverQuestionA {
 
 	public RegimeLiquidateurAndUserStatus solve(final RegimeAligne[] regimesAlignes, final String liquidateurReponseJsonStr) {
-		final QuestionChoiceValue choiceValue = getFromJsonArray(liquidateurReponseJsonStr);
+		final QuestionChoiceValue choiceValue = getFirstFromJsonArray(liquidateurReponseJsonStr);
 		switch (choiceValue) {
 		case NSA:
 			if (contains(regimesAlignes, CNAV, MSA, RSI)) {
