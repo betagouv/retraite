@@ -1,6 +1,7 @@
 package utils.engine;
 
 import static java.util.Arrays.asList;
+import static utils.engine.data.enums.EcranSortie.ECRAN_SORTIE_PENIBILITE;
 
 import java.lang.reflect.Field;
 
@@ -92,12 +93,17 @@ public class RetraiteEngine {
 		} else if (data.hidden_step.equals("displayLiquidateurQuestions")) {
 			final RegimeAligne[] regimesAlignes = calculateurRegimeAlignes.getRegimesAlignes(data.hidden_regimes);
 			displayerLiquidateurQuestions.fillData(data, renderData, data.hidden_regimes, regimesAlignes);
+			if (renderData.ecranSortie == ECRAN_SORTIE_PENIBILITE) {
+				renderData.hidden_step = "displaySortiePenibilite";
+				return renderData;
+			}
 			if (renderData.hidden_liquidateurStep == null) {
 				displayerDepartureDate.fillData(data, renderData, null);
 			}
 		} else if (data.hidden_step.equals("displayDepartureDate")) {
 			if (data.departInconnu) {
-				return displaySortieDepartInconnu(renderData);
+				renderData.hidden_step = "displaySortieDepartInconnu";
+				return renderData;
 			}
 			if (!ageLegalEvaluator.isAgeLegal(data.hidden_naissance, data.departMois, data.departAnnee)) {
 				return displayQuestionCarriereLongue(renderData, data.departMois, data.departAnnee);
@@ -124,11 +130,6 @@ public class RetraiteEngine {
 				renderData.hidden_naissance);
 		renderData.hidden_step = "displaySortieAucunRegimeDeBaseAligne";
 		renderData.regimesInfos = asList(allInformations.regimes);
-		return renderData;
-	}
-
-	private RenderData displaySortieDepartInconnu(final RenderData renderData) {
-		renderData.hidden_step = "displaySortieDepartInconnu";
 		return renderData;
 	}
 

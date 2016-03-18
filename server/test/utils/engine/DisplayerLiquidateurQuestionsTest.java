@@ -5,6 +5,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static utils.engine.data.enums.EcranSortie.ECRAN_SORTIE_PENIBILITE;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_A;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_B;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_C;
@@ -19,6 +20,7 @@ import static utils.engine.data.enums.QuestionChoiceValue.SALARIE;
 import static utils.engine.data.enums.RegimeAligne.CNAV;
 import static utils.engine.data.enums.RegimeAligne.MSA;
 import static utils.engine.data.enums.RegimeAligne.RSI;
+import static utils.engine.data.enums.UserStatus.STATUS_CHEF;
 import static utils.engine.data.enums.UserStatus.STATUS_NSA;
 
 import java.util.ArrayList;
@@ -41,8 +43,9 @@ public class DisplayerLiquidateurQuestionsTest {
 	private RenderData renderData;
 	private final String regimes = "CNAV,CCMSA,AGIRC ARRCO";
 
-	private SolverQuestionA solverQuestionAMock;
-	private SolverQuestionB solverQuestionBMock;
+	private QuestionSolverA solverQuestionAMock;
+	private QuestionSolverB solverQuestionBMock;
+	private QuestionSolverC solverQuestionCMock;
 
 	private DisplayerLiquidateurQuestions displayerLiquidateurQuestions;
 
@@ -51,15 +54,19 @@ public class DisplayerLiquidateurQuestionsTest {
 		postData = new PostData();
 		renderData = new RenderData();
 
-		solverQuestionAMock = mock(SolverQuestionA.class);
+		solverQuestionAMock = mock(QuestionSolverA.class);
 		when(solverQuestionAMock.solve(any(RegimeAligne[].class), anyString()))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
 
-		solverQuestionBMock = mock(SolverQuestionB.class);
-		when(solverQuestionBMock.solve(anyString()))
+		solverQuestionBMock = mock(QuestionSolverB.class);
+		when(solverQuestionBMock.solve(any(RegimeAligne[].class), anyString()))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
 
-		displayerLiquidateurQuestions = new DisplayerLiquidateurQuestions(solverQuestionAMock, solverQuestionBMock);
+		solverQuestionCMock = mock(QuestionSolverC.class);
+		when(solverQuestionCMock.solve(any(RegimeAligne[].class), anyString()))
+				.thenReturn(new RegimeLiquidateurAndUserStatus());
+
+		displayerLiquidateurQuestions = new DisplayerLiquidateurQuestions(solverQuestionAMock, solverQuestionBMock, solverQuestionCMock);
 	}
 
 	@Test
@@ -167,7 +174,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		postData.liquidateurReponseJsonStr = "[\"INDEP\"]";
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { RSI };
 
-		when(solverQuestionBMock.solve(postData.liquidateurReponseJsonStr))
+		when(solverQuestionBMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
 
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
@@ -189,7 +196,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { RSI };
 		postData.hidden_liquidateur = "RSI";
 
-		when(solverQuestionBMock.solve(postData.liquidateurReponseJsonStr))
+		when(solverQuestionBMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
 
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
@@ -209,8 +216,8 @@ public class DisplayerLiquidateurQuestionsTest {
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { RSI };
 		postData.hidden_liquidateur = null;
 
-		when(solverQuestionBMock.solve(postData.liquidateurReponseJsonStr))
-				.thenReturn(new RegimeLiquidateurAndUserStatus(RegimeAligne.RSI, UserStatus.STATUS_CHEF));
+		when(solverQuestionBMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
+				.thenReturn(new RegimeLiquidateurAndUserStatus(RSI, STATUS_CHEF));
 
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
 
@@ -219,6 +226,25 @@ public class DisplayerLiquidateurQuestionsTest {
 		assertThat(renderData.hidden_userStatus).isEqualTo("STATUS_CHEF");
 		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_C);
 		assertThat(choicesValues(renderData.questionLiquidateur.choices)).containsOnly(INVALIDITE_RSI, PENIBILITE);
+	}
+
+	@Test
+	public void test_ecran_sortie_apres_question_C() {
+
+		// Step : QUESTION_C --> Ecran de sortie PENINILITE
+
+		postData.hidden_liquidateurStep = "QUESTION_C";
+		postData.liquidateurReponseJsonStr = "[\"PENIBILITE\"]";
+		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { RSI };
+		postData.hidden_liquidateur = null;
+
+		when(solverQuestionCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
+				.thenReturn(new RegimeLiquidateurAndUserStatus(ECRAN_SORTIE_PENIBILITE));
+
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+
+		assertThat(renderData.hidden_liquidateurStep).isNull();
+		assertThat(renderData.ecranSortie).isEqualTo(ECRAN_SORTIE_PENIBILITE);
 	}
 
 	@Test

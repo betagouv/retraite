@@ -17,6 +17,7 @@ import static org.mockito.Mockito.when;
 import static utils.JsonUtils.toJson;
 import static utils.engine.data.enums.ComplementQuestionDescriptor.ACCORD_INFO_RELEVE_CARRIERE;
 import static utils.engine.data.enums.ComplementQuestionDescriptor.CONSULT_RELEVE_CARRIERE;
+import static utils.engine.data.enums.EcranSortie.ECRAN_SORTIE_PENIBILITE;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor.CHEF_EXPLOITATION_AGRICOLE;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor.DERN_ACT_SA_CONJOINT_AUTRE_DOUBLE;
 import static utils.engine.data.enums.QuestionChoiceValue.CONJOINT;
@@ -352,9 +353,9 @@ public class RetraiteEngineTest {
 	}
 
 	@Test
-	public void step_display_departure_date() {
+	public void step_display_ecran_sortie_penibilite() {
 
-		// Step : displayLiquidateurQuestions --> displayDepartureDate
+		// Step : displayLiquidateurQuestions --> displaySortiePenibilite
 
 		final PostData postData = new PostData();
 		postData.hidden_step = "displayLiquidateurQuestions";
@@ -370,11 +371,40 @@ public class RetraiteEngineTest {
 			@Override
 			public Void answer(final InvocationOnMock invocation) throws Throwable {
 				final RenderData renderData = invocation.getArgumentAt(1, RenderData.class);
-				// renderData.hidden_liquidateurStep = null;// Plus de question
+				renderData.ecranSortie = ECRAN_SORTIE_PENIBILITE;
 				return null;
 			}
 		}).when(displayerLiquidateurQuestionsMock).fillData(any(PostData.class), any(RenderData.class), any(String.class),
 				any(RegimeAligne[].class));
+
+		final RenderData renderData = retraiteEngine.processToNextStep(postData);
+
+		assertThat(renderData.hidden_step).isEqualTo("displaySortiePenibilite");
+		assertThat(renderData.hidden_nom).isEqualTo("DUPONT");
+		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
+		assertThat(renderData.hidden_nir).isEqualTo("1 50 12 18 123 456");
+		assertThat(renderData.hidden_departement).isEqualTo("973");
+		assertThat(renderData.hidden_regimes).isEqualTo("d,e");
+		assertThat(renderData.hidden_liquidateurReponseJsonStr).isEqualTo(liquidateurReponseJsonStr);
+	}
+
+	@Test
+	public void step_display_departure_date() {
+
+		// Step : displayLiquidateurQuestions --> displayDepartureDate
+
+		final PostData postData = new PostData();
+		postData.hidden_step = "displayLiquidateurQuestions";
+		postData.hidden_liquidateurStep = "QUESTION_B";
+		postData.hidden_nom = "DUPONT";
+		postData.hidden_naissance = "1/2/3";
+		postData.hidden_nir = "1 50 12 18 123 456";
+		postData.hidden_regimes = "d,e";
+		postData.hidden_departement = "973";
+		postData.liquidateurReponseJsonStr = liquidateurReponseJsonStr;
+
+		// displayerLiquidateurQuestions.fillData() doit laisser
+		// renderData.hidden_liquidateurStep = null pour indiquer qu'il n'y a plus de questions
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
 

@@ -14,13 +14,13 @@ import utils.engine.data.enums.QuestionChoiceValue;
 import utils.engine.data.enums.RegimeAligne;
 import utils.engine.data.enums.UserStatus;
 
-public class SolverQuestionATest {
+public class QuestionSolverATest {
 
-	private SolverQuestionA solverQuestionA;
+	private QuestionSolverA questionSolverA;
 
 	@Before
 	public void setUp() {
-		solverQuestionA = new SolverQuestionA();
+		questionSolverA = new QuestionSolverA();
 	}
 
 	@Test
@@ -133,7 +133,7 @@ public class SolverQuestionATest {
 		}
 
 		public TestContext callSolver() {
-			solved = solverQuestionA.solve(regimes, liquidateurReponseJsonStr);
+			solved = questionSolverA.solve(regimes, liquidateurReponseJsonStr);
 			return this;
 		}
 

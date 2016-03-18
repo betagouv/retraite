@@ -45,7 +45,10 @@ public class RetraiteEngineFactory {
 						dateProvider),
 				new AgeLegalEvaluator(
 						new PeriodeDepartLegalDao()),
-				new DisplayerLiquidateurQuestions(new SolverQuestionA(), new SolverQuestionB()),
+				new DisplayerLiquidateurQuestions(
+						new QuestionSolverA(),
+						new QuestionSolverB(),
+						new QuestionSolverC()),
 				new DisplayerDepartureDate(new StepFormsDataProvider(dateProvider)),
 				new DisplayerAdditionalQuestions(new QuestionsComplementairesBuilder()), new DisplayerChecklist(
 						new QuestionComplementairesEvaluator(),

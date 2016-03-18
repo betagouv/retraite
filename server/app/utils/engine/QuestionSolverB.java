@@ -1,40 +1,39 @@
 package utils.engine;
 
-import static utils.engine.EngineUtils.contains;
 import static utils.engine.data.enums.QuestionChoiceValue.getFirstFromJsonArray;
 import static utils.engine.data.enums.RegimeAligne.CNAV;
 import static utils.engine.data.enums.RegimeAligne.MSA;
 import static utils.engine.data.enums.RegimeAligne.RSI;
+import static utils.engine.data.enums.UserStatus.STATUS_CHEF;
+import static utils.engine.data.enums.UserStatus.STATUS_CONJOINT_COLLABORATEUR;
 import static utils.engine.data.enums.UserStatus.STATUS_NSA;
-
-import java.util.Arrays;
+import static utils.engine.data.enums.UserStatus.STATUS_SA;
 
 import utils.engine.data.RegimeLiquidateurAndUserStatus;
 import utils.engine.data.enums.QuestionChoiceValue;
 import utils.engine.data.enums.RegimeAligne;
 
-public class SolverQuestionA {
+public class QuestionSolverB implements QuestionSolver {
 
+	@Override
 	public RegimeLiquidateurAndUserStatus solve(final RegimeAligne[] regimesAlignes, final String liquidateurReponseJsonStr) {
 		final QuestionChoiceValue choiceValue = getFirstFromJsonArray(liquidateurReponseJsonStr);
 		switch (choiceValue) {
+		case SALARIE:
+			return new RegimeLiquidateurAndUserStatus(CNAV, null);
 		case NSA:
-			if (contains(regimesAlignes, CNAV, MSA, RSI)) {
-				return new RegimeLiquidateurAndUserStatus(null, STATUS_NSA);
-			}
-			if (contains(regimesAlignes, CNAV, MSA)) {
-				return new RegimeLiquidateurAndUserStatus(CNAV, STATUS_NSA);
-			}
-			if (contains(regimesAlignes, RSI, MSA)) {
-				return new RegimeLiquidateurAndUserStatus(RSI, STATUS_NSA);
-			}
+			return new RegimeLiquidateurAndUserStatus(MSA, STATUS_NSA);
 		case SA:
-			return new RegimeLiquidateurAndUserStatus();
+			return new RegimeLiquidateurAndUserStatus(MSA, STATUS_SA);
+		case INDEP:
+			return new RegimeLiquidateurAndUserStatus(RSI, STATUS_CHEF);
+		case CONJOINT_INDEP:
+			return new RegimeLiquidateurAndUserStatus(RSI, STATUS_CONJOINT_COLLABORATEUR);
 		case DEUX_ACTIVITES:
-			return new RegimeLiquidateurAndUserStatus(MSA, null);
+			return new RegimeLiquidateurAndUserStatus(null, null);
 		}
 		throw new IllegalStateException(
-				"Situation non prévu : regimesAlignes=" + Arrays.asList(regimesAlignes) + " , liquidateurReponseJsonStr=" + liquidateurReponseJsonStr);
+				"Situation non prévu : liquidateurReponseJsonStr=" + liquidateurReponseJsonStr);
 	}
 
 }

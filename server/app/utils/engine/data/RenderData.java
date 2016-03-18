@@ -3,6 +3,7 @@ package utils.engine.data;
 import java.util.List;
 
 import models.FakeData;
+import utils.engine.data.enums.EcranSortie;
 import utils.wsinforetraite.InfoRetraiteResult.InfoRetraiteResultRegime;
 
 public class RenderData extends CommonExchangeData {
@@ -31,5 +32,7 @@ public class RenderData extends CommonExchangeData {
 	public List<InfoRetraiteResultRegime> regimesInfos;
 
 	public String dateGeneration;
+
+	public EcranSortie ecranSortie;
 
 }
