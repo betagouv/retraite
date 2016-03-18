@@ -9,6 +9,8 @@ import static utils.engine.data.enums.QuestionChoiceValue.NSA;
 import static utils.engine.data.enums.QuestionChoiceValue.PENIBILITE;
 import static utils.engine.data.enums.QuestionChoiceValue.SA;
 import static utils.engine.data.enums.QuestionChoiceValue.SALARIE;
+import static utils.engine.data.enums.QuestionMandatoryOrOptionnal.MANDATORY;
+import static utils.engine.data.enums.QuestionMandatoryOrOptionnal.OPTIONNAL;
 import static utils.engine.data.enums.QuestionType.MULTIPLE;
 import static utils.engine.data.enums.QuestionType.SIMPLE;
 
@@ -21,6 +23,7 @@ public enum LiquidateurQuestionDescriptor2 {
 	QUESTION_A(
 		"Au cours de votre carrière, avez-vous été ?",
 			SIMPLE,
+			MANDATORY,
 			choice("Chef d'exploitation ou d'entreprise agricole", NSA),
 			choice("Salarié agricole", SA),
 			choice("Les deux", DEUX_ACTIVITES)
@@ -29,6 +32,7 @@ public enum LiquidateurQuestionDescriptor2 {
 	QUESTION_B(
 		"Quelle est votre activité actuelle ou la dernière activité que vous avez exercée ?",
 			SIMPLE,
+			MANDATORY,
 			choice("Salarié (non agricole)", SALARIE),
 			choice("Chef d'exploitation", NSA),
 			choice("Salarié agricole", SA),
@@ -40,6 +44,7 @@ public enum LiquidateurQuestionDescriptor2 {
 	QUESTION_C(
 		"Êtes-vous dans l'une ou plusieurs des situations suivantes ?",
 			MULTIPLE,
+			OPTIONNAL,
 			choice("J'ai exercé une activité d'indépendant avant 1973", INDEP_AVANT_73),
 			choice("Je reçois une pension d'invalidité versée par le RSI", INVALIDITE_RSI),
 			choice("Je souhaite bénéficier du dispositif de retraite pour pénibilité", PENIBILITE)
@@ -51,11 +56,15 @@ public enum LiquidateurQuestionDescriptor2 {
 	private final String title;
 	@SuppressWarnings("unused")
 	private final QuestionType questionType;
+	@SuppressWarnings("unused")
+	private final QuestionMandatoryOrOptionnal questionMandatoryOrOptionnal;
 	private final QuestionChoice[] questionChoices;
 
-	LiquidateurQuestionDescriptor2(final String title, final QuestionType questionType, final QuestionChoice... questionChoices) {
+	LiquidateurQuestionDescriptor2(final String title, final QuestionType questionType, final QuestionMandatoryOrOptionnal questionMandatoryOrOptionnal,
+			final QuestionChoice... questionChoices) {
 		this.title = title;
 		this.questionType = questionType;
+		this.questionMandatoryOrOptionnal = questionMandatoryOrOptionnal;
 		this.questionChoices = questionChoices;
 	}
 
