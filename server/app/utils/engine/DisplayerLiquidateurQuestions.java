@@ -5,6 +5,7 @@ import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_A;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_B;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_C;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_D;
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_E;
 import static utils.engine.data.enums.QuestionChoiceValue.CONJOINT_INDEP;
 import static utils.engine.data.enums.QuestionChoiceValue.DEUX_ACTIVITES;
 import static utils.engine.data.enums.QuestionChoiceValue.INDEP;
@@ -53,16 +54,14 @@ public class DisplayerLiquidateurQuestions {
 
 	private void processNextStep(final PostData data, final RenderData renderData, final String regimes, final RegimeAligne[] regimesAlignes) {
 		final LiquidateurQuestionDescriptor2 previousStep = getStep(data.hidden_liquidateurStep);
-		if (isBefore(previousStep, QUESTION_A)) {
-			if (contains(regimesAlignes, RegimeAligne.MSA)) {
-				renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_A;
-				return;
-			}
+		if (isBefore(previousStep, QUESTION_A) && contains(regimesAlignes, MSA)) {
+			renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_A;
+			return;
 		}
 		if (previousStep == QUESTION_A) {
 			callQuestionSolverAndStoreResult(data, renderData, regimesAlignes, questionSolverA);
 		}
-		if (isBefore(previousStep, QUESTION_B) && renderData.hidden_liquidateur == null) {
+		if (isBefore(previousStep, QUESTION_B) && isRegimeLiquidateurNotDefined(renderData)) {
 			renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_B;
 			renderData.questionLiquidateur.choices = generateSpecificChoicesForQuestionB(regimesAlignes);
 			return;
@@ -70,7 +69,7 @@ public class DisplayerLiquidateurQuestions {
 		if (previousStep == QUESTION_B) {
 			callQuestionSolverAndStoreResult(data, renderData, regimesAlignes, questionSolverB);
 		}
-		if (isBefore(previousStep, QUESTION_C)) {
+		if (isBefore(previousStep, QUESTION_C) && contains(regimesAlignes, RSI)) {
 			renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_C;
 			if (isRsiLiquidateur(data, renderData)) {
 				renderData.questionLiquidateur.choices = generateSpecificChoicesForQuestionC();
@@ -83,13 +82,21 @@ public class DisplayerLiquidateurQuestions {
 				return;
 			}
 		}
-		if (isBefore(previousStep, QUESTION_D)) {
+		if (isBefore(previousStep, QUESTION_D) && isRegimeLiquidateurNotDefined(renderData)) {
 			renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_D;
 			renderData.questionLiquidateur.choices = generateSpecificChoicesForQuestionD(regimesAlignes);
 			return;
 		}
+		if (isBefore(previousStep, QUESTION_E)) {
+			renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_E;
+			return;
+		}
 
 		// Sinon, on ne fait rien, renderData.hidden_liquidateurStep=null indique qu'il n'y a plus de questions
+	}
+
+	private boolean isRegimeLiquidateurNotDefined(final RenderData renderData) {
+		return renderData.hidden_liquidateur == null;
 	}
 
 	private void callQuestionSolverAndStoreResult(final PostData data, final RenderData renderData, final RegimeAligne[] regimesAlignes,
