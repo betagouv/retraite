@@ -10,6 +10,7 @@ import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_A;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_B;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_C;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_D;
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_E;
 import static utils.engine.data.enums.QuestionChoiceValue.CONJOINT_INDEP;
 import static utils.engine.data.enums.QuestionChoiceValue.DEUX_ACTIVITES;
 import static utils.engine.data.enums.QuestionChoiceValue.INDEP;
@@ -36,6 +37,7 @@ import controllers.data.PostData;
 import utils.engine.data.QuestionChoice;
 import utils.engine.data.RegimeLiquidateurAndUserStatus;
 import utils.engine.data.RenderData;
+import utils.engine.data.enums.LiquidateurQuestionDescriptor2;
 import utils.engine.data.enums.QuestionChoiceValue;
 import utils.engine.data.enums.RegimeAligne;
 import utils.engine.data.enums.UserStatus;
@@ -253,7 +255,7 @@ public class DisplayerLiquidateurQuestionsTest {
 	@Test
 	public void test_question_D_apres_question_C_pas_de_filtre_si_3_regimes() {
 
-		// Step : QUESTION_C --> QUESTION_D
+		// Step : QUESTION_C --> QUESTION_D sans filtre pour les choix
 
 		postData.hidden_liquidateurStep = "QUESTION_C";
 		postData.liquidateurReponseJsonStr = "[]";
@@ -275,7 +277,7 @@ public class DisplayerLiquidateurQuestionsTest {
 	@Test
 	public void test_question_D_apres_question_C_avec_filtre_si_2_regimes() {
 
-		// Step : QUESTION_C --> QUESTION_D
+		// Step : QUESTION_C --> QUESTION_D avec filtre pour les choix
 
 		postData.hidden_liquidateurStep = "QUESTION_C";
 		postData.liquidateurReponseJsonStr = "[]";
@@ -295,14 +297,41 @@ public class DisplayerLiquidateurQuestionsTest {
 	}
 
 	@Test
+	public void test_question_E_apres_question_B_si_regime_liquidateur_determine_par_question_precedente() {
+
+		// Step : QUESTION_B --> QUESTION_E (pas QUESTION_D si régime liquidateur déterminé)
+
+		postData.hidden_liquidateurStep = "QUESTION_B";
+		postData.liquidateurReponseJsonStr = "[]";
+		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { MSA };
+		postData.hidden_liquidateur = null;
+
+		when(solverQuestionBMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
+				.thenReturn(new RegimeLiquidateurAndUserStatus(RegimeAligne.MSA, null));
+
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+
+		assertThat(renderData.hidden_liquidateurStep).isEqualTo("QUESTION_E");
+		assertThat(renderData.hidden_liquidateur).isEqualTo("MSA");
+		assertThat(renderData.hidden_userStatus).isNull();
+		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_E);
+		assertThat(choicesValues(renderData.questionLiquidateur.choices)).isNull();
+	}
+
+	@Test
 	public void test_no_more_question() {
 
-		postData.hidden_liquidateurStep = "QUESTION_D";
+		postData.hidden_liquidateurStep = getLastQuestionAsStr();
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { CNAV };
 
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
 
 		assertThat(renderData.hidden_liquidateurStep).isNull();
+	}
+
+	private String getLastQuestionAsStr() {
+		final LiquidateurQuestionDescriptor2[] values = LiquidateurQuestionDescriptor2.values();
+		return values[values.length - 1].toString();
 	}
 
 	private List<QuestionChoiceValue> choicesValues(final List<QuestionChoice> choices) {
