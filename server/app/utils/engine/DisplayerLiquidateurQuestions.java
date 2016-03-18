@@ -30,6 +30,7 @@ import utils.engine.data.RegimeLiquidateurAndUserStatus;
 import utils.engine.data.RenderData;
 import utils.engine.data.enums.LiquidateurQuestionDescriptor2;
 import utils.engine.data.enums.RegimeAligne;
+import utils.engine.data.enums.UserStatus;
 
 public class DisplayerLiquidateurQuestions {
 
@@ -71,7 +72,7 @@ public class DisplayerLiquidateurQuestions {
 		}
 		if (isBefore(previousStep, QUESTION_C) && contains(regimesAlignes, RSI)) {
 			renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_C;
-			if (isRsiLiquidateur(data, renderData)) {
+			if (isLiquidateur(data, renderData, RSI)) {
 				renderData.questionLiquidateur.choices = generateSpecificChoicesForQuestionC();
 			}
 			return;
@@ -87,7 +88,9 @@ public class DisplayerLiquidateurQuestions {
 			renderData.questionLiquidateur.choices = generateSpecificChoicesForQuestionD(regimesAlignes);
 			return;
 		}
-		if (isBefore(previousStep, QUESTION_E)) {
+		if (isBefore(previousStep, QUESTION_E)
+				&& isLiquidateur(data, renderData, MSA)
+				&& !isOneOrMore(data, renderData, UserStatus.STATUS_NSA, UserStatus.STATUS_SA)) {
 			renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_E;
 			return;
 		}
@@ -107,8 +110,21 @@ public class DisplayerLiquidateurQuestions {
 		renderData.ecranSortie = solved.getEcranSortie();
 	}
 
-	private boolean isRsiLiquidateur(final PostData data, final RenderData renderData) {
-		return RSI.toString().equals(data.hidden_liquidateur) || RSI.toString().equals(renderData.hidden_liquidateur);
+	private boolean isLiquidateur(final PostData data, final RenderData renderData, final RegimeAligne regimeAligne) {
+		return regimeAligne.toString().equals(data.hidden_liquidateur) || regimeAligne.toString().equals(renderData.hidden_liquidateur);
+	}
+
+	private boolean isOneOrMore(final PostData data, final RenderData renderData, final UserStatus... statuss) {
+		for (final UserStatus status : statuss) {
+			if (isStatus(data, renderData, status)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean isStatus(final PostData data, final RenderData renderData, final UserStatus status) {
+		return status.toString().equals(data.hidden_userStatus) || status.toString().equals(renderData.hidden_userStatus);
 	}
 
 	private List<QuestionChoice> generateSpecificChoicesForQuestionB(final RegimeAligne[] regimesAlignes) {
