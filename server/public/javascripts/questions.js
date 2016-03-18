@@ -4,20 +4,18 @@ var RetraiteQuestions = {};
 
 (function() {
 		
-	function areAllVisibleQuestionWithAnswer() {
-		var areAllVisibleQuestionWithAnswer = true;
-		$('div.question:visible').each(function() {
-			var $divQuestion = $(this);
-			var $inputsChecked = $divQuestion.find('input:checked');
-			if ($inputsChecked.length === 0) {
-				areAllVisibleQuestionWithAnswer = false;
-			}
-		});
-		return areAllVisibleQuestionWithAnswer; 
+	var $divQuestion, $nextButton, defaultNextButtonText;
+	
+	function questionIsOptionnal() {
+		return $divQuestion.data('optionnal');
+	}
+	
+	function noAnswerChecked() {
+		var $inputsChecked = $divQuestion.find('input:checked');
+		return ($inputsChecked.length === 0); 
 	}
 	
 	var updateHiddenDataForResponses = function() {
-		var $divQuestion = $('div.question');
 		var $inputsChecked = $divQuestion.find('input:checked');
 		var currentValues = [];
 		$inputsChecked.each(function() {
@@ -28,12 +26,28 @@ var RetraiteQuestions = {};
 		
 	};
 	
+	function enableNextButton() {
+		$nextButton.removeAttr("disabled");
+	}
+	
+	function disableNextButton() {
+		$nextButton.attr("disabled","disabled");	
+	}
+	
 	function updateNextButtonState() {
-		var $nextButton = $(".btn-next");
-		if (areAllVisibleQuestionWithAnswer()) {
-			$nextButton.removeAttr("disabled");
+		if (questionIsOptionnal()) {
+			if (noAnswerChecked()) {
+				$nextButton.val("Aucune de ces situations");
+			} else {
+				$nextButton.val(defaultNextButtonText);
+			}
+			enableNextButton();
 		} else {
-			$nextButton.attr("disabled","disabled");			
+			if (noAnswerChecked()) {
+				disableNextButton();			
+			} else {
+				enableNextButton();
+			}
 		}
 	}
 		
@@ -44,6 +58,11 @@ var RetraiteQuestions = {};
 	}
 	
 	function initJquery() {
+
+		$divQuestion = $('div.question');
+		$nextButton = $(".btn-next");
+		defaultNextButtonText = $nextButton.val();
+
 		$('input.questions-choice').click(function() {
 			// Il faut désynchroniser pour être sûr que les états 'checked' soient fixés (notamment dans le cadre des TU)
 			setTimeout(updateDisplayAndData, 0);
@@ -52,7 +71,6 @@ var RetraiteQuestions = {};
 		updateDisplayAndData();
 	}
 
-	RetraiteQuestions.areAllVisibleQuestionWithAnswer = areAllVisibleQuestionWithAnswer;
 	RetraiteQuestions.initJquery = initJquery;
 
 })();
