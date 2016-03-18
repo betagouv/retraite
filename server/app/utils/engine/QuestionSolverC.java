@@ -11,10 +11,12 @@ import java.util.List;
 
 import utils.engine.data.RegimeLiquidateurAndUserStatus;
 import utils.engine.data.enums.QuestionChoiceValue;
+import utils.engine.data.enums.RegimeAligne;
 
-public class SolverQuestionC {
+public class QuestionSolverC implements QuestionSolver {
 
-	public RegimeLiquidateurAndUserStatus solve(final String liquidateurReponseJsonStr) {
+	@Override
+	public RegimeLiquidateurAndUserStatus solve(final RegimeAligne[] regimesAlignes, final String liquidateurReponseJsonStr) {
 		final List<QuestionChoiceValue> choiceValues = getFromJsonArray(liquidateurReponseJsonStr);
 		if (choiceValues == null) {
 			return new RegimeLiquidateurAndUserStatus(null, null);

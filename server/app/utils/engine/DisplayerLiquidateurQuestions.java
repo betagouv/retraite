@@ -28,12 +28,14 @@ import utils.engine.data.enums.RegimeAligne;
 
 public class DisplayerLiquidateurQuestions {
 
-	private final SolverQuestionA solverQuestionA;
-	private final SolverQuestionB solverQuestionB;
+	private final QuestionSolverA questionSolverA;
+	private final QuestionSolverB questionSolverB;
+	private final QuestionSolverC questionSolverC;
 
-	public DisplayerLiquidateurQuestions(final SolverQuestionA solverQuestionA, final SolverQuestionB solverQuestionB) {
-		this.solverQuestionA = solverQuestionA;
-		this.solverQuestionB = solverQuestionB;
+	public DisplayerLiquidateurQuestions(final QuestionSolverA questionSolverA, final QuestionSolverB questionSolverB, final QuestionSolverC questionSolverC) {
+		this.questionSolverA = questionSolverA;
+		this.questionSolverB = questionSolverB;
+		this.questionSolverC = questionSolverC;
 	}
 
 	public void fillData(final PostData data, final RenderData renderData, final String regimes, final RegimeAligne[] regimesAlignes) {
@@ -54,9 +56,7 @@ public class DisplayerLiquidateurQuestions {
 			}
 		}
 		if (previousStep == QUESTION_A) {
-			final RegimeLiquidateurAndUserStatus solved = solverQuestionA.solve(regimesAlignes, data.liquidateurReponseJsonStr);
-			renderData.hidden_liquidateur = toStringOrNull(solved.getRegimeLiquidateur());
-			renderData.hidden_userStatus = toStringOrNull(solved.getStatus());
+			callQuestionSolverAndStoreResult(data, renderData, regimesAlignes, questionSolverA);
 		}
 		if (isBefore(previousStep, QUESTION_B) && renderData.hidden_liquidateur == null) {
 			renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_B;
@@ -64,9 +64,7 @@ public class DisplayerLiquidateurQuestions {
 			return;
 		}
 		if (previousStep == QUESTION_B) {
-			final RegimeLiquidateurAndUserStatus solved = solverQuestionB.solve(data.liquidateurReponseJsonStr);
-			renderData.hidden_liquidateur = toStringOrNull(solved.getRegimeLiquidateur());
-			renderData.hidden_userStatus = toStringOrNull(solved.getStatus());
+			callQuestionSolverAndStoreResult(data, renderData, regimesAlignes, questionSolverB);
 		}
 		if (isBefore(previousStep, QUESTION_C)) {
 			renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_C;
@@ -75,8 +73,19 @@ public class DisplayerLiquidateurQuestions {
 			}
 			return;
 		}
+		if (previousStep == QUESTION_C) {
+			callQuestionSolverAndStoreResult(data, renderData, regimesAlignes, questionSolverC);
+		}
 
 		// Sinon, on ne fait rien, renderData.hidden_liquidateurStep=null indique qu'il n'y a plus de questions
+	}
+
+	private void callQuestionSolverAndStoreResult(final PostData data, final RenderData renderData, final RegimeAligne[] regimesAlignes,
+			final QuestionSolver solver) {
+		final RegimeLiquidateurAndUserStatus solved = solver.solve(regimesAlignes, data.liquidateurReponseJsonStr);
+		renderData.hidden_liquidateur = toStringOrNull(solved.getRegimeLiquidateur());
+		renderData.hidden_userStatus = toStringOrNull(solved.getStatus());
+		renderData.ecranSortie = solved.getEcranSortie();
 	}
 
 	private boolean isRsiLiquidateur(final PostData data, final RenderData renderData) {

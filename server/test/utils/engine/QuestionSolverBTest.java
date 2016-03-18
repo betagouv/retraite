@@ -23,13 +23,13 @@ import utils.engine.data.enums.QuestionChoiceValue;
 import utils.engine.data.enums.RegimeAligne;
 import utils.engine.data.enums.UserStatus;
 
-public class SolverQuestionBTest {
+public class QuestionSolverBTest {
 
-	private SolverQuestionB solverQuestionB;
+	private QuestionSolverB questionSolverB;
 
 	@Before
 	public void setUp() {
-		solverQuestionB = new SolverQuestionB();
+		questionSolverB = new QuestionSolverB();
 	}
 
 	@Test
@@ -81,7 +81,7 @@ public class SolverQuestionBTest {
 		}
 
 		public TestContext callSolver() {
-			solved = solverQuestionB.solve(liquidateurReponseJsonStr);
+			solved = questionSolverB.solve(null, liquidateurReponseJsonStr);
 			return this;
 		}
 
