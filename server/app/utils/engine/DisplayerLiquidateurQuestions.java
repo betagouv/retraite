@@ -43,13 +43,17 @@ public class DisplayerLiquidateurQuestions {
 	private final QuestionSolverB questionSolverB;
 	private final QuestionSolverC questionSolverC;
 	private final QuestionSolverD questionSolverD;
+	private final QuestionSolverE questionSolverE;
+	private final QuestionSolverF questionSolverF;
 
 	public DisplayerLiquidateurQuestions(final QuestionSolverA questionSolverA, final QuestionSolverB questionSolverB, final QuestionSolverC questionSolverC,
-			final QuestionSolverD questionSolverD) {
+			final QuestionSolverD questionSolverD, final QuestionSolverE questionSolverE, final QuestionSolverF questionSolverF) {
 		this.questionSolverA = questionSolverA;
 		this.questionSolverB = questionSolverB;
 		this.questionSolverC = questionSolverC;
 		this.questionSolverD = questionSolverD;
+		this.questionSolverE = questionSolverE;
+		this.questionSolverF = questionSolverF;
 	}
 
 	public void fillData(final PostData data, final RenderData renderData, final String regimes, final RegimeAligne[] regimesAlignes) {
@@ -63,20 +67,20 @@ public class DisplayerLiquidateurQuestions {
 
 	private void processNextStep(final PostData data, final RenderData renderData, final String regimes, final RegimeAligne[] regimesAlignes) {
 		final LiquidateurQuestionDescriptor2 previousStep = getStep(data.hidden_liquidateurStep);
+
+		callQuestionSolversAndStoreResult(data, renderData, regimesAlignes, previousStep);
+		if (renderData.ecranSortie != null) {
+			return;
+		}
+
 		if (isBefore(previousStep, QUESTION_A) && contains(regimesAlignes, MSA)) {
 			renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_A;
 			return;
-		}
-		if (previousStep == QUESTION_A) {
-			callQuestionSolverAndStoreResult(data, renderData, regimesAlignes, questionSolverA);
 		}
 		if (isBefore(previousStep, QUESTION_B) && isRegimeLiquidateurNotDefined(data, renderData)) {
 			renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_B;
 			renderData.questionLiquidateur.choices = generateSpecificChoicesForQuestionB(regimesAlignes);
 			return;
-		}
-		if (previousStep == QUESTION_B) {
-			callQuestionSolverAndStoreResult(data, renderData, regimesAlignes, questionSolverB);
 		}
 		if (isBefore(previousStep, QUESTION_C) && contains(regimesAlignes, RSI)) {
 			renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_C;
@@ -85,19 +89,10 @@ public class DisplayerLiquidateurQuestions {
 			}
 			return;
 		}
-		if (previousStep == QUESTION_C) {
-			callQuestionSolverAndStoreResult(data, renderData, regimesAlignes, questionSolverC);
-			if (renderData.ecranSortie != null) {
-				return;
-			}
-		}
 		if (isBefore(previousStep, QUESTION_D) && isRegimeLiquidateurNotDefined(data, renderData)) {
 			renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_D;
 			renderData.questionLiquidateur.choices = generateSpecificChoicesForQuestionD(regimesAlignes);
 			return;
-		}
-		if (previousStep == QUESTION_D) {
-			callQuestionSolverAndStoreResult(data, renderData, regimesAlignes, questionSolverD);
 		}
 		if (isBefore(previousStep, QUESTION_E)
 				&& isLiquidateur(data, renderData, MSA)
@@ -115,9 +110,36 @@ public class DisplayerLiquidateurQuestions {
 		// Sinon, on ne fait rien, renderData.hidden_liquidateurStep=null indique qu'il n'y a plus de questions
 	}
 
+	private void callQuestionSolversAndStoreResult(final PostData data, final RenderData renderData, final RegimeAligne[] regimesAlignes,
+			final LiquidateurQuestionDescriptor2 previousStep) {
+		if (previousStep == null) {
+			return;
+		}
+		System.out.println("callQuestionSolversAndStoreResult...");
+		System.out.println("previousStep=" + previousStep);
+		switch (previousStep) {
+		case QUESTION_A:
+			callQuestionSolverAndStoreResult(data, renderData, regimesAlignes, questionSolverA);
+			break;
+		case QUESTION_B:
+			callQuestionSolverAndStoreResult(data, renderData, regimesAlignes, questionSolverB);
+			break;
+		case QUESTION_C:
+			callQuestionSolverAndStoreResult(data, renderData, regimesAlignes, questionSolverC);
+			break;
+		case QUESTION_D:
+			callQuestionSolverAndStoreResult(data, renderData, regimesAlignes, questionSolverD);
+			break;
+		case QUESTION_E:
+			callQuestionSolverAndStoreResult(data, renderData, regimesAlignes, questionSolverE);
+			break;
+		case QUESTION_F:
+			callQuestionSolverAndStoreResult(data, renderData, regimesAlignes, questionSolverF);
+			break;
+		}
+	}
+
 	private boolean isRegimeLiquidateurNotDefined(final PostData data, final RenderData renderData) {
-		System.out.println("isRegimeLiquidateurNotDefined...");
-		System.out.println("renderData.hidden_liquidateur=" + renderData.hidden_liquidateur);
 		return data.hidden_liquidateur == null && renderData.hidden_liquidateur == null;
 	}
 

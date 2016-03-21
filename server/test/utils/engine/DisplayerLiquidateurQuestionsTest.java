@@ -57,6 +57,8 @@ public class DisplayerLiquidateurQuestionsTest {
 	private QuestionSolverB questionSolverBMock;
 	private QuestionSolverC questionSolverCMock;
 	private QuestionSolverD questionSolverDMock;
+	private QuestionSolverE questionSolverEMock;
+	private QuestionSolverF questionSolverFMock;
 
 	private DisplayerLiquidateurQuestions displayerLiquidateurQuestions;
 
@@ -66,22 +68,25 @@ public class DisplayerLiquidateurQuestionsTest {
 		renderData = new RenderData();
 
 		questionSolverAMock = mock(QuestionSolverA.class);
-		when(questionSolverAMock.solve(any(RegimeAligne[].class), anyString()))
-				.thenReturn(new RegimeLiquidateurAndUserStatus());
+		solveNothingWhenCalled(questionSolverAMock);
 
 		questionSolverBMock = mock(QuestionSolverB.class);
-		when(questionSolverBMock.solve(any(RegimeAligne[].class), anyString()))
-				.thenReturn(new RegimeLiquidateurAndUserStatus());
+		solveNothingWhenCalled(questionSolverBMock);
 
 		questionSolverCMock = mock(QuestionSolverC.class);
-		when(questionSolverCMock.solve(any(RegimeAligne[].class), anyString()))
-				.thenReturn(new RegimeLiquidateurAndUserStatus());
+		solveNothingWhenCalled(questionSolverCMock);
 
 		questionSolverDMock = mock(QuestionSolverD.class);
-		when(questionSolverDMock.solve(any(RegimeAligne[].class), anyString()))
-				.thenReturn(new RegimeLiquidateurAndUserStatus());
+		solveNothingWhenCalled(questionSolverDMock);
 
-		displayerLiquidateurQuestions = new DisplayerLiquidateurQuestions(questionSolverAMock, questionSolverBMock, questionSolverCMock, questionSolverDMock);
+		questionSolverEMock = mock(QuestionSolverE.class);
+		solveNothingWhenCalled(questionSolverEMock);
+
+		questionSolverFMock = mock(QuestionSolverF.class);
+		solveNothingWhenCalled(questionSolverFMock);
+
+		displayerLiquidateurQuestions = new DisplayerLiquidateurQuestions(questionSolverAMock, questionSolverBMock, questionSolverCMock, questionSolverDMock,
+				questionSolverEMock, questionSolverFMock);
 	}
 
 	@After
@@ -605,6 +610,7 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
 
+		verifySolverIsCalled(questionSolverEMock);
 		assertThat(renderData.hidden_liquidateurStep).isNull();
 	}
 
@@ -616,6 +622,7 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
 
+		verifySolverIsCalled(questionSolverFMock);
 		assertThat(renderData.hidden_liquidateurStep).isNull();
 	}
 
@@ -632,6 +639,11 @@ public class DisplayerLiquidateurQuestionsTest {
 
 	private void verifySolverIsCalled(final QuestionSolver solver) {
 		verify(solver).solve(any(RegimeAligne[].class), anyString());
+	}
+
+	private void solveNothingWhenCalled(final QuestionSolver questionSolverMock) {
+		when(questionSolverMock.solve(any(RegimeAligne[].class), anyString()))
+				.thenReturn(new RegimeLiquidateurAndUserStatus());
 	}
 
 }
