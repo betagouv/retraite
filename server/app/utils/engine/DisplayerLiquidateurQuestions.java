@@ -62,7 +62,7 @@ public class DisplayerLiquidateurQuestions {
 		if (previousStep == QUESTION_A) {
 			callQuestionSolverAndStoreResult(data, renderData, regimesAlignes, questionSolverA);
 		}
-		if (isBefore(previousStep, QUESTION_B) && isRegimeLiquidateurNotDefined(renderData)) {
+		if (isBefore(previousStep, QUESTION_B) && isRegimeLiquidateurNotDefined(data, renderData)) {
 			renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_B;
 			renderData.questionLiquidateur.choices = generateSpecificChoicesForQuestionB(regimesAlignes);
 			return;
@@ -83,7 +83,7 @@ public class DisplayerLiquidateurQuestions {
 				return;
 			}
 		}
-		if (isBefore(previousStep, QUESTION_D) && isRegimeLiquidateurNotDefined(renderData)) {
+		if (isBefore(previousStep, QUESTION_D) && isRegimeLiquidateurNotDefined(data, renderData)) {
 			renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_D;
 			renderData.questionLiquidateur.choices = generateSpecificChoicesForQuestionD(regimesAlignes);
 			return;
@@ -98,8 +98,10 @@ public class DisplayerLiquidateurQuestions {
 		// Sinon, on ne fait rien, renderData.hidden_liquidateurStep=null indique qu'il n'y a plus de questions
 	}
 
-	private boolean isRegimeLiquidateurNotDefined(final RenderData renderData) {
-		return renderData.hidden_liquidateur == null;
+	private boolean isRegimeLiquidateurNotDefined(final PostData data, final RenderData renderData) {
+		System.out.println("isRegimeLiquidateurNotDefined...");
+		System.out.println("renderData.hidden_liquidateur=" + renderData.hidden_liquidateur);
+		return data.hidden_liquidateur == null && renderData.hidden_liquidateur == null;
 	}
 
 	private void callQuestionSolverAndStoreResult(final PostData data, final RenderData renderData, final RegimeAligne[] regimesAlignes,
