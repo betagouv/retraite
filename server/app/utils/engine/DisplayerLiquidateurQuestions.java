@@ -42,11 +42,14 @@ public class DisplayerLiquidateurQuestions {
 	private final QuestionSolverA questionSolverA;
 	private final QuestionSolverB questionSolverB;
 	private final QuestionSolverC questionSolverC;
+	private final QuestionSolverD questionSolverD;
 
-	public DisplayerLiquidateurQuestions(final QuestionSolverA questionSolverA, final QuestionSolverB questionSolverB, final QuestionSolverC questionSolverC) {
+	public DisplayerLiquidateurQuestions(final QuestionSolverA questionSolverA, final QuestionSolverB questionSolverB, final QuestionSolverC questionSolverC,
+			final QuestionSolverD questionSolverD) {
 		this.questionSolverA = questionSolverA;
 		this.questionSolverB = questionSolverB;
 		this.questionSolverC = questionSolverC;
+		this.questionSolverD = questionSolverD;
 	}
 
 	public void fillData(final PostData data, final RenderData renderData, final String regimes, final RegimeAligne[] regimesAlignes) {
@@ -92,6 +95,9 @@ public class DisplayerLiquidateurQuestions {
 			renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_D;
 			renderData.questionLiquidateur.choices = generateSpecificChoicesForQuestionD(regimesAlignes);
 			return;
+		}
+		if (previousStep == QUESTION_D) {
+			callQuestionSolverAndStoreResult(data, renderData, regimesAlignes, questionSolverD);
 		}
 		if (isBefore(previousStep, QUESTION_E)
 				&& isLiquidateur(data, renderData, MSA)

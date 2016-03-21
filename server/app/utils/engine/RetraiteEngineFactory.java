@@ -48,7 +48,8 @@ public class RetraiteEngineFactory {
 				new DisplayerLiquidateurQuestions(
 						new QuestionSolverA(),
 						new QuestionSolverB(),
-						new QuestionSolverC()),
+						new QuestionSolverC(),
+						new QuestionSolverD()),
 				new DisplayerDepartureDate(new StepFormsDataProvider(dateProvider)),
 				new DisplayerAdditionalQuestions(new QuestionsComplementairesBuilder()), new DisplayerChecklist(
 						new QuestionComplementairesEvaluator(),
