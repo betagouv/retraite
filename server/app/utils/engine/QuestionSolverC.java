@@ -1,6 +1,7 @@
 package utils.engine;
 
 import static utils.engine.data.enums.EcranSortie.ECRAN_SORTIE_PENIBILITE;
+import static utils.engine.data.enums.QuestionChoiceValue.INDEP_AVANT_73;
 import static utils.engine.data.enums.QuestionChoiceValue.INVALIDITE_RSI;
 import static utils.engine.data.enums.QuestionChoiceValue.PENIBILITE;
 import static utils.engine.data.enums.QuestionChoiceValue.getFromJsonArray;
@@ -27,8 +28,11 @@ public class QuestionSolverC implements QuestionSolver {
 		if (choiceValues.contains(INVALIDITE_RSI)) {
 			return new RegimeLiquidateurAndUserStatus(RSI, STATUS_PENIBILITE);
 		}
-		if (choiceValues.contains(QuestionChoiceValue.INDEP_AVANT_73)) {
+		if (choiceValues.contains(INDEP_AVANT_73)) {
 			return new RegimeLiquidateurAndUserStatus(RSI, null);
+		}
+		if (choiceValues.isEmpty()) {
+			return new RegimeLiquidateurAndUserStatus();
 		}
 		throw new IllegalStateException(
 				"Situation non prévu : liquidateurReponseJsonStr=" + liquidateurReponseJsonStr);

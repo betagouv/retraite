@@ -61,12 +61,12 @@ public class DisplayerLiquidateurQuestions {
 		renderData.hidden_regimes = regimes;
 		processNextStep(data, renderData, regimes, regimesAlignes);
 		if (renderData.questionLiquidateur.liquidateurQuestionDescriptor != null) {
-			renderData.hidden_liquidateurStep = renderData.questionLiquidateur.liquidateurQuestionDescriptor.toString();
+			renderData.hidden_liquidateurStep = renderData.questionLiquidateur.liquidateurQuestionDescriptor;
 		}
 	}
 
 	private void processNextStep(final PostData data, final RenderData renderData, final String regimes, final RegimeAligne[] regimesAlignes) {
-		final LiquidateurQuestionDescriptor2 previousStep = getStep(data.hidden_liquidateurStep);
+		final LiquidateurQuestionDescriptor2 previousStep = data.hidden_liquidateurStep;
 
 		callQuestionSolversAndStoreResult(data, renderData, regimesAlignes, previousStep);
 		if (renderData.ecranSortie != null) {
@@ -144,13 +144,19 @@ public class DisplayerLiquidateurQuestions {
 	private void callQuestionSolverAndStoreResult(final PostData data, final RenderData renderData, final RegimeAligne[] regimesAlignes,
 			final QuestionSolver solver) {
 		final RegimeLiquidateurAndUserStatus solved = solver.solve(regimesAlignes, data.liquidateurReponseJsonStr);
-		renderData.hidden_liquidateur = toStringOrNull(solved.getRegimeLiquidateur());
-		renderData.hidden_userStatus = toStringOrNull(solved.getStatus());
+		final RegimeAligne newRegimeLiquidateur = solved.getRegimeLiquidateur();
+		if (newRegimeLiquidateur != null) {
+			renderData.hidden_liquidateur = newRegimeLiquidateur;
+		}
+		final UserStatus newStatus = solved.getStatus();
+		if (newStatus != null) {
+			renderData.hidden_userStatus = newStatus;
+		}
 		renderData.ecranSortie = solved.getEcranSortie();
 	}
 
 	private boolean isLiquidateur(final PostData data, final RenderData renderData, final RegimeAligne regimeAligne) {
-		return regimeAligne.toString().equals(data.hidden_liquidateur) || regimeAligne.toString().equals(renderData.hidden_liquidateur);
+		return regimeAligne == data.hidden_liquidateur || regimeAligne == renderData.hidden_liquidateur;
 	}
 
 	private boolean isOneOrMore(final PostData data, final RenderData renderData, final UserStatus... statuss) {
@@ -163,7 +169,7 @@ public class DisplayerLiquidateurQuestions {
 	}
 
 	private boolean isStatus(final PostData data, final RenderData renderData, final UserStatus status) {
-		return status.toString().equals(data.hidden_userStatus) || status.toString().equals(renderData.hidden_userStatus);
+		return status == data.hidden_userStatus || status == renderData.hidden_userStatus;
 	}
 
 	private List<QuestionChoice> generateSpecificChoicesForQuestionB(final RegimeAligne[] regimesAlignes) {
@@ -220,21 +226,6 @@ public class DisplayerLiquidateurQuestions {
 
 	private boolean isBefore(final LiquidateurQuestionDescriptor2 step1, final LiquidateurQuestionDescriptor2 step2) {
 		return step1 == null || step1.isBefore(step2);
-	}
-
-	private LiquidateurQuestionDescriptor2 getStep(final String step) {
-		if (step == null) {
-			return null;
-		}
-		try {
-			return LiquidateurQuestionDescriptor2.valueOf(step);
-		} catch (final IllegalArgumentException e) {
-			return null;
-		}
-	}
-
-	private String toStringOrNull(final Object o) {
-		return o == null ? null : o.toString();
 	}
 
 }

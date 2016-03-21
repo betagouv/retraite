@@ -20,6 +20,8 @@ import static utils.engine.data.enums.ComplementQuestionDescriptor.CONSULT_RELEV
 import static utils.engine.data.enums.EcranSortie.ECRAN_SORTIE_PENIBILITE;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor.CHEF_EXPLOITATION_AGRICOLE;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor.DERN_ACT_SA_CONJOINT_AUTRE_DOUBLE;
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_A;
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_B;
 import static utils.engine.data.enums.QuestionChoiceValue.CONJOINT;
 import static utils.engine.data.enums.QuestionChoiceValue.NON;
 import static utils.engine.data.enums.RegimeAligne.CNAV;
@@ -326,6 +328,7 @@ public class RetraiteEngineTest {
 		postData.hidden_nir = "1 50 12 18 123 456";
 		postData.hidden_regimes = "d,e";
 		postData.hidden_departement = "973";
+		postData.hidden_liquidateur = RSI;
 		postData.liquidateurReponseJsonStr = liquidateurReponseJsonStr;
 
 		when(calculateurRegimeAlignesMock.getRegimesAlignes(anyString())).thenReturn(new RegimeAligne[] { CNAV, MSA, RSI });
@@ -334,7 +337,7 @@ public class RetraiteEngineTest {
 			@Override
 			public Void answer(final InvocationOnMock invocation) throws Throwable {
 				final RenderData renderData = invocation.getArgumentAt(1, RenderData.class);
-				renderData.hidden_liquidateurStep = "QUESTION_A";
+				renderData.hidden_liquidateurStep = QUESTION_A;
 				return null;
 			}
 		}).when(displayerLiquidateurQuestionsMock).fillData(any(PostData.class), any(RenderData.class), any(String.class),
@@ -349,6 +352,7 @@ public class RetraiteEngineTest {
 		assertThat(renderData.hidden_nir).isEqualTo("1 50 12 18 123 456");
 		assertThat(renderData.hidden_departement).isEqualTo("973");
 		assertThat(renderData.hidden_regimes).isEqualTo("d,e");
+		assertThat(renderData.hidden_liquidateur).isEqualTo(RSI);
 		assertThat(renderData.hidden_liquidateurReponseJsonStr).isEqualTo(liquidateurReponseJsonStr);
 	}
 
@@ -359,7 +363,7 @@ public class RetraiteEngineTest {
 
 		final PostData postData = new PostData();
 		postData.hidden_step = "displayLiquidateurQuestions";
-		postData.hidden_liquidateurStep = "QUESTION_B";
+		postData.hidden_liquidateurStep = QUESTION_B;
 		postData.hidden_nom = "DUPONT";
 		postData.hidden_naissance = "1/2/3";
 		postData.hidden_nir = "1 50 12 18 123 456";
@@ -395,7 +399,7 @@ public class RetraiteEngineTest {
 
 		final PostData postData = new PostData();
 		postData.hidden_step = "displayLiquidateurQuestions";
-		postData.hidden_liquidateurStep = "QUESTION_B";
+		postData.hidden_liquidateurStep = QUESTION_B;
 		postData.hidden_nom = "DUPONT";
 		postData.hidden_naissance = "1/2/3";
 		postData.hidden_nir = "1 50 12 18 123 456";

@@ -30,7 +30,12 @@ public class QuestionSolverCTest {
 	@Test
 	public void test() {
 
-		withAnswer()
+		withAnswerNull()
+				.callSolver()
+				.assertLiquidateurIs(null)
+				.andStateIs(null);
+
+		withAnswerEmpty()
 				.callSolver()
 				.assertLiquidateurIs(null)
 				.andStateIs(null);
@@ -53,8 +58,12 @@ public class QuestionSolverCTest {
 
 	}
 
-	private TestContext withAnswer() {
+	private TestContext withAnswerNull() {
 		return new TestContext();
+	}
+
+	private TestContext withAnswerEmpty() {
+		return new TestContext(new QuestionChoiceValue[0]);
 	}
 
 	private TestContext withAnswer(final QuestionChoiceValue... choiceValues) {

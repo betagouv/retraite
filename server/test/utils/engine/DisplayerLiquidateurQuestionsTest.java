@@ -113,7 +113,7 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
 
-		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_A.toString());
+		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_A);
 		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_A);
 		assertThat(choicesValues(renderData.questionLiquidateur.choices)).isNull();
 	}
@@ -128,7 +128,7 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
 
-		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_B.toString());
+		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_B);
 		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_B);
 		assertThat(choicesValues(renderData.questionLiquidateur.choices)).containsOnly(SALARIE);
 	}
@@ -138,7 +138,7 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		// Step : QUESTION_A --> QUESTION_B avec DEUX_ACTIVITES
 
-		postData.hidden_liquidateurStep = QUESTION_A.toString();
+		postData.hidden_liquidateurStep = QUESTION_A;
 		postData.liquidateurReponseJsonStr = "[\"NSA\"]";
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { MSA, RSI };
 
@@ -148,9 +148,9 @@ public class DisplayerLiquidateurQuestionsTest {
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverAMock);
-		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_B.toString());
+		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_B);
 		assertThat(renderData.hidden_liquidateur).isNull();
-		assertThat(renderData.hidden_userStatus).isEqualTo("STATUS_NSA");
+		assertThat(renderData.hidden_userStatus).isEqualTo(STATUS_NSA);
 		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_B);
 		assertThat(choicesValues(renderData.questionLiquidateur.choices)).containsOnly(NSA, SA, INDEP, CONJOINT_INDEP, DEUX_ACTIVITES);
 	}
@@ -160,13 +160,13 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		// Step : QUESTION_A --> QUESTION_B sans DEUX_ACTIVITES
 
-		postData.hidden_liquidateurStep = QUESTION_A.toString();
+		postData.hidden_liquidateurStep = QUESTION_A;
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { RSI };
 
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverAMock);
-		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_B.toString());
+		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_B);
 		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_B);
 		assertThat(choicesValues(renderData.questionLiquidateur.choices)).containsOnly(INDEP, CONJOINT_INDEP);
 	}
@@ -176,7 +176,7 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		// Step : QUESTION_A --> QUESTION_C (= pas de QUESTION_B si régime liquidateur déterminé)
 
-		postData.hidden_liquidateurStep = QUESTION_A.toString();
+		postData.hidden_liquidateurStep = QUESTION_A;
 		postData.liquidateurReponseJsonStr = "[\"NSA\"]";
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { RSI };
 
@@ -186,9 +186,9 @@ public class DisplayerLiquidateurQuestionsTest {
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverAMock);
-		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_C.toString());
-		assertThat(renderData.hidden_liquidateur).isEqualTo(MSA.toString());
-		assertThat(renderData.hidden_userStatus).isEqualTo("STATUS_NSA");
+		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_C);
+		assertThat(renderData.hidden_liquidateur).isEqualTo(MSA);
+		assertThat(renderData.hidden_userStatus).isEqualTo(STATUS_NSA);
 		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_C);
 		assertThat(choicesValues(renderData.questionLiquidateur.choices)).isNull();
 	}
@@ -198,7 +198,7 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		// Step : QUESTION_A --> QUESTION_E
 
-		postData.hidden_liquidateurStep = QUESTION_A.toString();
+		postData.hidden_liquidateurStep = QUESTION_A;
 		postData.liquidateurReponseJsonStr = "[\"DEUX_ACTIVITES\"]";
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { MSA };
 
@@ -209,8 +209,8 @@ public class DisplayerLiquidateurQuestionsTest {
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverAMock);
-		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_E.toString());
-		assertThat(renderData.hidden_liquidateur).isEqualTo(MSA.toString());
+		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_E);
+		assertThat(renderData.hidden_liquidateur).isEqualTo(MSA);
 		assertThat(renderData.hidden_userStatus).isNull();
 		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_E);
 	}
@@ -220,7 +220,7 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		// Step : QUESTION_A --> (plus de question)
 
-		postData.hidden_liquidateurStep = QUESTION_A.toString();
+		postData.hidden_liquidateurStep = QUESTION_A;
 		postData.liquidateurReponseJsonStr = "[\"NSA\"]";
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { MSA, CNAV };
 
@@ -239,7 +239,7 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		// Step : QUESTION_B --> QUESTION_C sans filtre de choix
 
-		postData.hidden_liquidateurStep = QUESTION_B.toString();
+		postData.hidden_liquidateurStep = QUESTION_B;
 		postData.liquidateurReponseJsonStr = "[\"INDEP\"]";
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { RSI };
 
@@ -249,7 +249,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverBMock);
-		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_C.toString());
+		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_C);
 		assertThat(renderData.hidden_liquidateur).isNull();
 		assertThat(renderData.hidden_userStatus).isNull();
 		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_C);
@@ -261,10 +261,10 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		// Step : QUESTION_B --> QUESTION_C avec filtre pour les choix
 
-		postData.hidden_liquidateurStep = QUESTION_B.toString();
+		postData.hidden_liquidateurStep = QUESTION_B;
 		postData.liquidateurReponseJsonStr = "[\"INDEP\"]";
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { RSI };
-		postData.hidden_liquidateur = RSI.toString();
+		postData.hidden_liquidateur = renderData.hidden_liquidateur = RSI;
 
 		when(questionSolverBMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
@@ -272,7 +272,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverBMock);
-		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_C.toString());
+		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_C);
 		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_C);
 		assertThat(choicesValues(renderData.questionLiquidateur.choices)).containsOnly(INVALIDITE_RSI, PENIBILITE);
 	}
@@ -282,10 +282,10 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		// Step : QUESTION_B --> QUESTION_C avec filtre pour les choix
 
-		postData.hidden_liquidateurStep = QUESTION_B.toString();
+		postData.hidden_liquidateurStep = QUESTION_B;
 		postData.liquidateurReponseJsonStr = "[\"INDEP\"]";
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { RSI };
-		postData.hidden_liquidateur = null;
+		postData.hidden_liquidateur = renderData.hidden_liquidateur = null;
 
 		when(questionSolverBMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus(RSI, STATUS_CHEF));
@@ -293,9 +293,9 @@ public class DisplayerLiquidateurQuestionsTest {
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverBMock);
-		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_C.toString());
-		assertThat(renderData.hidden_liquidateur).isEqualTo(RSI.toString());
-		assertThat(renderData.hidden_userStatus).isEqualTo("STATUS_CHEF");
+		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_C);
+		assertThat(renderData.hidden_liquidateur).isEqualTo(RSI);
+		assertThat(renderData.hidden_userStatus).isEqualTo(STATUS_CHEF);
 		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_C);
 		assertThat(choicesValues(renderData.questionLiquidateur.choices)).containsOnly(INVALIDITE_RSI, PENIBILITE);
 	}
@@ -305,10 +305,10 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		// Step : QUESTION_B --> QUESTION_D
 
-		postData.hidden_liquidateurStep = QUESTION_B.toString();
+		postData.hidden_liquidateurStep = QUESTION_B;
 		postData.liquidateurReponseJsonStr = "[\"INDEP\"]";
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { CNAV };
-		postData.hidden_liquidateur = null;
+		postData.hidden_liquidateur = renderData.hidden_liquidateur = null;
 
 		// Ecran B : réponse "Deux activités en même temps"
 		when(questionSolverBMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
@@ -317,7 +317,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverBMock);
-		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_D.toString());
+		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_D);
 		assertThat(renderData.hidden_liquidateur).isNull();
 		assertThat(renderData.hidden_userStatus).isNull();
 		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_D);
@@ -329,14 +329,14 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		// Step : QUESTION_B --> (plus de question)
 
-		postData.hidden_liquidateurStep = QUESTION_B.toString();
+		postData.hidden_liquidateurStep = QUESTION_B;
 		postData.liquidateurReponseJsonStr = "[]";
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { MSA };
-		postData.hidden_liquidateur = null;
+		postData.hidden_liquidateur = renderData.hidden_liquidateur = null;
 
 		// Ecran B : choix "Chef d'exploitation"
 		when(questionSolverBMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
-				.thenReturn(new RegimeLiquidateurAndUserStatus(RegimeAligne.MSA, STATUS_NSA));
+				.thenReturn(new RegimeLiquidateurAndUserStatus(MSA, STATUS_NSA));
 
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
 
@@ -349,10 +349,10 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		// Step : QUESTION_C --> Ecran de sortie PENINILITE
 
-		postData.hidden_liquidateurStep = QUESTION_C.toString();
+		postData.hidden_liquidateurStep = QUESTION_C;
 		postData.liquidateurReponseJsonStr = "[\"PENIBILITE\"]";
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { RSI };
-		postData.hidden_liquidateur = null;
+		postData.hidden_liquidateur = renderData.hidden_liquidateur = null;
 
 		when(questionSolverCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus(ECRAN_SORTIE_PENIBILITE));
@@ -369,10 +369,10 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		// Step : QUESTION_C --> QUESTION_D sans filtre pour les choix
 
-		postData.hidden_liquidateurStep = QUESTION_C.toString();
+		postData.hidden_liquidateurStep = QUESTION_C;
 		postData.liquidateurReponseJsonStr = "[]";
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { CNAV, MSA, RSI };
-		postData.hidden_liquidateur = null;
+		postData.hidden_liquidateur = renderData.hidden_liquidateur = null;
 
 		when(questionSolverCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
@@ -380,7 +380,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverCMock);
-		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_D.toString());
+		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_D);
 		assertThat(renderData.hidden_liquidateur).isNull();
 		assertThat(renderData.hidden_userStatus).isNull();
 		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_D);
@@ -392,10 +392,10 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		// Step : QUESTION_C --> QUESTION_D avec filtre pour les choix
 
-		postData.hidden_liquidateurStep = QUESTION_C.toString();
+		postData.hidden_liquidateurStep = QUESTION_C;
 		postData.liquidateurReponseJsonStr = "[]";
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { MSA, RSI };
-		postData.hidden_liquidateur = null;
+		postData.hidden_liquidateur = renderData.hidden_liquidateur = null;
 
 		when(questionSolverCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
@@ -403,7 +403,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverCMock);
-		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_D.toString());
+		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_D);
 		assertThat(renderData.hidden_liquidateur).isNull();
 		assertThat(renderData.hidden_userStatus).isNull();
 		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_D);
@@ -415,10 +415,10 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		// Step : QUESTION_C --> QUESTION_E si liquidateur=MSA et ni NSA ni SA
 
-		postData.hidden_liquidateurStep = QUESTION_C.toString();
+		postData.hidden_liquidateurStep = QUESTION_C;
 		postData.liquidateurReponseJsonStr = "[]";
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { MSA };
-		postData.hidden_liquidateur = MSA.toString();
+		postData.hidden_liquidateur = renderData.hidden_liquidateur = MSA;
 
 		when(questionSolverCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
@@ -426,8 +426,8 @@ public class DisplayerLiquidateurQuestionsTest {
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverCMock);
-		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_E.toString());
-		assertThat(renderData.hidden_liquidateur).isNull();
+		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_E);
+		assertThat(renderData.hidden_liquidateur).isEqualTo(MSA);
 		assertThat(renderData.hidden_userStatus).isNull();
 		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_E);
 		assertThat(choicesValues(renderData.questionLiquidateur.choices)).isNull();
@@ -438,10 +438,10 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		// Step : QUESTION_C --> QUESTION_F si liquidateur=RSI et ni CHEF ni CC
 
-		postData.hidden_liquidateurStep = QUESTION_C.toString();
+		postData.hidden_liquidateurStep = QUESTION_C;
 		postData.liquidateurReponseJsonStr = "[]";
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { RSI };
-		postData.hidden_liquidateur = RSI.toString();
+		postData.hidden_liquidateur = renderData.hidden_liquidateur = RSI;
 
 		when(questionSolverCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
@@ -449,8 +449,8 @@ public class DisplayerLiquidateurQuestionsTest {
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverCMock);
-		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_F.toString());
-		assertThat(renderData.hidden_liquidateur).isNull();
+		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_F);
+		assertThat(renderData.hidden_liquidateur).isEqualTo(RSI);
 		assertThat(renderData.hidden_userStatus).isNull();
 		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_F);
 		assertThat(choicesValues(renderData.questionLiquidateur.choices)).isNull();
@@ -461,11 +461,11 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		// Step : QUESTION_C --> (plus de question)
 
-		postData.hidden_liquidateurStep = QUESTION_C.toString();
+		postData.hidden_liquidateurStep = QUESTION_C;
 		postData.liquidateurReponseJsonStr = "[]";
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { MSA };
-		postData.hidden_liquidateur = MSA.toString();
-		postData.hidden_userStatus = STATUS_NSA.toString();
+		postData.hidden_liquidateur = renderData.hidden_liquidateur = MSA;
+		postData.hidden_userStatus = STATUS_NSA;
 
 		when(questionSolverCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
@@ -481,11 +481,11 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		// Step : QUESTION_C --> (plus de question)
 
-		postData.hidden_liquidateurStep = QUESTION_C.toString();
+		postData.hidden_liquidateurStep = QUESTION_C;
 		postData.liquidateurReponseJsonStr = "[]";
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { MSA };
-		postData.hidden_liquidateur = MSA.toString();
-		postData.hidden_userStatus = STATUS_SA.toString();
+		postData.hidden_liquidateur = renderData.hidden_liquidateur = MSA;
+		postData.hidden_userStatus = STATUS_SA;
 
 		when(questionSolverCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
@@ -501,11 +501,11 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		// Step : QUESTION_C --> (plus de question)
 
-		postData.hidden_liquidateurStep = QUESTION_C.toString();
+		postData.hidden_liquidateurStep = QUESTION_C;
 		postData.liquidateurReponseJsonStr = "[]";
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { RSI };
-		postData.hidden_liquidateur = RSI.toString();
-		postData.hidden_userStatus = UserStatus.STATUS_CHEF.toString();
+		postData.hidden_liquidateur = renderData.hidden_liquidateur = RSI;
+		postData.hidden_userStatus = UserStatus.STATUS_CHEF;
 
 		when(questionSolverCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
@@ -521,11 +521,11 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		// Step : QUESTION_C --> (plus de question)
 
-		postData.hidden_liquidateurStep = QUESTION_C.toString();
+		postData.hidden_liquidateurStep = QUESTION_C;
 		postData.liquidateurReponseJsonStr = "[]";
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { RSI };
-		postData.hidden_liquidateur = RSI.toString();
-		postData.hidden_userStatus = UserStatus.STATUS_CONJOINT_COLLABORATEUR.toString();
+		postData.hidden_liquidateur = renderData.hidden_liquidateur = RSI;
+		postData.hidden_userStatus = UserStatus.STATUS_CONJOINT_COLLABORATEUR;
 
 		when(questionSolverCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
@@ -541,10 +541,10 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		// Step : QUESTION_D --> QUESTION_E si liquidateur=MSA et ni NSA ni SA
 
-		postData.hidden_liquidateurStep = QUESTION_D.toString();
+		postData.hidden_liquidateurStep = QUESTION_D;
 		postData.liquidateurReponseJsonStr = "[]";
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { MSA };
-		postData.hidden_liquidateur = MSA.toString();
+		postData.hidden_liquidateur = renderData.hidden_liquidateur = MSA;
 
 		when(questionSolverCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
@@ -552,8 +552,8 @@ public class DisplayerLiquidateurQuestionsTest {
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverDMock);
-		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_E.toString());
-		assertThat(renderData.hidden_liquidateur).isNull();
+		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_E);
+		assertThat(renderData.hidden_liquidateur).isEqualTo(MSA);
 		assertThat(renderData.hidden_userStatus).isNull();
 		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_E);
 		assertThat(choicesValues(renderData.questionLiquidateur.choices)).isNull();
@@ -564,10 +564,10 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		// Step : QUESTION_D --> QUESTION_F si liquidateur=RSI et ni CHEF ni CC
 
-		postData.hidden_liquidateurStep = QUESTION_D.toString();
+		postData.hidden_liquidateurStep = QUESTION_D;
 		postData.liquidateurReponseJsonStr = "[]";
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { RSI };
-		postData.hidden_liquidateur = RSI.toString();
+		postData.hidden_liquidateur = renderData.hidden_liquidateur = RSI;
 
 		when(questionSolverCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
@@ -575,8 +575,8 @@ public class DisplayerLiquidateurQuestionsTest {
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverDMock);
-		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_F.toString());
-		assertThat(renderData.hidden_liquidateur).isNull();
+		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_F);
+		assertThat(renderData.hidden_liquidateur).isEqualTo(RSI);
 		assertThat(renderData.hidden_userStatus).isNull();
 		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_F);
 		assertThat(choicesValues(renderData.questionLiquidateur.choices)).isNull();
@@ -587,11 +587,11 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		// Step : QUESTION_D --> (plus de question)
 
-		postData.hidden_liquidateurStep = QUESTION_D.toString();
+		postData.hidden_liquidateurStep = QUESTION_D;
 		postData.liquidateurReponseJsonStr = "[]";
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { RSI };
-		postData.hidden_liquidateur = RSI.toString();
-		postData.hidden_userStatus = UserStatus.STATUS_CONJOINT_COLLABORATEUR.toString();
+		postData.hidden_liquidateur = renderData.hidden_liquidateur = RSI;
+		postData.hidden_userStatus = UserStatus.STATUS_CONJOINT_COLLABORATEUR;
 
 		when(questionSolverCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
@@ -605,7 +605,7 @@ public class DisplayerLiquidateurQuestionsTest {
 	@Test
 	public void test_plus_de_question_apres_question_E() {
 
-		postData.hidden_liquidateurStep = QUESTION_E.toString();
+		postData.hidden_liquidateurStep = QUESTION_E;
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { CNAV };
 
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
@@ -617,7 +617,7 @@ public class DisplayerLiquidateurQuestionsTest {
 	@Test
 	public void test_plus_de_question_apres_question_F() {
 
-		postData.hidden_liquidateurStep = QUESTION_F.toString();
+		postData.hidden_liquidateurStep = QUESTION_F;
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { CNAV };
 
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
