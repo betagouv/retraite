@@ -115,8 +115,6 @@ public class DisplayerLiquidateurQuestions {
 		if (previousStep == null) {
 			return;
 		}
-		System.out.println("callQuestionSolversAndStoreResult...");
-		System.out.println("previousStep=" + previousStep);
 		switch (previousStep) {
 		case QUESTION_A:
 			callQuestionSolverAndStoreResult(data, renderData, regimesAlignes, questionSolverA);
