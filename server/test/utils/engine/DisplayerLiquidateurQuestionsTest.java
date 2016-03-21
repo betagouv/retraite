@@ -288,6 +288,30 @@ public class DisplayerLiquidateurQuestionsTest {
 	}
 
 	@Test
+	public void test_question_D_apres_question_B() {
+
+		// Step : QUESTION_B --> QUESTION_D
+
+		postData.hidden_liquidateurStep = "QUESTION_B";
+		postData.liquidateurReponseJsonStr = "[\"INDEP\"]";
+		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { CNAV };
+		postData.hidden_liquidateur = null;
+
+		// Ecran B : réponse "Deux activités en même temps"
+		when(solverQuestionBMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
+				.thenReturn(new RegimeLiquidateurAndUserStatus());
+
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+
+		verifySolverIsCalled(solverQuestionBMock);
+		assertThat(renderData.hidden_liquidateurStep).isEqualTo("QUESTION_D");
+		assertThat(renderData.hidden_liquidateur).isNull();
+		assertThat(renderData.hidden_userStatus).isNull();
+		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_D);
+		assertThat(choicesValues(renderData.questionLiquidateur.choices)).containsOnly(QuestionChoiceValue.SANTE_CPAM);
+	}
+
+	@Test
 	public void test_plus_de_question_apres_question_B_si_regime_liquidateur_MSA_determine() {
 
 		// Step : QUESTION_B --> (plus de question)
