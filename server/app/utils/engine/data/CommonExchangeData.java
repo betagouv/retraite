@@ -1,5 +1,7 @@
 package utils.engine.data;
 
+import java.util.List;
+
 import utils.engine.data.enums.LiquidateurQuestionDescriptor2;
 import utils.engine.data.enums.RegimeAligne;
 import utils.engine.data.enums.UserStatus;
@@ -19,6 +21,6 @@ public class CommonExchangeData {
 	public boolean hidden_attestationCarriereLongue;
 	public LiquidateurQuestionDescriptor2 hidden_liquidateurStep;
 	public RegimeAligne hidden_liquidateur;
-	public UserStatus hidden_userStatus;
+	public List<UserStatus> hidden_userStatus;
 
 }
