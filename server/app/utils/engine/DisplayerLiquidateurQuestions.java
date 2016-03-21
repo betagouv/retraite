@@ -6,6 +6,7 @@ import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_B;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_C;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_D;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_E;
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_F;
 import static utils.engine.data.enums.QuestionChoiceValue.CONJOINT_INDEP;
 import static utils.engine.data.enums.QuestionChoiceValue.DEUX_ACTIVITES;
 import static utils.engine.data.enums.QuestionChoiceValue.INDEP;
@@ -20,6 +21,10 @@ import static utils.engine.data.enums.QuestionChoiceValue.SANTE_RSI;
 import static utils.engine.data.enums.RegimeAligne.CNAV;
 import static utils.engine.data.enums.RegimeAligne.MSA;
 import static utils.engine.data.enums.RegimeAligne.RSI;
+import static utils.engine.data.enums.UserStatus.STATUS_CHEF;
+import static utils.engine.data.enums.UserStatus.STATUS_CONJOINT_COLLABORATEUR;
+import static utils.engine.data.enums.UserStatus.STATUS_NSA;
+import static utils.engine.data.enums.UserStatus.STATUS_SA;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,8 +95,14 @@ public class DisplayerLiquidateurQuestions {
 		}
 		if (isBefore(previousStep, QUESTION_E)
 				&& isLiquidateur(data, renderData, MSA)
-				&& !isOneOrMore(data, renderData, UserStatus.STATUS_NSA, UserStatus.STATUS_SA)) {
+				&& !isOneOrMore(data, renderData, STATUS_NSA, STATUS_SA)) {
 			renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_E;
+			return;
+		}
+		if (isBefore(previousStep, QUESTION_F)
+				&& isLiquidateur(data, renderData, RSI)
+				&& !isOneOrMore(data, renderData, STATUS_CHEF, STATUS_CONJOINT_COLLABORATEUR)) {
+			renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_F;
 			return;
 		}
 
