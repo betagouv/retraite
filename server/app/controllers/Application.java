@@ -1,5 +1,6 @@
 package controllers;
 
+import static controllers.utils.DataUnbinder.unbind;
 import static utils.dao.DaoChecklistFactory.createDaoChecklist;
 
 import java.io.ByteArrayInputStream;
@@ -29,6 +30,9 @@ import utils.mail.MailSenderWithSendGrid;
 public class Application extends RetraiteController {
 
 	public static void process(final PostData postData, final String test) {
+		if (postData != null) {
+			postData.hidden_userStatus = unbind(params.get("postData.hidden_userStatus"));
+		}
 		final boolean isTest = params._contains("test");
 		final RenderData data = RetraiteEngineFactory.create().processToNextStep(postData);
 		renderTemplate("Application/steps/" + data.hidden_step + ".html", data, isTest);

@@ -150,9 +150,18 @@ public class DisplayerLiquidateurQuestions {
 		}
 		final UserStatus newStatus = solved.getStatus();
 		if (newStatus != null) {
-			renderData.hidden_userStatus = newStatus;
+			renderData.hidden_userStatus = add(renderData.hidden_userStatus, newStatus);
 		}
 		renderData.ecranSortie = solved.getEcranSortie();
+	}
+
+	private List<UserStatus> add(final List<UserStatus> current, final UserStatus newStatus) {
+		final List<UserStatus> news = new ArrayList<>();
+		if (current != null) {
+			news.addAll(current);
+		}
+		news.add(newStatus);
+		return news;
 	}
 
 	private boolean isLiquidateur(final PostData data, final RenderData renderData, final RegimeAligne regimeAligne) {
@@ -169,7 +178,7 @@ public class DisplayerLiquidateurQuestions {
 	}
 
 	private boolean isStatus(final PostData data, final RenderData renderData, final UserStatus status) {
-		return status == data.hidden_userStatus || status == renderData.hidden_userStatus;
+		return contains(data.hidden_userStatus, status) || contains(renderData.hidden_userStatus, status);
 	}
 
 	private List<QuestionChoice> generateSpecificChoicesForQuestionB(final RegimeAligne[] regimesAlignes) {
