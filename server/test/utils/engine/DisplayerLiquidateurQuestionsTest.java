@@ -21,6 +21,7 @@ import static utils.engine.data.enums.QuestionChoiceValue.NSA;
 import static utils.engine.data.enums.QuestionChoiceValue.PENIBILITE;
 import static utils.engine.data.enums.QuestionChoiceValue.SA;
 import static utils.engine.data.enums.QuestionChoiceValue.SALARIE;
+import static utils.engine.data.enums.QuestionChoiceValue.SANTE_CPAM;
 import static utils.engine.data.enums.QuestionChoiceValue.SANTE_MSA;
 import static utils.engine.data.enums.QuestionChoiceValue.SANTE_RSI;
 import static utils.engine.data.enums.RegimeAligne.CNAV;
@@ -43,6 +44,7 @@ import utils.engine.data.RenderData;
 import utils.engine.data.enums.LiquidateurQuestionDescriptor2;
 import utils.engine.data.enums.QuestionChoiceValue;
 import utils.engine.data.enums.RegimeAligne;
+import utils.engine.data.enums.UserStatus;
 
 public class DisplayerLiquidateurQuestionsTest {
 
@@ -308,7 +310,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		assertThat(renderData.hidden_liquidateur).isNull();
 		assertThat(renderData.hidden_userStatus).isNull();
 		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_D);
-		assertThat(choicesValues(renderData.questionLiquidateur.choices)).containsOnly(QuestionChoiceValue.SANTE_CPAM);
+		assertThat(choicesValues(renderData.questionLiquidateur.choices)).containsOnly(SANTE_CPAM);
 	}
 
 	@Test
@@ -395,6 +397,69 @@ public class DisplayerLiquidateurQuestionsTest {
 		assertThat(renderData.hidden_userStatus).isNull();
 		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_D);
 		assertThat(choicesValues(renderData.questionLiquidateur.choices)).containsOnly(SANTE_MSA, SANTE_RSI);
+	}
+
+	@Test
+	public void test_question_E_apres_question_C_sans_etats_NSA_SA() {
+
+		// Step : QUESTION_C --> QUESTION_E si liquidateur=MSA et ni NSA ni SA
+
+		postData.hidden_liquidateurStep = "QUESTION_C";
+		postData.liquidateurReponseJsonStr = "[]";
+		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { MSA };
+		postData.hidden_liquidateur = "MSA";
+
+		when(solverQuestionCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
+				.thenReturn(new RegimeLiquidateurAndUserStatus());
+
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+
+		verifySolverIsCalled(solverQuestionCMock);
+		assertThat(renderData.hidden_liquidateurStep).isEqualTo("QUESTION_E");
+		assertThat(renderData.hidden_liquidateur).isNull();
+		assertThat(renderData.hidden_userStatus).isNull();
+		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_E);
+		assertThat(choicesValues(renderData.questionLiquidateur.choices)).isNull();
+	}
+
+	@Test
+	public void test_plus_de_question_apres_question_C_avec_etats_NSA() {
+
+		// Step : QUESTION_C --> (plus de question)
+
+		postData.hidden_liquidateurStep = "QUESTION_C";
+		postData.liquidateurReponseJsonStr = "[]";
+		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { MSA };
+		postData.hidden_liquidateur = "MSA";
+		postData.hidden_userStatus = UserStatus.STATUS_NSA.toString();
+
+		when(solverQuestionCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
+				.thenReturn(new RegimeLiquidateurAndUserStatus());
+
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+
+		verifySolverIsCalled(solverQuestionCMock);
+		assertThat(renderData.hidden_liquidateurStep).isNull();
+	}
+
+	@Test
+	public void test_plus_de_question_apres_question_C_avec_etats_SA() {
+
+		// Step : QUESTION_C --> (plus de question)
+
+		postData.hidden_liquidateurStep = "QUESTION_C";
+		postData.liquidateurReponseJsonStr = "[]";
+		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { MSA };
+		postData.hidden_liquidateur = "MSA";
+		postData.hidden_userStatus = UserStatus.STATUS_SA.toString();
+
+		when(solverQuestionCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
+				.thenReturn(new RegimeLiquidateurAndUserStatus());
+
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+
+		verifySolverIsCalled(solverQuestionCMock);
+		assertThat(renderData.hidden_liquidateurStep).isNull();
 	}
 
 	@Test
