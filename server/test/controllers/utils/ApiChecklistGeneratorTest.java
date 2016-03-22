@@ -7,13 +7,16 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static utils.engine.data.enums.RegimeAligne.CNAV;
+import static utils.engine.data.enums.RegimeAligne.RSI;
+
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import controllers.data.ApiUserChecklistParams;
 import utils.engine.data.ComplementReponses;
-import utils.engine.data.LiquidateurReponses;
 import utils.engine.data.MonthAndYear;
 import utils.engine.data.RenderData;
 import utils.engine.data.UserChecklistGenerationData;
@@ -54,7 +57,7 @@ public class ApiChecklistGeneratorTest {
 		apiUserChecklistParams.departAnnee = "2017";
 		apiUserChecklistParams.dateNaissance = "07/10/1954";
 		apiUserChecklistParams.regimes = new Regime[0];
-		apiUserChecklistParams.regimeLiquidateur = "CNAV";
+		apiUserChecklistParams.regimeLiquidateur = CNAV;
 		data = apiRestUserChecklistGenerator.generate(apiUserChecklistParams);
 		assertThat(data.errorMessage).isEqualTo("Le paramètre 'departement' est manquant");
 
@@ -65,7 +68,7 @@ public class ApiChecklistGeneratorTest {
 		apiUserChecklistParams.departAnnee = "2017";
 		apiUserChecklistParams.dateNaissance = "07/10/1954";
 		apiUserChecklistParams.regimes = new Regime[0];
-		apiUserChecklistParams.regimeLiquidateur = "CNAV";
+		apiUserChecklistParams.regimeLiquidateur = CNAV;
 		data = apiRestUserChecklistGenerator.generate(apiUserChecklistParams);
 		assertThat(data.errorMessage).isEqualTo("Le paramètre 'departMois' est manquant");
 
@@ -76,7 +79,7 @@ public class ApiChecklistGeneratorTest {
 		// apiUserChecklistParams.departAnnee = "2017";
 		apiUserChecklistParams.dateNaissance = "07/10/1954";
 		apiUserChecklistParams.regimes = new Regime[0];
-		apiUserChecklistParams.regimeLiquidateur = "CNAV";
+		apiUserChecklistParams.regimeLiquidateur = CNAV;
 		data = apiRestUserChecklistGenerator.generate(apiUserChecklistParams);
 		assertThat(data.errorMessage).isEqualTo("Le paramètre 'departAnnee' est manquant");
 
@@ -87,7 +90,7 @@ public class ApiChecklistGeneratorTest {
 		// On ne renseigne pas ce champ :
 		// apiUserChecklistParams.dateNaissance = "07/10/1954";
 		apiUserChecklistParams.regimes = new Regime[0];
-		apiUserChecklistParams.regimeLiquidateur = "CNAV";
+		apiUserChecklistParams.regimeLiquidateur = CNAV;
 		data = apiRestUserChecklistGenerator.generate(apiUserChecklistParams);
 		assertThat(data.errorMessage).isEqualTo("Le paramètre 'dateNaissance' est manquant");
 
@@ -108,7 +111,7 @@ public class ApiChecklistGeneratorTest {
 		apiUserChecklistParams.departAnnee = "2017";
 		apiUserChecklistParams.dateNaissance = "07/10/1954";
 		apiUserChecklistParams.regimes = new Regime[0];
-		apiUserChecklistParams.regimeLiquidateur = "CNAV";
+		apiUserChecklistParams.regimeLiquidateur = CNAV;
 		data = apiRestUserChecklistGenerator.generate(apiUserChecklistParams);
 		assertThat(data.errorMessage).isNull();
 
@@ -118,7 +121,7 @@ public class ApiChecklistGeneratorTest {
 	public void should_generate_data() {
 		final UserChecklistGenerationData userChecklistGenerationData = UserChecklistGenerationData.create().get();
 		when(userChecklistGenerationDataBuilderMock.build(any(MonthAndYear.class), any(String.class), any(Regime[].class), any(RegimeAligne[].class),
-				any(LiquidateurReponses.class), any(ComplementReponses.class), anyBoolean(), anyBoolean(), anyBoolean()))
+				any(RegimeAligne.class), any(ComplementReponses.class), anyBoolean(), anyBoolean(), anyBoolean(), any(List.class)))
 						.thenReturn(userChecklistGenerationData);
 		when(calculateurRegimeAlignesMock.getRegimesAlignes(new Regime[] { Regime.CNAV })).thenReturn(new RegimeAligne[] { RegimeAligne.CNAV });
 
@@ -132,7 +135,7 @@ public class ApiChecklistGeneratorTest {
 		apiUserChecklistParams.regimes = new Regime[] { Regime.CNAV };
 		apiUserChecklistParams.parcoursDemat = true;
 		apiUserChecklistParams.published = false;
-		apiUserChecklistParams.regimeLiquidateur = "RSI";
+		apiUserChecklistParams.regimeLiquidateur = RSI;
 
 		final RenderData data = apiRestUserChecklistGenerator.generate(apiUserChecklistParams);
 
@@ -148,12 +151,13 @@ public class ApiChecklistGeneratorTest {
 				"973",
 				new Regime[] { Regime.CNAV },
 				new RegimeAligne[] { RegimeAligne.CNAV },
-				new LiquidateurReponses(),
+				RSI,
 				new ComplementReponses(),
 				true,
 				false,
-				false);
-		verify(userChecklistGeneratorMock).generate(eq(ChecklistName.RSI), eq(userChecklistGenerationData), any(LiquidateurReponses.class));
+				false,
+				null /* ? */);
+		verify(userChecklistGeneratorMock).generate(eq(ChecklistName.RSI), eq(userChecklistGenerationData));
 	}
 
 }

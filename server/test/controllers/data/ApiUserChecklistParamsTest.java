@@ -2,6 +2,7 @@ package controllers.data;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.fail;
+import static utils.engine.data.enums.RegimeAligne.MSA;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -44,7 +45,7 @@ public class ApiUserChecklistParamsTest {
 		assertThat(paramsResult.nir).isEqualTo("1223344567890");
 		assertThat(paramsResult.departMois).isEqualTo("11");
 		assertThat(paramsResult.departAnnee).isEqualTo("2017");
-		assertThat(paramsResult.regimeLiquidateur).isEqualTo("MSA");
+		assertThat(paramsResult.regimeLiquidateur).isEqualTo(MSA);
 		assertThat(paramsResult.regimes).isEqualTo(new Regime[] { Regime.CNAV, Regime.RSI });
 		assertThat(paramsResult.parcoursDemat).isTrue();
 

@@ -5,7 +5,6 @@ import static org.junit.Assert.fail;
 import java.util.List;
 
 import utils.engine.data.ComplementReponses;
-import utils.engine.data.LiquidateurReponses;
 import utils.engine.data.QuestionChoice;
 import utils.engine.data.enums.ComplementQuestionDescriptor;
 import utils.engine.data.enums.LiquidateurQuestionDescriptor;
@@ -17,14 +16,14 @@ public class TestsUtils {
 		return jsonString.replaceAll("''", "££").replaceAll("'", "\"").replaceAll("££", "'");
 	}
 
-	public static void assertReponseValuesAreInQuestions(final LiquidateurReponses reponses) {
-		for (final LiquidateurQuestionDescriptor liquidateurQuestionDescriptor : reponses.getReponses().keySet()) {
-			final List<QuestionChoiceValue> values = reponses.getReponses().get(liquidateurQuestionDescriptor);
-			for (final QuestionChoiceValue value : values) {
-				assertReponseValueIsInQuestion(liquidateurQuestionDescriptor, value);
-			}
-		}
-	}
+	// public static void assertReponseValuesAreInQuestions(final LiquidateurReponses reponses) {
+	// for (final LiquidateurQuestionDescriptor liquidateurQuestionDescriptor : reponses.getReponses().keySet()) {
+	// final List<QuestionChoiceValue> values = reponses.getReponses().get(liquidateurQuestionDescriptor);
+	// for (final QuestionChoiceValue value : values) {
+	// assertReponseValueIsInQuestion(liquidateurQuestionDescriptor, value);
+	// }
+	// }
+	// }
 
 	public static void assertReponseValuesAreInQuestions(final ComplementReponses reponses) {
 		for (final ComplementQuestionDescriptor complementQuestionDescriptor : reponses.getReponses().keySet()) {

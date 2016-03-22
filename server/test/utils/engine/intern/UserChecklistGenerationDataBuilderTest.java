@@ -1,19 +1,26 @@
 package utils.engine.intern;
 
+import static java.util.Arrays.asList;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static utils.engine.data.enums.RegimeAligne.CNAV;
+import static utils.engine.data.enums.UserStatus.STATUS_CONJOINT_COLLABORATEUR;
+import static utils.engine.data.enums.UserStatus.STATUS_NSA;
+import static utils.engine.data.enums.UserStatus.STATUS_SA;
+
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import utils.engine.data.ComplementReponses;
-import utils.engine.data.LiquidateurReponses;
 import utils.engine.data.MonthAndYear;
 import utils.engine.data.UserChecklistGenerationData;
 import utils.engine.data.enums.Regime;
 import utils.engine.data.enums.RegimeAligne;
+import utils.engine.data.enums.UserStatus;
 
 public class UserChecklistGenerationDataBuilderTest {
 
@@ -35,16 +42,14 @@ public class UserChecklistGenerationDataBuilderTest {
 		final MonthAndYear dateDepart = new MonthAndYear();
 		final Regime[] regimes = new Regime[] { Regime.CNAV };
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { RegimeAligne.CNAV };
-		final LiquidateurReponses liquidateurReponses = new LiquidateurReponses();
 		final ComplementReponses complementReponses = new ComplementReponses();
+		final RegimeAligne regimeLiquidateur = CNAV;
+		final List<UserStatus> userStatus = asList(STATUS_NSA, STATUS_CONJOINT_COLLABORATEUR, STATUS_SA);
 
-		when(liquidateurReponsesEvaluatorMock.isConjointCollaborateur(liquidateurReponses)).thenReturn(true);
-		when(liquidateurReponsesEvaluatorMock.isNSA(liquidateurReponses)).thenReturn(true);
-		when(liquidateurReponsesEvaluatorMock.isSA(liquidateurReponses)).thenReturn(true);
 		when(liquidateurReponsesEvaluatorMock.isCarriereAReconstituer(complementReponses)).thenReturn(true);
 
 		final UserChecklistGenerationData userChecklistGenerationData = userChecklistGenerationDataBuilder.build(dateDepart, "973", regimes, regimesAlignes,
-				liquidateurReponses, complementReponses, true, false, true);
+				regimeLiquidateur, complementReponses, true, false, true, userStatus);
 
 		assertThat(userChecklistGenerationData.getDateDepart()).isSameAs(dateDepart);
 		assertThat(userChecklistGenerationData.getDepartement()).isEqualTo("973");
@@ -53,9 +58,6 @@ public class UserChecklistGenerationDataBuilderTest {
 		assertThat(userChecklistGenerationData.isParcoursDematIfExist()).isTrue();
 		assertThat(userChecklistGenerationData.published).isFalse();
 
-		verify(liquidateurReponsesEvaluatorMock).isConjointCollaborateur(liquidateurReponses);
-		verify(liquidateurReponsesEvaluatorMock).isNSA(liquidateurReponses);
-		verify(liquidateurReponsesEvaluatorMock).isSA(liquidateurReponses);
 		verify(liquidateurReponsesEvaluatorMock).isCarriereAReconstituer(complementReponses);
 
 		assertThat(userChecklistGenerationData.isConjointCollaborateur).isTrue();

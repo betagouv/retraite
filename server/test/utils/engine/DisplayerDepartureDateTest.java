@@ -4,7 +4,6 @@ import static java.util.Arrays.asList;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static utils.JsonUtils.toJson;
 
 import java.util.List;
 
@@ -12,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import controllers.data.PostData;
-import utils.engine.data.LiquidateurReponses;
 import utils.engine.data.RenderData;
 import utils.engine.data.ValueAndText;
 import utils.engine.intern.StepFormsDataProvider;
@@ -50,11 +48,8 @@ public class DisplayerDepartureDateTest {
 	@Test
 	public void step_display_departure_date() {
 
-		final LiquidateurReponses liquidateurReponse = RetraiteEngineTest.createLiquidateurReponses();
-		final String liquidateurReponseJsonStr = toJson(liquidateurReponse.getReponses());
-
 		final PostData postData = new PostData();
-		postData.liquidateurReponseJsonStr = liquidateurReponseJsonStr;
+		postData.liquidateurReponseJsonStr = null;
 		final RenderData renderData = new RenderData();
 
 		displayerDepartureDate.fillData(postData, renderData, null);
