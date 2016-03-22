@@ -57,12 +57,12 @@ public class Application extends RetraiteController {
 	private static final boolean AS_HTML = false;
 	private static final boolean RENDER_PDF_WITH_I_TEXT = true;
 
-	public static void pdf(final PostData postData) {
+	public static void pdf(final PostData postData, final String html) {
 
 		final RenderData data = RetraiteEngineFactory.create().processToNextStep(postData);
 		data.isPDF = true;
 
-		if (AS_HTML) {
+		if (AS_HTML || params._contains("html")) {
 			// Rendu HTML pour mise au point
 			render(data);
 		}
