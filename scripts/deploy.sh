@@ -23,17 +23,26 @@ if [ -n "$(git diff --exit-code)" ]; then
 fi
 
 # Génération de l'application cliente
+echo
+echo "Génération de l'application cliente ..."
+echo
 cd client
 grunt build
 cd ..
 
 # Copie de l'application client dans le serveur
+echo
+echo "Copie de l'application client dans le serveur..."
+echo
 rm -rf server/www/*
 cp -R client/www/ server/www
 
 cd server
 
 # Commit Git
+echo
+echo "Git : commit et tag..."
+echo
 git status
 read -p "Une touche pour continuer ..."
 git add .
@@ -41,6 +50,9 @@ git commit -am "deploy_$ENV_$(date +%Y-%m-%d_%H-%M-%S)"
 git tag "deploy_$ENV_$(date +%Y-%m-%d_%H-%M-%S)"
 
 # Deploiement
+echo
+echo "Déploiement..."
+echo
 rsync -rv --exclude-from=rsync.exclude.txt --delete . $REMOTE_USER@vm_retraite:/home/$REMOTE_DIR/retraite
 ssh $REMOTE_USER@vm_retraite "cd /home/$REMOTE_DIR/retraite && source ../set-retraite-env.sh && /home/deploy/play-1.3.1/play evolutions:apply --%$ENV && /home/deploy/play-1.3.1/play deps --sync && /home/deploy/play-1.3.1/play restart --%$ENV"
 cd ..
