@@ -1,5 +1,6 @@
 package utils.engine;
 
+import static java.util.Arrays.asList;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
@@ -10,6 +11,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static utils.JsonUtils.toJson;
 import static utils.engine.data.enums.RegimeAligne.CNAV;
+import static utils.engine.data.enums.UserStatus.STATUS_CHEF;
+
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,13 +21,13 @@ import org.junit.Test;
 import controllers.data.PostData;
 import utils.RetraiteException;
 import utils.engine.data.ComplementReponses;
-import utils.engine.data.LiquidateurReponses;
 import utils.engine.data.MonthAndYear;
 import utils.engine.data.RenderData;
 import utils.engine.data.UserChecklist;
 import utils.engine.data.UserChecklistGenerationData;
 import utils.engine.data.enums.Regime;
 import utils.engine.data.enums.RegimeAligne;
+import utils.engine.data.enums.UserStatus;
 import utils.engine.intern.CalculateurRegimeAlignes;
 import utils.engine.intern.QuestionComplementairesEvaluator;
 import utils.engine.intern.UserChecklistGenerationDataBuilder;
@@ -57,8 +61,6 @@ public class DisplayerChecklistTest {
 		final ComplementReponses complementReponse = RetraiteEngineTest.createComplementReponses();
 		final String complementReponseJsonStr = toJson(complementReponse.getReponses());
 		final UserChecklist userChecklistMock = RetraiteEngineTest.createUserChecklist();
-		final LiquidateurReponses liquidateurReponse = RetraiteEngineTest.createLiquidateurReponses();
-		final String liquidateurReponseJsonStr = toJson(liquidateurReponse.getReponses());
 
 		final PostData postData = new PostData();
 		postData.hidden_step = "displayAdditionalQuestions";
@@ -67,23 +69,25 @@ public class DisplayerChecklistTest {
 		postData.hidden_nir = "1 50 12 18 123 456";
 		postData.hidden_departement = "973";
 		postData.hidden_regimes = "CNAV";
-		postData.hidden_liquidateurReponseJsonStr = liquidateurReponseJsonStr;
+		postData.hidden_liquidateurReponseJsonStr = null;
 		postData.hidden_departMois = "11";
 		postData.hidden_departAnnee = "2017";
 		postData.hidden_attestationCarriereLongue = true;
 		postData.complementReponseJsonStr = complementReponseJsonStr;
+		postData.hidden_liquidateur = CNAV;
 
 		final MonthAndYear dateDepart = new MonthAndYear("11", "2017");
 		final Regime[] regimes = new Regime[] { Regime.CNAV };
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { CNAV };
 		final UserChecklistGenerationData userChecklistGenerationData = new UserChecklistGenerationData(dateDepart, "973", regimes, regimesAlignes,
 				false, true);
+		final List<UserStatus> userStatus = asList(STATUS_CHEF);
 
 		when(calculateurRegimeAlignesMock.getRegimesAlignes("CNAV")).thenReturn(regimesAlignes);
 		when(questionComplementairesEvaluatorMock.isParcoursDemat(complementReponse)).thenReturn(true);
-		when(userChecklistGenerationDataBuilderMock.build(eq(dateDepart), eq("973"), eq(regimes), eq(regimesAlignes), eq(liquidateurReponse),
-				eq(complementReponse), eq(true), eq(true), eq(true))).thenReturn(userChecklistGenerationData);
-		when(userChecklistGeneratorMock.generate(same(userChecklistGenerationData), eq(liquidateurReponse))).thenReturn(userChecklistMock);
+		when(userChecklistGenerationDataBuilderMock.build(eq(dateDepart), eq("973"), eq(regimes), eq(regimesAlignes), eq(postData.hidden_liquidateur),
+				eq(complementReponse), eq(true), eq(true), eq(true), eq(userStatus))).thenReturn(userChecklistGenerationData);
+		when(userChecklistGeneratorMock.generate(same(userChecklistGenerationData), eq(postData.hidden_liquidateur))).thenReturn(userChecklistMock);
 		final RenderData renderData = new RenderData();
 
 		displayerChecklist.fillData(postData, renderData);
@@ -100,13 +104,14 @@ public class DisplayerChecklistTest {
 		// Step : displayAdditionalQuestions --> displayCheckList
 
 		final UserChecklistGenerationData userChecklistGenerationData = UserChecklistGenerationData.create().get();
+		final List<UserStatus> userStatus = asList(STATUS_CHEF);
 
 		when(calculateurRegimeAlignesMock.getRegimesAlignes(anyString())).thenReturn(new RegimeAligne[] { CNAV });
 		when(userChecklistGenerationDataBuilderMock.build(any(MonthAndYear.class), any(String.class), any(Regime[].class), any(RegimeAligne[].class),
-				any(LiquidateurReponses.class), any(ComplementReponses.class), eq(false), eq(true), eq(true))).thenReturn(userChecklistGenerationData);
+				any(RegimeAligne.class), any(ComplementReponses.class), eq(false), eq(true), eq(true), eq(userStatus))).thenReturn(userChecklistGenerationData);
 
 		// Simulation Exception
-		doThrow(new RetraiteException("xxx")).when(userChecklistGeneratorMock).generate(any(UserChecklistGenerationData.class), any(LiquidateurReponses.class));
+		doThrow(new RetraiteException("xxx")).when(userChecklistGeneratorMock).generate(any(UserChecklistGenerationData.class), any(RegimeAligne.class));
 
 		final PostData postData = new PostData();
 		postData.hidden_step = "displayAdditionalQuestions";

@@ -18,15 +18,13 @@ import static utils.JsonUtils.toJson;
 import static utils.engine.data.enums.ComplementQuestionDescriptor.ACCORD_INFO_RELEVE_CARRIERE;
 import static utils.engine.data.enums.ComplementQuestionDescriptor.CONSULT_RELEVE_CARRIERE;
 import static utils.engine.data.enums.EcranSortie.ECRAN_SORTIE_PENIBILITE;
-import static utils.engine.data.enums.LiquidateurQuestionDescriptor.CHEF_EXPLOITATION_AGRICOLE;
-import static utils.engine.data.enums.LiquidateurQuestionDescriptor.DERN_ACT_SA_CONJOINT_AUTRE_DOUBLE;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_A;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_B;
-import static utils.engine.data.enums.QuestionChoiceValue.CONJOINT;
 import static utils.engine.data.enums.QuestionChoiceValue.NON;
 import static utils.engine.data.enums.RegimeAligne.CNAV;
 import static utils.engine.data.enums.RegimeAligne.MSA;
 import static utils.engine.data.enums.RegimeAligne.RSI;
+import static utils.engine.data.enums.UserStatus.STATUS_CHEF;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +40,6 @@ import utils.RetraiteException;
 import utils.dao.DaoFakeData;
 import utils.engine.data.ComplementReponses;
 import utils.engine.data.Departement;
-import utils.engine.data.LiquidateurReponses;
 import utils.engine.data.MonthAndYear;
 import utils.engine.data.QuestionComplementaire;
 import utils.engine.data.RenderData;
@@ -51,6 +48,7 @@ import utils.engine.data.UserChecklistGenerationData;
 import utils.engine.data.ValueAndText;
 import utils.engine.data.enums.Regime;
 import utils.engine.data.enums.RegimeAligne;
+import utils.engine.data.enums.UserStatus;
 import utils.engine.intern.CalculateurRegimeAlignes;
 import utils.engine.intern.QuestionComplementairesEvaluator;
 import utils.engine.intern.StepFormsDataProvider;
@@ -69,8 +67,6 @@ public class RetraiteEngineTest {
 	private final String allRegimes = "CNAV,CCMSA,AGIRC ARRCO";
 	private final List<ValueAndText> listeMoisAvecPremierMock = asList(vet("1", "1er Janvier"), vet("12", "1er Décembre"));
 	private final List<String> listeAnneesDepartMock = asList("2015", "2016");
-	private final LiquidateurReponses liquidateurReponse = createLiquidateurReponses();
-	private final String liquidateurReponseJsonStr = toJson(liquidateurReponse.getReponses());
 	private final ComplementReponses complementReponse = createComplementReponses();
 	private final String complementReponseJsonStr = toJson(complementReponse.getReponses());
 	private final List<FakeData> fakeDataMock = createFakeDataList();
@@ -87,6 +83,7 @@ public class RetraiteEngineTest {
 	private DisplayerChecklist displayerChecklistMock;
 
 	private RetraiteEngine retraiteEngine;
+	private final String liquidateurReponseJsonStr = "[\"OUI\"]";
 
 	@Before
 	public void setUp() throws Exception {
@@ -563,12 +560,14 @@ public class RetraiteEngineTest {
 		final UserChecklist userChecklistMock = createUserChecklist();
 		final UserChecklistGenerationData userChecklistGenerationData = new UserChecklistGenerationData(dateDepart, "973", regimes, regimesAlignes,
 				false, true);
+		final RegimeAligne regimeLiquidateur = CNAV;
+		final List<UserStatus> userStatus = asList(STATUS_CHEF);
 
 		when(calculateurRegimeAlignesMock.getRegimesAlignes("CNAV")).thenReturn(regimesAlignes);
 		when(questionComplementairesEvaluatorMock.isParcoursDemat(complementReponse)).thenReturn(true);
-		when(userChecklistGenerationDataBuilderMock.build(eq(dateDepart), eq("973"), eq(regimes), eq(regimesAlignes), eq(liquidateurReponse),
-				eq(complementReponse), eq(true), eq(true), eq(true))).thenReturn(userChecklistGenerationData);
-		when(userChecklistGeneratorMock.generate(same(userChecklistGenerationData), eq(liquidateurReponse))).thenReturn(userChecklistMock);
+		when(userChecklistGenerationDataBuilderMock.build(eq(dateDepart), eq("973"), eq(regimes), eq(regimesAlignes), eq(regimeLiquidateur),
+				eq(complementReponse), eq(true), eq(true), eq(true), eq(userStatus))).thenReturn(userChecklistGenerationData);
+		when(userChecklistGeneratorMock.generate(same(userChecklistGenerationData), eq(regimeLiquidateur))).thenReturn(userChecklistMock);
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
 
@@ -597,13 +596,6 @@ public class RetraiteEngineTest {
 
 	static UserChecklist createUserChecklist() {
 		return new UserChecklist();
-	}
-
-	static LiquidateurReponses createLiquidateurReponses() {
-		final LiquidateurReponses liquidateurReponses = new LiquidateurReponses();
-		liquidateurReponses.getReponses().put(CHEF_EXPLOITATION_AGRICOLE, asList(NON));
-		liquidateurReponses.getReponses().put(DERN_ACT_SA_CONJOINT_AUTRE_DOUBLE, asList(CONJOINT));
-		return liquidateurReponses;
 	}
 
 	static ComplementReponses createComplementReponses() {
