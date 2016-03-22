@@ -269,6 +269,7 @@ public class RetraiteEngineTest {
 		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
 		assertThat(renderData.hidden_nir).isEqualTo("1 50 12 18 123 456");
 		assertThat(renderData.hidden_departement).isEqualTo("65");
+		assertThat(renderData.hidden_liquidateur).isEqualTo(CNAV);
 	}
 
 	@Test
@@ -480,6 +481,8 @@ public class RetraiteEngineTest {
 	public void step_display_additionnal_questions_after_carriere_longue() {
 
 		// Step : displayQuestionCarriereLongue --> displayAdditionalQuestions
+		// Provisoire :
+		// Step : displayQuestionCarriereLongue --> displayCheckList
 
 		final PostData postData = new PostData();
 		postData.hidden_step = "displayQuestionCarriereLongue";
@@ -494,7 +497,7 @@ public class RetraiteEngineTest {
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
 
-		verify(displayerAdditionalQuestionsMock).fillData(isA(PostData.class), isA(RenderData.class));
+		verify(displayerChecklistMock).fillData(isA(PostData.class), isA(RenderData.class));
 		assertThat(renderData.hidden_nom).isEqualTo("DUPONT");
 		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
 		assertThat(renderData.hidden_nir).isEqualTo("1 50 12 18 123 456");
@@ -506,43 +509,46 @@ public class RetraiteEngineTest {
 		assertThat(renderData.hidden_attestationCarriereLongue).isTrue();
 	}
 
-	@Test
-	public void step_display_additionnal_questions() {
-
-		// Step : displayDepartureDate --> displayAdditionalQuestions
-
-		final PostData postData = new PostData();
-		postData.hidden_step = "displayDepartureDate";
-		postData.hidden_nom = "DUPONT";
-		postData.hidden_naissance = "1/2/3";
-		postData.hidden_nir = "1 50 12 18 123 456";
-		postData.hidden_departement = "973";
-		postData.hidden_regimes = "a,b,c";
-		postData.hidden_liquidateurReponseJsonStr = liquidateurReponseJsonStr;
-		postData.departMois = "11";
-		postData.departAnnee = "2017";
-		postData.departInconnu = false;
-
-		final RenderData renderData = retraiteEngine.processToNextStep(postData);
-
-		verify(displayerAdditionalQuestionsMock).fillData(isA(PostData.class), isA(RenderData.class));
-		assertThat(renderData.hidden_nom).isEqualTo("DUPONT");
-		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
-		assertThat(renderData.hidden_nir).isEqualTo("1 50 12 18 123 456");
-		assertThat(renderData.hidden_departement).isEqualTo("973");
-		assertThat(renderData.hidden_regimes).isEqualTo("a,b,c");
-		assertThat(renderData.hidden_departMois).isEqualTo("11");
-		assertThat(renderData.hidden_departAnnee).isEqualTo("2017");
-		assertThat(renderData.hidden_liquidateurReponseJsonStr).isEqualTo(liquidateurReponseJsonStr);
-	}
+	// @Test
+	// public void step_display_additionnal_questions() {
+	//
+	// // Step : displayDepartureDate --> displayAdditionalQuestions
+	//
+	// final PostData postData = new PostData();
+	// postData.hidden_step = "displayDepartureDate";
+	// postData.hidden_nom = "DUPONT";
+	// postData.hidden_naissance = "1/2/3";
+	// postData.hidden_nir = "1 50 12 18 123 456";
+	// postData.hidden_departement = "973";
+	// postData.hidden_regimes = "a,b,c";
+	// postData.hidden_liquidateurReponseJsonStr = liquidateurReponseJsonStr;
+	// postData.departMois = "11";
+	// postData.departAnnee = "2017";
+	// postData.departInconnu = false;
+	//
+	// final RenderData renderData = retraiteEngine.processToNextStep(postData);
+	//
+	// verify(displayerAdditionalQuestionsMock).fillData(isA(PostData.class), isA(RenderData.class));
+	// assertThat(renderData.hidden_nom).isEqualTo("DUPONT");
+	// assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
+	// assertThat(renderData.hidden_nir).isEqualTo("1 50 12 18 123 456");
+	// assertThat(renderData.hidden_departement).isEqualTo("973");
+	// assertThat(renderData.hidden_regimes).isEqualTo("a,b,c");
+	// assertThat(renderData.hidden_departMois).isEqualTo("11");
+	// assertThat(renderData.hidden_departAnnee).isEqualTo("2017");
+	// assertThat(renderData.hidden_liquidateurReponseJsonStr).isEqualTo(liquidateurReponseJsonStr);
+	// }
 
 	@Test
 	public void step_display_checklist() {
 
 		// Step : displayAdditionalQuestions --> displayCheckList
+		// Provisoire :
+		// Step : displayDepartureDate --> displayCheckList
 
 		final PostData postData = new PostData();
-		postData.hidden_step = "displayAdditionalQuestions";
+		// postData.hidden_step = "displayAdditionalQuestions";
+		postData.hidden_step = "displayDepartureDate";
 		postData.hidden_nom = "DUPONT";
 		postData.hidden_naissance = "1/2/3";
 		postData.hidden_nir = "1 50 12 18 123 456";
@@ -553,6 +559,10 @@ public class RetraiteEngineTest {
 		postData.hidden_departAnnee = "2017";
 		postData.hidden_attestationCarriereLongue = true;
 		postData.complementReponseJsonStr = complementReponseJsonStr;
+
+		// Temp
+		postData.departMois = "11";
+		postData.departAnnee = "2017";
 
 		final MonthAndYear dateDepart = new MonthAndYear("11", "2017");
 		final Regime[] regimes = new Regime[] { Regime.CNAV };

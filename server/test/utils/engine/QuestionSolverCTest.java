@@ -7,7 +7,7 @@ import static utils.engine.data.enums.QuestionChoiceValue.INDEP_AVANT_73;
 import static utils.engine.data.enums.QuestionChoiceValue.INVALIDITE_RSI;
 import static utils.engine.data.enums.QuestionChoiceValue.PENIBILITE;
 import static utils.engine.data.enums.RegimeAligne.RSI;
-import static utils.engine.data.enums.UserStatus.STATUS_PENIBILITE;
+import static utils.engine.data.enums.UserStatus.STATUS_INVALIDITE_RSI;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -48,7 +48,7 @@ public class QuestionSolverCTest {
 		withAnswer(INDEP_AVANT_73, INVALIDITE_RSI)
 				.callSolver()
 				.assertLiquidateurIs(RSI)
-				.andStateIs(STATUS_PENIBILITE);
+				.andStateIs(STATUS_INVALIDITE_RSI);
 
 		withAnswer(INDEP_AVANT_73, INVALIDITE_RSI, PENIBILITE)
 				.callSolver()

@@ -44,4 +44,13 @@ public class EngineUtils {
 		return list == null ? false : list.contains(elt);
 	}
 
+	public static <T> T firstNotNull(final T... objects) {
+		for (final T object : objects) {
+			if (object != null) {
+				return object;
+			}
+		}
+		return null;
+	}
+
 }

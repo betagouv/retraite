@@ -1,6 +1,7 @@
 package utils.engine;
 
 import static java.util.Arrays.asList;
+import static utils.engine.EngineUtils.firstNotNull;
 import static utils.engine.data.enums.EcranSortie.ECRAN_SORTIE_PENIBILITE;
 
 import java.lang.reflect.Field;
@@ -89,6 +90,7 @@ public class RetraiteEngine {
 				displayerLiquidateurQuestions.fillData(data, renderData, regimes, regimesAlignes);
 				return renderData;
 			}
+			renderData.hidden_liquidateur = regimesAlignes[0];
 			displayerDepartureDate.fillData(data, renderData, regimes);
 		} else if (data.hidden_step.equals("displayLiquidateurQuestions")) {
 			final RegimeAligne[] regimesAlignes = calculateurRegimeAlignes.getRegimesAlignes(data.hidden_regimes);
@@ -108,10 +110,14 @@ public class RetraiteEngine {
 			if (!ageLegalEvaluator.isAgeLegal(data.hidden_naissance, data.departMois, data.departAnnee)) {
 				return displayQuestionCarriereLongue(renderData, data.departMois, data.departAnnee);
 			}
-			displayerAdditionalQuestions.fillData(data, renderData);
+			// Provisoire
+			// displayerAdditionalQuestions.fillData(data, renderData);
+			displayerChecklist.fillData(data, renderData);
 		} else if (data.hidden_step.equals("displayQuestionCarriereLongue")) {
 			renderData.hidden_attestationCarriereLongue = true;
-			displayerAdditionalQuestions.fillData(data, renderData);
+			// Provisoire
+			// displayerAdditionalQuestions.fillData(data, renderData);
+			displayerChecklist.fillData(data, renderData);
 		} else if (data.hidden_step.equals("displayAdditionalQuestions") || data.hidden_step.equals("displayCheckList")) {
 			displayerChecklist.fillData(data, renderData);
 		} else {
@@ -177,15 +183,6 @@ public class RetraiteEngine {
 		} catch (final NoSuchFieldException e) {
 			return null;
 		}
-	}
-
-	private Object firstNotNull(final Object... objects) {
-		for (final Object object : objects) {
-			if (object != null) {
-				return object;
-			}
-		}
-		return null;
 	}
 
 }

@@ -6,7 +6,7 @@ import static utils.engine.data.enums.QuestionChoiceValue.INVALIDITE_RSI;
 import static utils.engine.data.enums.QuestionChoiceValue.PENIBILITE;
 import static utils.engine.data.enums.QuestionChoiceValue.getFromJsonArray;
 import static utils.engine.data.enums.RegimeAligne.RSI;
-import static utils.engine.data.enums.UserStatus.STATUS_PENIBILITE;
+import static utils.engine.data.enums.UserStatus.STATUS_INVALIDITE_RSI;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class QuestionSolverC implements QuestionSolver {
 			return new RegimeLiquidateurAndUserStatus(ECRAN_SORTIE_PENIBILITE);
 		}
 		if (choiceValues.contains(INVALIDITE_RSI)) {
-			return new RegimeLiquidateurAndUserStatus(RSI, STATUS_PENIBILITE);
+			return new RegimeLiquidateurAndUserStatus(RSI, STATUS_INVALIDITE_RSI);
 		}
 		if (choiceValues.contains(INDEP_AVANT_73)) {
 			return new RegimeLiquidateurAndUserStatus(RSI, null);
