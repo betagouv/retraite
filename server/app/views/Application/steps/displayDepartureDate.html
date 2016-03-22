@@ -22,7 +22,7 @@
 			    </select>
 			    <select name='postData.departAnnee' class='form-control xxx-select' required >
 			       	#{list items:data.listeAnneesDepart, as:'annee'}
-			           	<option>${annee}</option>
+			           	<option ${annee_index == 2 ? 'selected' : ''}>${annee}</option>
 			        #{/list}
 			    </select>
 			
