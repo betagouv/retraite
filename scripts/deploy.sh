@@ -29,6 +29,9 @@ echo
 cd client
 grunt build
 if [ $? != 0 ]; then
+    echo
+    echo "Il y a eu une erreur : arrêt du déploiement !"
+    echo
     exit $?
 fi
 cd ..
