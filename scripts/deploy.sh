@@ -28,6 +28,9 @@ echo "Génération de l'application cliente ..."
 echo
 cd client
 grunt build
+if [ $? != 0 ]; then
+    exit $?
+fi
 cd ..
 
 # Copie de l'application client dans le serveur
