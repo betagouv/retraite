@@ -42,6 +42,12 @@ echo "Copie de l'application client dans le serveur..."
 echo
 rm -rf server/www/*
 cp -R client/www/ server/www
+if [ $? != 0 ]; then
+    echo
+    echo "Il y a eu une erreur : arrêt du déploiement !"
+    echo
+    exit $?
+fi
 
 cd server
 
@@ -60,5 +66,19 @@ echo
 echo "Déploiement..."
 echo
 rsync -rv --exclude-from=rsync.exclude.txt --delete . $REMOTE_USER@vm_retraite:/home/$REMOTE_DIR/retraite
+if [ $? != 0 ]; then
+    echo
+    echo "Il y a eu une erreur : arrêt du déploiement !"
+    echo
+    exit $?
+fi
 ssh $REMOTE_USER@vm_retraite "cd /home/$REMOTE_DIR/retraite && source ../set-retraite-env.sh && /home/deploy/play-1.3.1/play evolutions:apply --%$ENV && /home/deploy/play-1.3.1/play deps --sync && /home/deploy/play-1.3.1/play restart --%$ENV"
+if [ $? != 0 ]; then
+    echo
+    echo "Il y a eu une erreur : arrêt du déploiement !"
+    echo
+    exit $?
+fi
 cd ..
+
+echo "Déploiement terminé avec succès ! :-)"
