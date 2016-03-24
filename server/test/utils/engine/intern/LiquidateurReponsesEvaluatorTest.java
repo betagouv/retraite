@@ -16,7 +16,6 @@ import org.junit.Test;
 import utils.TestsUtils;
 import utils.engine.data.ComplementReponses;
 import utils.engine.data.enums.ComplementQuestionDescriptor;
-import utils.engine.data.enums.LiquidateurQuestionDescriptor;
 import utils.engine.data.enums.QuestionChoiceValue;
 
 public class LiquidateurReponsesEvaluatorTest {
@@ -87,22 +86,6 @@ public class LiquidateurReponsesEvaluatorTest {
 			this.value = value;
 		}
 
-	}
-
-	private TestStatutData data(final LiquidateurQuestionDescriptor descriptor, final QuestionChoiceValue value, final boolean expectedResult) {
-		return new TestStatutData(descriptor, value, expectedResult);
-	}
-
-	private static class TestStatutData {
-		final LiquidateurQuestionDescriptor descriptor;
-		final QuestionChoiceValue value;
-		final boolean expectedResult;
-
-		TestStatutData(final LiquidateurQuestionDescriptor descriptor, final QuestionChoiceValue value, final boolean expectedResult) {
-			this.descriptor = descriptor;
-			this.value = value;
-			this.expectedResult = expectedResult;
-		}
 	}
 
 	private TestCarriereData data(final boolean expectedResult, final Question... questions) {
