@@ -28,12 +28,18 @@
 							<div class="img_bg">
 								#{if !_data.isPDF}
 									<div class="carre">${chapitre_index}</div>
-									<h3>${chapitre.titre}</h3>
+									<div>
+										#{if chapitre.delai}
+											<span class="delai">${chapitre.delai} :</span>
+										#{/if}
+										<h3>${chapitre.titre}</h3>
+									</div>
 								#{/if}
 								#{if _data.isPDF}
 									<h3>${chapitre_index} - ${chapitre.titre}</h3>
 								#{/if}
 							</div>
+							<!-- 
 							<div class="panel-heading">
 								<div class="delai">
 									#{if chapitre.delai}
@@ -41,6 +47,7 @@
 									#{/if}
 								</div>
 							</div>
+							 -->
 							<div id="panel-details-${chapitre_index}" class="panel-body panel-details">
 						        <div class=''>${chapitre.texteIntro?.raw()}</div>
 						        <div class=''>${chapitre.parcours?.raw()}</div>
