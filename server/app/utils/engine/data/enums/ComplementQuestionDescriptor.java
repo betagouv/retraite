@@ -56,11 +56,7 @@ public enum ComplementQuestionDescriptor implements QuestionDescriptor {
 	}
 
 	private static QuestionChoice choice(final String text, final QuestionChoiceValue value) {
-		return choice(text, value, null);
-	}
-
-	private static QuestionChoice choice(final String text, final QuestionChoiceValue value, final ChecklistSelector selector) {
-		return new QuestionChoice(text, value, selector);
+		return new QuestionChoice(text, value);
 	}
 
 }
