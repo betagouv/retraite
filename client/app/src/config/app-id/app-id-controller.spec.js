@@ -7,7 +7,7 @@ describe('AppIdCtrl', function () {
     it('should set appId=recette', inject(function ($controller, Wrapper) {
         
         spyOn(Wrapper, 'getLocation').and.returnValue({
-            host: 'recette-retraite.sgmap.fr'
+            host: 'recette-retraite.beta.gouv.fr'
         });
         
         var controller = $controller('AppIdCtrl', {$scope: {}});
@@ -29,7 +29,7 @@ describe('AppIdCtrl', function () {
     it('should set appId=prod', inject(function ($controller, Wrapper) {
         
         spyOn(Wrapper, 'getLocation').and.returnValue({
-            host: 'retraite.sgmap.fr'
+            host: 'retraite.beta.gouv.fr'
         });
         
         var controller = $controller('AppIdCtrl', {$scope: {}});
