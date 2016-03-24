@@ -3,6 +3,7 @@ package utils.engine.data;
 import java.util.List;
 
 import models.FakeData;
+import utils.engine.data.enums.EcranSortie;
 import utils.wsinforetraite.InfoRetraiteResult.InfoRetraiteResultRegime;
 
 public class RenderData extends CommonExchangeData {
@@ -18,7 +19,9 @@ public class RenderData extends CommonExchangeData {
 	// Temporaire pour afficher les DataRegime tant qu'on ne peut pas interroger le WS info-retraite
 	public List<FakeData> fakeData;
 
-	public List<QuestionLiquidateur> questionsLiquidateur;
+	// public List<QuestionLiquidateur> questionsLiquidateur;
+
+	public QuestionLiquidateur2 questionLiquidateur = new QuestionLiquidateur2();
 
 	public List<QuestionComplementaire> questionsComplementaires;
 
@@ -29,5 +32,7 @@ public class RenderData extends CommonExchangeData {
 	public List<InfoRetraiteResultRegime> regimesInfos;
 
 	public String dateGeneration;
+
+	public EcranSortie ecranSortie;
 
 }

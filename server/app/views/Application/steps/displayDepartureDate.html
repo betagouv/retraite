@@ -22,7 +22,7 @@
 			    </select>
 			    <select name='postData.departAnnee' class='form-control xxx-select' required >
 			       	#{list items:data.listeAnneesDepart, as:'annee'}
-			           	<option>${annee}</option>
+			           	<option ${annee_index == 2 ? 'selected' : ''}>${annee}</option>
 			        #{/list}
 			    </select>
 			
@@ -49,3 +49,8 @@
 	</div>
 </div>
 
+#{if isTest}
+	<div class="form-group row col-sm-12">
+		A ce stade : Régime liquidateur = '${data.hidden_liquidateur}', états = '${data.hidden_userStatus}', liquidateurStep='${data.hidden_liquidateurStep}'
+	</div>
+#{/if}

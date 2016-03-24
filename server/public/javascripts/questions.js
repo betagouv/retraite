@@ -4,83 +4,73 @@ var RetraiteQuestions = {};
 
 (function() {
 		
-	function areAllVisibleQuestionWithAnswer() {
-		var areAllVisibleQuestionWithAnswer = true;
-		$('div.question:visible').each(function() {
-			var $divQuestion = $(this);
-			var $inputsChecked = $divQuestion.find('input:checked');
-			if ($inputsChecked.length === 0) {
-				areAllVisibleQuestionWithAnswer = false;
-			}
-		});
-		return areAllVisibleQuestionWithAnswer; 
+	var $divQuestion, $nextButton, defaultNextButtonText;
+	
+	function questionIsOptionnal() {
+		return $divQuestion.data('optionnal');
 	}
 	
-	var updateDisplayQuestions = function() {
-		
-		var currentValues = {};
-		
-		var mustShowQuestion = function($divQuestion) {
-			var key = $divQuestion.attr('condition-key');
-			var value = $divQuestion.attr('condition-value');
-			if (key && value) {
-				if ($.inArray(value, currentValues[key]) != -1) {
-					return true;
-				} else {
-					return false;
-				}
-			}
-			return true;
-		};
-
-		var storeValuesForThisQuestion = function($divQuestion) {
-			var $inputsChecked = $divQuestion.find('input:checked');
-			$inputsChecked.each(function() {
-				var key = $(this).attr('condition-key');
-				var value = $(this).val();
-				currentValues[key] = currentValues[key] || [];				
-				currentValues[key].push(value);				
-			});
-			$("input#reponseJsonStr").val(JSON.stringify(currentValues));
-		};
-		
-		$('div.question').each(function() {
-			var $divQuestion = $(this);
-			if (mustShowQuestion($divQuestion)) {
-				$divQuestion.show();
-				storeValuesForThisQuestion($divQuestion);
-			} else {
-				$divQuestion.hide();
-			}
+	function noAnswerChecked() {
+		var $inputsChecked = $divQuestion.find('input:checked');
+		return ($inputsChecked.length === 0); 
+	}
+	
+	var updateHiddenDataForResponses = function() {
+		var $inputsChecked = $divQuestion.find('input:checked');
+		var currentValues = [];
+		$inputsChecked.each(function() {
+			var value = $(this).val();
+			currentValues.push(value);				
 		});
+		$("input#reponseJsonStr").val(JSON.stringify(currentValues));
 		
 	};
 	
+	function enableNextButton() {
+		$nextButton.removeAttr("disabled");
+	}
+	
+	function disableNextButton() {
+		$nextButton.attr("disabled","disabled");	
+	}
+	
 	function updateNextButtonState() {
-		var $nextButton = $(".btn-next");
-		if (areAllVisibleQuestionWithAnswer()) {
-			$nextButton.removeAttr("disabled");
+		if (questionIsOptionnal()) {
+			if (noAnswerChecked()) {
+				$nextButton.val("Aucune de ces situations");
+			} else {
+				$nextButton.val(defaultNextButtonText);
+			}
+			enableNextButton();
 		} else {
-			$nextButton.attr("disabled","disabled");			
+			if (noAnswerChecked()) {
+				disableNextButton();			
+			} else {
+				enableNextButton();
+			}
 		}
 	}
 		
-	function updateDisplay() {
-		updateDisplayQuestions();
+	function updateDisplayAndData() {
+		updateHiddenDataForResponses();
 		updateNextButtonState();
 		$(document).trigger('Retraite:questions:diplayUpdated');
 	}
 	
 	function initJquery() {
+
+		$divQuestion = $('div.question');
+		$nextButton = $(".btn-next");
+		defaultNextButtonText = $nextButton.val();
+
 		$('input.questions-choice').click(function() {
 			// Il faut désynchroniser pour être sûr que les états 'checked' soient fixés (notamment dans le cadre des TU)
-			setTimeout(updateDisplay, 0);
+			setTimeout(updateDisplayAndData, 0);
 		});
 		
-		updateDisplay();
+		updateDisplayAndData();
 	}
 
-	RetraiteQuestions.areAllVisibleQuestionWithAnswer = areAllVisibleQuestionWithAnswer;
 	RetraiteQuestions.initJquery = initJquery;
 
 })();

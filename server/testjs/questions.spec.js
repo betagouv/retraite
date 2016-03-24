@@ -1,13 +1,15 @@
 'use strict';
 
-
 describe('questions', function () {
 
-    describe('RetraiteQuestions.areAllVisibleQuestionWithAnswer()', function () {
+	beforeEach(function () {
+		jasmine.getFixtures().fixturesPath = 'base/testjs/spec/javascripts/fixtures';
+	});
+	
+    describe('mandatory', function () {
         
     	beforeEach(function () {
-    		jasmine.getFixtures().fixturesPath = 'base/testjs/spec/javascripts/fixtures';
-    		loadFixtures('questions.html'); 
+    		loadFixtures('questions_mandatory.html'); 
     		RetraiteQuestions.initJquery(); 
     	});
 
@@ -15,7 +17,9 @@ describe('questions', function () {
         	expectNextButtonIsDisabled();
         });
         
-        it('should be enabled if question 1 is checked without other questions visible', function (done) {
+        it('should be enabled if question is checked', function (done) {
+        	
+        	// NDLA : le 'trigger click' devrait peut-être être après le 'on event' ? ...
         	
         	$('[value=INDEP_AVANT_73]').trigger( "click" );
     		
@@ -23,31 +27,52 @@ describe('questions', function () {
     			// Il faut se désabonner de l'évènement pour éviter le mélange entre chaque TU
     			$(document).off('Retraite:questions:diplayUpdated');
     			expectNextButtonIsEnabled(); 
+    			expect($("input#reponseJsonStr").val()).toEqual("[\"INDEP_AVANT_73\"]");
     			done();
     		}); 
         });
         
-        it('should be disabled if question 1 is checked and question 2 is visible and not checked', function (done) {
-        	
-        	$('[value=AUCUNE]').trigger( "click" );
-        	
-        	$(document).on('Retraite:questions:diplayUpdated', function() {
-        		$(document).off('Retraite:questions:diplayUpdated');
-        		expectNextButtonIsDisabled(); 
-        		done();
-        	}); 
-        });
-        
-        it('should be enabled if questions 1 and 2 are checked', function (done) { 
-        	
-        	$('[value=AUCUNE]').trigger("click");
-    		$('[value=SA]').trigger("click");
+    });
+    
+    describe('optionnal', function () {
+    	
+    	beforeEach(function () {
+    		loadFixtures('questions_optionnal.html'); 
+    		RetraiteQuestions.initJquery(); 
+    	});
+    	
+    	it('should be disabled initialy', function () {
+    		expectNextButtonIsEnabled();
+    		expectNextButtonHasText("Aucune de ces situations");
+    	});
+    	
+        it('should be enabled if question is checked', function (done) {
+    		
+    		$('[value=INDEP_AVANT_73]').trigger( "click" );
     		
     		$(document).on('Retraite:questions:diplayUpdated', function() {
+    			// Il faut se désabonner de l'évènement pour éviter le mélange entre chaque TU
     			$(document).off('Retraite:questions:diplayUpdated');
     			expectNextButtonIsEnabled(); 
+    			expectNextButtonHasText("Étape suivante");
+    			expect($("input#reponseJsonStr").val()).toEqual("[\"INDEP_AVANT_73\"]");
     			done();
-    		});
+    		}); 
+    	});
+    	
+        it('should be enabled if question is checked and unchecked', function (done) {
+        	
+        	$('[value=INDEP_AVANT_73]').trigger( "click" );
+        	$('[value=INDEP_AVANT_73]').trigger( "click" );
+        	
+        	$(document).on('Retraite:questions:diplayUpdated', function() {
+        		// Il faut se désabonner de l'évènement pour éviter le mélange entre chaque TU
+        		$(document).off('Retraite:questions:diplayUpdated');
+        		expectNextButtonIsEnabled(); 
+        		expectNextButtonHasText("Aucune de ces situations");
+        		expect($("input#reponseJsonStr").val()).toEqual("[]");
+        		done();
+        	}); 
         });
         
     });
@@ -58,6 +83,10 @@ describe('questions', function () {
 
     function expectNextButtonIsEnabled() {
     	expect($(".btn-next").attr("disabled")).toBeUndefined(); 
+    }
+    
+    function expectNextButtonHasText(expectedText) {
+    	expect($(".btn-next").val()).toEqual(expectedText); 
     }
     
 });

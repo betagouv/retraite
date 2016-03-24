@@ -2,6 +2,10 @@
 
 $(function() {
 	
+	var regimeLiquidateur = $("[name='postData.hidden_liquidateur']").val();
+	
+	sendGoogleAnalyticsEvent('Checklist', 'display', regimeLiquidateur);
+	
 	$('.hiddeninfos').click(function(event) {
 		event.preventDefault();
 		$(this).removeClass('hiddeninfos');
@@ -21,12 +25,14 @@ $(function() {
 	
 	$('button.record').click(function(event) {
 		event.preventDefault();
+		sendGoogleAnalyticsEvent('Checklist', 'imprimer/PDF', regimeLiquidateur);
 		$("form").attr("action", "/application/pdf");
 		$("form").submit();
 	});
 	
 	$('button.mail').click(function(event) {
 		event.preventDefault();
+		sendGoogleAnalyticsEvent('Checklist', 'clickMail', regimeLiquidateur);
 		$('#DialogSendEMail').modal();
 	});
 	
@@ -34,6 +40,7 @@ $(function() {
 		event.preventDefault();
 		if (isEMailProvided()) {
 			$('#DialogSendEMail').modal('hide');
+			sendGoogleAnalyticsEvent('Checklist', 'sendMail', regimeLiquidateur);
 			sendRequestToSendByEMail();
 		} else {
 			$("#divEmail div").addClass('has-error');
@@ -57,4 +64,5 @@ $(function() {
 			}
 		});
 	}
+	
 });

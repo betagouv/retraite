@@ -1,5 +1,6 @@
 package controllers;
 
+import static controllers.utils.DataUnbinder.unbind;
 import static utils.dao.DaoChecklistFactory.createDaoChecklist;
 
 import java.io.ByteArrayInputStream;
@@ -29,9 +30,13 @@ import utils.mail.MailSenderWithSendGrid;
 public class Application extends RetraiteController {
 
 	public static void process(final PostData postData, final String test) {
+		if (postData != null) {
+			postData.hidden_userStatus = unbind(params.get("postData.hidden_userStatus"));
+		}
 		final boolean isTest = params._contains("test");
 		final RenderData data = RetraiteEngineFactory.create().processToNextStep(postData);
-		renderTemplate("Application/steps/" + data.hidden_step + ".html", data, isTest);
+		final String page = getPageNameForGoogleAnalytics(data);
+		renderTemplate("Application/steps/" + data.hidden_step + ".html", data, isTest, page);
 	}
 
 	public static void sendMail(final PostData postData) {
@@ -53,12 +58,12 @@ public class Application extends RetraiteController {
 	private static final boolean AS_HTML = false;
 	private static final boolean RENDER_PDF_WITH_I_TEXT = true;
 
-	public static void pdf(final PostData postData) {
+	public static void pdf(final PostData postData, final String html) {
 
 		final RenderData data = RetraiteEngineFactory.create().processToNextStep(postData);
 		data.isPDF = true;
 
-		if (AS_HTML) {
+		if (AS_HTML || params._contains("html")) {
 			// Rendu HTML pour mise au point
 			render(data);
 		}
@@ -73,6 +78,12 @@ public class Application extends RetraiteController {
 		renderPdfWithPdfPlayModule(data);
 		setResponseHeaderForAttachedPdf();
 		ok();
+	}
+
+	// Méthodes privées
+
+	private static String getPageNameForGoogleAnalytics(final RenderData data) {
+		return data.hidden_step + ("displayLiquidateurQuestions".equals(data.hidden_step) ? "_" + data.hidden_liquidateurStep : "");
 	}
 
 	private static void setResponseHeaderForAttachedPdf() {

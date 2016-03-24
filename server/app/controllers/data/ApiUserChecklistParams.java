@@ -1,11 +1,15 @@
 package controllers.data;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
+import controllers.utils.DataUnbinder;
 import play.mvc.Scope.Params;
 import utils.RetraiteException;
 import utils.engine.data.enums.Regime;
+import utils.engine.data.enums.RegimeAligne;
+import utils.engine.data.enums.UserStatus;
 
 public class ApiUserChecklistParams {
 
@@ -15,8 +19,9 @@ public class ApiUserChecklistParams {
 	public String departement;
 	public String departMois;
 	public String departAnnee;
-	public String regimeLiquidateur;
+	public RegimeAligne regimeLiquidateur;
 	public Regime[] regimes;
+	public List<UserStatus> userStatus;
 	public boolean parcoursDemat;
 	public boolean published;
 
@@ -28,12 +33,19 @@ public class ApiUserChecklistParams {
 		apiUserChecklistParams.departement = getAndRemove(params, "departement");
 		apiUserChecklistParams.departMois = getAndRemove(params, "departMois");
 		apiUserChecklistParams.departAnnee = getAndRemove(params, "departAnnee");
-		apiUserChecklistParams.regimeLiquidateur = getAndRemove(params, "regimeLiquidateur");
+		apiUserChecklistParams.regimeLiquidateur = getAndRemoveAsRegimeAligne(params, "regimeLiquidateur");
 		apiUserChecklistParams.regimes = Regime.fromStringList(getAndRemove(params, "regimes"));
+		apiUserChecklistParams.userStatus = new DataUnbinder().unbind(getAndRemove(params, "userStatus"));
 		apiUserChecklistParams.parcoursDemat = asBoolean(getAndRemove(params, "parcoursDemat"));
 		apiUserChecklistParams.published = asBoolean(getAndRemove(params, "published"));
 		checkDoNotRemainParams(params);
 		return apiUserChecklistParams;
+	}
+
+	private static RegimeAligne getAndRemoveAsRegimeAligne(final Params params, final String key) {
+		final String param = params.get(key);
+		params.remove(key);
+		return param == null ? null : RegimeAligne.valueOf(param);
 	}
 
 	private static String getAndRemove(final Params params, final String key) {
