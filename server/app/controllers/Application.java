@@ -35,7 +35,8 @@ public class Application extends RetraiteController {
 		}
 		final boolean isTest = params._contains("test");
 		final RenderData data = RetraiteEngineFactory.create().processToNextStep(postData);
-		renderTemplate("Application/steps/" + data.hidden_step + ".html", data, isTest);
+		final String page = getPageNameForGoogleAnalytics(data);
+		renderTemplate("Application/steps/" + data.hidden_step + ".html", data, isTest, page);
 	}
 
 	public static void sendMail(final PostData postData) {
@@ -77,6 +78,12 @@ public class Application extends RetraiteController {
 		renderPdfWithPdfPlayModule(data);
 		setResponseHeaderForAttachedPdf();
 		ok();
+	}
+
+	// Méthodes privées
+
+	private static String getPageNameForGoogleAnalytics(final RenderData data) {
+		return data.hidden_step + ("displayLiquidateurQuestions".equals(data.hidden_step) ? "_" + data.hidden_liquidateurStep : "");
 	}
 
 	private static void setResponseHeaderForAttachedPdf() {
