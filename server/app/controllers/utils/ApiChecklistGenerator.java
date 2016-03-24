@@ -1,14 +1,16 @@
 package controllers.utils;
 
+import java.util.List;
+
 import controllers.data.ApiUserChecklistParams;
 import utils.engine.data.ComplementReponses;
-import utils.engine.data.LiquidateurReponses;
 import utils.engine.data.MonthAndYear;
 import utils.engine.data.RenderData;
 import utils.engine.data.UserChecklistGenerationData;
 import utils.engine.data.enums.ChecklistName;
 import utils.engine.data.enums.Regime;
 import utils.engine.data.enums.RegimeAligne;
+import utils.engine.data.enums.UserStatus;
 import utils.engine.intern.CalculateurRegimeAlignes;
 import utils.engine.intern.UserChecklistGenerationDataBuilder;
 import utils.engine.intern.UserChecklistGenerator;
@@ -34,7 +36,8 @@ public class ApiChecklistGenerator {
 		final String departement = apiUserChecklistParams.departement;
 		final String departMois = apiUserChecklistParams.departMois;
 		final String departAnnee = apiUserChecklistParams.departAnnee;
-		final String regimeLiquidateur = apiUserChecklistParams.regimeLiquidateur;
+		final RegimeAligne regimeLiquidateur = apiUserChecklistParams.regimeLiquidateur;
+		final List<UserStatus> userStatus = apiUserChecklistParams.userStatus;
 		final Regime[] regimes = apiUserChecklistParams.regimes;
 		final boolean parcoursDemat = apiUserChecklistParams.parcoursDemat;
 		final boolean published = apiUserChecklistParams.published;
@@ -51,7 +54,7 @@ public class ApiChecklistGenerator {
 		if (isNullOrEmpty(dateNaissance)) {
 			return dataWithErrorMessage("Le paramètre 'dateNaissance' est manquant");
 		}
-		if (isNullOrEmpty(regimeLiquidateur)) {
+		if (isNull(regimeLiquidateur)) {
 			return dataWithErrorMessage("Le paramètre 'regimeLiquidateur' est manquant");
 		}
 
@@ -65,19 +68,22 @@ public class ApiChecklistGenerator {
 
 		final MonthAndYear dateDepart = new MonthAndYear(departMois, departAnnee);
 		final RegimeAligne[] regimesAlignes = calculateurRegimeAlignes.getRegimesAlignes(regimes);
-		final LiquidateurReponses liquidateurReponses = new LiquidateurReponses();
 		final ComplementReponses complementReponses = new ComplementReponses();
 		final boolean isCarriereLongue = false;// TODO
 		final UserChecklistGenerationData userChecklistGenerationData = userChecklistGenerationDataBuilder.build(dateDepart, departement, regimes,
-				regimesAlignes, liquidateurReponses, complementReponses, parcoursDemat, published, isCarriereLongue);
+				regimesAlignes, regimeLiquidateur, complementReponses, parcoursDemat, published, isCarriereLongue, userStatus);
 		final ChecklistName checklistName = ChecklistName.valueOf(apiUserChecklistParams.regimeLiquidateur);
 
-		data.userChecklist = userChecklistGenerator.generate(checklistName, userChecklistGenerationData, liquidateurReponses);
+		data.userChecklist = userChecklistGenerator.generate(checklistName, userChecklistGenerationData);
 		return data;
 	}
 
 	private boolean isNullOrEmpty(final String str) {
-		return str == null || str.isEmpty();
+		return isNull(str) || str.isEmpty();
+	}
+
+	private boolean isNull(final Object str) {
+		return str == null;
 	}
 
 	private RenderData dataWithErrorMessage(final String errorMessage) {

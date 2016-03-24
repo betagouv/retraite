@@ -5,7 +5,30 @@
     #{script 'questions.js'/}
 #{/set}
 
-#{displayQuestions questions:data.questionsLiquidateur /}
+<div class="contenu question marg-top col-sm-12"
+	data-optionnal="${data.questionLiquidateur.liquidateurQuestionDescriptor.questionMandatoryOrOptionnal.toString() == 'OPTIONNAL' ? 'true' : 'false'}"
+>
+	<div class="col-sm-1"></div>
+	<div class='col-sm-10'>
+	   	<h2 class="titre">${data.questionLiquidateur.liquidateurQuestionDescriptor.title}</h2>
+		#{if data.questionLiquidateur.liquidateurQuestionDescriptor.questionType.toString() != "SIMPLE"}
+   			<div class='question-infos'>
+   				<h4>Plusieurs choix possibles</h4>
+   			</div>
+		#{/if}
+		#{list items:data.questionLiquidateur.choices ? data.questionLiquidateur.choices : data.questionLiquidateur.liquidateurQuestionDescriptor.questionChoices, as:'choice'}
+			<div class='choice'>
+				#{if data.questionLiquidateur.liquidateurQuestionDescriptor.questionType.toString() == "SIMPLE"}
+		   			<label class='label-for-question-choice'><input type="radio" class='questions-choice' name="reponses[${data.questionLiquidateur.liquidateurQuestionDescriptor}]" value="${choice.value}" />${choice.text}</label>
+				#{/if}
+				#{else}
+		   			<label class='label-for-question-choice'><input type="checkbox" class='questions-choice' value="${choice.value}" />${choice.text}</label>
+				#{/else}
+			</div>
+		#{/list}
+	</div>
+	<div class="col-sm-1"></div>
+</div>
 
 <input type="hidden" id="reponseJsonStr" name="postData.liquidateurReponseJsonStr" />
 
@@ -18,3 +41,8 @@
 	</div>
 </div>
 
+#{if isTest}
+	<div class="form-group row col-sm-12">
+		A ce stade : Régime liquidateur = '${data.hidden_liquidateur}', états = '${data.hidden_userStatus}', liquidateurStep='${data.hidden_liquidateurStep}'
+	</div>
+#{/if}

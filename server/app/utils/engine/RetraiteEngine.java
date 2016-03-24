@@ -1,32 +1,22 @@
 package utils.engine;
 
 import static java.util.Arrays.asList;
+import static utils.engine.EngineUtils.firstNotNull;
+import static utils.engine.data.enums.EcranSortie.ECRAN_SORTIE_PENIBILITE;
 
 import java.lang.reflect.Field;
 
 import controllers.data.PostData;
 import play.Logger;
-import utils.DateUtils;
 import utils.RetraiteException;
 import utils.dao.DaoFakeData;
 import utils.engine.data.CommonExchangeData;
-import utils.engine.data.ComplementReponses;
-import utils.engine.data.LiquidateurReponses;
-import utils.engine.data.MonthAndYear;
 import utils.engine.data.RenderData;
-import utils.engine.data.UserChecklistGenerationData;
-import utils.engine.data.enums.Regime;
 import utils.engine.data.enums.RegimeAligne;
 import utils.engine.intern.CalculateurRegimeAlignes;
-import utils.engine.intern.QuestionComplementairesEvaluator;
-import utils.engine.intern.QuestionsComplementairesBuilder;
-import utils.engine.intern.QuestionsLiquidateurBuilder;
 import utils.engine.intern.StepFormsDataProvider;
-import utils.engine.intern.UserChecklistGenerationDataBuilder;
-import utils.engine.intern.UserChecklistGenerator;
 import utils.engine.utils.AgeCalculator;
 import utils.engine.utils.AgeLegalEvaluator;
-import utils.engine.utils.DateProvider;
 import utils.wsinforetraite.InfoRetraite;
 import utils.wsinforetraite.InfoRetraiteResult;
 
@@ -34,36 +24,37 @@ public class RetraiteEngine {
 
 	private final StepFormsDataProvider stepFormsDataProvider;
 	private final InfoRetraite infoRetraite;
-	private final UserChecklistGenerator userChecklistGenerator;
 	private final CalculateurRegimeAlignes calculateurRegimeAlignes;
-	private final QuestionComplementairesEvaluator questionComplementairesEvaluator;
-	private final QuestionsLiquidateurBuilder questionsLiquidateurBuilder;
 	private final DaoFakeData daoFakeData;
-	private final UserChecklistGenerationDataBuilder userChecklistGenerationDataBuilder;
-	private final QuestionsComplementairesBuilder questionsComplementairesBuilder;
 	private final AgeCalculator ageCalculator;
 	private final AgeLegalEvaluator ageLegalEvaluator;
-	private final DateProvider dateProvider;
+	private final DisplayerLiquidateurQuestions displayerLiquidateurQuestions;
+	private final DisplayerDepartureDate displayerDepartureDate;
+	private final DisplayerAdditionalQuestions displayerAdditionalQuestions;
+	private final DisplayerChecklist displayerChecklist;
 
-	public RetraiteEngine(final StepFormsDataProvider stepFormsDataProvider, final InfoRetraite infoRetraite,
-			final UserChecklistGenerator userChecklistProvider, final CalculateurRegimeAlignes calculateurRegimeAlignes,
-			final QuestionsLiquidateurBuilder questionsLiquidateurBuilder, final QuestionsComplementairesBuilder questionsComplementairesBuilder,
-			final DaoFakeData daoFakeData, final UserChecklistGenerationDataBuilder userChecklistGenerationDataBuilder,
-			final QuestionComplementairesEvaluator questionComplementairesEvaluator, final AgeCalculator ageCalculator,
-			final AgeLegalEvaluator ageLegalEvaluator, final DateProvider dateProvider) {
+	public RetraiteEngine(
+			final StepFormsDataProvider stepFormsDataProvider,
+			final InfoRetraite infoRetraite,
+			final CalculateurRegimeAlignes calculateurRegimeAlignes,
+			final DaoFakeData daoFakeData,
+			final AgeCalculator ageCalculator,
+			final AgeLegalEvaluator ageLegalEvaluator,
+			final DisplayerLiquidateurQuestions displayerLiquidateurQuestions,
+			final DisplayerDepartureDate displayerDepartureDate,
+			final DisplayerAdditionalQuestions displayerAdditionalQuestions,
+			final DisplayerChecklist displayerChecklist) {
 
 		this.stepFormsDataProvider = stepFormsDataProvider;
 		this.infoRetraite = infoRetraite;
-		this.userChecklistGenerator = userChecklistProvider;
 		this.calculateurRegimeAlignes = calculateurRegimeAlignes;
-		this.questionsLiquidateurBuilder = questionsLiquidateurBuilder;
-		this.questionsComplementairesBuilder = questionsComplementairesBuilder;
 		this.daoFakeData = daoFakeData;
-		this.userChecklistGenerationDataBuilder = userChecklistGenerationDataBuilder;
-		this.questionComplementairesEvaluator = questionComplementairesEvaluator;
 		this.ageCalculator = ageCalculator;
 		this.ageLegalEvaluator = ageLegalEvaluator;
-		this.dateProvider = dateProvider;
+		this.displayerLiquidateurQuestions = displayerLiquidateurQuestions;
+		this.displayerDepartureDate = displayerDepartureDate;
+		this.displayerAdditionalQuestions = displayerAdditionalQuestions;
+		this.displayerChecklist = displayerChecklist;
 	}
 
 	public RenderData processToNextStep(final PostData data) {
@@ -77,7 +68,7 @@ public class RetraiteEngine {
 			return displayWelcome(renderData);
 		}
 
-		copyHiddenFields(renderData, data);
+		copyHiddenFields(data, renderData);
 
 		if (data.hidden_step.equals("welcome")) {
 			return displayGetUserData(renderData);
@@ -95,35 +86,44 @@ public class RetraiteEngine {
 			if (regimesAlignes.length == 0) {
 				return displaySortieAucunRegimeDeBaseAligne(renderData);
 			}
-			if (regimesAlignes.length == 2) {
-				return displayLiquidateurQuestions(data, renderData, regimes, regimesAlignes);
+			if (regimesAlignes.length >= 2) {
+				displayerLiquidateurQuestions.fillData(data, renderData, regimes, regimesAlignes);
+				return renderData;
 			}
-			return displayDepartureDateWithoutLiquidateurQuestions(data, renderData, regimes);
+			renderData.hidden_liquidateur = regimesAlignes[0];
+			displayerDepartureDate.fillData(data, renderData, regimes);
 		} else if (data.hidden_step.equals("displayLiquidateurQuestions")) {
-			return displayDepartureDateWithLiquidateurQuestions(renderData, data);
+			final RegimeAligne[] regimesAlignes = calculateurRegimeAlignes.getRegimesAlignes(data.hidden_regimes);
+			displayerLiquidateurQuestions.fillData(data, renderData, data.hidden_regimes, regimesAlignes);
+			if (renderData.ecranSortie == ECRAN_SORTIE_PENIBILITE) {
+				renderData.hidden_step = "displaySortiePenibilite";
+				return renderData;
+			}
+			if (renderData.hidden_liquidateurStep == null) {
+				displayerDepartureDate.fillData(data, renderData, null);
+			}
 		} else if (data.hidden_step.equals("displayDepartureDate")) {
 			if (data.departInconnu) {
-				return displaySortieDepartInconnu(renderData);
+				renderData.hidden_step = "displaySortieDepartInconnu";
+				return renderData;
 			}
 			if (!ageLegalEvaluator.isAgeLegal(data.hidden_naissance, data.departMois, data.departAnnee)) {
 				return displayQuestionCarriereLongue(renderData, data.departMois, data.departAnnee);
 			}
-			return displayAdditionalQuestions(renderData, data.departMois, data.departAnnee);
+			// Provisoire
+			// displayerAdditionalQuestions.fillData(data, renderData);
+			displayerChecklist.fillData(data, renderData);
 		} else if (data.hidden_step.equals("displayQuestionCarriereLongue")) {
-			return displayAdditionalQuestionsAvecCarriereLongue(data, renderData);
+			renderData.hidden_attestationCarriereLongue = true;
+			// Provisoire
+			// displayerAdditionalQuestions.fillData(data, renderData);
+			displayerChecklist.fillData(data, renderData);
 		} else if (data.hidden_step.equals("displayAdditionalQuestions") || data.hidden_step.equals("displayCheckList")) {
-			final MonthAndYear dateDepart = new MonthAndYear(data.hidden_departMois, data.hidden_departAnnee);
-			final RegimeAligne[] regimesAlignes = calculateurRegimeAlignes.getRegimesAlignes(data.hidden_regimes);
-			final LiquidateurReponses liquidateurReponses = LiquidateurReponses.retrieveLiquidateurReponsesFromJson(data.hidden_liquidateurReponseJsonStr);
-			final ComplementReponses complementReponses = ComplementReponses.retrieveComplementReponsesFromJson(data.complementReponseJsonStr);
-			final Regime[] regimes = Regime.fromStringList(data.hidden_regimes);
-			final boolean isParcoursDemat = questionComplementairesEvaluator.isParcoursDemat(complementReponses);
-			final UserChecklistGenerationData userChecklistGenerationData = userChecklistGenerationDataBuilder.build(dateDepart, data.hidden_departement,
-					regimes, regimesAlignes, liquidateurReponses, complementReponses, isParcoursDemat, true, data.hidden_attestationCarriereLongue);
-			return displayCheckList(renderData, userChecklistGenerationData, data.complementReponseJsonStr, liquidateurReponses);
+			displayerChecklist.fillData(data, renderData);
 		} else {
 			throw new RetraiteException("Situation anormale : l'étape '" + data.hidden_step + "' pour le traitement");
 		}
+		return renderData;
 	}
 
 	private RenderData displaySortieTropJeune(final RenderData renderData) {
@@ -136,11 +136,6 @@ public class RetraiteEngine {
 				renderData.hidden_naissance);
 		renderData.hidden_step = "displaySortieAucunRegimeDeBaseAligne";
 		renderData.regimesInfos = asList(allInformations.regimes);
-		return renderData;
-	}
-
-	private RenderData displaySortieDepartInconnu(final RenderData renderData) {
-		renderData.hidden_step = "displaySortieDepartInconnu";
 		return renderData;
 	}
 
@@ -165,11 +160,11 @@ public class RetraiteEngine {
 		return renderData;
 	}
 
-	private void copyHiddenFields(final RenderData renderData, final PostData data) {
+	private void copyHiddenFields(final PostData data, final RenderData renderData) {
 		try {
 			for (final Field field : CommonExchangeData.class.getFields()) {
 				final String fieldName = field.getName();
-				if (fieldName.startsWith("hidden_")) {
+				if (fieldName.startsWith("hidden_") && !fieldName.toLowerCase().contains("step")) {
 					final Object hiddenData = field.get(data);
 					final Object noHiddenData = tryToGetNoHiddenData(data, fieldName);
 					field.set(renderData, firstNotNull(noHiddenData, hiddenData));
@@ -188,74 +183,6 @@ public class RetraiteEngine {
 		} catch (final NoSuchFieldException e) {
 			return null;
 		}
-	}
-
-	private RenderData displayLiquidateurQuestions(final PostData data, final RenderData renderData, final String regimes,
-			final RegimeAligne[] regimesAlignes) {
-		renderData.hidden_nom = data.nom;
-		renderData.hidden_naissance = data.naissance;
-		renderData.hidden_nir = data.nir;
-		renderData.hidden_step = "displayLiquidateurQuestions";
-		renderData.hidden_regimes = regimes;
-		renderData.questionsLiquidateur = questionsLiquidateurBuilder.buildQuestions(regimesAlignes);
-		return renderData;
-	}
-
-	private RenderData displayDepartureDateWithLiquidateurQuestions(final RenderData renderData, final PostData data) {
-		return displayDepartureDate(data, renderData, data.liquidateurReponseJsonStr, null);
-	}
-
-	private RenderData displayDepartureDateWithoutLiquidateurQuestions(final PostData data, final RenderData renderData, final String regimes) {
-		return displayDepartureDate(data, renderData, null, regimes);
-	}
-
-	private RenderData displayDepartureDate(final PostData data, final RenderData renderData, final String liquidateurReponseJsonStr, final String regimes) {
-		renderData.hidden_step = "displayDepartureDate";
-		if (liquidateurReponseJsonStr != null) {
-			renderData.hidden_liquidateurReponseJsonStr = liquidateurReponseJsonStr;
-		}
-		if (regimes != null) {
-			renderData.hidden_regimes = regimes;
-		}
-		renderData.listeMoisAvecPremier = stepFormsDataProvider.getListMoisAvecPremier();
-		renderData.listeAnneesDepart = stepFormsDataProvider.getListAnneesDepart();
-		return renderData;
-	}
-
-	private Object firstNotNull(final Object... objects) {
-		for (final Object object : objects) {
-			if (object != null) {
-				return object;
-			}
-		}
-		return null;
-	}
-
-	private RenderData displayAdditionalQuestionsAvecCarriereLongue(final PostData data, final RenderData renderData) {
-		renderData.hidden_attestationCarriereLongue = true;
-		return displayAdditionalQuestions(renderData, data.hidden_departMois, data.hidden_departAnnee);
-	}
-
-	private RenderData displayAdditionalQuestions(final RenderData renderData, final String departMois, final String departAnnee) {
-		renderData.hidden_step = "displayAdditionalQuestions";
-		renderData.hidden_departMois = departMois;
-		renderData.hidden_departAnnee = departAnnee;
-		renderData.questionsComplementaires = questionsComplementairesBuilder.buildQuestions();
-		return renderData;
-	}
-
-	private RenderData displayCheckList(final RenderData renderData, final UserChecklistGenerationData userChecklistGenerationData,
-			final String complementReponseJsonStr, final LiquidateurReponses liquidateurReponses) {
-		renderData.hidden_step = "displayCheckList";
-		renderData.hidden_complementReponseJsonStr = complementReponseJsonStr;
-		try {
-			renderData.userChecklist = userChecklistGenerator.generate(userChecklistGenerationData, liquidateurReponses);
-		} catch (final RetraiteException e) {
-			Logger.error(e, "Impossible de déterminer le régime liquidateur");
-			renderData.errorMessage = "Désolé, impossible de déterminer le régime liquidateur...";
-		}
-		renderData.dateGeneration = DateUtils.format(dateProvider.getCurrentDate());
-		return renderData;
 	}
 
 }

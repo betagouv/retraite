@@ -12,7 +12,6 @@ import org.junit.Test;
 
 import models.Checklist;
 import utils.dao.DaoChecklist;
-import utils.engine.data.LiquidateurReponses;
 import utils.engine.data.MonthAndYear;
 import utils.engine.data.UserChecklist;
 import utils.engine.data.UserChecklistGenerationData;
@@ -25,8 +24,6 @@ public class UserChecklistGeneratorTest {
 	private static final Regime[] REGIMES = new Regime[] { RSI, AGIRC_ARRCO, CNAV };
 
 	private static final RegimeAligne[] REGIMES_ALIGNES = new RegimeAligne[] { RegimeAligne.CNAV };
-
-	private static final LiquidateurReponses LIQUIDATEUR_REPONSES = new LiquidateurReponses();
 
 	private DaoChecklist daoChecklistMock;
 	private ChecklistNameSelector checklistNameSelectorMock;
@@ -52,11 +49,11 @@ public class UserChecklistGeneratorTest {
 		final Checklist checklist = new Checklist();
 		final UserChecklist userChecklist = new UserChecklist();
 
-		when(checklistNameSelectorMock.select(REGIMES_ALIGNES, LIQUIDATEUR_REPONSES)).thenReturn(ChecklistName.CNAV);
+		when(checklistNameSelectorMock.select(REGIMES_ALIGNES, RegimeAligne.CNAV)).thenReturn(ChecklistName.CNAV);
 		when(daoChecklistMock.find("CNAV", true)).thenReturn(checklist);
 		when(userChecklistComputerMock.compute(checklist, userChecklistGenerationData)).thenReturn(userChecklist);
 
-		final UserChecklist userChecklistGenerated = userChecklistGenerator.generate(userChecklistGenerationData, LIQUIDATEUR_REPONSES);
+		final UserChecklist userChecklistGenerated = userChecklistGenerator.generate(userChecklistGenerationData, RegimeAligne.CNAV);
 
 		assertThat(userChecklistGenerated).isSameAs(userChecklist);
 	}
@@ -72,11 +69,11 @@ public class UserChecklistGeneratorTest {
 		final Checklist checklist = new Checklist();
 		final UserChecklist userChecklist = new UserChecklist();
 
-		when(checklistNameSelectorMock.select(REGIMES_ALIGNES, LIQUIDATEUR_REPONSES)).thenReturn(ChecklistName.CNAV);
+		when(checklistNameSelectorMock.select(REGIMES_ALIGNES, RegimeAligne.CNAV)).thenReturn(ChecklistName.CNAV);
 		when(daoChecklistMock.find("CNAV", false)).thenReturn(checklist);
 		when(userChecklistComputerMock.compute(checklist, userChecklistGenerationData)).thenReturn(userChecklist);
 
-		final UserChecklist userChecklistGenerated = userChecklistGenerator.generate(userChecklistGenerationData, LIQUIDATEUR_REPONSES);
+		final UserChecklist userChecklistGenerated = userChecklistGenerator.generate(userChecklistGenerationData, RegimeAligne.CNAV);
 
 		assertThat(userChecklistGenerated).isSameAs(userChecklist);
 	}

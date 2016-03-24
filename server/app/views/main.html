@@ -21,7 +21,7 @@
 
     <header class="entete col-sm-12">
         <div class="title">
-        	<a href="/">
+        	<a href="/${ isTest ? "?test" : ""}">
 	            <h1>Mes démarches retraite</h1>
 	            <h2>pas à pas</h2>
             </a>
@@ -30,7 +30,7 @@
 
 
     <body>
-
+    
         <div class="container padding-bottom #{get 'pageCssClass' /}">
 
             <div class="wrapper">
@@ -72,6 +72,8 @@
 		<!-- endinjector -->
 
         #{get 'moreScripts' /}
+        
+		<script src="/public/javascripts/retraite-analytics.js"></script>
 
     </body>
     
@@ -85,7 +87,7 @@
 			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 			
 			ga('create', '${gacode}', 'auto');
-			ga('send', 'pageview');
+			ga('send', 'pageview', '${page}');
 
 		</script>
 	    

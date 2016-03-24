@@ -24,30 +24,64 @@ fi
 
 # Génération de l'application cliente
 echo
-echo "Génération de l'application cliente..."
+echo "Génération de l'application cliente ..."
 echo
 cd client
 grunt build
-
 if [ $? != 0 ]; then
-	echo
-	echo "Arrêt du déploiement car il y eu une erreur !"
-	echo
+    echo
+    echo "Il y a eu une erreur : arrêt du déploiement !"
+    echo
     exit $?
 fi
-
 cd ..
 
 # Tag Git
 git tag "deploy.$ENV.$(date +%Y-%m-%d_%H-%M-%S)"
 
 # Copie de l'application client dans le serveur
+echo
+echo "Copie de l'application client dans le serveur..."
+echo
 rm -rf server/www/*
 cp -R client/www/ server/www
+if [ $? != 0 ]; then
+    echo
+    echo "Il y a eu une erreur : arrêt du déploiement !"
+    echo
+    exit $?
+fi
 
 cd server
 
+# Commit Git
+echo
+echo "Git : commit et tag..."
+echo
+git status
+read -p "Une touche pour continuer ..."
+git add .
+git commit -am "deploy_$ENV_$(date +%Y-%m-%d_%H-%M-%S)"
+git tag "deploy_$ENV_$(date +%Y-%m-%d_%H-%M-%S)"
+
 # Deploiement
+echo
+echo "Déploiement..."
+echo
 rsync -rv --exclude-from=rsync.exclude.txt --delete . $REMOTE_USER@vm_retraite:/home/$REMOTE_DIR/retraite
+if [ $? != 0 ]; then
+    echo
+    echo "Il y a eu une erreur : arrêt du déploiement !"
+    echo
+    exit $?
+fi
 ssh $REMOTE_USER@vm_retraite "cd /home/$REMOTE_DIR/retraite && source ../set-retraite-env.sh && /home/deploy/play-1.3.1/play evolutions:apply --%$ENV && /home/deploy/play-1.3.1/play deps --sync && /home/deploy/play-1.3.1/play restart --%$ENV"
+if [ $? != 0 ]; then
+    echo
+    echo "Il y a eu une erreur : arrêt du déploiement !"
+    echo
+    exit $?
+fi
 cd ..
+
+echo "Déploiement terminé avec succès ! :-)"

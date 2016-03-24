@@ -1,6 +1,9 @@
 package utils.engine;
 
+import java.util.List;
+
 import utils.engine.data.enums.RegimeAligne;
+import utils.engine.data.enums.UserStatus;
 
 public class EngineUtils {
 
@@ -9,7 +12,7 @@ public class EngineUtils {
 			return false;
 		}
 		for (final RegimeAligne regimeToSearch : regimesToSearch) {
-			if (!isRegime(regimesAlignes, regimeToSearch)) {
+			if (!contains(regimesAlignes, regimeToSearch)) {
 				return false;
 			}
 
@@ -17,13 +20,37 @@ public class EngineUtils {
 		return true;
 	}
 
-	private static boolean isRegime(final RegimeAligne[] regimesAlignes, final RegimeAligne regimeToSearch) {
-		for (final RegimeAligne regimeAligne : regimesAlignes) {
-			if (regimeAligne == regimeToSearch) {
-				return true;
+	public static <T> boolean contains(final T[] array, final T... elts) {
+		for (final T elt : elts) {
+			if (!contains(array, elt)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static <T> boolean contains(final T[] array, final T elt) {
+		if (array != null) {
+			for (final T regimeAligne : array) {
+				if (regimeAligne.equals(elt)) {
+					return true;
+				}
 			}
 		}
 		return false;
+	}
+
+	public static <T> boolean contains(final List<UserStatus> list, final UserStatus elt) {
+		return list == null ? false : list.contains(elt);
+	}
+
+	public static <T> T firstNotNull(final T... objects) {
+		for (final T object : objects) {
+			if (object != null) {
+				return object;
+			}
+		}
+		return null;
 	}
 
 }
