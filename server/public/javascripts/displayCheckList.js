@@ -6,6 +6,8 @@ $(function() {
 	
 	sendGoogleAnalyticsEvent('Checklist', 'display', regimeLiquidateur);
 	
+	addScrollHandlerToSendEventIfScrollToBottom();
+	
 	$('.hiddeninfos').click(function(event) {
 		event.preventDefault();
 		$(this).removeClass('hiddeninfos');
@@ -64,5 +66,23 @@ $(function() {
 			}
 		});
 	}
+	
+	function addScrollHandlerToSendEventIfScrollToBottom() {
+		
+		var eventSent = false;
+		
+		function isScrolledToBottom() {
+			return (window.scrollY + window.innerHeight) >= (document.body.offsetHeight - window.innerHeight);
+		};
+		
+		$(window).scroll(function(event) {
+		    if (!eventSent && isScrolledToBottom()) {
+		    	eventSent = true;
+		    	sendGoogleAnalyticsEvent('Checklist', 'scrolledToBottom', regimeLiquidateur);
+		    }
+		});
+	}
+	
+
 	
 });

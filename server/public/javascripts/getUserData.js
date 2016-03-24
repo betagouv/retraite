@@ -35,11 +35,9 @@ var RetraiteGetUserData = {};
 		} else {
 			$nextButton.attr("disabled","disabled");			
 		}
-		//$(document).trigger('Retraite:getUserData:diplayUpdated');
 	}
 	
 	function areAllFieldsFilled() {
-		//console.log($('#nom').val()+" , "+$('#naissance').val()+" , "+$('#nir').val());
 		return isLengthMin('nom', 2) && isLength('naissance', 10, true) && (isLength('nir', 13, true) || isLength('nir', 15, true));
 	}
 	
