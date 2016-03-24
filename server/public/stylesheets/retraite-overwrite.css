@@ -54,3 +54,15 @@ body .container.information .bouton .btn {
 .img_bg div {
 	display: table;
 }
+
+footer.footer-feedback {
+	color: #0b6ba8;
+    font-size: 1.8em;
+}
+
+footer a.footer-feedback {
+	color: #0b6ba8;
+    font-size: 1.4em;
+    font-weight: bold;
+    font-family: "Open sans", "Arial", "Helvetica", sans-serif;
+}
