@@ -3,7 +3,6 @@ package utils.engine.intern;
 import static java.util.Arrays.asList;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static utils.engine.data.enums.RegimeAligne.CNAV;
 import static utils.engine.data.enums.UserStatus.STATUS_CONJOINT_COLLABORATEUR;
@@ -58,7 +57,8 @@ public class UserChecklistGenerationDataBuilderTest {
 		assertThat(userChecklistGenerationData.isParcoursDematIfExist()).isTrue();
 		assertThat(userChecklistGenerationData.published).isFalse();
 
-		verify(liquidateurReponsesEvaluatorMock).isCarriereAReconstituer(complementReponses);
+		// [XN-29/03/2016-En attendant de remettre les questions complémentaires, on force l'affichage des chapitres]
+		// verify(liquidateurReponsesEvaluatorMock).isCarriereAReconstituer(complementReponses);
 
 		assertThat(userChecklistGenerationData.isConjointCollaborateur).isTrue();
 		assertThat(userChecklistGenerationData.isNSA).isTrue();
