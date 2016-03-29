@@ -1,0 +1,504 @@
+/* =============================================================================
+   Button
+============================================================================= */
+
+/// Default button theme
+///
+/// @group theme
+/// @example scss Usage
+/// .foo {
+///   @include btn-default;
+/// }
+@mixin btn-default {
+  @include reset-box-model;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+  text-align: left;
+  line-height: 1.2;
+  font-size: inherit;
+  font-family: inherit;
+  transition: all 300ms;
+
+  @include hover {
+    text-decoration: none;
+  }
+
+  &:active {
+
+  }
+
+}
+
+
+
+/* -----------------------------------------------------------------------------
+   Helpers
+----------------------------------------------------------------------------- */
+
+/// Button wide
+///
+/// @group theme
+/// @example scss Usage
+/// .foo {
+///   @include btn--wide;
+/// }
+@mixin btn--wide {
+  display: block;
+  width: 100%;
+  float: none;
+}
+
+.btn-wide {
+  @include btn--wide;
+}
+
+
+
+/// Button bigger
+///
+/// @group theme
+/// @example scss Usage
+/// .foo {
+///   @include btn--bigger;
+/// }
+@mixin btn--bigger {
+ padding: 15px 25px;
+}
+
+.btn-bigger {
+  @include btn--bigger;
+}
+
+
+
+/// Button small
+///
+/// @group theme
+/// @example scss Usage
+/// .foo {
+///   @include btn--small;
+/// }
+@mixin btn--small {
+  padding: 2px 5px;
+  font-size: em(12px);
+}
+
+.btn-small {
+  @include btn--small;
+}
+
+
+
+
+/* -----------------------------------------------------------------------------
+   Styles
+----------------------------------------------------------------------------- */
+
+.btn {
+  @include btn-default;
+
+  @include hover {
+
+  }
+}
+
+
+
+/*.btn-x {
+  @include btn-default;
+  @include btn-bigger;
+
+  @include hover {
+
+  }
+}*/
+
+
+
+
+
+
+
+
+
+/*bouton home/etape/information*/
+input.btn {
+  text-transform: uppercase;
+  margin-top:15px;
+  border-radius: 5px;
+  padding: 10px 10px 10px 10px;
+  color:#fff;
+  box-shadow:0 4px 5px 0 #c8c8c8;
+  font-size: 2.2rem;
+  font-family: $font-stack-alt;
+  font-weight: 300;
+}
+
+input.btn:link,
+input.btn:visited{
+  background-color: $red;
+}
+
+input.btn:hover,
+input.btn:focus {
+  background-color: $red-1;
+}
+
+
+input.btn-next {
+  background: $red url("../img/sprites/next_white.png") no-repeat right 13px;
+  padding-right:30px;
+}
+
+.btn {
+  text-transform: uppercase;
+  margin-top:15px;
+  border-radius: 5px;
+  padding: 10px 10px 10px 10px;
+  color:#fff;
+  box-shadow:0 4px 5px 0 #c8c8c8;
+  font-size: 2.2rem;
+  font-family: $font-stack-alt;
+  font-weight: 300;
+}
+
+.btn:link,
+.btn:visited{
+  background-color: $red;
+}
+
+.btn:hover,
+.btn:focus,
+.btn:active {
+  background-color: $red-1;
+}
+
+.btn-next,
+.btn-success {
+  background: $red url("../img/sprites/next_white.png") no-repeat right 13px;
+  padding-right:30px;
+}
+
+.btn-precedente {
+  background: $red url("../img/sprites/previous_white.png") no-repeat left 13px;
+  padding-left:30px;
+  float: left;
+  z-index:1;
+}
+
+.btn-precedente:link,
+.btn-precedente:visited{
+  background: $red url("../img/sprites/previous_white.png") no-repeat left 13px;
+}
+
+.btn-precedente:hover,
+.btn-precedente:focus,
+.btn-precedente:active {
+  background: $red-1 url("../img/sprites/previous_white.png") no-repeat left 13px;
+}
+
+.btn.active.focus, .btn.active:focus,
+.btn.focus, .btn.focus:active,
+.btn:active:focus, .btn:focus,
+.btn.valid:focus, .btn-valid:focus {
+  outline-style : none;
+}
+
+.btn:active {
+  -webkit-box-shadow: 0px 1px 2px #bbb;
+   -moz-box-shadow: 0px 1px 2px #bbb;
+        box-shadow: 0px 1px 2px #bbb;
+}
+
+.form-group .btn.active.btn-next,
+.form-group .btn:active.btn-next {
+  background: $red-1 url("../img/sprites/next_white.png") no-repeat right 13px;
+}
+
+/*bouton home/etape/information*/
+input.btn {
+  text-transform: uppercase;
+  margin-top:15px;
+  border-radius: 5px;
+  padding: 10px 10px 10px 10px;
+  color:#fff;
+  box-shadow:0 4px 5px 0 #c8c8c8;
+  font-size: 2.2rem;
+  font-family: $font-stack-alt;
+  font-weight: 300;
+}
+
+input.btn:link,
+input.btn:visited{
+  background-color: $red;
+}
+
+input.btn:hover,
+input.btn:focus {
+  background-color: $red-1;
+}
+
+input.btn-next {
+  background: $red url("../img/sprites/next_white.png") no-repeat right 13px;
+  padding-right:30px;
+  color: #fff!important;
+}
+
+.btn {
+  text-transform: uppercase;
+  margin-top:15px;
+  border-radius: 5px;
+  padding: 10px 10px 10px 10px;
+  color:#fff;
+  box-shadow:0 4px 5px 0 #c8c8c8;
+  font-size: 2.2rem;
+  font-family: $font-stack-alt;
+  font-weight: 300;
+}
+
+.btn:link,
+.btn:visited{
+  background-color: $red;
+}
+
+.btn:hover,
+.btn:focus,
+.btn:active {
+  background-color: $red-1;
+}
+
+.btn-next,
+.btn-success {
+  background: $red url("../img/sprites/next_white.png") no-repeat right 13px;
+  padding-right:30px;
+}
+
+.btn-precedente {
+  background: $red url("../img/sprites/previous_white.png") no-repeat left 13px;
+  padding-left:30px;
+  float: left;
+  z-index:1;
+}
+
+.btn-precedente:link,
+.btn-precedente:visited{
+  background: $red url("../img/sprites/previous_white.png") no-repeat left 13px;
+}
+
+.btn-precedente:hover,
+.btn-precedente:focus,
+.btn-precedente:active {
+  background: $red-1 url("../img/sprites/previous_white.png") no-repeat left 13px;
+}
+
+.btn.active.focus, .btn.active:focus,
+.btn.focus, .btn.focus:active,
+.btn:active:focus, .btn:focus,
+.btn.valid:focus, .btn-valid:focus {
+  outline-style : none;
+}
+
+.btn:active {
+  -webkit-box-shadow: 0px 1px 2px #bbb;
+   -moz-box-shadow: 0px 1px 2px #bbb;
+        box-shadow: 0px 1px 2px #bbb;
+}
+
+.form-group .btn.active.btn-next,
+.form-group .btn:active.btn-next {
+  background: $red-1 url("../img/sprites/next_white.png") no-repeat right 13px;
+}
+
+.modal-footer button.btn{
+  background-image: none;
+  padding-right: 10px;
+}
+
+/*pour bandeau scroll partie cnav et msa noir et blanc*/
+    button.btn {
+      text-transform: uppercase;
+      margin-top:15px;
+      border-radius: 5px;
+      padding: 10px 10px 10px 10px;
+      box-shadow:0 4px 5px 0 #c8c8c8;
+      font-size: 2.2rem;
+      font-family: $font-stack-alt;
+      font-weight: 300;
+      margin-bottom:20px;
+      margin-right:59px;
+      overflow:hidden;
+    }
+
+    .bouton button:link,
+    .bouton button:visited {
+      background-color: $blue-1;
+      text-transform: none;
+      color:#fff;
+    }
+
+    .record {
+      background: $blue-1 url("../img/sprites/save_white.png") no-repeat 10px 11px;
+      height: 57px;
+      overflow: hidden;
+      display:block;
+      color: #fff;
+    }
+
+    .print {
+      background: $blue-1 url("../img/sprites/print_white.png") no-repeat 10px 7px;
+      height: 57px;
+      overflow: hidden;
+      display:block;
+      color: #fff;
+    }
+
+    .mail {
+      background: $blue-1 url("../img/sprites/mail_white.png") no-repeat 10px 15px;
+      height: 57px;
+      overflow: hidden;
+      display:block;
+      color: #fff;
+    }
+
+    .bouton button:hover,
+    .bouton button:focus {
+      background-color: $blue-dark;
+      color:#fff;
+    }
+
+    .record:hover,
+    .record:focus {
+      background: $blue-dark url("../img/sprites/save.png") no-repeat 10px 11px;
+      height: 57px;
+      overflow: hidden;
+      display:block;
+      color: #fff;
+    }
+
+    .print:hover,
+    .print:focus {
+      background: $blue-dark url("../img/sprites/print.png") no-repeat 10px 7px;
+      height: 57px;
+      overflow: hidden;
+      display:block;
+      color: #fff;
+    }
+
+    .mail:hover,
+    .mail:focus {
+      background: $blue-dark url("../img/sprites/mail.png") no-repeat 10px 15px;
+      height: 57px;
+      overflow: hidden;
+      display:block;
+      color: #fff;
+    }
+
+
+body .container.information .contenu {
+    .bandeau-scroll {
+      position: fixed;
+      bottom: 0;
+      left: auto;
+      right: auto;
+      z-index:10;
+      width:872px;
+      text-align: center;
+    }
+
+    p.bouton {
+      text-align: center;
+
+    }
+
+    button.btn {
+      text-transform: uppercase;
+      margin-top:15px;
+      border-radius: 5px;
+      padding: 10px 10px 10px 10px;
+      box-shadow:0 4px 5px 0 #c8c8c8;
+      font-size: 2.2rem;
+      font-family: $font-stack-alt;
+      font-weight: 300;
+      margin-bottom:20px;
+      margin-right:59px;
+      overflow:hidden;
+    }
+
+    .bouton button:link,
+    .bouton button:visited {
+      background-color: $blue-1;
+      text-transform: none;
+      color:#fff;
+    }
+
+    .record {
+      background: $blue-1 url("../img/sprites/save.png") no-repeat 10px 11px;
+      height: 57px;
+      overflow: hidden;
+      display:block;
+      color: #fff;
+    }
+
+    .print {
+      background: $blue-1 url("../img/sprites/print.png") no-repeat 10px 7px;
+      height: 57px;
+      overflow: hidden;
+      display:block;
+      color: #fff;
+    }
+
+    .mail {
+      background: $blue-1 url("../img/sprites/mail.png") no-repeat 10px 15px;
+      height: 57px;
+      overflow: hidden;
+      display:block;
+      color: #fff;
+    }
+
+    .bouton button:hover,
+    .bouton button:focus {
+      background-color: $blue-dark;
+      color:#fff;
+    }
+
+    .record:hover,
+    .record:focus {
+      background: $blue-dark url("../img/sprites/save.png") no-repeat 10px 11px;
+      height: 57px;
+      overflow: hidden;
+      display:block;
+      color: #fff;
+    }
+
+    .print:hover,
+    .print:focus {
+      background: $blue-dark url("../img/sprites/print.png") no-repeat 10px 7px;
+      height: 57px;
+      overflow: hidden;
+      display:block;
+      color: #fff;
+    }
+
+    .mail:hover,
+    .mail:focus {
+      background: $blue-dark url("../img/sprites/mail.png") no-repeat 10px 15px;
+      height: 57px;
+      overflow: hidden;
+      display:block;
+      color: #fff;
+    }
+
+    .bouton .btn {
+      float:left;
+      text-align: center;
+      padding-left: 58px;
+    }
+
+    .btn {
+      padding-left: 58px;
+      float:left;
+    }
+  }
+

@@ -71,6 +71,7 @@ body .container {
 			float: left;
 			margin-bottom:10px;
 			color: $grey;
+			top: 4px;
 		}
 
 		.choice input[type="radio"]{
@@ -94,37 +95,5 @@ body .container {
 	.text-right {
 		text-align:right;
 		padding-right: 0;
-	}
-
-	.btn {
-		text-transform: uppercase;
-		margin-top:15px;
-		border-radius: 5px;
-		padding: 10px 10px 10px 10px;
-		color:#fff;
-		box-shadow:0 4px 5px 0 #c8c8c8;
-		font-size: 2.2rem;
-		font-family: $font-stack-alt;
-		font-weight: 300;
-	}
-
-	.btn:link,
-	.btn:visited{
-		background-color: $red;
-	}
-
-	.btn:hover,
-	.btn:focus {
-		background-color: $red-1;
-	}
-
-	.btn-next {
-		background: $red url("../img/sprites/next_white.png") no-repeat right 13px;
-		padding-right:30px;
-	}
-
-	.btn-precedente {
-		background: $red url("../img/sprites/previous_white.png") no-repeat left 13px;
-		padding-left:30px;
 	}
 }

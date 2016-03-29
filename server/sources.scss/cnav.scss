@@ -1,0 +1,83 @@
+@charset 'utf-8';
+
+@import "pages/main";
+
+/* -----------------------------------------------------------------------------
+   Utils
+----------------------------------------------------------------------------- */
+
+// Mixins
+@import 'utils/utils';
+@import 'utils/clearfix';
+@import "utils/breakpoints";
+//@import "utils/sprites";
+
+// Reset
+@import 'utils/normalize';
+@import "utils/box-sizing";
+
+// Generic & reusable
+@import 'utils/display';
+@import 'utils/alignments';
+@import 'utils/image';
+
+
+
+
+/* -----------------------------------------------------------------------------
+   Vendors
+----------------------------------------------------------------------------- */
+
+// Third party css (ex: jQuery plugins)
+
+//@import 'vendors/plugin-name';
+
+
+
+/* -----------------------------------------------------------------------------
+   Theme
+----------------------------------------------------------------------------- */
+
+// Colors, fonts & variables
+
+@import 'themes/colors-cnav';
+@import 'themes/theme';
+
+
+/* -----------------------------------------------------------------------------
+   Components
+----------------------------------------------------------------------------- */
+
+// Base styles
+
+@import 'components/links';
+@import 'components/block';
+@import 'components/lists';
+@import 'components/texts';
+@import 'components/button';
+@import 'components/tables';
+@import 'components/media';
+@import 'components/breadcrumb';
+@import 'components/form/form';
+@import 'components/article';
+@import 'components/header';
+@import 'components/footer';
+@import 'components/nav';
+
+
+
+/* -----------------------------------------------------------------------------
+   Pages
+----------------------------------------------------------------------------- */
+
+@import 'pages/home';
+@import 'pages/etape_2';
+@import 'pages/information';
+
+
+
+/* -----------------------------------------------------------------------------
+   Print
+----------------------------------------------------------------------------- */
+
+@import 'utils/print';

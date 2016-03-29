@@ -1,0 +1,24 @@
+// =============================================================================
+// Colors
+// =============================================================================
+
+$red: #9e4872;
+$red-1:#9b0950;
+
+$blue: #0b6ba8;
+$blue-1: #337ab7;
+$blue-dark: #045589;
+//$blue-light: tint($blue, 20%);
+//$blue-dark: shade($blue, 20%);
+
+
+$grey-7: #282828;
+$grey-8: #707070;
+
+
+$brand: $blue;
+/// Brand highlight
+/// @group theme
+$brand-highlight: tint($brand, 20%);
+
+$pathImg : "../img/agnostique";

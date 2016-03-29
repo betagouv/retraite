@@ -1,6 +1,7 @@
 package utils.engine.data;
 
 import java.util.List;
+import java.util.Map;
 
 import models.FakeData;
 import utils.engine.data.enums.EcranSortie;
@@ -31,8 +32,7 @@ public class RenderData extends CommonExchangeData {
 
 	public List<InfoRetraiteResultRegime> regimesInfos;
 
-	public String dateGeneration;
-
 	public EcranSortie ecranSortie;
 
+	public Map<String, String> userInfos;
 }

@@ -39,7 +39,7 @@
 ----------------------------------------------------------------------------- */
 
 // Colors, fonts & variables
-
+@import 'themes/colors-agnostique';
 @import 'themes/theme';
 
 
@@ -54,13 +54,12 @@
 @import 'components/block';
 @import 'components/lists';
 @import 'components/texts';
-@import 'components/button';
+@import 'components/button-agnostique';
 @import 'components/tables';
 @import 'components/media';
 @import 'components/breadcrumb';
 @import 'components/form/form';
 @import 'components/article';
-
 @import 'components/header';
 @import 'components/footer';
 @import 'components/nav';

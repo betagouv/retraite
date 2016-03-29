@@ -2,11 +2,14 @@
 
 	<div class="contenu col-sm-12">
 		<div class="question">
-			<h2 style='padding-bottom: 50px;'>${_data.hidden_nir.startsWith('1') ? 'M.' : 'Mme'} ${_data.hidden_nom}, pour partir à la retraite le #{dateDepart data:_data /},
-				<br/>
-				récupérez la liste de vos démarches.</h2>
+			<h2 style=''>${_data.hidden_nir.startsWith('1') ? 'M.' : 'Mme'} ${_data.hidden_nom}, pour partir à la retraite le #{dateDepart data:_data /},
+				<br/>récupérez la liste de vos démarches.</h2>
 			<div class="bg-box">
 
+				#{if _data.isPDF}
+					.
+				#{/if}
+				
 				#{if !_data.isPDF}
 					<div class="col-sm-12 ">
 						<div class="col-sm-1"></div>
@@ -35,9 +38,9 @@
 										<h3>${chapitre.titre}</h3>
 									</div>
 								#{/if}
-								#{if _data.isPDF}
+								#{else}
 									<h3>${chapitre_index} - ${chapitre.titre}</h3>
-								#{/if}
+								#{/else}
 							</div>
 							<!-- 
 							<div class="panel-heading">

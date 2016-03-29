@@ -4,6 +4,7 @@ import static java.util.Arrays.asList;
 import static utils.engine.EngineUtils.firstNotNull;
 import static utils.engine.data.enums.UserStatus.STATUS_CHEF;
 
+import java.util.HashMap;
 import java.util.List;
 
 import controllers.data.PostData;
@@ -50,9 +51,9 @@ public class DisplayerChecklist {
 		// [XN-29/03/2016-En attendant de remettre les questions complémentaires, on force l'affichage du parcours démat]
 		final boolean isParcoursDemat = true;// questionComplementairesEvaluator.isParcoursDemat(complementReponses);
 		// Temp
-		// final MonthAndYear dateDepart = new MonthAndYear(data.hidden_departMois, data.hidden_departAnnee);
-		final MonthAndYear dateDepart = new MonthAndYear(firstNotNull(data.departMois, data.hidden_departMois),
-				firstNotNull(data.departAnnee, data.hidden_departAnnee));
+		final String departMois = firstNotNull(data.departMois, data.hidden_departMois);
+		final String departAnnee = firstNotNull(data.departAnnee, data.hidden_departAnnee);
+		final MonthAndYear dateDepart = new MonthAndYear(departMois, departAnnee);
 		final UserChecklistGenerationData userChecklistGenerationData = userChecklistGenerationDataBuilder.build(dateDepart, data.hidden_departement,
 				regimes, regimesAlignes, regimeLiquidateur, complementReponses, isParcoursDemat, true, data.hidden_attestationCarriereLongue, userStatus);
 		renderData.hidden_step = "displayCheckList";
@@ -63,7 +64,12 @@ public class DisplayerChecklist {
 			Logger.error(e, "Impossible de déterminer le régime liquidateur");
 			renderData.errorMessage = "Désolé, impossible de déterminer le régime liquidateur...";
 		}
-		renderData.dateGeneration = DateUtils.format(dateProvider.getCurrentDate());
+		renderData.userInfos = new HashMap<>();
+		renderData.userInfos.put("Document produit le", DateUtils.format(dateProvider.getCurrentDate()));
+		renderData.userInfos.put("Nom de naissance", data.hidden_nom);
+		if (departMois != null && departAnnee != null) {
+			renderData.userInfos.put("Date de départ envisagée", "01/" + (departMois.length() == 1 ? "0" : "") + departMois + "/" + departAnnee);
+		}
 	}
 
 }
