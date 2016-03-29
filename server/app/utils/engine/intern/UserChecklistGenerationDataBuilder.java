@@ -29,7 +29,8 @@ public class UserChecklistGenerationDataBuilder {
 		userChecklistGenerationData.isConjointCollaborateur = userStatus.contains(STATUS_CONJOINT_COLLABORATEUR);
 		userChecklistGenerationData.isNSA = userStatus.contains(STATUS_NSA);
 		userChecklistGenerationData.isSA = userStatus.contains(STATUS_SA);
-		userChecklistGenerationData.isCarriereAReconstituer = liquidateurReponsesEvaluator.isCarriereAReconstituer(complementReponses);
+		// [XN-29/03/2016-En attendant de remettre les questions complémentaires, on force l'affichage des chapitres]
+		userChecklistGenerationData.isCarriereAReconstituer = true;// liquidateurReponsesEvaluator.isCarriereAReconstituer(complementReponses);
 		userChecklistGenerationData.isCarriereLongue = isCarriereLongue;
 		return userChecklistGenerationData;
 	}
