@@ -1,9 +1,52 @@
 html {
+	height: 0;
+	background: white;
+}
+
+body,
+body .container.information .wrapper,
+body .container.information .contenu .bg-box .panel-body,
+body .container.information .contenu .bg-box,
+body .container.information .contenu table.table.table-bordered.table-interlocuteur,
+body .container.information .contenu .question h2 {
+	background: none;
+}
+
+body .container .contenu,
+body .container.information .contenu .bg-box .panel {
+	box-shadow: none;
+}
+
+body .container .contenu,
+body .container .question {
+	margin: 0;
+	padding: 0;
+}
+
+table.pdf-interlocuteurs {
+}
+
+table.pdf-interlocuteurs td {
+    border: none;
+}
+
+table.pdf-interlocuteurs td.pdf-interlocuteurs-data {
+	font-weight: 600;
+}
+
+
+/*
+html {
     font-size: 1em;
 }
 
 body {
-    font-size: 1em;
+	font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+    font-size: 20px;
+}
+
+body .container {
+    font-size: 2em;
 }
 
 body .container.information .contenu h2 {
@@ -21,3 +64,4 @@ body .container.information .contenu .bg-box .panel-body {
 body .container.information .delai {
     font-size: 6.0em;
 }
+*/

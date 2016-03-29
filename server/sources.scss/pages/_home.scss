@@ -4,9 +4,27 @@
 header.entete {
   background: #fff url("../img/sprites/background.png") left bottom;
 	background-repeat: repeat-x;
-	height:82px;
+	height:92px;
 	position:relative;
 	margin :0 auto;
+
+
+	.logo {
+		padding: 2px 0 0;
+		position: absolute;
+		display: inline;
+	}
+
+	.header-inner {
+		max-width: 900px;
+		margin: 0 auto;
+	}
+
+	.home.header-inner {
+		max-width: 754px;
+		margin: 0 auto;
+	}
+
 
 	.title {
 		background-position: center top;
@@ -197,33 +215,6 @@ body .container {
 		.text-right {
 			text-align:right;
 		}
-
-		input.btn {
-			text-transform: uppercase;
-			margin-top:15px;
-			border-radius: 5px;
-			padding: 10px 10px 10px 10px;
-			color:#fff;
-			box-shadow:0 4px 5px 0 #c8c8c8;
-			font-size: 2.2rem;
-			font-family: $font-stack-alt;
-			font-weight: 300;
-		}
-
-		input.btn:link,
-		input.btn:visited{
-			background-color: $red;
-		}
-
-		input.btn:hover,
-		input.btn:focus {
-			background-color: $red-1;
-		}
-
-		input.btn-next {
-			background: $red url("../img/sprites/next_white.png") no-repeat right 13px;
-			padding-right:30px;
-		}
 	}
 }
 
@@ -261,6 +252,10 @@ footer {
 	.footer-right {
 		float:right;
 		text-align: right;
+
+		li {
+			padding-left: 40px;
+		}
 	}
 
 	.footer-nav {
@@ -271,17 +266,17 @@ footer {
 		padding-left:0;
 
 		li {
-		display: inline;
-		font-size: 1.6rem;
-		color: $grey-8;
-		list-style: none;
+			display: inline;
+			font-size: 1.6rem;
+			color: $grey-8;
+			list-style: none;
 		}
 	}
-a:link,
-a:visited {
-	color: $grey-8;
-}
 
+	a:link,
+	a:visited {
+		color: $grey-8;
+	}
 
 	a:focus img,
 	a:hover img {
@@ -305,11 +300,45 @@ body .container.padding-bottom{
 		line-height: 1.8rem;
 	}
 
+	footer .wrapper-inner {
+		padding-top: 10px;
+	}
+
 	footer ul {
 		padding-left: 0;
 	}
 
+	.footer-right ul li {
+		padding-left: 6px;
+	}
+
 	footer .footer-nav {
 		margin-top:23px;
+	}
+
+	body .container .contenu .form-group {
+		height: 70px;
+	}
+
+	.date {
+		overflow:hidden;
+		height: 40px;
+	}
+}
+
+
+/*@media (min-width: @screen-sm-min) {  */
+@media screen and (max-width: 691px) {
+	.text-right {
+		margin-right: 15px;
+	}
+
+	footer {
+		margin-left: -15px;
+		margin-right: -15px;
+	}
+
+	footer .footer-nav {
+		width: 30%;
 	}
 }

@@ -1,7 +1,8 @@
 body {
     padding: 0;
     padding-top: 85px;
-    font-size: 18px;
+    /*font-size: 18px;*/
+    font-size: 1em;
 }
 
 body, a, a:hover, a:visited {
@@ -9,7 +10,7 @@ body, a, a:hover, a:visited {
 }
 
 a {
-    text-decoration: underline;    
+    text-decoration: underline;
 }
 
 .navbar-fixed-top {
@@ -23,7 +24,8 @@ h1, .h1, h2, .h2, h3, .h3 {
 }
 
 h2 {
-    font-size: 24px;
+    /*font-size: 24px;*/
+    font-size: 1.333em;
 }
 
 .form-control {
@@ -70,7 +72,7 @@ h2 {
         /* XN 730px */
     }
     /* Remove the padding we set earlier */
-    
+
     .header,
     .marketing,
     .footer {
@@ -78,12 +80,12 @@ h2 {
         padding-right: 0;
     }
     /* Space out the masthead */
-    
+
     .header {
         margin-bottom: 30px;
     }
     /* Remove the bottom border on the jumbotron for visual effect */
-    
+
     .jumbotron {
         border-bottom: 0;
     }
@@ -118,7 +120,8 @@ h2 {
 
 .question-infos {
 	font-style: italic;
-	font-size: 14px;
+	/*font-size: 14px;*/
+    font-size: 0.778em;
 }
 
 .choice input[type="radio"], .choice input[type="checkbox"] {
@@ -130,9 +133,10 @@ h2 {
     display: inline-block;
     vertical-align: middle;
     width: 255px;
-    
+
     font-weight: bold;
-    font-size: 18px;
+    /*font-size: 18px;*/
+    font-size: 1em;
     margin: 10px;
     color: black;
     padding-top: 20px;
@@ -157,7 +161,8 @@ h2 {
 
 .caisse-details {
     text-align: left;
-    font-size: 13px;
+    /*font-size: 13px;*/
+    font-size: 0.722em;
 }
 
 .caisse span {
@@ -168,7 +173,8 @@ h2 {
 }
 
 .table-interlocuteur {
-    font-size: 16px;
+    /*font-size: 16px;*/
+    font-size: 0.889em;
 }
 
 .panel-heading {
@@ -199,7 +205,7 @@ h2 {
 }
 
 .precision {
-    font-style: italic;    
+    font-style: italic;
 }
 
 .bordered {

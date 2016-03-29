@@ -13,7 +13,9 @@ import static utils.JsonUtils.toJson;
 import static utils.engine.data.enums.RegimeAligne.CNAV;
 import static utils.engine.data.enums.UserStatus.STATUS_CHEF;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -70,13 +72,13 @@ public class DisplayerChecklistTest {
 		postData.hidden_departement = "973";
 		postData.hidden_regimes = "CNAV";
 		postData.hidden_liquidateurReponseJsonStr = null;
-		postData.hidden_departMois = "11";
+		postData.hidden_departMois = "2";
 		postData.hidden_departAnnee = "2017";
 		postData.hidden_attestationCarriereLongue = true;
 		postData.complementReponseJsonStr = complementReponseJsonStr;
 		postData.hidden_liquidateur = CNAV;
 
-		final MonthAndYear dateDepart = new MonthAndYear("11", "2017");
+		final MonthAndYear dateDepart = new MonthAndYear("2", "2017");
 		final Regime[] regimes = new Regime[] { Regime.CNAV };
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { CNAV };
 		final UserChecklistGenerationData userChecklistGenerationData = new UserChecklistGenerationData(dateDepart, "973", regimes, regimesAlignes,
@@ -95,7 +97,15 @@ public class DisplayerChecklistTest {
 		assertThat(renderData.hidden_step).isEqualTo("displayCheckList");
 		assertThat(renderData.hidden_complementReponseJsonStr).isEqualTo(complementReponseJsonStr);
 		assertThat(renderData.userChecklist).isSameAs(userChecklistMock);
-		assertThat(renderData.dateGeneration).isEqualTo("23/12/2015");
+
+		final Map<String, String> expectedUserInfos = new HashMap<String, String>() {
+			{
+				put("Document produit le", "23/12/2015");
+				put("Nom de naissance", "DUPONT");
+				put("Date de départ envisagée", "01/02/2017");
+			}
+		};
+		assertThat(renderData.userInfos).isEqualTo(expectedUserInfos);
 	}
 
 	@Test

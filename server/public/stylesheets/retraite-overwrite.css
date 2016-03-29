@@ -1,6 +1,10 @@
 
 /* Styles ajoutés */
 
+.font-normal {
+	font-size: 1.8rem;
+}
+
 .titre-intro-checklist {
 	margin: 42px auto 10px;
 	color: #0b6ba8;
@@ -66,3 +70,4 @@ footer a.footer-feedback {
     font-weight: bold;
     font-family: "Open sans", "Arial", "Helvetica", sans-serif;
 }
+

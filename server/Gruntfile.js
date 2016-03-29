@@ -89,9 +89,16 @@ module.exports = function(grunt) {
                     ],
                     style: 'expanded'
                 },
-                files: {
+                files: [{
+					expand: true,
+					cwd: '<%= config.sourcesScss %>',
+					src: ['*.scss'],
+					dest: '<%= config.destCss %>',
+					ext: '.css'
+				}]
+                /*files: {
                     '<%= config.destCss %>/style.css': '<%= config.sourcesScss %>/style.scss'
-                }
+                }*/
             }
         },
 

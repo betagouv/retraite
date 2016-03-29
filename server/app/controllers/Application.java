@@ -56,7 +56,7 @@ public class Application extends RetraiteController {
 	}
 
 	private static final boolean AS_HTML = false;
-	private static final boolean RENDER_PDF_WITH_I_TEXT = true;
+	private static final boolean RENDER_PDF_WITH_I_TEXT = false;
 
 	public static void pdf(final PostData postData, final String html) {
 
@@ -68,15 +68,16 @@ public class Application extends RetraiteController {
 			render(data);
 		}
 
+		setResponseHeaderForPdfContentType();
+		setResponseHeaderForAttachedPdf();
+
 		if (RENDER_PDF_WITH_I_TEXT) {
 			renderPdfWith_iText(data);
-			setResponseHeaderForAttachedPdf();
 			ok();
 		}
 
 		// PDF.renderPDF() ne peut pas être utilisé car il écrase les headers fixés ci-dessous
 		renderPdfWithPdfPlayModule(data);
-		setResponseHeaderForAttachedPdf();
 		ok();
 	}
 
@@ -86,9 +87,12 @@ public class Application extends RetraiteController {
 		return data.hidden_step + ("displayLiquidateurQuestions".equals(data.hidden_step) ? "_" + data.hidden_liquidateurStep : "");
 	}
 
+	private static void setResponseHeaderForPdfContentType() {
+		response.setHeader("Content-Type", "application/pdf");
+	}
+
 	private static void setResponseHeaderForAttachedPdf() {
 		response.setHeader("Content-Disposition", "attachment; filename=\"Mes_demarches_retraite.pdf\"");
-		response.setHeader("Content-Type", "application/pdf");
 	}
 
 	private static void renderPdfWith_iText(final RenderData data) {

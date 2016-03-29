@@ -4,20 +4,29 @@
 	<div class="question">
 		<h2>Mes informations :</h2>
 		<div class="bg-box">
-			<ul class="sanspuce col-sm-5 text-right">
-				<li>Document produit le :</li>
-				<li>Nom de naissance :</li>
-				#{if _data.hidden_departMois && _data.hidden_departAnnee}
-					<li>Date de départ envisagée :</li>
-				#{/if}
-			</ul>
-			<ul class="sanspuce col-right col-sm-5">
-				<li>${_data.dateGeneration}</li>
-				<li>${_data.hidden_nom}</li>
-				#{if _data.hidden_departMois && _data.hidden_departAnnee}
-					<li>#{dateDepart data:_data /}</li>
-				#{/if}
-			</ul>
+
+			#{if !_data.isPDF}
+				<ul class="sanspuce col-sm-5 text-right">
+					#{list items:_data.userInfos.keySet(), as:'key'}
+						<li>${key} :</li>
+					#{/list}
+				</ul>
+				<ul class="sanspuce col-right col-sm-5">
+					#{list items:_data.userInfos.keySet(), as:'key'}
+						<li>${_data.userInfos.get(key)}</li>
+					#{/list}
+				</ul>
+			#{/if}
+			#{else}
+				<table class="pdf-interlocuteurs">
+					#{list items:_data.userInfos.keySet(), as:'key'}
+						<tr>
+							<td>${key} :&nbsp;</td>
+							<td class="pdf-interlocuteurs-data">${_data.userInfos.get(key)}</td>
+						</tr>
+					#{/list}
+				</table>
+			#{/else}
 		</div>
 		<!--fin bg-box-->
 	</div>
