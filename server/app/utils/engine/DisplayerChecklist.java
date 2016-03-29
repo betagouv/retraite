@@ -47,7 +47,8 @@ public class DisplayerChecklist {
 		final List<UserStatus> userStatus = asList(STATUS_CHEF);
 		final ComplementReponses complementReponses = ComplementReponses.retrieveComplementReponsesFromJson(data.complementReponseJsonStr);
 		final Regime[] regimes = Regime.fromStringList(data.hidden_regimes);
-		final boolean isParcoursDemat = questionComplementairesEvaluator.isParcoursDemat(complementReponses);
+		// [XN-29/03/2016-En attendant de remettre les questions complémentaires, on force l'affichage du parcours démat]
+		final boolean isParcoursDemat = true;// questionComplementairesEvaluator.isParcoursDemat(complementReponses);
 		// Temp
 		// final MonthAndYear dateDepart = new MonthAndYear(data.hidden_departMois, data.hidden_departAnnee);
 		final MonthAndYear dateDepart = new MonthAndYear(firstNotNull(data.departMois, data.hidden_departMois),
