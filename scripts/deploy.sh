@@ -36,9 +36,6 @@ if [ $? != 0 ]; then
 fi
 cd ..
 
-# Tag Git
-git tag "deploy.$ENV.$(date +%Y-%m-%d_%H-%M-%S)"
-
 # Copie de l'application client dans le serveur
 echo
 echo "Copie de l'application client dans le serveur..."
@@ -62,7 +59,9 @@ git status
 read -p "Une touche pour continuer ..."
 git add .
 git commit -am "deploy_$ENV_$(date +%Y-%m-%d_%H-%M-%S)"
-git tag "deploy_$ENV_$(date +%Y-%m-%d_%H-%M-%S)"
+
+# Tag Git
+git tag "deploy.$ENV.$(date +%Y-%m-%d_%H-%M-%S)"
 
 # Deploiement
 echo
