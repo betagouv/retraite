@@ -24,10 +24,27 @@ import play.templates.TemplateLoader;
 import utils.doc.ChecklistForDoc;
 import utils.doc.ChecklistForDocConverter;
 import utils.engine.RetraiteEngineFactory;
+import utils.engine.data.CommonExchangeData;
 import utils.engine.data.RenderData;
 import utils.mail.MailSenderWithSendGrid;
 
 public class Application extends RetraiteController {
+
+	private static Map<String, DisplayCheckListData> cache = new HashMap<>();
+
+	private static class DisplayCheckListData {
+
+		private final RenderData data;
+		private final boolean isTest;
+		private final String page;
+
+		public DisplayCheckListData(final RenderData data, final boolean isTest, final String page) {
+			this.data = data;
+			this.isTest = isTest;
+			this.page = page;
+		}
+
+	}
 
 	public static void process(final PostData postData, final String test) {
 		if (postData != null) {
@@ -36,6 +53,20 @@ public class Application extends RetraiteController {
 		final boolean isTest = params._contains("test");
 		final RenderData data = RetraiteEngineFactory.create().processToNextStep(postData);
 		final String page = getPageNameForGoogleAnalytics(data);
+		if (data.hidden_step.equals("displayCheckList")) {
+			final String key = "" + System.currentTimeMillis();
+			cache.put(key, new DisplayCheckListData(data, isTest, page));
+			displayCheckList(key);
+		} else {
+			renderTemplate("Application/steps/" + data.hidden_step + ".html", data, isTest, page);
+		}
+	}
+
+	public static void displayCheckList(final String key) {
+		final DisplayCheckListData displayCheckListData = cache.remove(key);
+		final CommonExchangeData data = displayCheckListData.data;
+		final boolean isTest = displayCheckListData.isTest;
+		final String page = displayCheckListData.page;
 		renderTemplate("Application/steps/" + data.hidden_step + ".html", data, isTest, page);
 	}
 

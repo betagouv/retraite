@@ -41,6 +41,9 @@ DELETE  /api/checklist/{id}						ApiRestChecklists.deleteChecklist
 GET		/api/inforetraite						ApiInfoRetraite.get
 GET		/api/checklistpublish					ApiChecklistPublish.get
 
+# Specials
+*		/demarches								Application.displayCheckList
+
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}
 
