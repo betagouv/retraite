@@ -8,8 +8,9 @@ import utils.JsonUtils;
 public class RetraiteController extends Controller {
 
 	@Before
-	public static void setGacode() {
+	public static void setGacodeAndAppid() {
 		renderArgs.put("gacode", Play.configuration.getProperty("gacode"));
+		renderArgs.put("appid", Play.configuration.getProperty("appid"));
 	}
 
 	protected static void renderJSON(final Object o) {
