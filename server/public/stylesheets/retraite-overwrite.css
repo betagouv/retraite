@@ -1,6 +1,4 @@
-
 /* Styles ajoutés */
-
 .font-normal {
 	font-size: 1.8rem;
 }
@@ -9,20 +7,20 @@
 	margin: 42px auto 10px;
 	color: #0b6ba8;
 	font-family: "Roboto", "Arial", "Helvetica", sans-serif;
-    font-weight: bold;
-    font-size: 3.2rem;
+	font-weight: bold;
+	font-size: 3.2rem;
 }
 
 label.label-carriere-longue {
 	display: inline-block;
 	font-weight: bold;
-    margin-top: 20px;
+	margin-top: 20px;
 }
 
 /* Styles surchargés */
-
 body .container .contenu {
 	/*margin: 0;*/
+	
 }
 
 .chemin-pendule {
@@ -50,9 +48,8 @@ body .container.information .contenu .bg-box h3 {
 	margin: 0;
 }
 
-
 body .container.information .bouton .btn {
-    margin-left: 240px;
+	margin-left: 240px;
 }
 
 .img_bg div {
@@ -61,13 +58,50 @@ body .container.information .bouton .btn {
 
 footer.footer-feedback {
 	color: #0b6ba8;
-    font-size: 1.8em;
+	font-size: 1.8em;
 }
 
 footer a.footer-feedback {
 	color: #0b6ba8;
-    font-size: 1.4em;
-    font-weight: bold;
-    font-family: "Open sans", "Arial", "Helvetica", sans-serif;
+	font-size: 1.4em;
+	font-weight: bold;
+	font-family: "Open sans", "Arial", "Helvetica", sans-serif;
 }
 
+.bandeau-cookie {
+	background-color: rgba(0, 0, 0, 0.8);
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	line-height: 2.5em;
+	padding: 2px;
+	vertical-align: middle;
+	font-size: 1.6rem;
+}
+
+.bandeau-cookie input[type=button] {
+	color: white;
+	background-color: #2272BA;
+	border-radius: 5px;
+	border: 0;
+	padding: 0 20px;
+	margin-left: 10px;
+}
+
+.bandeau-cookie input[type=button] {
+	color: white;
+	background-color: #2272BA;
+	border-radius: 5px;
+	border: 0;
+	padding: 0 20px;
+	margin-left: 10px;
+}
+
+.bandeau-cookie a {
+	color: white;
+	text-decoration: underline;
+}
+
+.bandeau-cookie input[type=button]:hover {
+	background-color: rgba(34, 114, 186, .5);
+}
