@@ -56,6 +56,7 @@ public class Application extends RetraiteController {
 		if (data.hidden_step.equals("displayCheckList")) {
 			final String key = "" + System.currentTimeMillis();
 			cache.put(key, new DisplayCheckListData(data, isTest, page));
+			// Redirection pour avoir une URL spécifique pour hotjar
 			displayCheckList(key);
 		} else {
 			renderTemplate("Application/steps/" + data.hidden_step + ".html", data, isTest, page);
