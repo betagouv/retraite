@@ -26,6 +26,8 @@ import utils.engine.utils.AgeCalculator;
 import utils.engine.utils.AgeLegalEvaluator;
 import utils.engine.utils.DateProvider;
 import utils.engine.utils.VariablesReplacerMustache;
+import utils.wsinforetraite.InfoRetraite;
+import utils.wsinforetraite.InfoRetraiteBdd;
 import utils.wsinforetraite.InfoRetraiteConnector;
 import utils.wsinforetraite.InfoRetraiteDecoder;
 import utils.wsinforetraite.InfoRetraiteTokenRecuperator;
@@ -33,17 +35,26 @@ import utils.wsinforetraite.InfoRetraiteWsUr;
 
 public class RetraiteEngineFactory {
 
-	public static RetraiteEngine create() {
+	public static RetraiteEngine create(final boolean isTest) {
 		final DateProvider dateProvider = new DateProvider();
 		final LiquidateurReponsesEvaluator liquidateurReponsesEvaluator = new LiquidateurReponsesEvaluator();
 		final WsUtils wsUtils = new WsUtils();
+
+		// @formatter:off
+		final InfoRetraite infoRetraite =
+			isTest ?
+				new InfoRetraiteBdd()
+			:
+				new InfoRetraiteWsUr(
+						new InfoRetraiteDecoder(),
+						new InfoRetraiteConnector(wsUtils, new InfoRetraiteTokenRecuperator(wsUtils)));
+		// @formatter:on
+
 		return new RetraiteEngine(
 				new StepFormsDataProvider(dateProvider),
 
 				// new InfoRetraiteBdd(),
-				new InfoRetraiteWsUr(
-						new InfoRetraiteDecoder(),
-						new InfoRetraiteConnector(wsUtils, new InfoRetraiteTokenRecuperator(wsUtils))),
+				infoRetraite,
 
 				new CalculateurRegimeAlignes(),
 				new DaoFakeData(),
