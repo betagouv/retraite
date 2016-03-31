@@ -35,7 +35,7 @@ public class Application extends RetraiteController {
 			postData.hidden_userStatus = unbind(params.get("postData.hidden_userStatus"));
 		}
 		final boolean isTest = params._contains("test");
-		final RenderData data = RetraiteEngineFactory.create().processToNextStep(postData);
+		final RenderData data = RetraiteEngineFactory.create(isTest).processToNextStep(postData);
 		final String page = getPageNameForGoogleAnalytics(data);
 		if (data.hidden_step.equals("displayCheckList")) {
 			final String key = "" + System.currentTimeMillis();
@@ -57,7 +57,8 @@ public class Application extends RetraiteController {
 
 	public static void sendMail(final PostData postData) {
 
-		final RenderData data = RetraiteEngineFactory.create().processToNextStep(postData);
+		final boolean isTest = params._contains("test");
+		final RenderData data = RetraiteEngineFactory.create(isTest).processToNextStep(postData);
 		data.isPDF = true;
 
 		final String htmlContent = "Bonjour,<br/><br/>Veuillez trouver ci-joint votre checklist !<br/><br/>L'Equipe <b>Parcours Retraite</b>";
@@ -76,7 +77,8 @@ public class Application extends RetraiteController {
 
 	public static void pdf(final PostData postData, final String html) {
 
-		final RenderData data = RetraiteEngineFactory.create().processToNextStep(postData);
+		final boolean isTest = params._contains("test");
+		final RenderData data = RetraiteEngineFactory.create(isTest).processToNextStep(postData);
 		data.isPDF = true;
 
 		if (AS_HTML || params._contains("html")) {

@@ -14,7 +14,6 @@ public class PostData extends CommonExchangeData {
 	public String departMois;
 	public String departAnnee;
 	public String email;
-	public boolean test;
 
 	@Override
 	public String toString() {
