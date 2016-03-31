@@ -1,16 +1,17 @@
 package utils.wsinforetraite;
 
 import static utils.wsinforetraite.InfoRetraiteResult.Status.ERROR;
+
 import utils.RetraiteException;
 import utils.wsinforetraite.InfoRetraiteResult.InfoRetraiteResultRegime;
 import utils.wsinforetraite.InfoRetraiteResult.Status;
 
-public class InfoRetraiteReal implements InfoRetraite {
+public class InfoRetraiteWsUr implements InfoRetraite {
 
 	private final InfoRetraiteConnector infoRetraiteConnector;
 	private final InfoRetraiteDecoder infoRetraiteDecoder;
 
-	public InfoRetraiteReal(final InfoRetraiteDecoder cypeXmlDecoder, final InfoRetraiteConnector infoRetraiteConnector) {
+	public InfoRetraiteWsUr(final InfoRetraiteDecoder cypeXmlDecoder, final InfoRetraiteConnector infoRetraiteConnector) {
 		this.infoRetraiteDecoder = cypeXmlDecoder;
 		this.infoRetraiteConnector = infoRetraiteConnector;
 	}
@@ -42,4 +43,5 @@ public class InfoRetraiteReal implements InfoRetraite {
 		}
 		return regimes;
 	}
+
 }

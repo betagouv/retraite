@@ -1,0 +1,193 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="Description" content="Un conseiller virtuel pour répondre à vos questions sur la retraite">
+        <title>Le conseiller Info retraite</title>
+        <link rel="stylesheet" media="screen" href="/assets/stylesheets/main.css">
+        <link rel="stylesheet" href=/assets/stylesheets/services/appForm.css type="text/css">
+        <link rel="shortcut icon" type="image/png" href="/assets/images/UR_favoricon.ico">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="google-site-verification" content="6gbSAitx59rMWGaKlOhiPSoxudDCiNUEoWv8Akj1vIs" />
+    </head>
+    <body>
+        <section id="siteWrapper">
+            <header id="siteHeader">
+    <div class="siteHeader-row">
+        <div class="siteHeader-image-column"><a href="/"><img src="/assets/images/logo_ur.png"/></a></div>
+        <div class="siteHeader-title-column">
+            <nav class="top-bar" data-topbar role="navigation">
+                <ul class="title-area">
+                    <li class="name"></li>
+                        <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+                    <li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
+                </ul>
+                <section class="top-bar-section">
+                        <!-- Right Nav Section -->
+                    <ul class="right">
+                        
+                        
+                        <li><a href="/conditions">Conditions d'utilisation</a></li>
+                        <li><a href="/mentions">Mentions légales</a></li>
+                        <li><a href="http://goo.gl/forms/9vZPr41mBq">Votre avis nous intéresse</a></li>
+                        
+                    </ul>
+                        <!-- Left Nav Section -->
+                    <ul class="left"></ul>
+                </section>
+            </nav>
+            
+        </div>
+    </div>
+</header>
+
+            <section id="mainSection">
+                
+    <article id="avatarSection">
+    
+<figure class="figure-row">
+    <figure class="figure-column show-for-large-up">
+        <img id="avatarImg" src='/assets/images/avatarGreetingsLarge.png' alt="Agent virtuel"/>
+    </figure>
+    
+</figure>
+    </article>
+    <article id="questionResponseSection">
+        
+
+
+ 
+
+<form action="/recherche" method="POST" >
+    
+    <div class="inlineFormsRow">
+        <div class="inlineInputColumn">
+            <input type="search" placeholder="Saisissez votre question" name='terms' id='terms'/>
+            <img src='/assets/images/avatarGreetingsSmall.png' alt="Avatar" class="hide-for-large-up"/>
+        </div>
+        <div class="inlineSubmitColumn">
+            <input type="submit" value='Interroger'/>
+        </div>
+    </div>
+
+</form>
+
+        
+    <b>Bonjour et bienvenue sur ce site proposé par vos régimes de retraite.</b><br/>
+    Saisissez votre question ou quelques mots-clés pour débuter votre recherche.
+
+    </article>
+    <aside id='asideSection'>
+        <div class="asRowSection">
+            <div class="asColumnSection">
+<article id="mesRegimesSimu">
+<h5 class="text-center">Connaître vos régimes de retraite</h5>
+ 
+
+<form action="/api/mesregimes" method="POST" >
+    
+<input type="hidden" name="csrfToken" value="74f3e4ba861b78ba85d4fbe13606ba4a66c0ec9f-1459418070015-7aa25501f34992df53296849"/>
+    <small class="msg-hidden" id="message-error-inc"></small>
+
+    <label class="label-input">
+        <!--[if lt IE 10]>
+        <label>Nom de famille (Nom de naissance)</label>
+        <![endif]-->
+    <input type="text" id="nom" class="default" placeholder="Nom de famille (Nom de naissance)" name="name">
+    <small class="msg-hidden" id="message-error-nom">Le champ Nom n'est pas correct</small>
+</label>
+<label class="label-input">
+    <!--[if lt IE 10]>
+    <label>Numéro de sécurité sociale</label>
+    <![endif]-->
+	<input type="text" maxlength="13" id="NIR" class="default" placeholder="Numéro de sécurité sociale" name="nir">
+    <small class="msg-hidden" id="message-error-nir"></small>
+</label>
+    
+    <div class="row">
+        <div id="div-date">
+            <label class="label-input">
+                <!--[if lt IE 10]>
+                <label>Date de naissance</label>
+                <![endif]-->
+                <input type="text"  maxlength=10 id="date" readonly placeholder="Date de naissance" name="dtnai">
+                <small class="msg-hidden" id="message-error-date">Votre Date de naissance ou votre NIR est incorrect</small>
+                </label>          
+        </div>
+    </div>
+    <input type="button" id="getMesRegimes" value="Valider les informations">
+
+</form>
+
+    <! Modal Grid >
+
+    <div id="myModal" class="reveal-modal small" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog"  style="max-width:400px;">
+        <h3 id="modalTitle">Date de naissance (JJ/MM/AAAA) </h3>
+    <fieldset id="grid">
+    	<ul class="imagelist small-block-grid-3">
+            <li><a href=# id="grid"><h2 id="1"></h2></a></li>
+            <li><a href=# id="grid"><h2 id="2"></h2></a></li>
+            <li><a href=# id="grid"><h2 id="3"></h2></a></li>
+            <li><a href=# id="grid"><h2 id="4"></h2></a></li>    
+
+            <li><a href=# id="grid"><h2 id="5"></h2></a></li>
+            <li><a href=# id="grid"><h2 id="6"></h2></a></li>
+            <li><a href=# id="grid"><h2 id="7"></h2></a></li>
+            <li><a href=# id="grid"><h2 id="8"></h2></a></li>    
+
+            <li><a href=# id="grid"><h2 id="9"></h2></a></li>
+            <li><a href=# id="grid"><h2 id="10"></h2></a></li>
+            <li><a href=# id="grid"><h2 id="11"></h2></a></li>
+            <li><a href=# id="grid"><h2 id="12"></h2></a></li>    
+        </ul>
+    </fieldset> 
+        <div>
+                <h2 id="modal-result"></h2>
+                <button class= "button expand alert small" id="correction" >Correction</button>
+        </div>
+
+     <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+ </div>
+
+    <! Model Grid pour les regimes >
+    <div id="myRegimes" class="reveal-modal xlarge" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+        <h1 id="modalTitle">Liste de mes régimes </h1>
+        <div id="gridRegime">
+            <div class="row" id="regimeList" data-equalizer>
+            </div>
+            <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+        </div>
+    </div>
+</article>
+
+</div>
+        </div>
+    </aside>
+
+            </section>
+            <div id="siteFooterPush"></div>
+        </section>
+        <div id="siteFooterWrapper">
+            <footer id="siteFooter">
+    <div class="footer-column">
+        © GIP Union retraite - Tous droits réservés
+    </div>
+</footer>
+        </div>
+        <script src='/assets/javascripts/modernizr.js'></script>
+        <script src='/assets/javascripts/ir-analytics.js'></script>
+        <script src='/assets/javascripts/jquery.min.js'></script>
+        <script src='/assets/javascripts/foundation.min.js'></script>
+        <script src='/assets/javascripts/typeahead.bundle.min.js'></script>
+        <script src='/assets/javascripts/main.js'></script>
+        <script src='/assets/javascripts/allServices.js'></script>
+    </body>
+</html>
+

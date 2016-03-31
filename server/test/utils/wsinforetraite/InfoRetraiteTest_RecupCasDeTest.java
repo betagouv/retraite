@@ -1,5 +1,7 @@
 package utils.wsinforetraite;
 
+import static java.lang.String.valueOf;
+
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
@@ -19,7 +21,10 @@ public class InfoRetraiteTest_RecupCasDeTest extends RetraiteUnitTestBase {
 	@Ignore
 	public void run() throws Exception {
 
-		final InfoRetraite infoRetraite = new InfoRetraiteReal(new InfoRetraiteDecoder(), new InfoRetraiteConnector(new WsUtils()));
+		final WsUtils wsUtils = new WsUtils();
+		final InfoRetraite infoRetraite = new InfoRetraiteWsUr(
+				new InfoRetraiteDecoder(),
+				new InfoRetraiteConnector(wsUtils, new InfoRetraiteTokenRecuperator(wsUtils)));
 
 		final FileWriter fileWriter = new FileWriter("ListeNomsEtNirsEtRegimes.txt");
 
@@ -41,7 +46,7 @@ public class InfoRetraiteTest_RecupCasDeTest extends RetraiteUnitTestBase {
 				fileWriter.flush();
 
 				i++;
-				System.out.println(i);
+				log(valueOf(i));
 				pause();
 			}
 		} finally {
@@ -53,7 +58,11 @@ public class InfoRetraiteTest_RecupCasDeTest extends RetraiteUnitTestBase {
 			fileWriter.close();
 		}
 
-		System.out.println("---");
+		log("---");
+	}
+
+	private void log(final String string) {
+		System.out.println(string);
 	}
 
 	private void pause() {

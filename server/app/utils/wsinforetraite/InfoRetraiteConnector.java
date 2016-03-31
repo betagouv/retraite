@@ -1,6 +1,8 @@
 package utils.wsinforetraite;
 
+import static utils.WsUtils.cookie;
 import static utils.WsUtils.param;
+import static utils.wsinforetraite.InfoRetraiteConstants.BASE_API_URL;
 
 import play.Logger;
 import play.libs.WS.HttpResponse;
@@ -11,18 +13,21 @@ public class InfoRetraiteConnector {
 
 	// URL : "https://www.conseiller.info-retraite.fr/api/mesregimes?name=TOTO&nir=1223344555666&dtnai=07/04/2000";
 
-	private static final String BASE_URL = "https://www.conseiller.info-retraite.fr/api/mesregimes";
-
 	private final WsUtils wsUtils;
+	private final InfoRetraiteTokenRecuperator infoRetraiteTokenRecuperator;
 
-	public InfoRetraiteConnector(final WsUtils wsUtils) {
+	public InfoRetraiteConnector(final WsUtils wsUtils, final InfoRetraiteTokenRecuperator infoRetraiteTokenRecuperator) {
 		this.wsUtils = wsUtils;
+		this.infoRetraiteTokenRecuperator = infoRetraiteTokenRecuperator;
 	}
 
 	public String get(final String name, final String nir, final String dateNaissance) {
 		try {
-			final HttpResponse response = wsUtils.doGet(
-					BASE_URL,
+			final InfoRetraiteTokens tokens = infoRetraiteTokenRecuperator.getToken();
+			final HttpResponse response = wsUtils.doPost(
+					BASE_API_URL,
+					cookie(tokens.getCookie()),
+					param("csrfToken", tokens.getCsrfToken()),
 					param("name", name.trim()),
 					param("nir", nir.replace(" ", "")),
 					param("dtnai", dateNaissance));

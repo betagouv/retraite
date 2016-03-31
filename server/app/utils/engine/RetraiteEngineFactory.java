@@ -1,5 +1,6 @@
 package utils.engine;
 
+import utils.WsUtils;
 import utils.dao.CaisseDao;
 import utils.dao.DaoChecklist;
 import utils.dao.DaoFakeData;
@@ -25,24 +26,28 @@ import utils.engine.utils.AgeCalculator;
 import utils.engine.utils.AgeLegalEvaluator;
 import utils.engine.utils.DateProvider;
 import utils.engine.utils.VariablesReplacerMustache;
-import utils.wsinforetraite.InfoRetraiteBdd;
+import utils.wsinforetraite.InfoRetraiteConnector;
+import utils.wsinforetraite.InfoRetraiteDecoder;
+import utils.wsinforetraite.InfoRetraiteTokenRecuperator;
+import utils.wsinforetraite.InfoRetraiteWsUr;
 
 public class RetraiteEngineFactory {
 
 	public static RetraiteEngine create() {
 		final DateProvider dateProvider = new DateProvider();
 		final LiquidateurReponsesEvaluator liquidateurReponsesEvaluator = new LiquidateurReponsesEvaluator();
+		final WsUtils wsUtils = new WsUtils();
 		return new RetraiteEngine(
-				new StepFormsDataProvider(
-						dateProvider),
-				new InfoRetraiteBdd(),
-				/*
-				 * new InfoRetraiteReal( new InfoRetraiteDecoder(), new InfoRetraiteConnector(new WsUtils())),
-				 */
+				new StepFormsDataProvider(dateProvider),
+
+				// new InfoRetraiteBdd(),
+				new InfoRetraiteWsUr(
+						new InfoRetraiteDecoder(),
+						new InfoRetraiteConnector(wsUtils, new InfoRetraiteTokenRecuperator(wsUtils))),
+
 				new CalculateurRegimeAlignes(),
 				new DaoFakeData(),
-				new AgeCalculator(
-						dateProvider),
+				new AgeCalculator(dateProvider),
 				new AgeLegalEvaluator(
 						new PeriodeDepartLegalDao()),
 				new DisplayerLiquidateurQuestions(
