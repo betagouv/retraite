@@ -30,23 +30,7 @@ import utils.mail.MailSenderWithSendGrid;
 
 public class Application extends RetraiteController {
 
-	private static Map<String, DisplayCheckListData> cache = new HashMap<>();
-
-	private static class DisplayCheckListData {
-
-		private final RenderData data;
-		private final boolean isTest;
-		private final String page;
-
-		public DisplayCheckListData(final RenderData data, final boolean isTest, final String page) {
-			this.data = data;
-			this.isTest = isTest;
-			this.page = page;
-		}
-
-	}
-
-	public static void process(final PostData postData, final String test) {
+	public static void process(final PostData postData) {
 		if (postData != null) {
 			postData.hidden_userStatus = unbind(params.get("postData.hidden_userStatus"));
 		}
@@ -176,4 +160,19 @@ public class Application extends RetraiteController {
 		return pdfOptions;
 	}
 
+	private static Map<String, DisplayCheckListData> cache = new HashMap<>();
+
+	private static class DisplayCheckListData {
+
+		private final RenderData data;
+		private final boolean isTest;
+		private final String page;
+
+		public DisplayCheckListData(final RenderData data, final boolean isTest, final String page) {
+			this.data = data;
+			this.isTest = isTest;
+			this.page = page;
+		}
+
+	}
 }

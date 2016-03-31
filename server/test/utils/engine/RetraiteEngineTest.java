@@ -56,7 +56,7 @@ import utils.engine.intern.UserChecklistGenerationDataBuilder;
 import utils.engine.intern.UserChecklistGenerator;
 import utils.engine.utils.AgeCalculator;
 import utils.engine.utils.AgeLegalEvaluator;
-import utils.wsinforetraite.InfoRetraiteReal;
+import utils.wsinforetraite.InfoRetraiteWsUr;
 import utils.wsinforetraite.InfoRetraiteResult;
 import utils.wsinforetraite.InfoRetraiteResult.InfoRetraiteResultRegime;
 import utils.wsinforetraite.InfoRetraiteResult.Status;
@@ -70,7 +70,7 @@ public class RetraiteEngineTest {
 	private final ComplementReponses complementReponse = createComplementReponses();
 	private final String complementReponseJsonStr = toJson(complementReponse.getReponses());
 	private final List<FakeData> fakeDataMock = createFakeDataList();
-	private InfoRetraiteReal infoRetraiteMock;
+	private InfoRetraiteWsUr infoRetraiteMock;
 	private CalculateurRegimeAlignes calculateurRegimeAlignesMock;
 	private UserChecklistGenerationDataBuilder userChecklistGenerationDataBuilderMock;
 	private UserChecklistGenerator userChecklistGeneratorMock;
@@ -92,7 +92,7 @@ public class RetraiteEngineTest {
 		when(stepFormsDataProvider.getListMoisAvecPremier()).thenReturn(listeMoisAvecPremierMock);
 		when(stepFormsDataProvider.getListAnneesDepart()).thenReturn(listeAnneesDepartMock);
 
-		infoRetraiteMock = mock(InfoRetraiteReal.class);
+		infoRetraiteMock = mock(InfoRetraiteWsUr.class);
 		when(infoRetraiteMock.retrieveRegimes("DUPONT", "1 50 12 18 123 456", "1/2/3")).thenReturn(allRegimes);
 
 		userChecklistGeneratorMock = mock(UserChecklistGenerator.class);
