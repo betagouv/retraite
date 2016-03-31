@@ -53,7 +53,7 @@ public class InfoRetraiteConnectorTest {
 				new WsParam("dtnai", "07/04/2000")))
 						.thenReturn(response);
 
-		final String result = infoRetraiteConnector.get(" DU PONT ", "1 22 33 44 555 666", "07/04/2000");
+		final String result = infoRetraiteConnector.get(" DU PONT ", "1 22 33 44 555 666 99", "07/04/2000");
 
 		assertThat(result).isEqualTo("abc");
 	}

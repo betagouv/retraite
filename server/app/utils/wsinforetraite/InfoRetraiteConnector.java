@@ -29,7 +29,7 @@ public class InfoRetraiteConnector {
 					cookie(tokens.getCookie()),
 					param("csrfToken", tokens.getCsrfToken()),
 					param("name", name.trim()),
-					param("nir", nir.replace(" ", "")),
+					param("nir", formatNir(nir)),
 					param("dtnai", dateNaissance));
 			if (response.getStatus() == 404) {
 				// Pas de réponse trouvée avec les informations fournies
@@ -47,6 +47,14 @@ public class InfoRetraiteConnector {
 		} catch (final Exception e) {
 			throw new RetraiteException("Error requesting WS conseiller.info-retraite.fr", e);
 		}
+	}
+
+	private String formatNir(final String nir) {
+		final String nirWithoutSpaces = nir.replace(" ", "");
+		if (nirWithoutSpaces.length() > 13) {
+			return nirWithoutSpaces.substring(0, 13);
+		}
+		return nirWithoutSpaces;
 	}
 
 }
