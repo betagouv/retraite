@@ -35,6 +35,9 @@ public class Application extends RetraiteController {
 			postData.hidden_userStatus = unbind(params.get("postData.hidden_userStatus"));
 		}
 		final boolean isTest = params._contains("test");
+		if (isTest) {
+			Logger.warn("Traitement des données en mode TEST, recherche des régimes en BDD !");
+		}
 		final RenderData data = RetraiteEngineFactory.create(isTest).processToNextStep(postData);
 		final String page = getPageNameForGoogleAnalytics(data);
 		if (data.hidden_step.equals("displayCheckList")) {

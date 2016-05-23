@@ -102,26 +102,33 @@ body .container.information{
 			}
 		}
 
-		span.enveloppe {
-			background: url("#{$pathImg}/enveloppe1.png") no-repeat left center;
-			display: inline-block;
-			height: 26px;
-			width: 26px;
-			position: absolute;
-			top:1px;
-			left:-19px;
+		.adresse {
+			position: relative;
+
+			span.enveloppe {
+				background: url("#{$pathImg}/enveloppe1.png") no-repeat left center;
+				display: inline-block;
+				height: 26px;
+				width: 26px;
+				position: absolute;
+				top:1px;
+				left:-32px;
+			}
 		}
 
+		.numerotelephone {
+			position: relative;
 
-		span.telephone {
-			background: url("#{$pathImg}/telephone1.png") no-repeat left center;
-			display: inline-block;
-			height: 26px;
-			width: 26px;
-			position: absolute;
-			left: -19px;
-			top:77px;
-		}
+			span.telephone {
+				background: url("#{$pathImg}/telephone1.png") no-repeat left center;
+				display: inline-block;
+				height: 26px;
+				width: 26px;
+				position: absolute;
+				left: -32px;
+				top: 1px;
+			}
+	}
 
 	 	a:link,
 		a:visited {
