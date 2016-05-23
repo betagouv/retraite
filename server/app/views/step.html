@@ -1,7 +1,7 @@
 #{set title:'Accueil mon pass retraite' /}
 #{extends 'main.html' /}
 
-<form action='/${ isTest ? "?test" : ""}' method='POST'>
+<form action='/${ actionQueryParams }' method='POST'>
 
 	#{stepsHiddenInputs /}
 	
