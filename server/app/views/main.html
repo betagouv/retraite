@@ -11,7 +11,7 @@
 		<!-- endinjector -->
 		<link rel="stylesheet" href="/public/libs/jquery-ui/themes/base/jquery-ui.css">
         
-        #{stylesheet 'style.css' /}
+        #{stylesheet look+'.css' /}
         #{stylesheet 'retraite-overwrite.css' /}
 
         <!--<link rel="shortcut icon" type="image/png" href="http://recette-retraite.sgmap.fr/public/images/favicon.png">-->
@@ -50,9 +50,22 @@
 		
     </head>
 
-    <header class="entete col-sm-12">
+    <header class="entete col-sm-12">,
+    	<div class="home header-inner clearfix">
+    	<div class="col-sm-2">
+            <div class="logo hidden-xs">
+            	#{if look == 'cnav'}
+	                <a target="_blank" href="https://www.lassuranceretraite.fr/portail-info/accueil"><img src="public/img/sprites/logo_CNAV.png" title="CNAV" alt="l'assurance retraite"></a>
+            	#{/if}
+            	#{if look == 'msa'}
+					<a target="_blank" href="http://www.msa.fr/lfr"><img src="public/img/sprites/logoMSA_home.png" title="msa" alt="sant√© famille retraite services"></a>
+            	#{/if}
+            	#{if look == 'rsi'}
+            	#{/if}
+            </div>
+        </div>
         <div class="title">
-        	<a href="/${ isTest ? "?test" : ""}">
+        	<a href="/${ actionQueryParams }">
 	            <h1>Mes démarches retraite</h1>
 	            <h2>pas à pas</h2>
             </a>

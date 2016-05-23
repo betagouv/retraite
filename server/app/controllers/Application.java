@@ -16,6 +16,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
 
 import controllers.data.PostData;
+import controllers.utils.ControllersMiscUtils;
 import models.Checklist;
 import play.Logger;
 import play.modules.pdf.PDF;
@@ -35,6 +36,8 @@ public class Application extends RetraiteController {
 			postData.hidden_userStatus = unbind(params.get("postData.hidden_userStatus"));
 		}
 		final boolean isTest = params._contains("test");
+		final String look = ControllersMiscUtils.getLook(params);
+		final String actionQueryParams = ControllersMiscUtils.computeActionQueryParams(isTest, look);
 		if (isTest) {
 			Logger.warn("Traitement des données en mode TEST, recherche des régimes en BDD !");
 		}
@@ -42,11 +45,12 @@ public class Application extends RetraiteController {
 		final String page = getPageNameForGoogleAnalytics(data);
 		if (data.hidden_step.equals("displayCheckList")) {
 			final String key = "" + System.currentTimeMillis();
-			cache.put(key, new DisplayCheckListData(data, isTest, page));
+			cache.put(key, new DisplayCheckListData(data, isTest, page, look, actionQueryParams));
 			// Redirection pour avoir une URL spécifique pour hotjar
 			displayCheckList(key);
 		} else {
-			renderTemplate("Application/steps/" + data.hidden_step + ".html", data, isTest, page);
+			System.out.println("look=" + look);
+			renderTemplate("Application/steps/" + data.hidden_step + ".html", data, isTest, page, look, actionQueryParams);
 		}
 	}
 
@@ -55,7 +59,9 @@ public class Application extends RetraiteController {
 		final CommonExchangeData data = displayCheckListData.data;
 		final boolean isTest = displayCheckListData.isTest;
 		final String page = displayCheckListData.page;
-		renderTemplate("Application/steps/" + data.hidden_step + ".html", data, isTest, page);
+		final String look = displayCheckListData.look;
+		final String actionQueryParams = displayCheckListData.actionQueryParams;
+		renderTemplate("Application/steps/" + data.hidden_step + ".html", data, isTest, page, look, actionQueryParams);
 	}
 
 	public static void sendMail(final PostData postData) {
@@ -172,11 +178,15 @@ public class Application extends RetraiteController {
 		private final RenderData data;
 		private final boolean isTest;
 		private final String page;
+		private final String look;
+		private final String actionQueryParams;
 
-		public DisplayCheckListData(final RenderData data, final boolean isTest, final String page) {
+		public DisplayCheckListData(final RenderData data, final boolean isTest, final String page, final String look, final String actionQueryParams) {
 			this.data = data;
 			this.isTest = isTest;
 			this.page = page;
+			this.look = look;
+			this.actionQueryParams = actionQueryParams;
 		}
 
 	}
