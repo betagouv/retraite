@@ -46,8 +46,8 @@ module.exports = function(grunt) {
                 files: {
                     'karma.conf.js': [
                         'bower.json',
-                        '<%= config.destJs %>/**/*.js',
-                        'testjs/**/*.js'
+                        'testjs/**/*.js',
+                        '<%= config.destJs %>/**/*.js'
                     ],
                 }
             }

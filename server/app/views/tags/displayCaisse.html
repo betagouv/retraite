@@ -13,24 +13,27 @@
 		*{ Téléphone }*
 		
 		#{if _caisse.telephone}
-			<span class="telephone"></span>
-			${_caisse.telephone}<br/>
+			<div class="numerotelephone">
+				<span class="telephone"></span>
+				${_caisse.telephone}<br/>
+			</div>
 		#{/if}
 
 		*{ Adresse postale }*
 		
-		<span class="enveloppe"></span>
-		${_caisse.adresse1}<br/>
-		#{if _caisse.adresse2}
-			${_caisse.adresse2}<br/>
-		#{/if}
-		#{if _caisse.adresse3}
-			${_caisse.adresse3}<br/>
-		#{/if}
-		#{if _caisse.adresse4}
-			${_caisse.adresse4}<br/>
-		#{/if}
+		<div class="adresse">
+			<span class="enveloppe"></span>
+			${_caisse.adresse1}<br/>
+			#{if _caisse.adresse2}
+				${_caisse.adresse2}<br/>
+			#{/if}
+			#{if _caisse.adresse3}
+				${_caisse.adresse3}<br/>
+			#{/if}
+			#{if _caisse.adresse4}
+				${_caisse.adresse4}<br/>
+			#{/if}
+		</div>
 	</div>
 </div>
-
 

@@ -1,0 +1,221 @@
+/* =============================================================================
+   Radio
+============================================================================= */
+
+/*doc
+---
+title: Radio
+name: form-radio
+category: Formulaires
+---
+```html_example
+<input type="radio" id="rad-1" name="rad" value="">
+<label for="rad-1">Option 1</label>
+
+<input type="radio" id="rad-2" name="rad" value="" checked>
+<label for="rad-2">Option 2</label>
+
+<input type="radio" id="rad-3" name="rad-3" value="" checked disabled>
+<label for="rad-3">Désactivée</label>
+```
+
+Compatibilité : IE9+ (affichage standard pour <= IE8)
+
+*/
+
+/*
+
+input[type="radio"]:not(:checked),
+input[type="radio"]:checked {
+
+  // Hide standard input
+  position: absolute;
+  left: -9999px;
+
+  // Label
+  + label {
+    position: relative;
+    padding-left: $cb-label-padding-left;
+    padding-top: 2px;
+
+    // Box
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: $cb-box-size;
+      height: $cb-box-size;
+      border: $cb-box-border;
+      background: $cb-box-bg;
+      border-radius: 50%;
+      box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
+    }
+
+    // Hover
+    &:hover {
+
+      &:before {
+        background-color: $cb-box-bg-hover;
+      }
+
+      &:after {
+        background-color: $cb-check-bg-hover;
+      }
+
+    }
+
+
+    // Check
+    &:after {
+      content: '';
+      position: absolute;
+      width: $cb-check-size;
+      height: $cb-check-size;
+      top: 2px;
+      left: 2px;
+      color: $cb-check-color;
+      background: $cb-check-bg;
+      border-radius: 50%;
+    }
+
+  }
+
+
+  // Focus
+  &:focus {
+
+    + label {
+
+      &:before {
+        background-color:$cb-box-bg-hover;
+      }
+
+      &:after {
+        background-color: $cb-check-bg-hover;
+      }
+    }
+
+  }
+
+
+}
+
+
+
+// Not checked
+input[type="radio"]:not(:checked) + label:after {
+  display: none;
+}
+
+// Checked
+input[type="radio"]:checked + label:after {
+  display: block;
+}
+
+// Disabled
+input[type="radio"][disabled]:not(:checked),
+input[type="radio"][disabled]:checked {
+
+  + label {
+    color: $cb-label-disabled;
+
+    &:before {
+      background-color: $cb-box-bg-disabled;
+    }
+
+    &:after {
+      color: $cb-check-color-disabled;
+      background-color: $cb-check-bg-disabled;
+    }
+  }
+
+}
+*/
+
+
+
+
+
+/* -----------------------------------------------------------------------------
+   Radio RSI
+----------------------------------------------------------------------------- */
+
+/* Label */
+input[type="radio"] {
+  position: absolute;
+  left: -9999px;
+}
+
+.choice {
+
+  input[type="radio"]:not(:checked) + label.label-for-question-choice,
+  input[type="radio"]:checked + label.label-for-question-choice {
+  padding-left: 18px;
+  position: relative;
+
+    // Box
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 1px;
+      width: 13px;
+      height: 13px;
+      border: 1px solid #B4B4B5;
+      background: #fff;
+      border-radius: 50%;
+    }
+
+    // Check
+    &:after {
+      content: '';
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      top: 5px;
+      left: 4px;
+      font-size: 1.091em;
+      color: #000;
+      line-height: 1.2;
+      border-radius: 50%;
+      background: #6b932c;
+      background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMTAwJSIgeDI9IjEwMCUiIHkyPSIwJSI+CiAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNmI5MzJjIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2U5ZTk4ZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
+      background: -moz-linear-gradient(45deg,  #6b932c 0%, #e9e98f 100%);
+      background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,#6b932c), color-stop(100%,#e9e98f));
+      background: -webkit-linear-gradient(45deg,  #6b932c 0%,#e9e98f 100%);
+      background: -o-linear-gradient(45deg,  #6b932c 0%,#e9e98f 100%);
+      background: -ms-linear-gradient(45deg,  #6b932c 0%,#e9e98f 100%);
+      background: linear-gradient(45deg,  #6b932c 0%,#e9e98f 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6b932c', endColorstr='#e9e98f',GradientType=1 );
+    }
+
+    // Hover
+    &:hover,
+    &:focus,
+    &:active {
+
+      &:before {
+        background-color: #f3f3f3;
+      }
+
+      &:after {
+        display: block;
+      }
+    }
+  }
+
+  /* Not checked */
+  input[type="radio"]:not(:checked) + label:after {
+    display: none;
+  }
+
+  /* Checked */
+  input[type="radio"]:checked + label:after {
+    display: block;
+  }
+} // /Choice
+
+
+
+

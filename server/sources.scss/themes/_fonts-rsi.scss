@@ -92,7 +92,7 @@
 /// @group theme
 /// @example scss - Usage
 ///   font-family: $font-stack;
-$font-stack: ('Open sans', 'Arial', 'Helvetica', sans-serif);
+$font-stack: ('Arial', 'Helvetica', sans-serif);
 
 /// Second font-stack map
 ///
@@ -100,6 +100,17 @@ $font-stack: ('Open sans', 'Arial', 'Helvetica', sans-serif);
 /// @example scss - Usage
 ///   font-family: $font-stack-alt;
 $font-stack-alt: ('Roboto', 'Arial', 'Helvetica', sans-serif);
+
+/// Base font-size
+///
+/// @group theme
+$base-font-size: 12px; // em unit - If 12px then 1em = 12px
+//$base-font-size: 10px; // rem unit : 1.2rem = 12px / 2rem = 20px
+
+/// Base line-height
+///
+/// @group theme
+$base-line-height: 1.2;
 
 
 

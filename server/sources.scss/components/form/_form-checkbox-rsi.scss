@@ -1,0 +1,245 @@
+// -----------------------------------------------------------------------------
+// Checkbox
+// -----------------------------------------------------------------------------
+
+$cb-styles: (
+  'box-bg': $form-bg,
+  'box-bg-hover': darken($form-bg, 5%),
+  'box-border': $form-border,
+  'box-size': 16px,
+  'box-radius': 0,
+  'box-shadow': none,
+
+  'check-bg': $brand,
+  'check-bg-hover': darken($brand, 5%),
+  'check-color': $brand,
+  'check-size': 12px,
+  'check-top': 2px,
+  'check-left': 2px,
+
+  'label-padding-left': $inputs-label-padding-left,
+  'label-padding-top': $inputs-label-padding-top
+);
+
+/*
+/// Checkbox theme
+///
+/// @group theme
+@mixin checkbox($styles) {
+
+  &:not(:checked),
+  &:checked {
+
+    // Hide standard input
+    position: absolute;
+    left: -9999px;
+
+    // Label
+    + label {
+      position: relative;
+      padding-left: map-get($styles, 'label-padding-left');
+      padding-top: map-get($styles, 'label-padding-top');
+
+      // Box
+      &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: map-get($styles, 'box-size');
+        height: map-get($styles, 'box-size');
+        border: map-get($styles, 'box-border');
+        background: map-get($styles, 'box-bg');
+        border-radius: map-get($styles, 'box-radius');
+        box-shadow: map-get($styles, 'box-shadow');
+      }
+
+      // Hover
+      &:hover {
+
+        &:before {
+          background-color: map-get($styles, 'box-bg-hover');
+        }
+
+        &:after {
+          background-color: map-get($styles, 'check-bg-hover');
+        }
+
+      }
+
+      // Check
+      &:after {
+        content: '';
+        width: map-get($styles, 'check-size');
+        height: map-get($styles, 'check-size');
+        background: map-get($styles, 'check-color');
+        position: absolute;
+        top: map-get($styles, 'check-top');
+        left: map-get($styles, 'check-left');
+        line-height: 1.2;
+        border-radius: map-get($styles, 'box-radius');
+      }
+    }
+
+    // Focus
+    &:focus {
+
+      + label {
+
+        &:before {
+          background-color: map-get($styles, 'box-bg-hover');
+        }
+
+        &:after {
+          background-color: map-get($styles, 'check-bg-hover');
+        }
+      }
+    }
+  }
+
+  // Not checked
+  &:not(:checked) + label:after {
+    display: none;
+  }
+
+  // Checked
+  &:checked + label:after {
+    display: block;
+  }
+
+  // Disabled
+  &[disabled]:not(:checked),
+  &[disabled]:checked {
+
+    + label {
+      color: map-get($styles, 'label-disabled');
+
+      &:before {
+        background-color: map-get($styles, 'box-bg-disabled');
+      }
+
+      &:after {
+        color: map-get($styles, 'check-color-disabled');
+        background-color: map-get($styles, 'check-bg-disabled');
+      }
+    }
+  }
+
+  // Checkbox à droite
+  &:not(:checked) + label.checkbox-right,
+  &:checked + label.checkbox-right {
+    padding-left: 0;
+    padding-right: map-get($styles, 'label-padding-left');
+
+    // Box
+    &:before {
+      left: auto;
+      right: 0;
+    }
+
+    // Check
+    &:after {
+      left: auto;
+      right: 2px;
+    }
+  }
+
+  // Checkbox sans label visible
+  &:not(:checked) + label.label-hidden,
+  &:checked + label.label-hidden {
+    margin-right: 0;
+
+    span {
+      @include hide-text;
+    }
+  }
+} // /@mixin checkbox
+
+*/
+
+
+/* -----------------------------------------------------------------------------
+   Checkox RSI
+----------------------------------------------------------------------------- */
+
+/* Label */
+input[type="checkbox"] {
+  position: absolute;
+  left: -9999px;
+}
+
+
+.choice {
+
+  input[type="checkbox"]:not(:checked) + label.label-for-question-choice,
+  input[type="checkbox"]:checked + label.label-for-question-choice {
+    padding-left: 18px;
+    position:relative;
+
+    // Box
+    &:before {
+      content: '';
+      left:0!important;
+      position: absolute;
+      left: 0;
+      top: 2px;
+      width: 11px;
+      height: 11px;
+      border: 1px solid #B4B4B5;
+      background: #fff;
+
+    }
+
+    // Check
+    &:after {
+      content: '';
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      top: 4px;
+      left: 2px;
+      font-size: 1.091em;
+      color: #000;
+      line-height: 1.2;
+      background: #6b932c;
+      background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMTAwJSIgeDI9IjEwMCUiIHkyPSIwJSI+CiAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNmI5MzJjIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2U5ZTk4ZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
+      background: -moz-linear-gradient(45deg,  #6b932c 0%, #e9e98f 100%);
+      background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,#6b932c), color-stop(100%,#e9e98f));
+      background: -webkit-linear-gradient(45deg,  #6b932c 0%,#e9e98f 100%);
+      background: -o-linear-gradient(45deg,  #6b932c 0%,#e9e98f 100%);
+      background: -ms-linear-gradient(45deg,  #6b932c 0%,#e9e98f 100%);
+      background: linear-gradient(45deg,  #6b932c 0%,#e9e98f 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6b932c', endColorstr='#e9e98f',GradientType=1 );
+    }
+
+    // Hover
+    &:hover,
+    &:focus,
+    &:active {
+
+      &:before {
+        background-color: #f3f3f3;
+      }
+
+      &:after {
+        display: block;
+      }
+
+
+    }
+  }
+
+
+  /* Not checked */
+  input[type="checkbox"]:not(:checked) + label:after {
+    display: none;
+  }
+
+  /* Checked */
+  input[type="checkbox"]:checked + label:after {
+    display: block;
+  }
+
+} // /choice
+
+
