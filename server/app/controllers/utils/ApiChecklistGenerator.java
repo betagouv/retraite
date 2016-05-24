@@ -3,7 +3,6 @@ package controllers.utils;
 import java.util.List;
 
 import controllers.data.ApiUserChecklistParams;
-import utils.engine.data.ComplementReponses;
 import utils.engine.data.MonthAndYear;
 import utils.engine.data.RenderData;
 import utils.engine.data.UserChecklistGenerationData;
@@ -68,10 +67,9 @@ public class ApiChecklistGenerator {
 
 		final MonthAndYear dateDepart = new MonthAndYear(departMois, departAnnee);
 		final RegimeAligne[] regimesAlignes = calculateurRegimeAlignes.getRegimesAlignes(regimes);
-		final ComplementReponses complementReponses = new ComplementReponses();
 		final boolean isCarriereLongue = false;// TODO
 		final UserChecklistGenerationData userChecklistGenerationData = userChecklistGenerationDataBuilder.build(dateDepart, departement, regimes,
-				regimesAlignes, regimeLiquidateur, complementReponses, parcoursDemat, published, isCarriereLongue, userStatus);
+				regimesAlignes, regimeLiquidateur, parcoursDemat, published, isCarriereLongue, userStatus);
 		final ChecklistName checklistName = ChecklistName.valueOf(apiUserChecklistParams.regimeLiquidateur);
 
 		data.userChecklist = userChecklistGenerator.generate(checklistName, userChecklistGenerationData);

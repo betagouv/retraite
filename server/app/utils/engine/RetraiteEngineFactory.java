@@ -8,9 +8,6 @@ import utils.dao.PeriodeDepartLegalDao;
 import utils.db.HtmlCleaner;
 import utils.engine.intern.CalculateurRegimeAlignes;
 import utils.engine.intern.ChecklistNameSelector;
-import utils.engine.intern.LiquidateurReponsesEvaluator;
-import utils.engine.intern.QuestionComplementairesEvaluator;
-import utils.engine.intern.QuestionsComplementairesBuilder;
 import utils.engine.intern.StepFormsDataProvider;
 import utils.engine.intern.UserChecklistChapitreComputer;
 import utils.engine.intern.UserChecklistChapitreFilter;
@@ -37,7 +34,6 @@ public class RetraiteEngineFactory {
 
 	public static RetraiteEngine create(final boolean isTest) {
 		final DateProvider dateProvider = new DateProvider();
-		final LiquidateurReponsesEvaluator liquidateurReponsesEvaluator = new LiquidateurReponsesEvaluator();
 		final WsUtils wsUtils = new WsUtils();
 
 		// @formatter:off
@@ -51,12 +47,11 @@ public class RetraiteEngineFactory {
 		// @formatter:on
 
 		return new RetraiteEngine(
-				new StepFormsDataProvider(dateProvider),
-
 				// new InfoRetraiteBdd(),
 				infoRetraite,
 
 				new CalculateurRegimeAlignes(),
+
 				new DaoFakeData(),
 				new AgeCalculator(dateProvider),
 				new AgeLegalEvaluator(
@@ -69,9 +64,9 @@ public class RetraiteEngineFactory {
 						new QuestionSolverE(),
 						new QuestionSolverF()),
 				new DisplayerDepartureDate(new StepFormsDataProvider(dateProvider)),
-				new DisplayerAdditionalQuestions(new QuestionsComplementairesBuilder()), new DisplayerChecklist(
-						new QuestionComplementairesEvaluator(),
-						new UserChecklistGenerationDataBuilder(liquidateurReponsesEvaluator),
+				new DisplayerAdditionalQuestions(new StepFormsDataProvider(new DateProvider())),
+				new DisplayerChecklist(
+						new UserChecklistGenerationDataBuilder(),
 						new UserChecklistGenerator(
 								new ChecklistNameSelector(),
 								new DaoChecklist(new HtmlCleaner()),
@@ -83,6 +78,7 @@ public class RetraiteEngineFactory {
 														new UserChecklistVarsProvider(),
 														new VariablesReplacerMustache())),
 										new CaisseDao())),
-						dateProvider, new CalculateurRegimeAlignes()));
+						dateProvider,
+						new CalculateurRegimeAlignes()));
 	}
 }

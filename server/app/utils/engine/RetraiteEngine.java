@@ -14,7 +14,6 @@ import utils.engine.data.CommonExchangeData;
 import utils.engine.data.RenderData;
 import utils.engine.data.enums.RegimeAligne;
 import utils.engine.intern.CalculateurRegimeAlignes;
-import utils.engine.intern.StepFormsDataProvider;
 import utils.engine.utils.AgeCalculator;
 import utils.engine.utils.AgeLegalEvaluator;
 import utils.wsinforetraite.InfoRetraite;
@@ -22,7 +21,6 @@ import utils.wsinforetraite.InfoRetraiteResult;
 
 public class RetraiteEngine {
 
-	private final StepFormsDataProvider stepFormsDataProvider;
 	private final InfoRetraite infoRetraite;
 	private final CalculateurRegimeAlignes calculateurRegimeAlignes;
 	private final DaoFakeData daoFakeData;
@@ -34,7 +32,6 @@ public class RetraiteEngine {
 	private final DisplayerChecklist displayerChecklist;
 
 	public RetraiteEngine(
-			final StepFormsDataProvider stepFormsDataProvider,
 			final InfoRetraite infoRetraite,
 			final CalculateurRegimeAlignes calculateurRegimeAlignes,
 			final DaoFakeData daoFakeData,
@@ -45,7 +42,6 @@ public class RetraiteEngine {
 			final DisplayerAdditionalQuestions displayerAdditionalQuestions,
 			final DisplayerChecklist displayerChecklist) {
 
-		this.stepFormsDataProvider = stepFormsDataProvider;
 		this.infoRetraite = infoRetraite;
 		this.calculateurRegimeAlignes = calculateurRegimeAlignes;
 		this.daoFakeData = daoFakeData;
@@ -110,14 +106,10 @@ public class RetraiteEngine {
 			if (!ageLegalEvaluator.isAgeLegal(data.hidden_naissance, data.departMois, data.departAnnee)) {
 				return displayQuestionCarriereLongue(renderData, data.departMois, data.departAnnee);
 			}
-			// Provisoire
-			// displayerAdditionalQuestions.fillData(data, renderData);
-			displayerChecklist.fillData(data, renderData);
+			displayerAdditionalQuestions.fillData(data, renderData);
 		} else if (data.hidden_step.equals("displayQuestionCarriereLongue")) {
 			renderData.hidden_attestationCarriereLongue = true;
-			// Provisoire
-			// displayerAdditionalQuestions.fillData(data, renderData);
-			displayerChecklist.fillData(data, renderData);
+			displayerAdditionalQuestions.fillData(data, renderData);
 		} else if (data.hidden_step.equals("displayAdditionalQuestions") || data.hidden_step.equals("displayCheckList")) {
 			displayerChecklist.fillData(data, renderData);
 		} else {
@@ -153,7 +145,6 @@ public class RetraiteEngine {
 
 	private RenderData displayGetUserData(final RenderData renderData) {
 		renderData.hidden_step = "getUserData";
-		renderData.departements = stepFormsDataProvider.getListDepartements();
 
 		// Temporaire pour afficher les DataRegime tant qu'on ne peut pas interroger le WS info-retraite
 		renderData.fakeData = daoFakeData.findAll();

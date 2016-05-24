@@ -16,7 +16,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import controllers.data.ApiUserChecklistParams;
-import utils.engine.data.ComplementReponses;
 import utils.engine.data.MonthAndYear;
 import utils.engine.data.RenderData;
 import utils.engine.data.UserChecklistGenerationData;
@@ -121,7 +120,7 @@ public class ApiChecklistGeneratorTest {
 	public void should_generate_data() {
 		final UserChecklistGenerationData userChecklistGenerationData = UserChecklistGenerationData.create().get();
 		when(userChecklistGenerationDataBuilderMock.build(any(MonthAndYear.class), any(String.class), any(Regime[].class), any(RegimeAligne[].class),
-				any(RegimeAligne.class), any(ComplementReponses.class), anyBoolean(), anyBoolean(), anyBoolean(), any(List.class)))
+				any(RegimeAligne.class), anyBoolean(), anyBoolean(), anyBoolean(), any(List.class)))
 						.thenReturn(userChecklistGenerationData);
 		when(calculateurRegimeAlignesMock.getRegimesAlignes(new Regime[] { Regime.CNAV })).thenReturn(new RegimeAligne[] { RegimeAligne.CNAV });
 
@@ -152,7 +151,6 @@ public class ApiChecklistGeneratorTest {
 				new Regime[] { Regime.CNAV },
 				new RegimeAligne[] { RegimeAligne.CNAV },
 				RSI,
-				new ComplementReponses(),
 				true,
 				false,
 				false,
