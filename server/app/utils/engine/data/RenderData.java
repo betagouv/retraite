@@ -24,8 +24,6 @@ public class RenderData extends CommonExchangeData {
 
 	public QuestionLiquidateur2 questionLiquidateur = new QuestionLiquidateur2();
 
-	public List<QuestionComplementaire> questionsComplementaires;
-
 	public String errorMessage;
 
 	public boolean isPDF;

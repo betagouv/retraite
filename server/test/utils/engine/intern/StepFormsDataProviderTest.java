@@ -2,6 +2,7 @@ package utils.engine.intern;
 
 import static org.fest.assertions.Assertions.assertThat;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
@@ -13,11 +14,12 @@ import utils.engine.data.ValueAndText;
 
 public class StepFormsDataProviderTest {
 
+	private static final int CURRENT_YEAR = 2031;
 	private StepFormsDataProvider stepFormsDataProvider;
 
 	@Before
 	public void setUp() throws Exception {
-		stepFormsDataProvider = new StepFormsDataProvider(new DateProviderFake(1, 1, 2031));
+		stepFormsDataProvider = new StepFormsDataProvider(new DateProviderFake(1, 1, CURRENT_YEAR));
 	}
 
 	@Test
@@ -58,8 +60,18 @@ public class StepFormsDataProviderTest {
 
 		final List<String> annees = stepFormsDataProvider.getListAnneesDepart();
 
-		assertThat(annees).containsExactly("2031", "2032", "2033", "2034", "2035", "2036", "2037", "2038", "2039", "2040");
+		final int count = 20;
+		final List<String> expectedAnnees = createExpectedAnneesList(CURRENT_YEAR, count);
+		assertThat(annees).isEqualTo(expectedAnnees);
 
+	}
+
+	private List<String> createExpectedAnneesList(final int currentYear, final int count) {
+		final ArrayList<String> list = new ArrayList<>();
+		for (int i = 0; i < count; i++) {
+			list.add(String.valueOf(currentYear + i));
+		}
+		return list;
 	}
 
 	private ValueAndText vet(final String value, final String text) {

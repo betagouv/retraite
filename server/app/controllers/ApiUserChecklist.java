@@ -6,7 +6,6 @@ import controllers.data.ApiUserChecklistParams;
 import controllers.utils.ApiChecklistGenerator;
 import utils.engine.data.RenderData;
 import utils.engine.intern.CalculateurRegimeAlignes;
-import utils.engine.intern.LiquidateurReponsesEvaluator;
 import utils.engine.intern.UserChecklistGenerationDataBuilder;
 
 public class ApiUserChecklist extends RetraiteController {
@@ -14,8 +13,7 @@ public class ApiUserChecklist extends RetraiteController {
 	public static void getUserChecklist() {
 
 		final ApiChecklistGenerator generator = new ApiChecklistGenerator(
-				new UserChecklistGenerationDataBuilder(
-						new LiquidateurReponsesEvaluator()),
+				new UserChecklistGenerationDataBuilder(),
 				createUserChecklistGenerator(),
 				new CalculateurRegimeAlignes());
 

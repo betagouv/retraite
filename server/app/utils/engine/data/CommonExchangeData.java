@@ -15,7 +15,6 @@ public class CommonExchangeData {
 	public String hidden_departement;
 	public String hidden_regimes;
 	public String hidden_liquidateurReponseJsonStr;
-	public String hidden_complementReponseJsonStr;
 	public String hidden_departMois;
 	public String hidden_departAnnee;
 	public boolean hidden_attestationCarriereLongue;

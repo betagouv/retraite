@@ -2,12 +2,31 @@
 
 #{set 'moreScripts'}
     #{script 'displayAdditionalQuestions.js'/}
-    #{script 'questions.js'/}
 #{/set}
 
-#{displayQuestions questions:data.questionsComplementaires /}
+<div class="contenu question marg-top col-sm-12">
+	<div class="col-sm-1"></div>
+	<div class="col-sm-10">
+	
+		<h2 class="titre">Où habitez-vous ?</h2>
 
-<input type="hidden" id="reponseJsonStr" name="postData.complementReponseJsonStr" />
+		<div  class="form-group">
+		
+	        <label for="dep" class="col-sm-5 control-label">Département de résidence :</label>
+	        
+			<div  class="col-sm-6">
+	            <select name="postData.departement" class="form-control xxx-select">
+		        	#{list items:data.departements, as:'departement'}
+		            	<option value='${departement.numero}'>${departement.numero} - ${departement.nom}</option>
+		            #{/list}
+	            </select>
+            </div>
+		
+		</div><!--fin contenu -image-->
+	
+	</div><!--fin contenu-->
+	<div class="col-sm-1"></div>
+</div>
 
 <div class="form-group row col-sm-12">
 	<div class="col-sm-6">
@@ -17,4 +36,3 @@
 		<input class="btn btn-success btn-next" value="Étape suivante" type="submit">
 	</div>
 </div>
-

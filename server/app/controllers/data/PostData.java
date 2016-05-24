@@ -9,7 +9,6 @@ public class PostData extends CommonExchangeData {
 	public String nir;
 	public String departement;
 	public String liquidateurReponseJsonStr;
-	public String complementReponseJsonStr;
 	public boolean departInconnu;
 	public String departMois;
 	public String departAnnee;
@@ -18,7 +17,7 @@ public class PostData extends CommonExchangeData {
 	@Override
 	public String toString() {
 		return "PostData[nom=" + nom + ", naissance=" + naissance + ", nir=" + nir + ", departement=" + departement + ", liquidateurReponseJsonStr="
-				+ liquidateurReponseJsonStr + ", complementReponseJsonStr=" + complementReponseJsonStr + ", departInconnu=" + departInconnu + ", departMois="
+				+ liquidateurReponseJsonStr + ", departInconnu=" + departInconnu + ", departMois="
 				+ departMois + ", departAnnee=" + departAnnee + ", email=" + email + "]";
 	}
 
@@ -26,7 +25,6 @@ public class PostData extends CommonExchangeData {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((complementReponseJsonStr == null) ? 0 : complementReponseJsonStr.hashCode());
 		result = prime * result + ((departAnnee == null) ? 0 : departAnnee.hashCode());
 		result = prime * result + (departInconnu ? 1231 : 1237);
 		result = prime * result + ((departMois == null) ? 0 : departMois.hashCode());
@@ -48,11 +46,6 @@ public class PostData extends CommonExchangeData {
 		if (getClass() != obj.getClass())
 			return false;
 		final PostData other = (PostData) obj;
-		if (complementReponseJsonStr == null) {
-			if (other.complementReponseJsonStr != null)
-				return false;
-		} else if (!complementReponseJsonStr.equals(other.complementReponseJsonStr))
-			return false;
 		if (departAnnee == null) {
 			if (other.departAnnee != null)
 				return false;
