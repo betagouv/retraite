@@ -15,7 +15,7 @@
     <div class='chapitre'>
 	    <div class='conditions'>
 		    #{list items:chapitre.conditions, as:'condition' }
-		    	<p>${condition}</p>
+		    	<p>${condition.raw()}</p>
 			#{/list}
 	    </div>
 	    

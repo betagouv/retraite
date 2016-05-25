@@ -38,9 +38,19 @@ public class ConverterConditionTest {
 		assertThat(converterCondition.convert(createConditionStatut("sa"))).isEqualTo("Si l’assuré appartient à la catégorie SA");
 		assertThat(converterCondition.convert(createConditionStatut("conjoint-collaborateur"))).isEqualTo("Si l’assuré est un conjoint collaborateur");
 		assertThat(converterCondition.convert(createConditionStatut("chef-entreprise"))).isEqualTo("Si l’assuré est un chef d'entreprise");
+		assertThat(converterCondition.convert(createConditionStatut("statut-inconnu")))
+				.isEqualTo("<b><font size='5' color='red'>!!! Statut non géré 'statut-inconnu' !!!</font></b>");
 
 		assertThat(converterCondition.convert(createConditionWithType("carriere-a-reconstituer")))
 				.isEqualTo("Si l’assuré doit reconstituer sa carrière");
+
+		assertThat(converterCondition.convert(createConditionWithType("carriere-longue-non")))
+				.isEqualTo("Si carrière longue : non");
+		assertThat(converterCondition.convert(createConditionWithType("carriere-longue-oui")))
+				.isEqualTo("Si carrière longue : oui (a une attestation)");
+
+		assertThat(converterCondition.convert(createConditionWithType("type-inconnu")))
+				.isEqualTo("<b><font size='5' color='red'>!!! Condition non gérée 'type-inconnu' !!!</font></b>");
 
 	}
 

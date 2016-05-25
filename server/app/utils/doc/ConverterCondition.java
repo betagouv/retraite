@@ -42,12 +42,18 @@ public class ConverterCondition {
 			if (statut.equals("chef-entreprise")) {
 				return "Si l’assuré est un chef d'entreprise";
 			}
-			throw new IllegalArgumentException("Unexpected statut '" + statut + "'");
+			return "<b><font size='5' color='red'>!!! Statut non géré '" + statut + "' !!!</font></b>";
 		}
 		if (type.equals("carriere-a-reconstituer")) {
 			return "Si l’assuré doit reconstituer sa carrière";
 		}
-		throw new IllegalArgumentException("Unexpected condition type '" + type + "'");
+		if (type.equals("carriere-longue-non")) {
+			return "Si carrière longue : non";
+		}
+		if (type.equals("carriere-longue-oui")) {
+			return "Si carrière longue : oui (a une attestation)";
+		}
+		return "<b><font size='5' color='red'>!!! Condition non gérée '" + type + "' !!!</font></b>";
 	}
 
 }
