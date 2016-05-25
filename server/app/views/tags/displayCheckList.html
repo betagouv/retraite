@@ -24,6 +24,24 @@
 					</div>
 				#{/if}
 
+<style type="text/css">
+ul.fleche li {
+	list-style-type: none;
+}
+ul.fleche li:before {
+    content: "→   ";
+    margin-left: -35px;
+    margin-right: 12px;
+    font-size: 18px;
+}
+body .container.information .contenu .bg-box ul.fleche li {
+    font-weight: bold;
+}
+.pj {
+	font-style: italic;
+}
+</style>
+
 				#{list items:_data.userChecklist.chapitres, as:'chapitre'}
 					<div class="col-sm-12">
 						<div class="col-sm-1"></div>
@@ -51,16 +69,40 @@
 								</div>
 							</div>
 							 -->
-							<div id="panel-details-${chapitre_index}" class="panel-body panel-details">
-						        <div class=''>${chapitre.texteIntro?.raw()}</div>
-						        <div class=''>${chapitre.parcours?.raw()}</div>
-						        <div class=''>${chapitre.texteComplementaire?.raw()}</div>
-								#{if chapitre_index == 99}
-									<ul class="filet-left sanspuce">
-										<li><span class="bold">Exemple de texte</span> pouvant être mis en 
-										évidence, à voir comment dans l'outil de config...</li>
-									</ul>
-								#{/if}
+							<div id="panel-details-${chapitre_index}" class="panel-body panel-details" style="font-size: 14px;">
+
+
+    	<div class='row'>
+    		<div class='col-xs-2'>
+                <img src="/public/img/actions.png">
+    		</div>
+    		<div class='col-xs-10'>
+    		<ul class='fleche'>
+<li>Je consulte mon relevé en ligne sur : <a href='https://www.lassuranceretraite.fr/'>https://www.lassuranceretraite.fr/</a>)
+<li>Si je rencontre des difficultés de connexion, je contacte le 0971.10.20.10
+<li>Si j’identifie des périodes manquantes pour mon activité salariée, je demande une régularisation de ma carrière soit sur : https://www.lassuranceretraite.fr/portail-services-ihm/index.html#/sec/afficherIframe/DEM_REGUL
+soit en appelant le 3960.
+    		</ul>
+    		</div>
+    	</div>
+
+    	<div class='row'>
+    		<div class='col-xs-2'>
+                <img src="/public/img/docs.png">
+    		</div>
+    		<div class='col-xs-10 pj'  style="font-size: 14px;">
+Exemples de pièces à fournir pour les périodes manquantes ou incomplètes :
+<ul>
+<li>Bulletins de salaires ou certificat de travail pour les périodes travaillées
+<li>Etat signalétique et des services pour les périodes militaires
+<li>Attestation Pôle Emploi pour le chômage indemnisé
+<li>Livret de famille ou attestation sur l'honneur d'éducation des enfants du conjoint pour les trimestres enfant
+<li>Décomptes de versement des indemnités journalières pour maladie, maternité, ou accident du travail
+<li>Décomptes de versement pour pension d’invalidité ou rente accident du travail                
+</ul>
+    		</div>
+    	</div>
+
 							</div>
 						</div>
 						<div class="col-sm-1"></div>
