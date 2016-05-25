@@ -43,14 +43,12 @@ public class Application extends RetraiteController {
 		}
 		final RenderData data = RetraiteEngineFactory.create(isTest).processToNextStep(postData);
 		final String page = getPageNameForGoogleAnalytics(data);
-		System.out.println("data.hidden_step=" + data.hidden_step);
 		if (data.hidden_step.equals("displayCheckList")) {
 			final String key = "" + System.currentTimeMillis();
 			cache.put(key, new DisplayCheckListData(data, isTest, page, look, actionQueryParams));
 			// Redirection pour avoir une URL spécifique pour hotjar
 			displayCheckList(key);
 		} else {
-			System.out.println("look=" + look);
 			renderTemplate("Application/steps/" + data.hidden_step + ".html", data, isTest, page, look, actionQueryParams);
 		}
 	}
