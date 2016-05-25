@@ -12,21 +12,29 @@
 	
 		<div  class="contenu-image">
 		
-			<div class="col-sm-12">
-				<h2 class='error'>${data.errorMessage}</h2>
-            </div><!--fin-->
+			%{
+				widthLabel = 4;
+				widthInput = 8;
+				widthInputSmall = 6;
+			}%
+		
+			#{if data.errorMessage}
+				<div class="col-sm-12">
+					<h2 class='error'>${data.errorMessage}</h2>
+	            </div><!--fin-->
+			#{/if}
 			
 		    <div class="form-group row col-sm-12">
-		        <label for="nom" class="col-sm-5 control-label">Nom de naissance :</label>
-		        <div class="col-sm-7">
-		            <input class="form-control" id="nom" name="postData.nom" value='${data.hidden_nom}' required="" type="text">
+		        <label for="nom" class="col-sm-${widthLabel} control-label">Nom de naissance :</label>
+		        <div class="col-sm-${widthInput}">
+		            <input id="nom" name="postData.nom" value='${data.hidden_nom}' class="form-control" required="" type="text">
 		        </div>
 		    </div>
 		
 		    <div class="form-group row col-sm-12">
-		        <label for="nom" class="col-sm-5 control-label">Date de naissance :</label>
-		        <div class="col-sm-4">
-		            <input class="form-control my-date" id="naissance" name="postData.naissance" value='${data.hidden_naissance}' required="" type="text">
+		        <label for="naissance" class="col-sm-${widthLabel} control-label">Date de naissance :</label>
+		        <div class="col-sm-${widthInputSmall-1} date">
+		            <input id="naissance" name="postData.naissance" value='${data.hidden_naissance}' class="form-control my-date" required="" type="text">
 		        </div>
 		        <label class="col-sm-3 control-label">
 		        	(jj/mm/aaaa)
@@ -34,9 +42,9 @@
 		    </div>
 		
 		    <div class="form-group row col-sm-12">
-		        <label for="nom" class="col-sm-5 control-label">N° de sécurité sociale :</label>
-		        <div class="col-sm-5">
-		            <input id="nir" name="postData.nir" value='${data.hidden_nir}'  class="form-control" required="" type="text">
+		        <label for="nir" class="col-sm-${widthLabel} control-label">N° de sécurité sociale :</label>
+		        <div class="col-sm-${widthInputSmall}">
+		            <input id="nir" name="postData.nir" value='${data.hidden_nir}' class="form-control" required="" type="text">
 		        </div>
 		    </div>
 		

@@ -10,11 +10,11 @@
 	
 		<h2 class="titre">Où habitez-vous ?</h2>
 
-		<div  class="form-group">
+		<div  class="form-group row">
 		
 	        <label for="dep" class="col-sm-5 control-label">Département de résidence :</label>
 	        
-			<div  class="col-sm-6">
+			<div  class="col-sm-5">
 	            <select name="postData.departement" class="form-control xxx-select">
 		        	#{list items:data.departements, as:'departement'}
 		            	<option value='${departement.numero}'>${departement.numero} - ${departement.nom}</option>
