@@ -162,7 +162,9 @@ public class Application extends RetraiteController {
 	public static void generateDoc(final int checklistId) {
 		final Checklist checklistFromBdd = createDaoChecklist().findById(checklistId);
 		final ChecklistForDoc checklist = new ChecklistForDocConverter().convert(checklistFromBdd);
-		render(checklist);
+		// final String look = ControllersMiscUtils.getLook(params);
+		final String look = "style";
+		render(checklist, look);
 	}
 
 	private static PDF.Options createPdfOptions() {
