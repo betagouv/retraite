@@ -128,49 +128,52 @@
 
     	<div class='row'>
     		<div class='col-xs-3'>
-    			<span>Texte d'introduction :</span>
+    			Paragraphes présents:
     		</div>
     		<div class='col-xs-9'>
-                <text-angular ng-model="chapitre.texteIntro" ta-text-editor-setup='textAreaSetup'>
-                </text-angular>
-    		</div>
-    	</div>
+                <input type="checkbox" checked> Actions&nbsp;&nbsp;&nbsp;
+                <input type="checkbox"> Informations&nbsp;&nbsp;&nbsp;
+                <input type="checkbox"> Contexte&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" checked> Liste de pièces
 
-    	<div class='row'>
-    		<div class='col-xs-12'>
-    			<input type='checkbox' ng-model='chapitre.parcoursDematDifferent'>
-    			Parcours dématérialisé et canaux traditionnels différents 
-	   		</div>
-    	</div>
-
-    	<div class='row'>
-    		<div class='col-xs-3'>
-    			<span ng-show='!chapitre.parcoursDematDifferent'>Parcours :</span>
-    			<span ng-show='chapitre.parcoursDematDifferent'>Parcours canaux traditionnels :</span>
-    		</div>
-    		<div class='col-xs-9'>
-                <text-angular ng-model="chapitre.parcours"></text-angular>
-    		</div>
-    	</div>
-
-    	<div class='row' ng-show='chapitre.parcoursDematDifferent'>
-    		<div class='col-xs-3'>
-    			Parcours Dématérialisé&nbsp;:
-    		</div>
-    		<div class='col-xs-9'>
-                <text-angular ng-model="chapitre.parcoursDemat"></text-angular>
     		</div>
     	</div>
 
     	<div class='row'>
     		<div class='col-xs-3'>
-    			<span>Texte complémentaire&nbsp;:</span>
+    			<span>Actions :</span><br/>
+                <img src="img/actions.png">
     		</div>
     		<div class='col-xs-9'>
-                <text-angular ng-model="chapitre.texteComplementaire">
-                </text-angular>
+                <i style="font-size:14px;">Chaque action sur une nouvelle ligne</i>
+                <textarea rows='7' style="font-size: 13px;" class='form-control'>
+Je consulte mon relevé en ligne sur : https://www.lassuranceretraite.fr/cs/Satellite/PUBConnecte/MesServices/service/VisualiserVotreCarriere?ppackedargs=null)
+Si je rencontre des difficultés de connexion, je contacte le 0971.10.20.10
+Si j’identifie des périodes manquantes pour mon activité salariée, je demande une régularisation de ma carrière soit sur : https://www.lassuranceretraite.fr/portail-services-ihm/index.html#/sec/afficherIframe/DEM_REGUL
+soit en appelant le 3960.
+                </textarea>
     		</div>
     	</div>
+
+    	<div class='row'>
+    		<div class='col-xs-3'>
+    			<span>Liste de pièces :</span><br/>
+                <img src="img/docs.png">
+    		</div>
+    		<div class='col-xs-9'>
+                <i style="font-size:14px;">Texte d'introduction puis chaque pièce sur une ligne précédé de '-'</i>
+                <textarea rows='7' style="font-size: 13px;" class='form-control'>
+Exemples de pièces à fournir pour les périodes manquantes ou incomplètes :
+- Bulletins de salaires ou certificat de travail pour les périodes travaillées
+- Etat signalétique et des services pour les périodes militaires
+- Attestation Pôle Emploi pour le chômage indemnisé
+- Livret de famille ou attestation sur l'honneur d'éducation des enfants du conjoint pour les trimestres enfant
+- Décomptes de versement des indemnités journalières pour maladie, maternité, ou accident du travail
+- Décomptes de versement pour pension d’invalidité ou rente accident du travail                
+                </textarea>
+    		</div>
+    	</div>
+
         
     </div>
     
