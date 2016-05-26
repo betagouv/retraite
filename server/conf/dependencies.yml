@@ -13,3 +13,13 @@ require:
     - play -> pdf 0.9
     - com.itextpdf -> itextpdf 5.5.8
     - com.itextpdf.tool -> xmlworker 5.5.8 
+    - org.fluentd -> fluent-logger 0.3.2
+    - org.fluentd -> fluentd-log4j-appender 0.0.1-SNAPSHOT
+
+repositories:
+    - My modules:
+        type:       local
+        artifact:   ${application.path}/localrepo/fluentd-log4j-appender.jar
+        contains:
+            # Voir https://github.com/xnopre/fluentd-log4j-appender
+            - org.fluentd -> fluentd-log4j-appender 0.0.1-SNAPSHOT
