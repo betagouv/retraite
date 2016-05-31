@@ -1,8 +1,7 @@
-
 <div class='config-header'>
-    
+
     <h1>{{checklist.nom}}</h1>
-    
+
     <a href='' ng-click='openAllChapitres()'>Tout ouvrir</a> | <a href='' ng-click='closeAllChapitres()'>Tout fermer</a>
 
     <div ng-if='checklist.modifiedButNotPublished===true' class='label label-warning label-published'>Checklist Non publiée</div>
@@ -22,9 +21,9 @@
 
 <div class='configListeChapitres'>
 
-<div ng-repeat='chapitre in checklist.chapitres' class="panel panel-primary">
-    <div class="panel-heading" >
-        <h2>
+    <div ng-repeat='chapitre in checklist.chapitres' class="panel panel-primary">
+        <div class="panel-heading">
+            <h2>
             <div class="chapitre-title">
                 <span class="sous-chapitre-btn-collapse glyphicon" ng-class="chapitre.closedInEdition ? 'glyphicon-triangle-right' : 'glyphicon-triangle-bottom'" ng-click="chapitre.closedInEdition = !chapitre.closedInEdition"></span>
                 {{$index+1}}. 
@@ -43,151 +42,205 @@
                 <span class="glyphicon glyphicon glyphicon-arrow-up"></span>
             </button>
         </h2>
-        <div class='description-in-chapitre-title' >
-            <span editable-text="chapitre.description">{{ chapitre.description ? chapitre.description : "Aucune description" }}</span>
-        </div>
-        <div class='notes-in-chapitre-title' ng-show='chapitre.closedInEdition && chapitre.notes'>
-            Notes : {{chapitre.notes}}
-        </div>
-    </div>
-    <div class="panel-body" ng-show='!chapitre.closedInEdition'>
-
-    	<div class='row'>
-    		<div class='col-xs-3'>
-    			Conditions :
-    		</div>
-    		<div class='col-xs-9'>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary dropdown-toggle condition" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Ajouter une condition... <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a ng-click='addConditionDelai(chapitre)' href="">Délai...</a></li>
-                        <li class="dropdown-submenu" >
-                            <a tabindex="-1" href="#">Régime détecté</a>
-                            <ul class="dropdown-menu">
-                            <li><a ng-click="addConditionRegimeDetecte(chapitre, 'agirc-arrco')" href="">AGIRC-ARRCO</a></li>
-                            <li><a ng-click="addConditionRegimeDetecte(chapitre, 'regimes-base-hors-alignés')" href="">Régimes de base hors alignés</a></li>
-                            <li><a ng-click="addConditionRegimeDetecte(chapitre, 'regimes-complémentaires-hors-agirc-arrco')" href="">Régimes complémentaires hors AGIRC-ARRCO</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown-submenu" ng-if="checklist.type==='msa' || checklist.type==='rsi'">
-                            <a tabindex="-1" href="#">Statut</a>
-                            <ul class="dropdown-menu">
-                            <!-- MSA -->
-                            <li><a ng-if="checklist.type==='msa'" ng-click="addConditionStatut(chapitre, 'nsa')" href="">NSA</a></li>
-                            <li><a ng-if="checklist.type==='msa'" ng-click="addConditionStatut(chapitre, 'sa')" href="">SA</a></li>
-                            <li><a ng-if="checklist.type==='msa'" ng-click="addConditionStatut(chapitre, 'conjoint-collaborateur')" href="">Conjoint collaborateur / aide familial</a></li>
-                            <!-- RSI -->
-                            <li><a ng-if="checklist.type==='rsi'" ng-click="addConditionStatut(chapitre, 'chef-entreprise')" href="">Chef d’entreprise</a></li>
-                            <li><a ng-if="checklist.type==='rsi'" ng-click="addConditionStatut(chapitre, 'conjoint-collaborateur')" href="">Conjoint collaborateur</a></li>
-                            </ul>
-                        </li>
-                        <li><a ng-click="addConditionType(chapitre, 'carriere-a-reconstituer')" href="">Carrière à reconstituer</a></li>
-                        <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#">Carrière longue</a>
-                            <ul class="dropdown-menu">
-                            <li><a ng-click="addConditionType(chapitre, 'carriere-longue-oui')" href="">Oui (a une attestation)</a></li>
-                            <li><a ng-click="addConditionType(chapitre, 'carriere-longue-non')" href="">Non</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div class='btn-group condition' role="group" ng-repeat='condition in chapitre.conditions' >
-                    <button ng-click='editCondition(chapitre, condition)' type="button" class="btn btn-success" ng-class="{'condition-editable': isEditable(condition), 'condition-not-editable': !isEditable(condition)}" type="button">
-                        {{conditionToHumanStr(condition)}}
-                    </button>
-                    <button type="button" class="btn btn-success" ng-click='removeCondition(chapitre, condition)'>
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                </div>
-                
+            <div class='description-in-chapitre-title'>
+                <span editable-text="chapitre.description">{{ chapitre.description ? chapitre.description : "Aucune description" }}</span>
             </div>
-    	</div>
+            <div class='notes-in-chapitre-title' ng-show='chapitre.closedInEdition && chapitre.notes'>
+                Notes : {{chapitre.notes}}
+            </div>
+        </div>
+        <div class="panel-body" ng-show='!chapitre.closedInEdition'>
 
-    	<div class='row'>
-    		<div ng-if="checklist.type !== 'msa'" class='col-xs-3'>
-    			Délai à afficher :
-    		</div>
-    		<div ng-if="checklist.type === 'msa'" class='col-xs-3'>
-    			Délai NSA à afficher :
-    		</div>
-    		<div class='col-xs-9'>
-				<button ng-click='editDelai(chapitre)' class="btn" ng-class="{'btn-warning': !chapitre.delai, 'btn-success': chapitre.delai}" type="button">{{chapitre.delai ? delaiToHumanStr(chapitre.delai) : "A configurer"}}</button>
-    		</div>
-    	</div>
+            <div class='row'>
+                <div class='col-xs-3'>
+                    Conditions :
+                </div>
+                <div class='col-xs-9'>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle condition" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Ajouter une condition... <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a ng-click='addConditionDelai(chapitre)' href="">Délai...</a>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Régime détecté</a>
+                                <ul class="dropdown-menu">
+                                    <li><a ng-click="addConditionRegimeDetecte(chapitre, 'agirc-arrco')" href="">AGIRC-ARRCO</a>
+                                    </li>
+                                    <li><a ng-click="addConditionRegimeDetecte(chapitre, 'regimes-base-hors-alignés')" href="">Régimes de base hors alignés</a>
+                                    </li>
+                                    <li><a ng-click="addConditionRegimeDetecte(chapitre, 'regimes-complémentaires-hors-agirc-arrco')" href="">Régimes complémentaires hors AGIRC-ARRCO</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu" ng-if="checklist.type==='msa' || checklist.type==='rsi'">
+                                <a tabindex="-1" href="#">Statut</a>
+                                <ul class="dropdown-menu">
+                                    <!-- MSA -->
+                                    <li><a ng-if="checklist.type==='msa'" ng-click="addConditionStatut(chapitre, 'nsa')" href="">NSA</a>
+                                    </li>
+                                    <li><a ng-if="checklist.type==='msa'" ng-click="addConditionStatut(chapitre, 'sa')" href="">SA</a>
+                                    </li>
+                                    <li><a ng-if="checklist.type==='msa'" ng-click="addConditionStatut(chapitre, 'conjoint-collaborateur')" href="">Conjoint collaborateur / aide familial</a>
+                                    </li>
+                                    <!-- RSI -->
+                                    <li><a ng-if="checklist.type==='rsi'" ng-click="addConditionStatut(chapitre, 'chef-entreprise')" href="">Chef d’entreprise</a>
+                                    </li>
+                                    <li><a ng-if="checklist.type==='rsi'" ng-click="addConditionStatut(chapitre, 'conjoint-collaborateur')" href="">Conjoint collaborateur</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a ng-click="addConditionType(chapitre, 'carriere-a-reconstituer')" href="">Carrière à reconstituer</a>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Carrière longue</a>
+                                <ul class="dropdown-menu">
+                                    <li><a ng-click="addConditionType(chapitre, 'carriere-longue-oui')" href="">Oui (a une attestation)</a>
+                                    </li>
+                                    <li><a ng-click="addConditionType(chapitre, 'carriere-longue-non')" href="">Non</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class='btn-group condition' role="group" ng-repeat='condition in chapitre.conditions'>
+                        <button ng-click='editCondition(chapitre, condition)' type="button" class="btn btn-success" ng-class="{'condition-editable': isEditable(condition), 'condition-not-editable': !isEditable(condition)}" type="button">
+                            {{conditionToHumanStr(condition)}}
+                        </button>
+                        <button type="button" class="btn btn-success" ng-click='removeCondition(chapitre, condition)'>
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </div>
 
-    	<div ng-if="checklist.type === 'msa'" class='row'>
-    		<div class='col-xs-3'>
-    			Délai SA à afficher :
-    		</div>
-    		<div class='col-xs-9'>
-				<button ng-click='editDelaiSA(chapitre)' class="btn" ng-class="{'btn-warning': !chapitre.delaiSA, 'btn-success': chapitre.delaiSA}" type="button">{{chapitre.delaiSA ? delaiToHumanStr(chapitre.delaiSA) : "A configurer"}}</button>
-    		</div>
-    	</div>
+                </div>
+            </div>
 
-    	<div class='row'>
-    		<div class='col-xs-3'>
-    			Paragraphes présents:
-    		</div>
-    		<div class='col-xs-9'>
-                <input type="checkbox" checked> Actions&nbsp;&nbsp;&nbsp;
-                <input type="checkbox"> Informations&nbsp;&nbsp;&nbsp;
-                <input type="checkbox"> Contexte&nbsp;&nbsp;&nbsp;
-                <input type="checkbox" checked> Liste de pièces
+            <div class='row'>
+                <div ng-if="checklist.type !== 'msa'" class='col-xs-3'>
+                    Délai à afficher :
+                </div>
+                <div ng-if="checklist.type === 'msa'" class='col-xs-3'>
+                    Délai NSA à afficher :
+                </div>
+                <div class='col-xs-9'>
+                    <button ng-click='editDelai(chapitre)' class="btn" ng-class="{'btn-warning': !chapitre.delai, 'btn-success': chapitre.delai}" type="button">{{chapitre.delai ? delaiToHumanStr(chapitre.delai) : "A configurer"}}</button>
+                </div>
+            </div>
 
-    		</div>
-    	</div>
+            <div ng-if="checklist.type === 'msa'" class='row'>
+                <div class='col-xs-3'>
+                    Délai SA à afficher :
+                </div>
+                <div class='col-xs-9'>
+                    <button ng-click='editDelaiSA(chapitre)' class="btn" ng-class="{'btn-warning': !chapitre.delaiSA, 'btn-success': chapitre.delaiSA}" type="button">{{chapitre.delaiSA ? delaiToHumanStr(chapitre.delaiSA) : "A configurer"}}</button>
+                </div>
+            </div>
 
-    	<div class='row'>
-    		<div class='col-xs-3'>
-    			<span>Actions :</span><br/>
-                <img src="img/actions.png">
-    		</div>
-    		<div class='col-xs-9'>
-                <i style="font-size:14px;">Chaque action sur une nouvelle ligne</i>
-                <textarea rows='7' style="font-size: 13px;" class='form-control'>
-Je consulte mon relevé en ligne sur : https://www.lassuranceretraite.fr/cs/Satellite/PUBConnecte/MesServices/service/VisualiserVotreCarriere?ppackedargs=null)
-Si je rencontre des difficultés de connexion, je contacte le 0971.10.20.10
-Si j’identifie des périodes manquantes pour mon activité salariée, je demande une régularisation de ma carrière soit sur : https://www.lassuranceretraite.fr/portail-services-ihm/index.html#/sec/afficherIframe/DEM_REGUL
-soit en appelant le 3960.
-                </textarea>
-    		</div>
-    	</div>
+            <div class='row'>
+                <div class='col-xs-3'>
+                    <span>Actions&nbsp;:</span>
+                    <br/>
+                    <img src="img/actions.png">
+                </div>
+                <div class='col-xs-9'>
+                    <text-angular ng-model="chapitre.texteActions" ta-text-editor-setup='textAreaSetup'>
+                    </text-angular>
+                    <i style="font-size:14px;">Les lignes précédées de '-' seront présentées sous forme de puces</i>
+                </div>
+            </div>
 
-    	<div class='row'>
-    		<div class='col-xs-3'>
-    			<span>Liste de pièces :</span><br/>
-                <img src="img/docs.png">
-    		</div>
-    		<div class='col-xs-9'>
-                <i style="font-size:14px;">Texte d'introduction puis chaque pièce sur une ligne précédé de '-'</i>
-                <textarea rows='7' style="font-size: 13px;" class='form-control'>
-Exemples de pièces à fournir pour les périodes manquantes ou incomplètes :
-- Bulletins de salaires ou certificat de travail pour les périodes travaillées
-- Etat signalétique et des services pour les périodes militaires
-- Attestation Pôle Emploi pour le chômage indemnisé
-- Livret de famille ou attestation sur l'honneur d'éducation des enfants du conjoint pour les trimestres enfant
-- Décomptes de versement des indemnités journalières pour maladie, maternité, ou accident du travail
-- Décomptes de versement pour pension d’invalidité ou rente accident du travail                
-                </textarea>
-    		</div>
-    	</div>
+            <div class='row'>
+                <div class='col-xs-3'>
+                    <span>Modalités&nbsp;:</span>
+                    <br/>
+                    <img src="img/docs.png">
+                </div>
+                <div class='col-xs-9'>
+                    <text-angular ng-model="chapitre.texteModalites" ta-text-editor-setup='textAreaSetup'>
+                    </text-angular>
+                    <i style="font-size:14px;">Les lignes précédées de '-' seront présentées sous forme de puces</i>
+                </div>
+            </div>
 
-        
+            <div class='row'>
+                <div class='col-xs-3'>
+                    <span>Infos complémentaires&nbsp;:</span>
+                    <br/>
+                    <img src="img/infos.png">
+                </div>
+                <div class='col-xs-9'>
+                    <text-angular ng-model="chapitre.texteInfos" ta-text-editor-setup='textAreaSetup'>
+                    </text-angular>
+                    <i style="font-size:14px;">Les lignes précédées de '-' seront présentées sous forme de puces</i>
+                </div>
+            </div>
+
+        </div>
+
+        <input type="checkbox" ng-model="showOldData"> Voir les anciennes données
+
+        <div ng-show='showOldData' class="panel-footer">
+
+            <div class='row'>
+                <div class='col-xs-3'>
+                    <span>Texte d'introduction :</span>
+                </div>
+                <div class='col-xs-9'>
+                    <text-angular ng-model="chapitre.texteIntro" ta-text-editor-setup='textAreaSetup'>
+                    </text-angular>
+                </div>
+            </div>
+
+            <div class='row'>
+                <div class='col-xs-12'>
+                    <input type='checkbox' ng-model='chapitre.parcoursDematDifferent'>
+                    Parcours dématérialisé et canaux traditionnels différents 
+                </div>
+            </div>
+
+            <div class='row'>
+                <div class='col-xs-3'>
+                    <span ng-show='!chapitre.parcoursDematDifferent'>Parcours :</span>
+                    <span ng-show='chapitre.parcoursDematDifferent'>Parcours canaux traditionnels :</span>
+                </div>
+                <div class='col-xs-9'>
+                    <text-angular ng-model="chapitre.parcours"></text-angular>
+                </div>
+            </div>
+
+            <div class='row' ng-show='chapitre.parcoursDematDifferent'>
+                <div class='col-xs-3'>
+                    Parcours Dématérialisé&nbsp;:
+                </div>
+                <div class='col-xs-9'>
+                    <text-angular ng-model="chapitre.parcoursDemat"></text-angular>
+                </div>
+            </div>
+
+            <div class='row'>
+                <div class='col-xs-3'>
+                    <span>Texte complémentaire&nbsp;:</span>
+                </div>
+                <div class='col-xs-9'>
+                    <text-angular ng-model="chapitre.texteComplementaire">
+                    </text-angular>
+                </div>
+            </div>
+            
+        </div>
+
+        <div ng-show='!chapitre.closedInEdition' class="panel-footer">
+            <div class='row'>
+                <div class='col-xs-3'>
+                    <span>Notes :</span>
+                </div>
+                <div class='col-xs-9'>
+                    <textarea ng-model='chapitre.notes' class='form-control'></textarea>
+                </div>
+            </div>
+        </div>
+
     </div>
-    
-    <div ng-show='!chapitre.closedInEdition' class="panel-footer">
-    	<div class='row'>
-    		<div class='col-xs-3'>
-    			<span>Notes :</span>
-    		</div>
-    		<div class='col-xs-9'>
-                <textarea ng-model='chapitre.notes' class='form-control'></textarea>
-    		</div>
-    	</div>
-    </div>
-    
-</div>
 
 </div>
