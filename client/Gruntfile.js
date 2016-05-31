@@ -139,7 +139,7 @@ module.exports = function(grunt) {
                     middleware: function (connect, options, middlewares ) {
                         middlewares.unshift(mockApiData);
                         middlewares.unshift(function(req, res, next) {
-                            res.setHeader('Access-Control-Allow-Origin ', '*');
+                            res.setHeader('Access-Control-Allow-Origin', '*');
                             res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
                             res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
                             next();

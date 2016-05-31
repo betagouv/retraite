@@ -29,16 +29,30 @@ public class Chapitre extends RetraiteModel implements Cloneable {
 	public boolean closedInEdition;
 
 	@Column(columnDefinition = "text")
+	public String texteActions;
+
+	@Column(columnDefinition = "text")
+	public String texteModalites;
+
+	@Column(columnDefinition = "text")
+	public String texteInfos;
+
+	@Deprecated
+	@Column(columnDefinition = "text")
 	public String texteIntro;
 
+	@Deprecated
 	public boolean parcoursDematDifferent;
 
+	@Deprecated
 	@Column(columnDefinition = "text")
 	public String parcours;
 
+	@Deprecated
 	@Column(columnDefinition = "text")
 	public String parcoursDemat;
 
+	@Deprecated
 	@Column(columnDefinition = "text")
 	public String texteComplementaire;
 
@@ -50,19 +64,19 @@ public class Chapitre extends RetraiteModel implements Cloneable {
 
 	@Embedded
 	@AttributeOverrides({
-			@AttributeOverride(name = "type", column = @Column(name = "delai_type") ),
-			@AttributeOverride(name = "min", column = @Column(name = "delai_min") ),
-			@AttributeOverride(name = "max", column = @Column(name = "delai_max") ),
-			@AttributeOverride(name = "unite", column = @Column(name = "delai_unite") )
+			@AttributeOverride(name = "type", column = @Column(name = "delai_type")),
+			@AttributeOverride(name = "min", column = @Column(name = "delai_min")),
+			@AttributeOverride(name = "max", column = @Column(name = "delai_max")),
+			@AttributeOverride(name = "unite", column = @Column(name = "delai_unite"))
 	})
 	public Delai delai;
 
 	@Embedded
 	@AttributeOverrides({
-			@AttributeOverride(name = "type", column = @Column(name = "delai_sa_type") ),
-			@AttributeOverride(name = "min", column = @Column(name = "delai_sa_min") ),
-			@AttributeOverride(name = "max", column = @Column(name = "delai_sa_max") ),
-			@AttributeOverride(name = "unite", column = @Column(name = "delai_sa_unite") )
+			@AttributeOverride(name = "type", column = @Column(name = "delai_sa_type")),
+			@AttributeOverride(name = "min", column = @Column(name = "delai_sa_min")),
+			@AttributeOverride(name = "max", column = @Column(name = "delai_sa_max")),
+			@AttributeOverride(name = "unite", column = @Column(name = "delai_sa_unite"))
 	})
 	public Delai delaiSA;
 

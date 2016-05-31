@@ -64,9 +64,7 @@ angular.module('SgmapRetraiteConfig').config(function ($urlRouterProvider, $stat
         });
 
         $delegate.toolbar = [
-            ['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'clear'],
-            ['justifyLeft', 'justifyCenter', 'justifyRight'],
-            ['html'],
+            ['bold'],
             ['addVariable']
         ];
         return $delegate;
