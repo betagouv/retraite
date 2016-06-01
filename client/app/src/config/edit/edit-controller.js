@@ -24,8 +24,8 @@ angular.module('SgmapRetraiteConfig').controller('EditCtrl',
         });
     };
     
-    $scope.openDocumentation = function() {
-        $window.open('/application/generateDoc?checklistId='+$scope.checklist.id, '_blank');
+    $scope.openDocumentation = function(published) {
+        $window.open('/application/generateDoc?checklistNom='+$scope.checklist.nom+'&published='+published, '_blank');
     };
     
     $scope.openAllChapitres = function() {

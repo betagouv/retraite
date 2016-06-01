@@ -158,12 +158,11 @@ public class Application extends RetraiteController {
 		return absolutePath.substring(0, absolutePath.length() - 2);
 	}
 
-	public static void generateDoc(final int checklistId) {
-		final Checklist checklistFromBdd = createDaoChecklist().findById(checklistId);
+	public static void generateDoc(final String checklistNom, final boolean published) {
+		final Checklist checklistFromBdd = createDaoChecklist().find(checklistNom, published);
 		final ChecklistForDoc checklist = new ChecklistForDocConverter().convert(checklistFromBdd);
-		// final String look = ControllersMiscUtils.getLook(params);
 		final String look = "style";
-		render(checklist, look);
+		render(checklist, published, look);
 	}
 
 	private static PDF.Options createPdfOptions() {

@@ -9,6 +9,13 @@
 
 <h1>Checklist : ${checklist.nom}</h1>
 
+#{if published}
+	<h1 class='text-green'>Version publiée</h1>
+#{/if}
+#{else}
+	<h1 class='text-red'>Version non publiée</h1>
+#{/else}
+
 #{list items:checklist.chapitres, as:'chapitre' }
     <h2>${chapitre_index} - ${chapitre.titre}</h2>
     

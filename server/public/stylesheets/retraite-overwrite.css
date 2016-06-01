@@ -107,3 +107,11 @@ footer a.footer-feedback {
 .bandeau-cookie input[type=button]:hover {
 	background-color: rgba(34, 114, 186, .5);
 }
+
+.text-red {
+	color: red;
+}
+
+.text-green {
+	color: green;
+}
