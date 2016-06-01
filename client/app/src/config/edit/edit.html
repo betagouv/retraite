@@ -12,7 +12,16 @@
         <button ng-click='addChapitre()' class="btn btn-success" type="button">
             <span class="glyphicon glyphicon-plus"></span>Ajouter un chapitre
         </button>
-        <button ng-click='openDocumentation()' class="btn btn-success" type="button">Générer la documentation (version publiée)</button>
+        <div class="btn-group">
+            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Générer la documentation... <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a ng-click='openDocumentation(false)' href="">Version enregistrée</a></li>
+                <li><a ng-click='openDocumentation(true)' href="">Version publiée</a></li>
+            </ul>
+        </div>
+
         <button ui-sref="test" class="btn btn-success" type="button">Tester</button>
         <button ng-click='save()' class="btn btn-success" type="button">Enregistrer</button>
         <button ng-click='publish()' class="btn" ng-class="{'btn-warning': checklist.modifiedButNotPublished, 'btn-default':!checklist.modifiedButNotPublished}" type="button">Publier</button>
