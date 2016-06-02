@@ -75,3 +75,4 @@ angular.module('SgmapRetraiteConfig').config(function ($urlRouterProvider, $stat
     $httpProvider.interceptors.push('HttpInterceptor');
 
 });
+

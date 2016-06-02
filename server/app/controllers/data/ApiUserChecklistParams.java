@@ -24,6 +24,7 @@ public class ApiUserChecklistParams {
 	public List<UserStatus> userStatus;
 	public boolean parcoursDemat;
 	public boolean published;
+	public boolean full;
 
 	public static ApiUserChecklistParams fromHttpParams(final Params params) {
 		final ApiUserChecklistParams apiUserChecklistParams = new ApiUserChecklistParams();
@@ -38,6 +39,7 @@ public class ApiUserChecklistParams {
 		apiUserChecklistParams.userStatus = new DataUnbinder().unbind(getAndRemove(params, "userStatus"));
 		apiUserChecklistParams.parcoursDemat = asBoolean(getAndRemove(params, "parcoursDemat"));
 		apiUserChecklistParams.published = asBoolean(getAndRemove(params, "published"));
+		apiUserChecklistParams.full = asBoolean(getAndRemove(params, "full"));
 		checkDoNotRemainParams(params);
 		return apiUserChecklistParams;
 	}

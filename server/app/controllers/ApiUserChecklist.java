@@ -25,7 +25,12 @@ public class ApiUserChecklist extends RetraiteController {
 			renderText(data.errorMessage);
 		}
 		data.isPDF = false;
-		renderTemplate("ApiUserChecklist/getUserChecklist.html", data);
+		if (apiUserChecklistParams.full) {
+			final String look = "style";
+			renderTemplate("Application/steps/displayChecklist.html", data, look);
+		} else {
+			renderTemplate("ApiUserChecklist/getUserChecklist.html", data);
+		}
 	}
 
 }
