@@ -22,7 +22,7 @@ public class ApiUserChecklistParams {
 	public RegimeAligne regimeLiquidateur;
 	public Regime[] regimes;
 	public List<UserStatus> userStatus;
-	public boolean parcoursDemat;
+	public boolean isCarriereLongue;
 	public boolean published;
 	public boolean full;
 
@@ -37,7 +37,7 @@ public class ApiUserChecklistParams {
 		apiUserChecklistParams.regimeLiquidateur = getAndRemoveAsRegimeAligne(params, "regimeLiquidateur");
 		apiUserChecklistParams.regimes = Regime.fromStringList(getAndRemove(params, "regimes"));
 		apiUserChecklistParams.userStatus = new DataUnbinder().unbind(getAndRemove(params, "userStatus"));
-		apiUserChecklistParams.parcoursDemat = asBoolean(getAndRemove(params, "parcoursDemat"));
+		apiUserChecklistParams.isCarriereLongue = asBoolean(getAndRemove(params, "isCarriereLongue"));
 		apiUserChecklistParams.published = asBoolean(getAndRemove(params, "published"));
 		apiUserChecklistParams.full = asBoolean(getAndRemove(params, "full"));
 		checkDoNotRemainParams(params);
@@ -72,7 +72,7 @@ public class ApiUserChecklistParams {
 	public String toString() {
 		return "ApiUserChecklistParams[nom=" + nom + ", dateNaissance=" + dateNaissance + ", nir=" + nir + ", departement=" + departement + ", departMois="
 				+ departMois + ", departAnnee=" + departAnnee + ", regimeLiquidateur=" + regimeLiquidateur + ", regimes=" + Arrays.toString(regimes)
-				+ ", parcoursDemat=" + parcoursDemat + ", published=" + published + "]";
+				+ ", isCarriereLongue=" + isCarriereLongue + ", published=" + published + ", full=" + full + "]";
 	}
 
 	private static boolean asBoolean(final String value) {
