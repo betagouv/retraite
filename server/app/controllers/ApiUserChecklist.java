@@ -27,7 +27,7 @@ public class ApiUserChecklist extends RetraiteController {
 		data.isPDF = false;
 		if (apiUserChecklistParams.full) {
 			final String look = "style";
-			renderTemplate("Application/steps/displayChecklist.html", data, look);
+			renderTemplate("Application/steps/displayCheckList.html", data, look);
 		} else {
 			renderTemplate("ApiUserChecklist/getUserChecklist.html", data);
 		}
