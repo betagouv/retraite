@@ -51,6 +51,18 @@ fi
 
 cd server
 
+# Génération de l'application WEB pour le serveur
+echo
+echo "Génération de l'application WEB serveur ..."
+echo
+grunt build
+if [ $? != 0 ]; then
+    echo
+    echo "Il y a eu une erreur : arrêt du déploiement !"
+    echo
+    exit $?
+fi
+
 # Commit Git
 echo
 echo "Git : commit et tag..."
