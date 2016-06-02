@@ -110,9 +110,9 @@ describe('EditCtrl', function () {
             
             spyOn($window, 'open');
             
-            $scope.openDocumentation();
+            $scope.openDocumentation(true);
             
-            expect($window.open).toHaveBeenCalledWith('/application/generateDoc?checklistId=2', '_blank');
+            expect($window.open).toHaveBeenCalledWith('/application/generateDoc?checklistNom=nom 1&published=true', '_blank');
             
         });
         

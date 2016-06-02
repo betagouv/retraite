@@ -34,6 +34,34 @@ describe('ApiUserChecklist', function () {
         $httpBackend.flush();
     });
 
+    it('should getChecklistUrl not full', function () {
+        
+        var data = {
+            nom: "DUPONT",
+            dateNaissance: "07/10/1954",
+            nir: "1541014123456",
+            regimes: [{ name:"CAVIMAC"},{ name:"CNAV" }]
+        };
+        
+        var url = ApiUserChecklist.getChecklistUrl(data);
+        
+        expect(url).toEqual('/apiuserchecklist/getuserchecklist?nom=DUPONT&dateNaissance=07/10/1954&nir=1541014123456&regimes=CAVIMAC,CNAV&published=true');
+    });
+
+    it('should getChecklistUrl full html page', function () {
+        
+        var data = {
+            nom: "DUPONT",
+            dateNaissance: "07/10/1954",
+            nir: "1541014123456",
+            regimes: [{ name:"CAVIMAC"},{ name:"CNAV" }]
+        };
+        
+        var url = ApiUserChecklist.getChecklistUrl(data, true);
+        
+        expect(url).toEqual('/apiuserchecklist/getuserchecklist?nom=DUPONT&dateNaissance=07/10/1954&nir=1541014123456&regimes=CAVIMAC,CNAV&published=true&full=true');
+    });
+
 });
 
 

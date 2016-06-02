@@ -37,9 +37,7 @@ angular.module('SgmapRetraiteConfig').controller('TestCtrl', function ($scope, A
     // Actions
     
     $scope.test = function() {
-        ApiUserChecklist.getChecklist($scope.data).then(function(resultHtml) {
-            $scope.userChecklistHtml = resultHtml;
-        });
+        $scope.testUrlForIFrame = ApiUserChecklist.getChecklistUrl($scope.data, true);
     };
     
     // Données

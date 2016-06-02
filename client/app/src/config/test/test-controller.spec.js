@@ -67,18 +67,11 @@ describe('TestCtrl', function () {
                 nir: "1541014123456"
             };
             
-            spyOn(ApiUserChecklist, 'getChecklist').and.callFake(function(data) {
-                expect(data).toBe($scope.data);
-                return {
-                    then: function(onSuccess, onError) {
-                        onSuccess('bla bla bla');
-                    }
-                };
-            });
+            spyOn(ApiUserChecklist, 'getChecklistUrl').and.returnValue("bla bla bla");
 
             $scope.test();
 
-            expect($scope.userChecklistHtml).toEqual('bla bla bla');
+            expect($scope.testUrlForIFrame).toEqual('bla bla bla');
         });
     });
 
