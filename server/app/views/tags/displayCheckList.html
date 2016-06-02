@@ -2,7 +2,7 @@
 
 	<div class="contenu col-sm-12">
 		<div class="question">
-			<h2 style=''>${_data.hidden_nir.startsWith('1') ? 'M.' : 'Mme'} ${_data.hidden_nom}, pour partir à la retraite le #{dateDepart data:_data /},
+			<h2 style=''>${_data.hidden_nir?.startsWith('1') ? 'M.' : 'Mme'} ${_data.hidden_nom}, pour partir à la retraite le #{dateDepart data:_data /},
 				<br/>récupérez la liste de vos démarches.</h2>
 			<div class="bg-box">
 
@@ -16,9 +16,6 @@
 						<div class="col-sm-11">
 							<p class="bouton">
 								<button class="btn record">Télécharger PDF</button>
-								<!-- 
-								<button class="btn mail">M'envoyer par courriel</button>
-								 -->
 							</p>
 						</div>
 					</div>
@@ -42,15 +39,6 @@
 									<h3>${chapitre_index} - ${chapitre.titre}</h3>
 								#{/else}
 							</div>
-							<!-- 
-							<div class="panel-heading">
-								<div class="delai">
-									#{if chapitre.delai}
-										<span class="add-on calendar"></span>${chapitre.delai}
-									#{/if}
-								</div>
-							</div>
-							 -->
 							<div id="panel-details-${chapitre_index}" class="panel-body panel-details">
 						        <div class=''>${chapitre.texteIntro?.raw()}</div>
 						        <div class=''>${chapitre.parcours?.raw()}</div>
