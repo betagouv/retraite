@@ -46,11 +46,12 @@
     </div>
 
     <div class=''>
-        <button ng-click='test()' class="btn btn-success" type="button">Tester la checklist non publiée</button>
+        <button ng-click='test(false)' class="btn btn-success" type="button">Tester la checklist non publiée</button>
+        <button ng-click='test(true)' class="btn btn-success" type="button">Tester la checklist publiée</button>
     </div>
 
 </div>
 
 <hr/>
 
-<iframe iframe-auto-height width='1000' height='0' ng-src='{{testUrlForIFrame}}' ng-show='testUrlForIFrame'></iframe>
+<iframe id='iframe-test-result' iframe-auto-height width='1000' height='0' ng-src='{{testUrlForIFrame}}' ng-show='testUrlForIFrame'></iframe>

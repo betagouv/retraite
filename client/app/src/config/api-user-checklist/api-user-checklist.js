@@ -2,11 +2,11 @@
 
 angular.module('SgmapRetraiteCommons').service('ApiUserChecklist', function ($q, $http) {
     
-    this.getChecklistUrl = function(data, full) {
+    this.getChecklistUrl = function(data, published, full) {
         data = angular.copy(data);
         convert(data);
         var params = addParamsFromObject("", data);
-        params = addParam(params, 'published', true);
+        params = addParam(params, 'published', !!published);
         if (full == true) {
             params = addParam(params, 'full', true);            
         }
