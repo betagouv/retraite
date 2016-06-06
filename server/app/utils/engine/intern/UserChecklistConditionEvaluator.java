@@ -2,6 +2,7 @@ package utils.engine.intern;
 
 import static java.util.Arrays.asList;
 import static utils.engine.data.enums.Regime.AGIRC_ARRCO;
+import static utils.engine.data.enums.Regime.RegimeType.BASE_ALIGNE;
 import static utils.engine.data.enums.Regime.RegimeType.BASE_AUTRE;
 import static utils.engine.data.enums.Regime.RegimeType.COMPLEMENTAIRE;
 
@@ -63,6 +64,13 @@ public class UserChecklistConditionEvaluator {
 		case "regimes-complémentaires-hors-agirc-arrco":
 			for (final Regime aRegime : regimes) {
 				if (aRegime.getType() == COMPLEMENTAIRE && aRegime != AGIRC_ARRCO) {
+					return true;
+				}
+			}
+			return false;
+		case "regimes-hors-alignés-et-hors-agirc-arrco":
+			for (final Regime aRegime : regimes) {
+				if (aRegime.getType() != BASE_ALIGNE && aRegime != AGIRC_ARRCO) {
 					return true;
 				}
 			}

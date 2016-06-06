@@ -201,6 +201,9 @@ angular.module('SgmapRetraiteConfig').controller('EditCtrl',
             if (condition.props.regime === 'regimes-complémentaires-hors-agirc-arrco') {
                 return "Détecté : Régimes compl. hors AGIRC-ARRCO";
             }
+            if (condition.props.regime === 'regimes-hors-alignés-et-hors-agirc-arrco') {
+                return "Détecté : Régimes hors alignés et hors AGIRC-ARRCO";
+            }
             return "!! "+JSON.stringify(condition.props).replace(/\"/g, "'")+" !!";
         }
         if (condition.props.type === 'statut') {

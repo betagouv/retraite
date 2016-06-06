@@ -33,6 +33,8 @@ public class ConverterConditionTest {
 		assertThat(converterCondition.convert(createConditionRegimeDetecte("regimes-base-hors-alignés"))).isEqualTo("Si régimes de base hors alignés détectés");
 		assertThat(converterCondition.convert(createConditionRegimeDetecte("regimes-complémentaires-hors-agirc-arrco"))).isEqualTo(
 				"Si régimes complémentaires hors AGIRC-ARRCO détectés");
+		assertThat(converterCondition.convert(createConditionRegimeDetecte("regimes-hors-alignés-et-hors-agirc-arrco"))).isEqualTo(
+				"Si régimes hors alignés et hors AGIRC-ARRCO détectés");
 
 		assertThat(converterCondition.convert(createConditionStatut("nsa"))).isEqualTo("Si l’assuré appartient à la catégorie NSA");
 		assertThat(converterCondition.convert(createConditionStatut("sa"))).isEqualTo("Si l’assuré appartient à la catégorie SA");
