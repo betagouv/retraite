@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import static utils.engine.data.enums.Regime.AGIRC_ARRCO;
 import static utils.engine.data.enums.Regime.BFSP;
 import static utils.engine.data.enums.Regime.CNAV;
+import static utils.engine.data.enums.Regime.FSPOEIE;
 import static utils.engine.data.enums.Regime.IRCANTEC;
 import static utils.engine.data.enums.Regime.RSI;
 
@@ -20,7 +21,6 @@ import models.Condition;
 import utils.engine.data.ConditionDelai;
 import utils.engine.data.MonthAndYear;
 import utils.engine.data.UserChecklistGenerationData;
-import utils.engine.data.enums.Regime;
 
 public class UserChecklistConditionEvaluatorTest {
 
@@ -59,10 +59,8 @@ public class UserChecklistConditionEvaluatorTest {
 		condition.props.put("type", "regimeDetecte");
 		condition.props.put("regime", "agirc-arrco");
 
-		final Regime[] regimes = new Regime[] { RSI, AGIRC_ARRCO, CNAV };
-
 		final UserChecklistGenerationData userChecklistGenerationData = UserChecklistGenerationData.create()
-				.withRegimes(regimes)
+				.withRegimes(RSI, AGIRC_ARRCO, CNAV)
 				.get();
 
 		final boolean isVerified = userChecklistConditionEvaluator.isVerified(condition, userChecklistGenerationData);
@@ -77,10 +75,8 @@ public class UserChecklistConditionEvaluatorTest {
 		condition.props.put("type", "regimeDetecte");
 		condition.props.put("regime", "agirc-arrco");
 
-		final Regime[] regimes = new Regime[] { RSI, CNAV };
-
 		final UserChecklistGenerationData userChecklistGenerationData = UserChecklistGenerationData.create()
-				.withRegimes(regimes)
+				.withRegimes(RSI, CNAV)
 				.get();
 
 		final boolean isVerified = userChecklistConditionEvaluator.isVerified(condition, userChecklistGenerationData);
@@ -95,10 +91,8 @@ public class UserChecklistConditionEvaluatorTest {
 		condition.props.put("type", "regimeDetecte");
 		condition.props.put("regime", "regimes-base-hors-alignés");
 
-		final Regime[] regimes = new Regime[] { RSI, BFSP, AGIRC_ARRCO, CNAV };
-
 		final UserChecklistGenerationData userChecklistGenerationData = UserChecklistGenerationData.create()
-				.withRegimes(regimes)
+				.withRegimes(RSI, BFSP, AGIRC_ARRCO, CNAV)
 				.get();
 
 		final boolean isVerified = userChecklistConditionEvaluator.isVerified(condition, userChecklistGenerationData);
@@ -113,10 +107,8 @@ public class UserChecklistConditionEvaluatorTest {
 		condition.props.put("type", "regimeDetecte");
 		condition.props.put("regime", "regimes-base-hors-alignés");
 
-		final Regime[] regimes = new Regime[] { RSI, AGIRC_ARRCO, CNAV };
-
 		final UserChecklistGenerationData userChecklistGenerationData = UserChecklistGenerationData.create()
-				.withRegimes(regimes)
+				.withRegimes(RSI, AGIRC_ARRCO, CNAV)
 				.get();
 
 		final boolean isVerified = userChecklistConditionEvaluator.isVerified(condition, userChecklistGenerationData);
@@ -131,10 +123,8 @@ public class UserChecklistConditionEvaluatorTest {
 		condition.props.put("type", "regimeDetecte");
 		condition.props.put("regime", "regimes-complémentaires-hors-agirc-arrco");
 
-		final Regime[] regimes = new Regime[] { RSI, IRCANTEC, AGIRC_ARRCO, CNAV };
-
 		final UserChecklistGenerationData userChecklistGenerationData = UserChecklistGenerationData.create()
-				.withRegimes(regimes)
+				.withRegimes(RSI, IRCANTEC, AGIRC_ARRCO, CNAV)
 				.get();
 
 		final boolean isVerified = userChecklistConditionEvaluator.isVerified(condition, userChecklistGenerationData);
@@ -149,10 +139,8 @@ public class UserChecklistConditionEvaluatorTest {
 		condition.props.put("type", "regimeDetecte");
 		condition.props.put("regime", "regimes-complémentaires-hors-agirc-arrco");
 
-		final Regime[] regimes = new Regime[] { RSI, AGIRC_ARRCO, CNAV };
-
 		final UserChecklistGenerationData userChecklistGenerationData = UserChecklistGenerationData.create()
-				.withRegimes(regimes)
+				.withRegimes(RSI, AGIRC_ARRCO, CNAV)
 				.get();
 
 		final boolean isVerified = userChecklistConditionEvaluator.isVerified(condition, userChecklistGenerationData);
@@ -160,7 +148,48 @@ public class UserChecklistConditionEvaluatorTest {
 		assertThat(isVerified).isFalse();
 	}
 
-	// regimes-complémentaires-hors-agirc-arrco
+	@Test
+	public void test_regimeDetecte_regimes_hors_alignés_et_hors_agirc_arrco_true() {
+
+		final Condition condition = new Condition();
+		condition.props.put("type", "regimeDetecte");
+		condition.props.put("regime", "regimes-hors-alignés-et-hors-agirc-arrco");
+
+		{
+			final UserChecklistGenerationData userChecklistGenerationData = UserChecklistGenerationData.create()
+					.withRegimes(RSI, IRCANTEC, AGIRC_ARRCO, CNAV)
+					.get();
+
+			final boolean isVerified = userChecklistConditionEvaluator.isVerified(condition, userChecklistGenerationData);
+
+			assertThat(isVerified).isTrue();
+		}
+		{
+			final UserChecklistGenerationData userChecklistGenerationData = UserChecklistGenerationData.create()
+					.withRegimes(RSI, FSPOEIE, AGIRC_ARRCO, CNAV)
+					.get();
+
+			final boolean isVerified = userChecklistConditionEvaluator.isVerified(condition, userChecklistGenerationData);
+
+			assertThat(isVerified).isTrue();
+		}
+	}
+
+	@Test
+	public void test_regimeDetecte_regimes_hors_alignés_et_hors_agirc_arrco_false() {
+
+		final Condition condition = new Condition();
+		condition.props.put("type", "regimeDetecte");
+		condition.props.put("regime", "regimes-hors-alignés-et-hors-agirc-arrco");
+
+		final UserChecklistGenerationData userChecklistGenerationData = UserChecklistGenerationData.create()
+				.withRegimes(RSI, AGIRC_ARRCO, CNAV)
+				.get();
+
+		final boolean isVerified = userChecklistConditionEvaluator.isVerified(condition, userChecklistGenerationData);
+
+		assertThat(isVerified).isFalse();
+	}
 
 	// Tests pour les conditions de type "statut"
 

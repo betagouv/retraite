@@ -68,7 +68,7 @@ echo
 echo "Git : commit et tag..."
 echo
 git status
-read -p "Une touche pour continuer ..."
+# read -p "Une touche pour continuer ..."
 git add .
 git commit -am "deploy_$ENV_$(date +%Y-%m-%d_%H-%M-%S)"
 

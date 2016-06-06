@@ -132,7 +132,6 @@ public class ApiChecklistGeneratorTest {
 		apiUserChecklistParams.departMois = "11";
 		apiUserChecklistParams.departAnnee = "2017";
 		apiUserChecklistParams.regimes = new Regime[] { Regime.CNAV };
-		apiUserChecklistParams.parcoursDemat = true;
 		apiUserChecklistParams.published = false;
 		apiUserChecklistParams.regimeLiquidateur = RSI;
 
@@ -151,7 +150,7 @@ public class ApiChecklistGeneratorTest {
 				new Regime[] { Regime.CNAV },
 				new RegimeAligne[] { RegimeAligne.CNAV },
 				RSI,
-				true,
+				false,
 				false,
 				false,
 				null /* ? */);

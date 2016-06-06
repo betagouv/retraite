@@ -2,15 +2,21 @@
 
 angular.module('SgmapRetraiteCommons').service('ApiUserChecklist', function ($q, $http) {
     
-    
-    this.getChecklist = function(data) {
-        
+    this.getChecklistUrl = function(data, published, full) {
         data = angular.copy(data);
         convert(data);
         var params = addParamsFromObject("", data);
-        params = addParam(params, 'published', true);
+        params = addParam(params, 'published', !!published);
+        if (full == true) {
+            params = addParam(params, 'full', true);            
+        }
+        return '/apiuserchecklist/getuserchecklist?'+params;
+    };
+    
+    this.getChecklist = function(data) {
         var deferred = $q.defer();
-        $http.get('/apiuserchecklist/getuserchecklist?'+params).then(function(data) {
+        var url = this.getChecklistUrl(data);
+        $http.get(url).then(function(data) {
             deferred.resolve(data.data);
         });
         return deferred.promise;        

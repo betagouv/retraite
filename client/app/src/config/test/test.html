@@ -31,25 +31,27 @@
             <div class='col-sm-9'>
                 <div>
                     <div class='checkbox-regime'>
-                        <input type='checkbox' ng-model="data.parcoursDemat" > Dématérialisé
+                        <input type='checkbox' ng-model="data.isCarriereLongue" > Carrière longue
                     </div>
                 </div>
+                <!--
                 <div>
                     <div class='checkbox-regime'>
                         <input type='checkbox' ng-model="data.carriereACompleter" disabled> <span disabled>Carrière à compléter</span>
                     </div>
                 </div>
+                -->
             </div>
         </div>
     </div>
 
     <div class=''>
-        <button ng-click='test()' class="btn btn-success" type="button">Tester la checklist non publiée</button>
+        <button ng-click='test(false)' class="btn btn-success" type="button">Tester la checklist non publiée</button>
+        <button ng-click='test(true)' class="btn btn-success" type="button">Tester la checklist publiée</button>
     </div>
 
 </div>
 
 <hr/>
 
-<div ng-bind-html='userChecklistHtml'>
-</div>
+<iframe id='iframe-test-result' iframe-auto-height width='1000' height='0' ng-src='{{testUrlForIFrame}}' ng-show='testUrlForIFrame'></iframe>

@@ -85,6 +85,7 @@ module.exports = function (config) {
             'app/src/config/app-id/app-id-controller.spec.js',
             'app/src/config/configlist/configlist-controller.js',
             'app/src/config/configlist/configlist-controller.spec.js',
+            'app/src/config/directives/iframe-auto-size.js',
             'app/src/config/edit/dialogs/dialog-delai/dialog-delai.js',
             'app/src/config/edit/dialogs/dialog-delai/dialog-delai.spec.js',
             'app/src/config/edit/dialogs/dialog-variables/dialog-variables.js',
