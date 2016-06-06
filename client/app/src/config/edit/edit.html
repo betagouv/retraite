@@ -66,9 +66,22 @@
     			Conditions :
     		</div>
     		<div class='col-xs-9'>
+                <span ng-show='chapitre.conditions.length == 0'>Ce chapitre sera toujours visible.</span>
+                <span ng-show='chapitre.conditions.length > 0'>Ce chapitre sera visible si : </span>
+                <div class='condition' ng-repeat='condition in chapitre.conditions' >
+                    <span ng-show='$index > 0'> et </span>
+                    <div class='btn-group condition' role="group" >
+                        <button ng-click='editCondition(chapitre, condition)' type="button" class="btn btn-success" ng-class="{'condition-editable': isEditable(condition), 'condition-not-editable': !isEditable(condition)}" type="button">
+                            {{conditionToHumanStr(condition)}}
+                        </button>
+                        <button type="button" class="btn btn-success" ng-click='removeCondition(chapitre, condition)'>
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </div>
+                </div>
                 <div class="btn-group">
-                    <button type="button" class="btn btn-primary dropdown-toggle condition" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Ajouter une condition... <span class="caret"></span>
+                    <button type="button" class="btn btn-primary dropdown-toggle condition" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Ajouter une condition...">
+                        <span ng-show='chapitre.conditions.length == 0'>Ajouter une condition...</span><span ng-show='chapitre.conditions.length > 0'>+</span> <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
                         <li><a ng-click='addConditionDelai(chapitre)' href="">Délai...</a></li>
@@ -102,15 +115,6 @@
                         </li>
                     </ul>
                 </div>
-                <div class='btn-group condition' role="group" ng-repeat='condition in chapitre.conditions' >
-                    <button ng-click='editCondition(chapitre, condition)' type="button" class="btn btn-success" ng-class="{'condition-editable': isEditable(condition), 'condition-not-editable': !isEditable(condition)}" type="button">
-                        {{conditionToHumanStr(condition)}}
-                    </button>
-                    <button type="button" class="btn btn-success" ng-click='removeCondition(chapitre, condition)'>
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                </div>
-                
             </div>
     	</div>
 
