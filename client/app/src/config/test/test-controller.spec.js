@@ -59,19 +59,33 @@ describe('TestCtrl', function () {
 
     describe('should get checklist and store result in scope', function () {
         
-        it('should have init data in scope', function () {
-            
+        beforeEach(function() {
             $scope.data = {
                 nom: "DUPONT",
                 dateNaissance: "07/10/1954",
                 nir: "1541014123456"
             };
-            
-            spyOn(ApiUserChecklist, 'getChecklistUrl').and.returnValue("bla bla bla");
 
-            $scope.test();
+            spyOn(ApiUserChecklist, 'getChecklistUrl').and.returnValue("bla bla bla");
+            spyOn($scope, 'reloadIFrame');
+        });
+        
+        it('should get URL for published=true', function () {
+            
+            $scope.test(true);
 
             expect($scope.testUrlForIFrame).toEqual('bla bla bla');
+            expect(ApiUserChecklist.getChecklistUrl).toHaveBeenCalledWith($scope.data, true, true);
+            expect($scope.reloadIFrame).toHaveBeenCalled();
+        });
+        
+        it('should get URL for published=false', function () {
+            
+            $scope.test(false);
+
+            expect($scope.testUrlForIFrame).toEqual('bla bla bla');
+            expect(ApiUserChecklist.getChecklistUrl).toHaveBeenCalledWith($scope.data, false, true);
+            expect($scope.reloadIFrame).toHaveBeenCalled();
         });
     });
 
