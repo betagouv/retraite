@@ -106,6 +106,6 @@ public class UserChecklistParcoursComputerTest {
 	// Méthodes privées
 
 	private String link(final String link) {
-		return "<a href='" + link + "' target='_blank'>" + link + "</a>";
+		return "<a href='" + link + "' target='_blank' title='Nouvelle fenêtre'>" + link + "</a>";
 	}
 }

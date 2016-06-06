@@ -19,10 +19,22 @@
 		#{list items:data.questionLiquidateur.choices ? data.questionLiquidateur.choices : data.questionLiquidateur.liquidateurQuestionDescriptor.questionChoices, as:'choice'}
 			<div class='choice'>
 				#{if data.questionLiquidateur.liquidateurQuestionDescriptor.questionType.toString() == "SIMPLE"}
-		   			<label class='label-for-question-choice'><input type="radio" class='questions-choice' name="reponses[${data.questionLiquidateur.liquidateurQuestionDescriptor}]" value="${choice.value}" />${choice.text}</label>
+	            	#{if look == 'rsi'}
+			   			<input type="radio" class='questions-choice' id="q${choice_index}" name="reponses[${data.questionLiquidateur.liquidateurQuestionDescriptor}]" value="${choice.value}" />
+			   			<label class='label-for-question-choice' for="q${choice_index}">${choice.text}</label>
+	            	#{/if}
+	            	#{else}
+			   			<label class='label-for-question-choice' for="q${choice_index}"><input type="radio" class='questions-choice' id="q${choice_index}" name="reponses[${data.questionLiquidateur.liquidateurQuestionDescriptor}]" value="${choice.value}" />${choice.text}</label>
+	            	#{/else}
 				#{/if}
 				#{else}
-		   			<label class='label-for-question-choice'><input type="checkbox" class='questions-choice' value="${choice.value}" />${choice.text}</label>
+	            	#{if look == 'rsi'}
+			   			<input type="checkbox" class='questions-choice' id="q${choice_index}" value="${choice.value}" />
+			   			<label class='label-for-question-choice' for="q${choice_index}">${choice.text}</label>
+	            	#{/if}
+	            	#{else}
+			   			<label class='label-for-question-choice' for="q${choice_index}"><input type="checkbox" class='questions-choice' id="q${choice_index}" value="${choice.value}" />${choice.text}</label>
+	            	#{/else}
 				#{/else}
 			</div>
 		#{/list}
@@ -40,9 +52,3 @@
 		<input class="btn btn-success btn-next" value="Étape suivante" type="submit">
 	</div>
 </div>
-
-#{if isTest}
-	<div class="form-group row col-sm-12">
-		A ce stade : Régime liquidateur = '${data.hidden_liquidateur}', états = '${data.hidden_userStatus}', liquidateurStep='${data.hidden_liquidateurStep}'
-	</div>
-#{/if}

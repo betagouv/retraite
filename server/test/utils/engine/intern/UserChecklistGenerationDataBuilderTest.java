@@ -56,4 +56,23 @@ public class UserChecklistGenerationDataBuilderTest {
 		assertThat(userChecklistGenerationData.isCarriereLongue).isTrue();
 	}
 
+	@Test
+	public void should_fill_all_fields_even_if_userStatus_is_null() {
+
+		final MonthAndYear dateDepart = new MonthAndYear();
+		final Regime[] regimes = new Regime[] { Regime.CNAV };
+		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { RegimeAligne.CNAV };
+		final RegimeAligne regimeLiquidateur = CNAV;
+		final List<UserStatus> userStatus = null;
+
+		final UserChecklistGenerationData userChecklistGenerationData = userChecklistGenerationDataBuilder.build(dateDepart, "973", regimes, regimesAlignes,
+				regimeLiquidateur, true, false, true, userStatus);
+
+		assertThat(userChecklistGenerationData.isConjointCollaborateur).isFalse();
+		assertThat(userChecklistGenerationData.isNSA).isFalse();
+		assertThat(userChecklistGenerationData.isSA).isFalse();
+		assertThat(userChecklistGenerationData.isCarriereAReconstituer).isTrue();
+		assertThat(userChecklistGenerationData.isCarriereLongue).isTrue();
+	}
+
 }

@@ -44,9 +44,9 @@ body .container.information .delai {
 	padding-bottom: 0px;
 }
 
-body .container.information .contenu .bg-box h3 {
+/*body .container.information .contenu .bg-box h3 {
 	margin: 0;
-}
+}*/
 
 body .container.information .bouton .btn {
 	margin-left: 240px;
@@ -106,4 +106,12 @@ footer a.footer-feedback {
 
 .bandeau-cookie input[type=button]:hover {
 	background-color: rgba(34, 114, 186, .5);
+}
+
+.text-red {
+	color: red;
+}
+
+.text-green {
+	color: green;
 }

@@ -110,9 +110,9 @@ describe('EditCtrl', function () {
             
             spyOn($window, 'open');
             
-            $scope.openDocumentation();
+            $scope.openDocumentation(true);
             
-            expect($window.open).toHaveBeenCalledWith('/application/generateDoc?checklistId=2', '_blank');
+            expect($window.open).toHaveBeenCalledWith('/application/generateDoc?checklistNom=nom 1&published=true', '_blank');
             
         });
         
@@ -573,6 +573,18 @@ describe('EditCtrl', function () {
                 };
                 var str = $scope.conditionToHumanStr(condition);
                 expect(str).toEqual("Détecté : Régimes compl. hors AGIRC-ARRCO");
+            });
+        
+            it('regimes-hors-alignés-et-hors-agirc-arrco', function () {
+
+                var condition = {
+                    props: {
+                        type: 'regimeDetecte',
+                        regime: 'regimes-hors-alignés-et-hors-agirc-arrco'
+                    }
+                };
+                var str = $scope.conditionToHumanStr(condition);
+                expect(str).toEqual("Détecté : Régimes hors alignés et hors AGIRC-ARRCO");
             });
         
         });

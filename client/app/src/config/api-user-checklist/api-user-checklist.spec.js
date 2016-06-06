@@ -23,7 +23,7 @@ describe('ApiUserChecklist', function () {
             regimes: [{ name:"CAVIMAC"},{ name:"CNAV" }]
         };
         
-        $httpBackend.whenGET('/apiuserchecklist/getuserchecklist?nom=DUPONT&dateNaissance=07/10/1954&nir=1541014123456&regimes=CAVIMAC,CNAV&published=true')
+        $httpBackend.whenGET('/apiuserchecklist/getuserchecklist?nom=DUPONT&dateNaissance=07/10/1954&nir=1541014123456&regimes=CAVIMAC,CNAV&published=false')
             .respond('bla bla bla');
         
         ApiUserChecklist.getChecklist(data).then(function onSuccess(result) {
@@ -32,6 +32,34 @@ describe('ApiUserChecklist', function () {
         });
         
         $httpBackend.flush();
+    });
+
+    it('should getChecklistUrl not published not full', function () {
+        
+        var data = {
+            nom: "DUPONT",
+            dateNaissance: "07/10/1954",
+            nir: "1541014123456",
+            regimes: [{ name:"CAVIMAC"},{ name:"CNAV" }]
+        };
+        
+        var url = ApiUserChecklist.getChecklistUrl(data);
+        
+        expect(url).toEqual('/apiuserchecklist/getuserchecklist?nom=DUPONT&dateNaissance=07/10/1954&nir=1541014123456&regimes=CAVIMAC,CNAV&published=false');
+    });
+
+    it('should getChecklistUrl published and full html page', function () {
+        
+        var data = {
+            nom: "DUPONT",
+            dateNaissance: "07/10/1954",
+            nir: "1541014123456",
+            regimes: [{ name:"CAVIMAC"},{ name:"CNAV" }]
+        };
+        
+        var url = ApiUserChecklist.getChecklistUrl(data, true, true);
+        
+        expect(url).toEqual('/apiuserchecklist/getuserchecklist?nom=DUPONT&dateNaissance=07/10/1954&nir=1541014123456&regimes=CAVIMAC,CNAV&published=true&full=true');
     });
 
 });

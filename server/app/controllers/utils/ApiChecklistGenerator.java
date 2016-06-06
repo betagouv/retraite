@@ -38,7 +38,7 @@ public class ApiChecklistGenerator {
 		final RegimeAligne regimeLiquidateur = apiUserChecklistParams.regimeLiquidateur;
 		final List<UserStatus> userStatus = apiUserChecklistParams.userStatus;
 		final Regime[] regimes = apiUserChecklistParams.regimes;
-		final boolean parcoursDemat = apiUserChecklistParams.parcoursDemat;
+		final boolean isCarriereLongue = apiUserChecklistParams.isCarriereLongue;
 		final boolean published = apiUserChecklistParams.published;
 
 		if (isNullOrEmpty(departement)) {
@@ -67,9 +67,8 @@ public class ApiChecklistGenerator {
 
 		final MonthAndYear dateDepart = new MonthAndYear(departMois, departAnnee);
 		final RegimeAligne[] regimesAlignes = calculateurRegimeAlignes.getRegimesAlignes(regimes);
-		final boolean isCarriereLongue = false;// TODO
 		final UserChecklistGenerationData userChecklistGenerationData = userChecklistGenerationDataBuilder.build(dateDepart, departement, regimes,
-				regimesAlignes, regimeLiquidateur, parcoursDemat, published, isCarriereLongue, userStatus);
+				regimesAlignes, regimeLiquidateur, false, published, isCarriereLongue, userStatus);
 		final ChecklistName checklistName = ChecklistName.valueOf(apiUserChecklistParams.regimeLiquidateur);
 
 		data.userChecklist = userChecklistGenerator.generate(checklistName, userChecklistGenerationData);
