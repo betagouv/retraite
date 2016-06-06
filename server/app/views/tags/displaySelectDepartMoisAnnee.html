@@ -1,0 +1,10 @@
+<select name='postData.departMois' class='form-control xxx-select' required >
+   	#{list items:_data.listeMoisAvecPremier, as:'mois'}
+       	<option value='${mois.value}'>${mois.text}</option>
+    #{/list}
+</select>
+<select name='postData.departAnnee' class='form-control xxx-select' required >
+   	#{list items:_data.listeAnneesDepart, as:'annee'}
+       	<option ${annee_index == 2 ? 'selected' : ''}>${annee}</option>
+    #{/list}
+</select>

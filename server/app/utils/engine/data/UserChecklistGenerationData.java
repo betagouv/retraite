@@ -79,7 +79,7 @@ public class UserChecklistGenerationData {
 			return this;
 		}
 
-		public Builder withRegimes(final Regime[] regimes) {
+		public Builder withRegimes(final Regime... regimes) {
 			userChecklistGenerationData.regimes = regimes;
 			return this;
 		}

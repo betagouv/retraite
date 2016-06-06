@@ -12,27 +12,29 @@
 	
 		<div class='choice'>
 
-			<label class='label-for-question-choice'>
-				<input type="radio" name='postData.departInconnu' value='false' checked /> Je prévois de partir au : 
-
-			    <select name='postData.departMois' class='form-control xxx-select' required >
-			       	#{list items:data.listeMoisAvecPremier, as:'mois'}
-			           	<option value='${mois.value}'>${mois.text}</option>
-			        #{/list}
-			    </select>
-			    <select name='postData.departAnnee' class='form-control xxx-select' required >
-			       	#{list items:data.listeAnneesDepart, as:'annee'}
-			           	<option ${annee_index == 2 ? 'selected' : ''}>${annee}</option>
-			        #{/list}
-			    </select>
-			
-				<br/>
+           	#{if look == 'rsi'}
+				<input type="radio" id='q1' name='postData.departInconnu' value='false' checked />
+				<label class='label-for-question-choice' for='q1'>
+					 Je prévois de partir au : 
+				</label>
+				#{displaySelectDepartMoisAnnee data:data /}
 				
-			</label>
-			
-			<label class='label-for-question-choice'>
-				<input type="radio" name='postData.departInconnu' value='true'/> Je ne sais pas
-			</label>
+				<input type="radio" id='q2' name='postData.departInconnu' value='true'/>
+				<label class='label-for-question-choice' for='q2'>
+					 Je ne sais pas
+				</label>
+           	#{/if}
+           	#{else}
+				<label class='label-for-question-choice' for='q1'>
+					<input type="radio" id='q1' name='postData.departInconnu' value='false' checked /> Je prévois de partir au : 
+					#{displaySelectDepartMoisAnnee data:data /}
+				</label>
+				
+				<label class='label-for-question-choice' for='q2'>
+					<input type="radio" id='q2' name='postData.departInconnu' value='true'/> Je ne sais pas
+				</label>
+           	#{/else}
+
 			
 		</div>
 	
@@ -48,9 +50,3 @@
 		<input class="btn btn-success btn-next" value="Étape suivante" type="submit">
 	</div>
 </div>
-
-#{if isTest}
-	<div class="form-group row col-sm-12">
-		A ce stade : Régime liquidateur = '${data.hidden_liquidateur}', états = '${data.hidden_userStatus}', liquidateurStep='${data.hidden_liquidateurStep}'
-	</div>
-#{/if}

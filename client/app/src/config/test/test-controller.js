@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('SgmapRetraiteConfig').controller('TestCtrl', function ($scope, ApiRegimes, ApiUserChecklist) {
+angular.module('SgmapRetraiteConfig').controller('TestCtrl', function ($scope, ApiRegimes, ApiUserChecklist, $timeout) {
 
     // Privé
     
@@ -36,10 +36,14 @@ angular.module('SgmapRetraiteConfig').controller('TestCtrl', function ($scope, A
     
     // Actions
     
-    $scope.test = function() {
-        ApiUserChecklist.getChecklist($scope.data).then(function(resultHtml) {
-            $scope.userChecklistHtml = resultHtml;
-        });
+    $scope.test = function(published) {
+        $scope.testUrlForIFrame = ApiUserChecklist.getChecklistUrl($scope.data, published, true);
+        $scope.reloadIFrame();
+    };
+
+    $scope.reloadIFrame = function() {
+        var iframe = $('#iframe-test-result');
+        iframe.attr('src', iframe.attr('src'));
     };
     
     // Données

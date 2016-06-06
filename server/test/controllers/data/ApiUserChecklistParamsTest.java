@@ -36,7 +36,6 @@ public class ApiUserChecklistParamsTest {
 		put(params, "departAnnee", "2017");
 		put(params, "regimeLiquidateur", "MSA");
 		put(params, "regimes", "CNAV,RSI");
-		put(params, "parcoursDemat", "true");
 
 		final ApiUserChecklistParams paramsResult = apiUserChecklistParams.fromHttpParams(params);
 
@@ -47,7 +46,6 @@ public class ApiUserChecklistParamsTest {
 		assertThat(paramsResult.departAnnee).isEqualTo("2017");
 		assertThat(paramsResult.regimeLiquidateur).isEqualTo(MSA);
 		assertThat(paramsResult.regimes).isEqualTo(new Regime[] { Regime.CNAV, Regime.RSI });
-		assertThat(paramsResult.parcoursDemat).isTrue();
 
 	}
 
