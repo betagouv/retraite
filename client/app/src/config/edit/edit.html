@@ -79,13 +79,14 @@
                         </button>
                     </div>
                 </div>
+                <br/>
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary dropdown-toggle condition" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Ajouter une condition...">
-                        <span ng-show='chapitre.conditions.length == 0'>Ajouter une condition...</span><span ng-show='chapitre.conditions.length > 0'>+</span> <span class="caret"></span>
+                        Ajouter une condition... <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
                         <li><a ng-click='addConditionDelai(chapitre)' href="">Délai...</a></li>
-                        <li class="dropdown-submenu" >
+                        <li class="dropdown-submenu " >
                             <a tabindex="-1" href="#">Régime détecté</a>
                             <ul class="dropdown-menu">
                             <li><a ng-click="addConditionRegimeDetecte(chapitre, 'agirc-arrco')" href="">AGIRC-ARRCO</a></li>
