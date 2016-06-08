@@ -54,6 +54,14 @@ public class UserChecklistParcoursComputerTest {
 	}
 
 	@Test
+	public void should_return_null_for_empty() {
+
+		final String after = userChecklistParcoursComputer.compute("<p></p>", null);
+
+		assertThat(after).isNull();
+	}
+
+	@Test
 	public void should_do_nothing_for_simple_text() {
 
 		final String before = "texte simple";
