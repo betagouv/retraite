@@ -20,7 +20,15 @@ public class UserChecklistParcoursComputer {
 		if (parcours == null) {
 			return null;
 		}
+		if (isLikeEmpty(parcours)) {
+			return null;
+		}
 		return replaceVars(replaceLinks(parcours), userChecklistGenerationData);
+	}
+
+	private boolean isLikeEmpty(final String html) {
+		final String htmlWithoutTags = html.replaceAll("\\<.*?>", "");
+		return htmlWithoutTags.trim().isEmpty();
 	}
 
 	private String replaceVars(final String text, final UserChecklistGenerationData userChecklistGenerationData) {

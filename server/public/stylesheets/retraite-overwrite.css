@@ -115,3 +115,29 @@ footer a.footer-feedback {
 .text-green {
 	color: green;
 }
+
+
+.checklist-actions, .checklist-modalites, .checklist-infos {
+    background-repeat: no-repeat;
+    padding-left: 75px;
+    min-height: 67px;
+}
+	
+.checklist-actions {
+	border: solid #B1D7F8 1px;
+    border-radius: 10px;
+    font-weight: bold;
+    background-image: url("/public/img/actions.png");
+}
+
+.checklist-modalites {
+    background-image: url("/public/img/docs.png");
+}
+
+.checklist-infos {
+	background-color: #e7e7e7;
+    border-radius: 20px;
+    font-style: italic;
+    font-size: 1.4rem;
+    background-image: url("/public/img/infos.png");
+}

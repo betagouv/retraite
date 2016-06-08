@@ -41,7 +41,7 @@ angular.module('SgmapRetraiteConfig').config(function ($urlRouterProvider, $stat
 
         taRegisterTool('addVariable', {
             iconclass: "fa fa-th",
-            buttontext: "Variables",
+            buttontext: "Ajouter une variable...",
             /*action: function (item) {
                 if (item.text) {
                     this.$editor().wrapSelection('insertHtml', item.text + '***');
@@ -64,8 +64,7 @@ angular.module('SgmapRetraiteConfig').config(function ($urlRouterProvider, $stat
         });
 
         $delegate.toolbar = [
-            ['bold'],
-            ['addVariable']
+            ['bold'],['ul', 'ol'],['addVariable']
         ];
         return $delegate;
     });

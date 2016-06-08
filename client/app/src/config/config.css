@@ -193,3 +193,6 @@ span[disabled] {
     background-color: rgba(255, 127, 80, 0.38);
 }
 
+.text-angular-modalites > .ta-scroll-window.form-control {
+    height: 200px;
+}
