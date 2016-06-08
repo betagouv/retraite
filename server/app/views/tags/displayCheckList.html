@@ -58,9 +58,15 @@ body .container.information .contenu .bg-box ul.fleche li {
 								#{/else}
 							</div>
 							<div id="panel-details-${chapitre_index}" class="panel-body panel-details">
-						        <div class=''>${chapitre.texteIntro?.raw()}</div>
-						        <div class=''>${chapitre.parcours?.raw()}</div>
-						        <div class=''>${chapitre.texteComplementaire?.raw()}</div>
+								#{if chapitre.texteActions?.length() > 0}
+						        	<div class='checklist-actions'>${chapitre.texteActions?.raw()}</div>
+								#{/if}
+								#{if chapitre.texteModalites}
+							        <div class='checklist-modalites'>${chapitre.texteModalites?.raw()}</div>
+								#{/if}
+								#{if chapitre.texteInfos}
+							        <div class='checklist-infos'>${chapitre.texteInfos?.raw()}</div>
+								#{/if}
 								#{if chapitre_index == 99}
 									<ul class="filet-left sanspuce">
 										<li><span class="bold">Exemple de texte</span> pouvant être mis en 

@@ -19,17 +19,11 @@ public class UserChecklistChapitreComputer {
 		final UserChapitre userChapitre = new UserChapitre();
 		userChapitre.titre = chapitre.titre;
 		userChapitre.delai = computeDelai(chapitre, userChecklistGenerationData);
-		userChapitre.texteIntro = userChecklistParcoursComputer.compute(chapitre.texteIntro, userChecklistGenerationData);
-		userChapitre.parcours = computeParcours(chapitre, userChecklistGenerationData);
-		userChapitre.texteComplementaire = userChecklistParcoursComputer.compute(chapitre.texteComplementaire, userChecklistGenerationData);
+		userChapitre.texteActions = userChecklistParcoursComputer.compute(chapitre.texteActions, userChecklistGenerationData);
+		userChapitre.texteModalites = userChecklistParcoursComputer.compute(chapitre.texteModalites, userChecklistGenerationData);
+		userChapitre.texteInfos = userChecklistParcoursComputer.compute(chapitre.texteInfos, userChecklistGenerationData);
 
 		return userChapitre;
-	}
-
-	private String computeParcours(final Chapitre chapitre, final UserChecklistGenerationData userChecklistGenerationData) {
-		return userChecklistParcoursComputer.compute(
-				userChecklistGenerationData.isParcoursDematIfExist() && chapitre.parcoursDematDifferent ? chapitre.parcoursDemat : chapitre.parcours,
-				userChecklistGenerationData);
 	}
 
 	private String computeDelai(final Chapitre chapitre, final UserChecklistGenerationData userChecklistGenerationData) {
