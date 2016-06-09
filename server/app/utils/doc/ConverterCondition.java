@@ -47,9 +47,6 @@ public class ConverterCondition {
 			}
 			return "<b><font size='5' color='red'>!!! Statut non géré '" + statut + "' !!!</font></b>";
 		}
-		if (type.equals("carriere-a-reconstituer")) {
-			return "Si l’assuré doit reconstituer sa carrière";
-		}
 		if (type.equals("carriere-longue-non")) {
 			return "Si carrière longue : non";
 		}

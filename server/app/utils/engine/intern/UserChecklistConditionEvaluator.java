@@ -31,8 +31,6 @@ public class UserChecklistConditionEvaluator {
 			return isVerified_regimeDetecte(condition, userChecklistGenerationData.getRegimes());
 		case "statut":
 			return isVerified_statut(condition, userChecklistGenerationData);
-		case "carriere-a-reconstituer":
-			return userChecklistGenerationData.isCarriereAReconstituer;
 		case "carriere-longue-non":
 			return !userChecklistGenerationData.isCarriereLongue;
 		case "carriere-longue-oui":

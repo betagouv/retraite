@@ -221,9 +221,6 @@ angular.module('SgmapRetraiteConfig').controller('EditCtrl',
             }
             return "!! "+JSON.stringify(condition.props).replace(/\"/g, "'")+" !!";
         }
-        if (condition.props.type === 'carriere-a-reconstituer') {
-            return "Carrière à reconstituer";
-        }
         if (condition.props.type === 'carriere-longue-oui') {
             return "Carrière longue : Oui (l'assuré a une attestation)";
         }

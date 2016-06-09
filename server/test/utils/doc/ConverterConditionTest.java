@@ -43,9 +43,6 @@ public class ConverterConditionTest {
 		assertThat(converterCondition.convert(createConditionStatut("statut-inconnu")))
 				.isEqualTo("<b><font size='5' color='red'>!!! Statut non géré 'statut-inconnu' !!!</font></b>");
 
-		assertThat(converterCondition.convert(createConditionWithType("carriere-a-reconstituer")))
-				.isEqualTo("Si l’assuré doit reconstituer sa carrière");
-
 		assertThat(converterCondition.convert(createConditionWithType("carriere-longue-non")))
 				.isEqualTo("Si carrière longue : non");
 		assertThat(converterCondition.convert(createConditionWithType("carriere-longue-oui")))
