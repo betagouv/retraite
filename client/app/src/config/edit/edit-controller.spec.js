@@ -659,21 +659,6 @@ describe('EditCtrl', function () {
         
         });
         
-        describe('for carriere-a-reconstituer', function () {
-
-            it('should generate human string', function () {
-
-                var condition = {
-                    props: {
-                        type:'carriere-a-reconstituer'
-                    }
-                };
-                var str = $scope.conditionToHumanStr(condition);
-                expect(str).toEqual("Carrière à reconstituer");
-            });
-        
-        });
-        
         describe('for carriere-longue-oui', function () {
 
             it('should generate human string', function () {

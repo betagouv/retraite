@@ -52,7 +52,6 @@ public class UserChecklistGenerationDataBuilderTest {
 		assertThat(userChecklistGenerationData.isConjointCollaborateur).isTrue();
 		assertThat(userChecklistGenerationData.isNSA).isTrue();
 		assertThat(userChecklistGenerationData.isSA).isTrue();
-		assertThat(userChecklistGenerationData.isCarriereAReconstituer).isTrue();
 		assertThat(userChecklistGenerationData.isCarriereLongue).isTrue();
 	}
 
@@ -71,7 +70,6 @@ public class UserChecklistGenerationDataBuilderTest {
 		assertThat(userChecklistGenerationData.isConjointCollaborateur).isFalse();
 		assertThat(userChecklistGenerationData.isNSA).isFalse();
 		assertThat(userChecklistGenerationData.isSA).isFalse();
-		assertThat(userChecklistGenerationData.isCarriereAReconstituer).isTrue();
 		assertThat(userChecklistGenerationData.isCarriereLongue).isTrue();
 	}
 

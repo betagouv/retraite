@@ -14,7 +14,6 @@ public class UserChecklistGenerationData {
 	public boolean isConjointCollaborateur;
 	public boolean isNSA;
 	public boolean isSA;
-	public boolean isCarriereAReconstituer;
 	public boolean isCarriereLongue;
 
 	public boolean published;
@@ -96,11 +95,6 @@ public class UserChecklistGenerationData {
 
 		public Builder withConjointCollaborateur(final boolean isConjointCollaborateur) {
 			userChecklistGenerationData.isConjointCollaborateur = isConjointCollaborateur;
-			return this;
-		}
-
-		public Builder withCarriereAReconstituer(final boolean isCarriereAReconstituer) {
-			userChecklistGenerationData.isCarriereAReconstituer = isCarriereAReconstituer;
 			return this;
 		}
 

@@ -287,38 +287,6 @@ public class UserChecklistConditionEvaluatorTest {
 		assertThat(isVerified).isFalse();
 	}
 
-	// type:'carriere-a-reconstituer'
-
-	@Test
-	public void test_carriere_a_reconstituer_true() {
-
-		final UserChecklistGenerationData userChecklistGenerationData = UserChecklistGenerationData.create()
-				.withCarriereAReconstituer(true)
-				.get();
-
-		final Condition condition = new Condition();
-		condition.props.put("type", "carriere-a-reconstituer");
-
-		final boolean isVerified = userChecklistConditionEvaluator.isVerified(condition, userChecklistGenerationData);
-
-		assertThat(isVerified).isTrue();
-	}
-
-	@Test
-	public void test_carriere_a_reconstituer_false() {
-
-		final UserChecklistGenerationData userChecklistGenerationData = UserChecklistGenerationData.create()
-				.withCarriereAReconstituer(false)
-				.get();
-
-		final Condition condition = new Condition();
-		condition.props.put("type", "carriere-a-reconstituer");
-
-		final boolean isVerified = userChecklistConditionEvaluator.isVerified(condition, userChecklistGenerationData);
-
-		assertThat(isVerified).isFalse();
-	}
-
 	// type:'carriere-longue-non'
 
 	@Test
