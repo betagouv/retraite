@@ -14,8 +14,8 @@
 		
 			%{
 				widthLabel = 4;
-				widthInput = 8;
-				widthInputSmall = 6;
+				widthInput = 6;
+				widthInputSmall = 4;
 			}%
 		
 			#{if data.errorMessage}
@@ -26,16 +26,12 @@
 			
 		    <div class="form-group row col-sm-12">
 		        <label for="nom" class="col-sm-${widthLabel} control-label">Nom de naissance :</label>
-		        <div class="col-sm-${widthInput}">
-		            <input id="nom" name="postData.nom" value='${data.hidden_nom}' class="form-control" required="" type="text">
-		        </div>
+	            <input id="nom" name="postData.nom" value='${data.hidden_nom}' class="col-sm-${widthInput}" required="" type="text">
 		    </div>
 		
 		    <div class="form-group row col-sm-12">
 		        <label for="naissance" class="col-sm-${widthLabel} control-label">Date de naissance :</label>
-		        <div class="col-sm-${widthInputSmall-1} date">
-		            <input id="naissance" name="postData.naissance" value='${data.hidden_naissance}' class="form-control my-date" required="" type="text">
-		        </div>
+	            <input id="naissance" name="postData.naissance" value='${data.hidden_naissance}' class="col-sm-${widthInputSmall}" required="" type="text">
 		        <label class="col-sm-3 control-label">
 		        	(jj/mm/aaaa)
 		        </label>
@@ -43,9 +39,7 @@
 		
 		    <div class="form-group row col-sm-12">
 		        <label for="nir" class="col-sm-${widthLabel} control-label">N° de sécurité sociale :</label>
-		        <div class="col-sm-${widthInputSmall}">
-		            <input id="nir" name="postData.nir" value='${data.hidden_nir}' class="form-control" required="" type="text">
-		        </div>
+	            <input id="nir" name="postData.nir" value='${data.hidden_nir}' class="col-sm-${widthInput}" required="" type="text">
 		    </div>
 		
 		    <div class="form-group row etape col-sm-12">

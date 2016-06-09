@@ -264,6 +264,15 @@ border: 1px solid #b7b7b7;
             border-radius: 2px;
 }
 
+input.btn-next[disabled]:hover,
+.btn-precedente:active:focus,
+input.btn-next:active:focus {
+    background: #fff; 
+    border-color: #b7b7b7;
+    transition: none;
+	color: #5c5c5c;
+}
+
 .btn-success,
 .btn-success[disabled],
 .btn-success[disabled]:active{
