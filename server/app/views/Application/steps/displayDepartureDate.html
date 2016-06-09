@@ -13,16 +13,20 @@
 		<div class='choice'>
 
            	#{if look == 'rsi'}
-				<input type="radio" id='q1' name='postData.departInconnu' value='false' checked />
-				<label class='label-for-question-choice' for='q1'>
-					 Je prévois de partir au : 
-				</label>
-				#{displaySelectDepartMoisAnnee data:data /}
+           		<div class='form-group'>
+					<input type="radio" id='q1' name='postData.departInconnu' value='false' checked />
+					<label class='label-for-question-choice' for='q1'>
+						 Je prévois de partir au : 
+					</label>
+					#{displaySelectDepartMoisAnnee data:data /}
+           		</div>
 				
-				<input type="radio" id='q2' name='postData.departInconnu' value='true'/>
-				<label class='label-for-question-choice' for='q2'>
-					 Je ne sais pas
-				</label>
+           		<div class='form-group'>
+					<input type="radio" id='q2' name='postData.departInconnu' value='true'/>
+					<label class='label-for-question-choice' for='q2'>
+						 Je ne sais pas
+					</label>
+           		</div>
            	#{/if}
            	#{else}
 				<label class='label-for-question-choice' for='q1'>

@@ -86,13 +86,15 @@ body {
 }
 
 .container, .contenu.col-sm-10,
-.contenu-image,
 .question {
   max-width: 536px!important;
   padding: 0!important;
   width: 100%;
 }
 
+.contenu-image {
+	padding-top: 30px;
+}
 
 //partie home
 .entete .col-sm-2,
@@ -179,13 +181,13 @@ body {
 
 .form-group label {
   float: left;
-  font-size: 1.1rem;
-  margin-right: 15px;
+  /* XN font-size: 1.1rem; */
+  /* XN margin-right: 15px; */
   padding-top: 2px;
   text-align: right;
   vertical-align: middle;
   font-weight: normal;
-  width: 30%;
+  /* XN width: 30%; */
   margin-bottom:0;
   padding-left:0;
 }
@@ -215,7 +217,7 @@ input[type="text"] {
   margin: 0;
   border-radius: 0;
   display: inline-block;
-  width: 66%;
+  /* XN width: 66%; */
   height: 100%
 }
 
@@ -233,10 +235,6 @@ input[type="text"] {
   width: 85%;
 }
 
-input[type="text"]#nir {
-  width: 85%;
-  margin-right: 0;
-}
 .contenu-image .form-group.row .col-sm-6,
 .contenu-image .form-group.row .col-sm-6.date {
   width:50%;
@@ -245,9 +243,9 @@ input[type="text"]#nir {
 .form-group select {
   border-radius: 0;
   height: 22px;
-  width: 226px;
+  /* width: 226px; */
   padding: 0;
-  font-size: 1em;
+  /* XN font-size: 1em; */
   background: url('#{$pathImg}/submit_bas.png') repeat-x left bottom;
   z-index:1;
 }
@@ -258,12 +256,10 @@ input[type="text"]#nir {
 
 
 .xxx-select{
-  font-size: 0.917em;
+  font-size: 1.2rem;
   padding: 3px 20px 3px 5px;
-  //background: url('#{$pathImg}/select-arrow.png') top right no-repeat!important;
   z-index: 10;
   overflow:hidden;
-  display: block;
 }
 
 .etape {
@@ -291,7 +287,7 @@ input[type="text"]#nir {
 
 .form-group.row .col-sm-6 {
   display: inline-block;
-  text-align: right;
+  /* XN text-align: right; */
   padding-left: 0;
   padding-right:0;
 }
@@ -650,11 +646,6 @@ span.telephone {
 
   .home .form-group .col-sm-6.date {
     width: 47%;
-  }
-
-  .home .form-group .col-sm-6.date input[type="text"],
-  .home .form-group .col-sm-6 input[type="text"]#nir{
-    width: 84%;
   }
 
   .home .form-group.etape .col-sm-6 {
