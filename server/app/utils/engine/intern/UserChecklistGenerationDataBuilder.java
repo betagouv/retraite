@@ -23,7 +23,6 @@ public class UserChecklistGenerationDataBuilder {
 		userChecklistGenerationData.isNSA = contains(userStatus, STATUS_NSA);
 		userChecklistGenerationData.isSA = contains(userStatus, STATUS_SA);
 		// [XN-29/03/2016-En attendant de remettre les questions complémentaires, on force l'affichage des chapitres]
-		userChecklistGenerationData.isCarriereAReconstituer = true;// liquidateurReponsesEvaluator.isCarriereAReconstituer(complementReponses);
 		userChecklistGenerationData.isCarriereLongue = isCarriereLongue;
 		return userChecklistGenerationData;
 	}
