@@ -1,5 +1,8 @@
 package controllers.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import play.mvc.Scope.Params;
 
 public class ControllersMiscUtils {
@@ -19,20 +22,49 @@ public class ControllersMiscUtils {
 		return "style";
 	}
 
-	public static String computeActionQueryParams(final boolean isTest, final String look) {
-		String queryParams = "";
-		if (isTest) {
-			queryParams = "?test";
+	public static String computeActionQueryParams(final boolean test, final boolean debug, final String look) {
+		final List<KeyAndValue> params = new ArrayList<>();
+		if (test) {
+			params.add(new KeyAndValue("test"));
+		}
+		if (debug) {
+			params.add(new KeyAndValue("debug"));
 		}
 		if (!look.equals("style")) {
-			if (queryParams.isEmpty()) {
+			params.add(new KeyAndValue("look", look));
+		}
+		String queryParams = "";
+		for (int i = 0; i < params.size(); i++) {
+			if (i == 0) {
 				queryParams += "?";
 			} else {
 				queryParams += "&";
 			}
-			queryParams += "look=" + look;
+			queryParams += params.get(i).formatForQuery();
 		}
 		return queryParams;
 	}
 
+	private static class KeyAndValue {
+
+		private final String key;
+		private final String value;
+
+		public KeyAndValue(final String key) {
+			this(key, null);
+		}
+
+		public String formatForQuery() {
+			if (value == null) {
+				return key;
+			}
+			return key + "=" + value;
+		}
+
+		public KeyAndValue(final String key, final String value) {
+			this.key = key;
+			this.value = value;
+		}
+
+	}
 }

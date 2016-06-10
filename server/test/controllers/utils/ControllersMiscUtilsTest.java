@@ -34,10 +34,11 @@ public class ControllersMiscUtilsTest {
 
 	@Test
 	public void test_computeActionQueryParams() {
-		assertThat(ControllersMiscUtils.computeActionQueryParams(false, "style")).isEqualTo("");
-		assertThat(ControllersMiscUtils.computeActionQueryParams(true, "style")).isEqualTo("?test");
-		assertThat(ControllersMiscUtils.computeActionQueryParams(false, "cnav")).isEqualTo("?look=cnav");
-		assertThat(ControllersMiscUtils.computeActionQueryParams(true, "rsi")).isEqualTo("?test&look=rsi");
+		assertThat(ControllersMiscUtils.computeActionQueryParams(false, false, "style")).isEqualTo("");
+		assertThat(ControllersMiscUtils.computeActionQueryParams(true, false, "style")).isEqualTo("?test");
+		assertThat(ControllersMiscUtils.computeActionQueryParams(false, true, "style")).isEqualTo("?debug");
+		assertThat(ControllersMiscUtils.computeActionQueryParams(false, false, "cnav")).isEqualTo("?look=cnav");
+		assertThat(ControllersMiscUtils.computeActionQueryParams(true, true, "rsi")).isEqualTo("?test&debug&look=rsi");
 	}
 
 	private static class MyParams extends Params {
