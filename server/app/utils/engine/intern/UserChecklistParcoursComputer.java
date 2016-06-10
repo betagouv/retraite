@@ -82,7 +82,26 @@ public class UserChecklistParcoursComputer {
 	}
 
 	private String buildLink(final String link) {
-		return "<a href='" + link + "' target='_blank' title='Nouvelle fenêtre'>" + link + "</a>";
+		return "<a href='" + link + "' target='_blank' title='Nouvelle fenêtre'>" + convertTextForLink(link) + "</a>";
+	}
+
+	private String convertTextForLink(final String link) {
+		if (link.startsWith("http://")) {
+			return convertTextForLink(link.substring("http://".length()));
+		}
+		if (link.startsWith("https://")) {
+			return convertTextForLink(link.substring("https://".length()));
+		}
+		if (link.startsWith("www.")) {
+			return convertTextForLink(link.substring("www.".length()));
+		}
+		if (link.endsWith(".html")) {
+			return convertTextForLink(link.substring(0, link.length() - ".html".length()));
+		}
+		if (link.endsWith(".htm")) {
+			return convertTextForLink(link.substring(0, link.length() - ".htm".length()));
+		}
+		return link;
 	}
 
 }
