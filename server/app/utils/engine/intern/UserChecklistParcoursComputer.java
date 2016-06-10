@@ -101,6 +101,9 @@ public class UserChecklistParcoursComputer {
 		if (link.endsWith(".htm")) {
 			return convertTextForLink(link.substring(0, link.length() - ".htm".length()));
 		}
+		if (link.endsWith(".pdf")) {
+			return convertTextForLink(link.substring(0, link.length() - ".pdf".length()));
+		}
 		return link;
 	}
 
