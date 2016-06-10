@@ -67,6 +67,11 @@ public class TestsUtils {
 			return strResponse;
 		}
 
+		@Override
+		public String getString(final String encoding) {
+			return null;
+		}
+
 	};
 
 }

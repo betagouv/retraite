@@ -4,6 +4,7 @@ require:
     - play
     - crud
     - org.apache.commons -> commons-lang3 3.4
+    - org.apache.commons -> commons-collections4 4.1
     - org.mockito -> mockito-all 1.10.19
     - org.easytesting -> fest-assert 1.4
     - info.cukes -> cucumber-java 1.2.4
