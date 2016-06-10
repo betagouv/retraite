@@ -78,17 +78,17 @@ public class UserChecklistParcoursComputerTest {
 
 		final String after = userChecklistParcoursComputer.compute(before, null);
 
-		assertThat(after).isEqualTo("xxx " + link("http://monsite.com/path/page.html") + " yyy");
+		assertThat(after).isEqualTo("xxx " + link("http://monsite.com/path/page.html", "monsite.com/path/page") + " yyy");
 	}
 
 	@Test
 	public void should_replace_one_https_link_and_nothing_after_link() {
 
-		final String before = "xxx https://monsite.com/path/page.html";
+		final String before = "xxx https://www.monsite.com/path/page.htm";
 
 		final String after = userChecklistParcoursComputer.compute(before, null);
 
-		assertThat(after).isEqualTo("xxx " + link("https://monsite.com/path/page.html") + "");
+		assertThat(after).isEqualTo("xxx " + link("https://www.monsite.com/path/page.htm", "monsite.com/path/page") + "");
 	}
 
 	@Test
@@ -98,7 +98,7 @@ public class UserChecklistParcoursComputerTest {
 
 		final String after = userChecklistParcoursComputer.compute(before, null);
 
-		assertThat(after).isEqualTo("soit " + link("http://a/a") + ". ou <i>" + link("https://b/b") + "</i> fin");
+		assertThat(after).isEqualTo("soit " + link("http://a/a", "a/a") + ". ou <i>" + link("https://b/b", "b/b") + "</i> fin");
 	}
 
 	@Test
@@ -113,7 +113,7 @@ public class UserChecklistParcoursComputerTest {
 
 	// Méthodes privées
 
-	private String link(final String link) {
-		return "<a href='" + link + "' target='_blank' title='Nouvelle fenêtre'>" + link + "</a>";
+	private String link(final String link, final String text) {
+		return "<a href='" + link + "' target='_blank' title='Nouvelle fenêtre'>" + text + "</a>";
 	}
 }
