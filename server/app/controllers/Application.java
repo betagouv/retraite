@@ -1,5 +1,7 @@
 package controllers;
 
+import static controllers.utils.ControllersMiscUtils.computeActionQueryParams;
+import static controllers.utils.ControllersMiscUtils.getLook;
 import static controllers.utils.DataUnbinder.unbind;
 import static utils.dao.DaoChecklistFactory.createDaoChecklist;
 
@@ -11,13 +13,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.commons.collections4.map.PassiveExpiringMap;
+
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
 
 import controllers.data.PostData;
-import controllers.utils.ControllersMiscUtils;
 import models.Checklist;
 import play.Logger;
 import play.modules.pdf.PDF;
@@ -37,8 +40,8 @@ public class Application extends RetraiteController {
 			postData.hidden_userStatus = unbind(params.get("postData.hidden_userStatus"));
 		}
 		final boolean isTest = params._contains("test");
-		final String look = ControllersMiscUtils.getLook(params);
-		final String actionQueryParams = ControllersMiscUtils.computeActionQueryParams(isTest, look);
+		final String look = getLook(params);
+		final String actionQueryParams = computeActionQueryParams(isTest, look);
 		if (isTest) {
 			Logger.warn("Traitement des données en mode TEST, recherche des régimes en BDD !");
 		}
@@ -46,22 +49,28 @@ public class Application extends RetraiteController {
 		final String page = getPageNameForGoogleAnalytics(data);
 		if (data.hidden_step.equals("displayCheckList")) {
 			final String key = UUID.randomUUID().toString();
-			cache.put(key, new DisplayCheckListData(data, isTest, page, look, actionQueryParams));
+			putToCache(key, new DisplayCheckListData(data, page, actionQueryParams));
 			// Redirection pour avoir une URL spécifique pour hotjar
-			displayCheckList(key);
+			displayCheckList(key, isTest, look);
 		} else {
 			renderTemplate("Application/steps/" + data.hidden_step + ".html", data, isTest, page, look, actionQueryParams);
 		}
 	}
 
-	public static void displayCheckList(final String key) {
-		final DisplayCheckListData displayCheckListData = cache.remove(key);
+	public static void displayCheckList(final String key, final boolean isTest, final String look) {
+		final DisplayCheckListData displayCheckListData = getFromCache(key);
+		if (displayCheckListData == null) {
+			displayExpired(isTest, look);
+		}
 		final CommonExchangeData data = displayCheckListData.data;
-		final boolean isTest = displayCheckListData.isTest;
 		final String page = displayCheckListData.page;
-		final String look = displayCheckListData.look;
 		final String actionQueryParams = displayCheckListData.actionQueryParams;
 		renderTemplate("Application/steps/" + data.hidden_step + ".html", data, isTest, page, look, actionQueryParams);
+	}
+
+	public static void displayExpired(final boolean isTest, final String look) {
+		final String actionQueryParams = computeActionQueryParams(isTest, look);
+		render(look, actionQueryParams);
 	}
 
 	public static void sendMail(final PostData postData) {
@@ -172,23 +181,38 @@ public class Application extends RetraiteController {
 		return pdfOptions;
 	}
 
-	private static Map<String, DisplayCheckListData> cache = new HashMap<>();
+	// Cache pour l'affichage des checklists
+
+	private static final long TEN_MINUTES = 10 * 60 * 1000;
+
+	private static Map<String, DisplayCheckListData> cache = new PassiveExpiringMap<>(TEN_MINUTES);
 
 	private static class DisplayCheckListData {
 
 		private final RenderData data;
-		private final boolean isTest;
 		private final String page;
-		private final String look;
 		private final String actionQueryParams;
 
-		public DisplayCheckListData(final RenderData data, final boolean isTest, final String page, final String look, final String actionQueryParams) {
+		public DisplayCheckListData(final RenderData data, final String page, final String actionQueryParams) {
 			this.data = data;
-			this.isTest = isTest;
 			this.page = page;
-			this.look = look;
 			this.actionQueryParams = actionQueryParams;
 		}
-
 	}
+
+	private static void putToCache(final String key, final DisplayCheckListData displayCheckListData) {
+		cleanCacheForTimeoutedData();
+		cache.put(key, displayCheckListData);
+	}
+
+	private static DisplayCheckListData getFromCache(final String key) {
+		cleanCacheForTimeoutedData();
+		return cache.get(key);
+	}
+
+	private static void cleanCacheForTimeoutedData() {
+		// Access all map to force clean
+		cache.entrySet();
+	}
+
 }
