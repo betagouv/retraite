@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -44,7 +45,7 @@ public class Application extends RetraiteController {
 		final RenderData data = RetraiteEngineFactory.create(isTest).processToNextStep(postData);
 		final String page = getPageNameForGoogleAnalytics(data);
 		if (data.hidden_step.equals("displayCheckList")) {
-			final String key = "" + System.currentTimeMillis();
+			final String key = UUID.randomUUID().toString();
 			cache.put(key, new DisplayCheckListData(data, isTest, page, look, actionQueryParams));
 			// Redirection pour avoir une URL spécifique pour hotjar
 			displayCheckList(key);
