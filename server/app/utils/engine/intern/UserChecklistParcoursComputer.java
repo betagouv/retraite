@@ -86,22 +86,22 @@ public class UserChecklistParcoursComputer {
 	}
 
 	private String convertTextForLink(final String link) {
-		if (link.startsWith("http://")) {
+		if (link.toLowerCase().startsWith("http://")) {
 			return convertTextForLink(link.substring("http://".length()));
 		}
-		if (link.startsWith("https://")) {
+		if (link.toLowerCase().startsWith("https://")) {
 			return convertTextForLink(link.substring("https://".length()));
 		}
-		if (link.startsWith("www.")) {
+		if (link.toLowerCase().startsWith("www.")) {
 			return convertTextForLink(link.substring("www.".length()));
 		}
-		if (link.endsWith(".html")) {
+		if (link.toLowerCase().endsWith(".html")) {
 			return convertTextForLink(link.substring(0, link.length() - ".html".length()));
 		}
-		if (link.endsWith(".htm")) {
+		if (link.toLowerCase().endsWith(".htm")) {
 			return convertTextForLink(link.substring(0, link.length() - ".htm".length()));
 		}
-		if (link.endsWith(".pdf")) {
+		if (link.toLowerCase().endsWith(".pdf")) {
 			return convertTextForLink(link.substring(0, link.length() - ".pdf".length()));
 		}
 		return link;
