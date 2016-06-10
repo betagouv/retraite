@@ -39,44 +39,45 @@ public class Application extends RetraiteController {
 		if (postData != null) {
 			postData.hidden_userStatus = unbind(params.get("postData.hidden_userStatus"));
 		}
-		final boolean isTest = params._contains("test");
+		final boolean test = params._contains("test");
+		final boolean debug = params._contains("debug");
 		final String look = getLook(params);
-		final String actionQueryParams = computeActionQueryParams(isTest, look);
-		if (isTest) {
+		final String actionQueryParams = computeActionQueryParams(test, debug, look);
+		if (test) {
 			Logger.warn("Traitement des données en mode TEST, recherche des régimes en BDD !");
 		}
-		final RenderData data = RetraiteEngineFactory.create(isTest).processToNextStep(postData);
+		final RenderData data = RetraiteEngineFactory.create(test).processToNextStep(postData);
 		final String page = getPageNameForGoogleAnalytics(data);
 		if (data.hidden_step.equals("displayCheckList")) {
 			final String key = UUID.randomUUID().toString();
 			putToCache(key, new DisplayCheckListData(data, page, actionQueryParams));
 			// Redirection pour avoir une URL spécifique pour hotjar
-			displayCheckList(key, isTest, look);
+			displayCheckList(key, test, debug, look);
 		} else {
-			renderTemplate("Application/steps/" + data.hidden_step + ".html", data, isTest, page, look, actionQueryParams);
+			renderTemplate("Application/steps/" + data.hidden_step + ".html", data, test, debug, page, look, actionQueryParams);
 		}
 	}
 
-	public static void displayCheckList(final String key, final boolean isTest, final String look) {
+	public static void displayCheckList(final String key, final boolean test, final boolean debug, final String look) {
 		final DisplayCheckListData displayCheckListData = getFromCache(key);
 		if (displayCheckListData == null) {
-			displayExpired(isTest, look);
+			displayExpired(test, debug, look);
 		}
 		final CommonExchangeData data = displayCheckListData.data;
 		final String page = displayCheckListData.page;
 		final String actionQueryParams = displayCheckListData.actionQueryParams;
-		renderTemplate("Application/steps/" + data.hidden_step + ".html", data, isTest, page, look, actionQueryParams);
+		renderTemplate("Application/steps/" + data.hidden_step + ".html", data, test, debug, page, look, actionQueryParams);
 	}
 
-	public static void displayExpired(final boolean isTest, final String look) {
-		final String actionQueryParams = computeActionQueryParams(isTest, look);
+	public static void displayExpired(final boolean test, final boolean debug, final String look) {
+		final String actionQueryParams = computeActionQueryParams(test, debug, look);
 		render(look, actionQueryParams);
 	}
 
 	public static void sendMail(final PostData postData) {
 
-		final boolean isTest = params._contains("test");
-		final RenderData data = RetraiteEngineFactory.create(isTest).processToNextStep(postData);
+		final boolean test = params._contains("test");
+		final RenderData data = RetraiteEngineFactory.create(test).processToNextStep(postData);
 		data.isPDF = true;
 
 		final String htmlContent = "Bonjour,<br/><br/>Veuillez trouver ci-joint votre checklist !<br/><br/>L'Equipe <b>Parcours Retraite</b>";
@@ -95,8 +96,8 @@ public class Application extends RetraiteController {
 
 	public static void pdf(final PostData postData, final String html) {
 
-		final boolean isTest = params._contains("test");
-		final RenderData data = RetraiteEngineFactory.create(isTest).processToNextStep(postData);
+		final boolean test = params._contains("test");
+		final RenderData data = RetraiteEngineFactory.create(test).processToNextStep(postData);
 		data.isPDF = true;
 
 		if (AS_HTML || params._contains("html")) {

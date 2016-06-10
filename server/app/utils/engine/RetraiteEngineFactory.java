@@ -32,13 +32,13 @@ import utils.wsinforetraite.InfoRetraiteWsUr;
 
 public class RetraiteEngineFactory {
 
-	public static RetraiteEngine create(final boolean isTest) {
+	public static RetraiteEngine create(final boolean testMode) {
 		final DateProvider dateProvider = new DateProvider();
 		final WsUtils wsUtils = new WsUtils();
 
 		// @formatter:off
 		final InfoRetraite infoRetraite =
-			isTest ?
+			testMode ?
 				new InfoRetraiteBdd()
 			:
 				new InfoRetraiteWsUr(
