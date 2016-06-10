@@ -94,11 +94,11 @@ public class UserChecklistParcoursComputerTest {
 	@Test
 	public void should_replace_multiple_http_links_and_followed_by_different_characters() {
 
-		final String before = "soit http://a/a. ou <i>https://b/b</i> fin";
+		final String before = "soit http://a/a. ou <i>https://b/b.pdf</i> fin";
 
 		final String after = userChecklistParcoursComputer.compute(before, null);
 
-		assertThat(after).isEqualTo("soit " + link("http://a/a", "a/a") + ". ou <i>" + link("https://b/b", "b/b") + "</i> fin");
+		assertThat(after).isEqualTo("soit " + link("http://a/a", "a/a") + ". ou <i>" + link("https://b/b.pdf", "b/b") + "</i> fin");
 	}
 
 	@Test
