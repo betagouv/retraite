@@ -68,6 +68,7 @@ public class RetraiteEngineTest {
 	private DisplayerDepartureDate displayerDepartureDateMock;
 	private DisplayerAdditionalQuestions displayerAdditionalQuestionsMock;
 	private DisplayerChecklist displayerChecklistMock;
+	private DisplayerQuestionCarriereLongue displayerQuestionCarriereLongueMock;
 
 	private RetraiteEngine retraiteEngine;
 	private final String liquidateurReponseJsonStr = "[\"OUI\"]";
@@ -97,10 +98,11 @@ public class RetraiteEngineTest {
 		displayerDepartureDateMock = mock(DisplayerDepartureDate.class);
 		displayerAdditionalQuestionsMock = mock(DisplayerAdditionalQuestions.class);
 		displayerChecklistMock = mock(DisplayerChecklist.class);
+		displayerQuestionCarriereLongueMock = mock(DisplayerQuestionCarriereLongue.class);
 
 		retraiteEngine = new RetraiteEngine(infoRetraiteMock, calculateurRegimeAlignesMock, daoFakeDataMock,
 				ageCalculatorMock, ageLegalEvaluatorMock, displayerLiquidateurQuestionsMock, displayerDepartureDateMock, displayerAdditionalQuestionsMock,
-				displayerChecklistMock);
+				displayerChecklistMock, displayerQuestionCarriereLongueMock);
 	}
 
 	@After
@@ -444,7 +446,7 @@ public class RetraiteEngineTest {
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
 
-		assertThat(renderData.hidden_step).isEqualTo("displayQuestionCarriereLongue");
+		verify(displayerQuestionCarriereLongueMock).fillData(isA(PostData.class), isA(RenderData.class));
 		assertThat(renderData.hidden_nom).isEqualTo("DUPONT");
 		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
 		assertThat(renderData.hidden_nir).isEqualTo("1 50 12 18 123 456");

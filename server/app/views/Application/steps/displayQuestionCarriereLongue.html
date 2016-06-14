@@ -16,6 +16,19 @@
 		
 		<br/>
 		<br/>
+		
+		Vous souhaitez partir au #{dateDepart data:data /}, donc à l'âge de ${data.extras.age.annees} ans
+		#{if data.extras.age.mois} 
+			et ${data.extras.age.mois} mois
+		#{/if}
+		, or pour votre génération, l'age légal de départ est de ${data.extras.ageLegalPourPartir.annees} ans 
+		#{if data.extras.ageLegalPourPartir.mois} 
+			et ${data.extras.ageLegalPourPartir.mois} mois
+		#{/if}
+		, soit pour vous à la date du ${data.extras.dateDepartPossible}.
+
+		<br/>
+		<br/>
 	
 		Si vous avez obtenu une attestation de situation carrières longues, cochez la case suivante puis cliquez sur "Etape suivante" :
 	
