@@ -4,6 +4,7 @@
 
     <a href='' ng-click='openAllChapitres()'>Tout ouvrir</a> | <a href='' ng-click='closeAllChapitres()'>Tout fermer</a>
 
+    <div ng-if='modified===true' class='label label-danger label-published'>Checklist modifiée et non enregistrée</div>
     <div ng-if='checklist.modifiedButNotPublished===true' class='label label-warning label-published'>Checklist Non publiée</div>
     <div ng-if='checklist.modifiedButNotPublished===false' class='label label-success  label-published'>Checklist Publiée</div>
 
@@ -22,7 +23,7 @@
         </div>
 
         <button ui-sref="test" class="btn btn-success" type="button">Tester</button>
-        <button ng-click='save()' class="btn btn-success" type="button">Enregistrer</button>
+        <button ng-click='save()' class="btn" ng-class="{'btn-danger': modified, 'btn-default':!modified}" type="button">Enregistrer</button>
         <button ng-click='publish()' class="btn" ng-class="{'btn-warning': checklist.modifiedButNotPublished, 'btn-default':!checklist.modifiedButNotPublished}" type="button">Publier</button>
     </div>
 </div>
