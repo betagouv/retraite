@@ -11,7 +11,7 @@
 		<!-- endinjector -->
 		<link rel="stylesheet" href="/public/libs/jquery-ui/themes/base/jquery-ui.css">
         
-        #{stylesheet look+'.css' /}
+        #{stylesheet (look ? look : 'style')+'.css' /}
         #{stylesheet 'retraite-overwrite.css' /}
 
         <!--<link rel="shortcut icon" type="image/png" href="http://recette-retraite.sgmap.fr/public/images/favicon.png">-->
