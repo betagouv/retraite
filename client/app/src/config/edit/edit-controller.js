@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('SgmapRetraiteConfig').controller('EditCtrl', 
-            function ($scope, $stateParams, CheckList, RetraiteDialog, ArrayUtils, EditConditionValidator, $window, PromptService, DialogDelai, RetraiteToaster, ChecklistPublisher, PastedTextCleaner) {
+            function ($scope, $state, $stateParams, CheckList, RetraiteDialog, ArrayUtils, EditConditionValidator, $window, PromptService, DialogDelai, RetraiteToaster, ChecklistPublisher, PastedTextCleaner) {
 
     // Actions
     
     $scope.save = function() {
         CheckList.save($scope.checklist).then(function(checklist) {
-            $scope.checklist = checklist;
+            storeChecklist(checklist, false);
             RetraiteToaster.popSuccess("Enregistré avec Succès !");
         });
     };
@@ -15,7 +15,7 @@ angular.module('SgmapRetraiteConfig').controller('EditCtrl',
     $scope.publish = function() {
         PromptService.promptQuestion("Confirmation", "Etes-vous sûr de vouloir publier cette checklist ?").then(function() {
             CheckList.save($scope.checklist).then(function(checklist) {
-                $scope.checklist = checklist;
+                storeChecklist(checklist, false);
                 ChecklistPublisher.publish($scope.checklist.id).then(function() {
                     RetraiteToaster.popSuccess("Enregistré et publié avec Succès !");
                     getChecklistToEdit();
@@ -269,10 +269,60 @@ angular.module('SgmapRetraiteConfig').controller('EditCtrl',
         });
     };
 
+    // Gestion de l'enregistrement et de la sortie de l'écran
+    
+    var msgModifiedData = "ATTENTION : les données ont été modifiées. Êtes-vous sûr de vouloir quitter la page ? Les données modifiées seront perdues ! ...";
+    
+    // . Audition sur les navigations "générales" (navigateur)
+    $window.onbeforeunload = function(e) {
+        if ($scope.modified) {
+            var e = e || window.event;
+            // For IE and Firefox
+            if (e) {
+                e.returnValue = msgModifiedData;
+            }
+            return msgModifiedData;
+        }
+    };
+    
+    // . Audition sur les navigations "internes" ($stateProvider)
+    $scope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+        if ($scope.modified) {
+            // Par défaut, on désactive la navigation et on pose la question (asynchrone)
+            event.preventDefault();
+            PromptService.promptQuestion("Confirmation", msgModifiedData).then(function() {
+                $scope.modified = false;
+                $state.go(toState, toParams);
+            });
+        }
+    });
+    
     // Données
+
+    var fnRemoveWatch;
+    
+    function addWatch() {
+        $scope.modified = false;
+        fnRemoveWatch = $scope.$watch('checklist', function(newValue, oldValue) {
+            if (!angular.equals(newValue, oldValue)) {
+                $scope.modified = true;
+            }
+        }, true);
+    }
+    
+    function storeChecklist(checklist) {
+        if (fnRemoveWatch) {
+            fnRemoveWatch();
+        }
+        $scope.checklist = checklist;
+        addWatch();
+    }
     
     function getChecklistToEdit() {
-        $scope.checklist = CheckList.get($stateParams.clid);
+        var checklist = CheckList.get($stateParams.clid);
+        checklist.$promise.then(function() {
+            storeChecklist(checklist);
+        });
     }
     getChecklistToEdit();
     
