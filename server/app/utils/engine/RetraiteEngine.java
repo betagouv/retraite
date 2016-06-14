@@ -30,6 +30,7 @@ public class RetraiteEngine {
 	private final DisplayerDepartureDate displayerDepartureDate;
 	private final DisplayerAdditionalQuestions displayerAdditionalQuestions;
 	private final DisplayerChecklist displayerChecklist;
+	private final DisplayerQuestionCarriereLongue displayerQuestionCarriereLongue;
 
 	public RetraiteEngine(
 			final InfoRetraite infoRetraite,
@@ -40,7 +41,7 @@ public class RetraiteEngine {
 			final DisplayerLiquidateurQuestions displayerLiquidateurQuestions,
 			final DisplayerDepartureDate displayerDepartureDate,
 			final DisplayerAdditionalQuestions displayerAdditionalQuestions,
-			final DisplayerChecklist displayerChecklist) {
+			final DisplayerChecklist displayerChecklist, final DisplayerQuestionCarriereLongue displayerQuestionCarriereLongue) {
 
 		this.infoRetraite = infoRetraite;
 		this.calculateurRegimeAlignes = calculateurRegimeAlignes;
@@ -51,6 +52,7 @@ public class RetraiteEngine {
 		this.displayerDepartureDate = displayerDepartureDate;
 		this.displayerAdditionalQuestions = displayerAdditionalQuestions;
 		this.displayerChecklist = displayerChecklist;
+		this.displayerQuestionCarriereLongue = displayerQuestionCarriereLongue;
 	}
 
 	public RenderData processToNextStep(final PostData data) {
@@ -104,7 +106,7 @@ public class RetraiteEngine {
 				return renderData;
 			}
 			if (!ageLegalEvaluator.isAgeLegal(data.hidden_naissance, data.departMois, data.departAnnee)) {
-				return displayQuestionCarriereLongue(renderData, data.departMois, data.departAnnee);
+				return displayQuestionCarriereLongue(data, renderData);
 			}
 			displayerAdditionalQuestions.fillData(data, renderData);
 		} else if (data.hidden_step.equals("displayQuestionCarriereLongue")) {
@@ -131,10 +133,8 @@ public class RetraiteEngine {
 		return renderData;
 	}
 
-	private RenderData displayQuestionCarriereLongue(final RenderData renderData, final String departMois, final String departAnnee) {
-		renderData.hidden_step = "displayQuestionCarriereLongue";
-		renderData.hidden_departMois = departMois;
-		renderData.hidden_departAnnee = departAnnee;
+	private RenderData displayQuestionCarriereLongue(final PostData data, final RenderData renderData) {
+		displayerQuestionCarriereLongue.fillData(data, renderData);
 		return renderData;
 	}
 

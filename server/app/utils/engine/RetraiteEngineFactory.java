@@ -46,6 +46,8 @@ public class RetraiteEngineFactory {
 						new InfoRetraiteConnector(wsUtils, new InfoRetraiteTokenRecuperator(wsUtils)));
 		// @formatter:on
 
+		final AgeLegalEvaluator ageLegalEvaluator = new AgeLegalEvaluator(new PeriodeDepartLegalDao());
+		final StepFormsDataProvider stepFormsDataProvider = new StepFormsDataProvider(dateProvider);
 		return new RetraiteEngine(
 				// new InfoRetraiteBdd(),
 				infoRetraite,
@@ -54,8 +56,7 @@ public class RetraiteEngineFactory {
 
 				new DaoFakeData(),
 				new AgeCalculator(dateProvider),
-				new AgeLegalEvaluator(
-						new PeriodeDepartLegalDao()),
+				ageLegalEvaluator,
 				new DisplayerLiquidateurQuestions(
 						new QuestionSolverA(),
 						new QuestionSolverB(),
@@ -63,8 +64,8 @@ public class RetraiteEngineFactory {
 						new QuestionSolverD(),
 						new QuestionSolverE(),
 						new QuestionSolverF()),
-				new DisplayerDepartureDate(new StepFormsDataProvider(dateProvider)),
-				new DisplayerAdditionalQuestions(new StepFormsDataProvider(new DateProvider())),
+				new DisplayerDepartureDate(stepFormsDataProvider),
+				new DisplayerAdditionalQuestions(stepFormsDataProvider),
 				new DisplayerChecklist(
 						new UserChecklistGenerationDataBuilder(),
 						new UserChecklistGenerator(
@@ -79,6 +80,7 @@ public class RetraiteEngineFactory {
 														new VariablesReplacerMustache())),
 										new CaisseDao())),
 						dateProvider,
-						new CalculateurRegimeAlignes()));
+						new CalculateurRegimeAlignes()),
+				new DisplayerQuestionCarriereLongue(ageLegalEvaluator));
 	}
 }

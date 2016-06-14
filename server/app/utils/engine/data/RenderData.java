@@ -33,4 +33,6 @@ public class RenderData extends CommonExchangeData {
 	public EcranSortie ecranSortie;
 
 	public Map<String, String> userInfos;
+
+	public Map<String, Object> extras;
 }
