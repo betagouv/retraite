@@ -17,7 +17,7 @@ angular.module('SgmapRetraiteConfig').controller('EditCtrl',
             CheckList.save($scope.checklist).then(function(checklist) {
                 storeChecklist(checklist, false);
                 ChecklistPublisher.publish($scope.checklist.id).then(function() {
-                    RetraiteToaster.popSuccess("Enregistré et publié avec Succès !");
+                    RetraiteToaster.popSuccess("Enregistrée et publiée avec succès !");
                     getChecklistToEdit();
                 });
             });
