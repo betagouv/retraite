@@ -30,35 +30,26 @@
 	    	<p>Délai : ${chapitre.delai}</p>
 	    </div>
 	    
-	    <div class='textIntro'>
-	    	${chapitre.texteIntro?.raw()}
-	    </div>
+		#{if chapitre.texteActions?.length() > 0}
+	    	<h3>Actions</h3>
+		    <div class='texteActions'>
+		    	${chapitre.texteActions?.raw()}
+		    </div>
+		#{/if}
 	    
-	    #{if chapitre.parcoursDematDifferent}
-	    	
-	    	<h3>Parcours canaux traditionnels</h3>
-		    <div class='parcours'>
-		    	${chapitre.parcours?.raw()}
+		#{if chapitre.texteModalites?.length() > 0}
+	    	<h3>Modalités</h3>
+		    <div class='texteModalites'>
+		    	${chapitre.texteModalites?.raw()}
 		    </div>
+		#{/if}
 	    	
-	    	<h3>Parcours dématérialisé</h3>
-		    <div class='parcours'>
-		    	${chapitre.parcoursDemat?.raw()}
+		#{if chapitre.texteInfos?.length() > 0}
+	    	<h3>Infos complémentaires</h3>
+		    <div class='texteInfos'>
+		    	${chapitre.texteInfos?.raw()}
 		    </div>
-	    	
-	    #{/if}
-	    #{else}
-	    	
-	    	<h3>Parcours</h3>
-		    <div class='parcours'>
-		    	${chapitre.parcours?.raw()}
-		    </div>
-	    	
-	    #{/else}
-
-	    <div class='texteComplementaire'>
-	    	${chapitre.texteComplementaire?.raw()}
-	    </div>
+		#{/if}
 	    
 	    #{if chapitre.notes}
 		    <div class='notes'>

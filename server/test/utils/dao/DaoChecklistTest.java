@@ -33,6 +33,14 @@ public class DaoChecklistTest extends RetraiteUnitTestBase {
 		loadAndLinkChecklistData("utils/dao/Checklists.yml");
 
 		htmlCleanerMock = mock(HtmlCleaner.class);
+		when(htmlCleanerMock.clean(anyString())).thenAnswer(new Answer() {
+			@Override
+			public Object answer(final InvocationOnMock invocation) {
+				final Object[] args = invocation.getArguments();
+				return args[0] + " cleaned";
+			}
+		});
+
 		daoChecklist = new DaoChecklist(htmlCleanerMock);
 	}
 
@@ -133,23 +141,14 @@ public class DaoChecklistTest extends RetraiteUnitTestBase {
 		checklist.modifiedButNotPublished = false;
 		checklist = checklist.save();
 
-		when(htmlCleanerMock.clean(anyString())).thenAnswer(new Answer() {
-			@Override
-			public Object answer(final InvocationOnMock invocation) {
-				final Object[] args = invocation.getArguments();
-				return args[0] + " cleaned";
-			}
-		});
-
 		daoChecklist.update(quote("{"
 				+ "id:" + checklist.id + ","
 				+ "nom:'titi',"
 				+ "chapitres:[{"
 				+ "titre:'Je contacte',"
-				+ "texteIntro:'texteIntro',"
-				+ "parcours:'parcours',"
-				+ "parcoursDemat:'parcoursDemat',"
-				+ "texteComplementaire:'texteComplementaire'"
+				+ "texteActions:'texteActions',"
+				+ "texteModalites:'texteModalites',"
+				+ "texteInfos:'texteInfos'"
 				+ "}]"
 				+ "}"));
 
@@ -157,29 +156,27 @@ public class DaoChecklistTest extends RetraiteUnitTestBase {
 		assertThat(checklistAfter.nom).isEqualTo("titi");
 		assertThat(checklistAfter.modifiedButNotPublished).isTrue();
 		final Chapitre chapitre0 = checklistAfter.chapitres.get(0);
-		assertThat(chapitre0.texteIntro).isEqualTo("texteIntro cleaned");
-		assertThat(chapitre0.parcours).isEqualTo("parcours cleaned");
-		assertThat(chapitre0.parcoursDemat).isEqualTo("parcoursDemat cleaned");
-		assertThat(chapitre0.texteComplementaire).isEqualTo("texteComplementaire cleaned");
+		assertThat(chapitre0.texteActions).isEqualTo("texteActions cleaned");
+		assertThat(chapitre0.texteModalites).isEqualTo("texteModalites cleaned");
+		assertThat(chapitre0.texteInfos).isEqualTo("texteInfos cleaned");
 	}
 
 	@Test
 	public void update_should_update_checklist_in_base2() {
 
-		Checklist checklist = new Checklist();
+		final Checklist checklist = new Checklist();
 		checklist.nom = "toto";
 		checklist.chapitres = new ArrayList<Chapitre>();
 		final Chapitre chapitre1 = createAndAddChapitre(checklist, "a");
 		final Chapitre chapitre2 = createAndAddChapitre(checklist, "b");
-		checklist = checklist.save();
+		final Checklist checklistSaved = checklist.save();
 
 		// @formatter:off
 		final Checklist checklistUpdated = daoChecklist
 				.update(quote("{"
 						+ "'nom':'RSI',"
 						+ "'chapitres':["
-						+ "{'titre':'Je contacte mes autres régimes (hors régimes alignés)',"
-						+ "'parcoursDematDifferent':true,"
+						+ "{'titre':'Je contacte mes autres régimes (hors reg alignés)',"
 						+ "'id':" + chapitre1.id + ","
 						+ "'conditions':["
 						+ "{'props':"
@@ -191,29 +188,32 @@ public class DaoChecklistTest extends RetraiteUnitTestBase {
 						+ "}"
 						+ "}"
 						+ "],"
-						+ "'texteIntro':'<p>rsi 1</p>',"
-						+ "'texteComplementaire':'abc'"
+						+ "'texteActions':'actions 1',"
+						+ "'texteModalites':'modalités 1',"
+						+ "'texteInfos':'infos 1'"
 						+ "},{"
 						+ "'titre':'J’obtiens ma retraite',"
 						+ "'parcoursDematDifferent':false,"
 						+ "'id':" + chapitre2.id + ","
-						+ "'texteIntro':'qsd',"
-						+ "'texteComplementaire':'wxc'"
+						+ "'texteActions':'actions 2',"
+						+ "'texteModalites':'modalités 2',"
+						+ "'texteInfos':'infos 2'"
 						+ "}],"
-						+ "'id':" + checklist.id + "}"));
+						+ "'id':" + checklistSaved.id + "}"));
 		// @formatter:on
 
-		final Checklist checklistAfter = Checklist.findById(checklist.id);
+		final Checklist checklistAfter = Checklist.findById(checklistSaved.id);
 		assertThat(checklistUpdated).isEqualTo(checklistAfter);
 
 		assertThat(checklistAfter.nom).isEqualTo("RSI");
 		assertThat(checklistAfter.chapitres).hasSize(2);
 		final Chapitre[] chapitres = checklistAfter.chapitres.toArray(new Chapitre[0]);
+
 		final Chapitre chapitre1After = chapitres[0];
-		assertThat(chapitre1After.titre).isEqualTo("Je contacte mes autres régimes (hors régimes alignés)");
-		assertThat(chapitre1After.parcoursDematDifferent).isTrue();
+		assertThat(chapitre1After.titre).isEqualTo("Je contacte mes autres régimes (hors reg alignés)");
 		assertThat(chapitre1After.checklist).isSameAs(checklistAfter);
 		assertThat(chapitre1After.conditions).hasSize(1);
+
 		final Condition condition0 = chapitre1After.conditions.get(0);
 		assertThat(condition0.chapitre).isSameAs(chapitre1After);
 		assertThat(condition0.props).hasSize(4);
@@ -221,15 +221,24 @@ public class DaoChecklistTest extends RetraiteUnitTestBase {
 		assertThat(condition0.props).includes(entry("nombre", "9"));
 		assertThat(condition0.props).includes(entry("unite", "annees"));
 		assertThat(condition0.props).includes(entry("type", "delai"));
+		assertThat(chapitre1After.texteActions).isEqualTo("actions 1 cleaned");
+		assertThat(chapitre1After.texteModalites).isEqualTo("modalités 1 cleaned");
+		assertThat(chapitre1After.texteInfos).isEqualTo("infos 1 cleaned");
+
+		final Chapitre chapitre2After = chapitres[1];
+		assertThat(chapitre2After.texteInfos).isEqualTo("infos 2 cleaned");
+		assertThat(chapitre2After.texteActions).isEqualTo("actions 2 cleaned");
+		assertThat(chapitre2After.texteModalites).isEqualTo("modalités 2 cleaned");
 	}
 
 	// Méthodes privées
 
 	private Chapitre createAndAddChapitre(final Checklist checklist, final String titre) {
 		final Chapitre chapitre = new Chapitre();
+		checklist.chapitres.add(chapitre);
 		chapitre.titre = titre;
 		chapitre.checklist = checklist;
-		checklist.chapitres.add(chapitre);
+		chapitre.texteActions = "texte actions avant";
 		return chapitre;
 	}
 
