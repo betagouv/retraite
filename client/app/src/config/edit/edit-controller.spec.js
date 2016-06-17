@@ -19,9 +19,28 @@ describe('EditCtrl', function () {
         
     }));
     
-    var mockCheckList1 = {id:2,nom:"nom 1"};
-    var mockCheckList1b = {id:2,nom:"nom 1b"};
-    var mockCheckList2 = {id:2,nom:"nom 2"};
+    var mockCheckList1 = {
+        id:2,
+        nom:"nom 1",
+        $promise: {
+            then: function(callback) {
+                callback(mockCheckList1);
+            }
+        }
+    };
+    var mockCheckList1b = {
+        id:2,
+        nom:"nom 1b",
+        $promise: {
+            then: function(callback) {
+                callback(mockCheckList1b);
+            }
+        }
+    };
+    var mockCheckList2 = {
+        id:2,
+        nom:"nom 2"
+    };
 
     beforeEach(function() {
         spyOn(CheckList, 'get').and.returnValue(mockCheckList1);
@@ -59,7 +78,7 @@ describe('EditCtrl', function () {
             $scope.save();
             
             expect($scope.checklist).toEqual(mockCheckList2);
-            expect(RetraiteToaster.popSuccess).toHaveBeenCalledWith("Enregistré avec Succès !");
+            expect(RetraiteToaster.popSuccess).toHaveBeenCalledWith("Enregistrée avec succès !");
         });
         
     });
@@ -98,7 +117,7 @@ describe('EditCtrl', function () {
             expect(PromptService.promptQuestion).toHaveBeenCalledWith("Confirmation", jasmine.stringMatching('Etes-vous sûr'));
             expect(CheckList.save).toHaveBeenCalledWith(mockCheckList1);
             expect(ChecklistPublisher.publish).toHaveBeenCalledWith(2);
-            expect(RetraiteToaster.popSuccess).toHaveBeenCalledWith("Enregistré et publié avec Succès !");
+            expect(RetraiteToaster.popSuccess).toHaveBeenCalledWith("Enregistrée et publiée avec succès !");
             expect($scope.checklist).toEqual(mockCheckList1b);
         });
         
