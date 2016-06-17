@@ -10,13 +10,13 @@ import static utils.TestsUtilsDelai.createDelaiEntre;
 
 import java.util.ArrayList;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import models.Chapitre;
 import models.Checklist;
 import models.Condition;
 import models.Delai;
-
-import org.junit.Before;
-import org.junit.Test;
 
 public class ChecklistForDocConverterTest {
 
@@ -33,19 +33,23 @@ public class ChecklistForDocConverterTest {
 		final Checklist checklist = new Checklist();
 		checklist.nom = "Ma checklist";
 		checklist.chapitres = new ArrayList<Chapitre>();
-		createAndAddChapitre(checklist, "chap1", false)
+		createAndAddChapitre(checklist, "chap1")
 				.setDelai(createDelaiDesQuePossible())
 				.addCondition(createConditionDelai("PLUS", "3", "ANNEES"))
 				.addCondition(createConditionStatut("nsa"));
-		createAndAddChapitre(checklist, "chap2", true)
+		createAndAddChapitre(checklist, "chap2")
 				.setDelai(createDelaiAuPlus(4, Delai.Unite.MOIS))
 				.addCondition(createConditionRegimeDetecte("agirc-arrco"))
 				.addCondition(createConditionStatut("sa"));
-		createAndAddChapitre(checklist, "chap3", false)
+		final Chapitre chapitre = createAndAddChapitre(checklist, "chap3")
 				.setDelai(createDelaiEntre(7, 8, Delai.Unite.ANNEES))
 				.addCondition(createConditionRegimeDetecte("regimes-base-hors-alignés"))
-				.addCondition(createConditionStatut("sa"));
-		createAndAddChapitre(checklist, "chap4 sans delai", false);
+				.addCondition(createConditionStatut("sa"))
+				.getChapitre();
+		chapitre.texteActions = "<p></p>";
+		chapitre.texteModalites = "<br/>";
+		chapitre.texteInfos = "<p></p>";
+		createAndAddChapitre(checklist, "chap4 sans delai");
 
 		// Test
 		final ChecklistForDoc checklistForDoc = converter.convert(checklist);
@@ -57,11 +61,9 @@ public class ChecklistForDocConverterTest {
 			final ChapitreForDoc chapitre1 = checklistForDoc.chapitres.get(0);
 			assertThat(chapitre1.titre).isEqualTo("chap1");
 			assertThat(chapitre1.delai).isEqualTo("Dès que possible");
-			assertThat(chapitre1.texteIntro).isEqualTo("Intro chap1");
-			assertThat(chapitre1.parcoursDematDifferent).isFalse();
-			assertThat(chapitre1.parcours).isEqualTo("Parcours chap1");
-			assertThat(chapitre1.parcoursDemat).isNull();
-			assertThat(chapitre1.texteComplementaire).isEqualTo("Comp chap1");
+			assertThat(chapitre1.texteActions).isEqualTo("Actions chap1");
+			assertThat(chapitre1.texteModalites).isEqualTo("Modalités chap1");
+			assertThat(chapitre1.texteInfos).isEqualTo("Infos chap1");
 			assertThat(chapitre1.notes).isEqualTo("Notes chap1");
 			assertThat(chapitre1.conditions).contains(
 					"Si le délai restant avant la date de départ prévue est supérieur à 3 années",
@@ -71,11 +73,9 @@ public class ChecklistForDocConverterTest {
 			final ChapitreForDoc chapitre2 = checklistForDoc.chapitres.get(1);
 			assertThat(chapitre2.titre).isEqualTo("chap2");
 			assertThat(chapitre2.delai).isEqualTo("Au plus tard 4 mois avant la date de départ prévue");
-			assertThat(chapitre2.texteIntro).isEqualTo("Intro chap2");
-			assertThat(chapitre2.parcoursDematDifferent).isTrue();
-			assertThat(chapitre2.parcours).isEqualTo("Parcours chap2");
-			assertThat(chapitre2.parcoursDemat).isEqualTo("Parcours demat chap2");
-			assertThat(chapitre2.texteComplementaire).isEqualTo("Comp chap2");
+			assertThat(chapitre2.texteActions).isEqualTo("Actions chap2");
+			assertThat(chapitre2.texteModalites).isEqualTo("Modalités chap2");
+			assertThat(chapitre2.texteInfos).isEqualTo("Infos chap2");
 			assertThat(chapitre2.notes).isEqualTo("Notes chap2");
 			assertThat(chapitre2.conditions).contains(
 					"Si régimes AGIRC-ARRCO détectés",
@@ -85,6 +85,9 @@ public class ChecklistForDocConverterTest {
 			final ChapitreForDoc chapitre3 = checklistForDoc.chapitres.get(2);
 			assertThat(chapitre3.titre).isEqualTo("chap3");
 			assertThat(chapitre3.delai).isEqualTo("Entre 7 et 8 années avant la date de départ prévue");
+			assertThat(chapitre3.texteActions).isNull(); // Texte vide --> null
+			assertThat(chapitre3.texteModalites).isNull(); // Texte vide --> null
+			assertThat(chapitre3.texteInfos).isNull(); // Texte vide --> null
 			assertThat(chapitre3.conditions).contains(
 					"Si régimes de base hors alignés détectés",
 					"Si l’assuré appartient à la catégorie SA");
@@ -96,16 +99,12 @@ public class ChecklistForDocConverterTest {
 		}
 	}
 
-	private ChapitreHelper createAndAddChapitre(final Checklist checklist, final String titre, final boolean parcoursDematDifferent) {
+	private ChapitreHelper createAndAddChapitre(final Checklist checklist, final String titre) {
 		final Chapitre chapitre = new Chapitre();
 		chapitre.titre = titre;
-		chapitre.texteIntro = "Intro " + titre;
-		chapitre.parcoursDematDifferent = parcoursDematDifferent;
-		chapitre.parcours = "Parcours " + titre;
-		if (parcoursDematDifferent) {
-			chapitre.parcoursDemat = "Parcours demat " + titre;
-		}
-		chapitre.texteComplementaire = "Comp " + titre;
+		chapitre.texteActions = "Actions " + titre;
+		chapitre.texteModalites = "Modalités " + titre;
+		chapitre.texteInfos = "Infos " + titre;
 		chapitre.notes = "Notes " + titre;
 		chapitre.checklist = checklist;
 		checklist.chapitres.add(chapitre);
@@ -134,6 +133,9 @@ public class ChecklistForDocConverterTest {
 			return this;
 		}
 
+		public Chapitre getChapitre() {
+			return chapitre;
+		}
 	}
 
 }

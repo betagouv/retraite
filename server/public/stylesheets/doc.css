@@ -16,10 +16,6 @@ h3 {
     margin-left: 30px;
 }
 
-.parcours {
-    margin-left: 60px;
-}
-
 .conditions {
 	color: green;
 }
@@ -28,8 +24,30 @@ h3 {
     color: darkmagenta;
 }
 
-.conditions, .texteComplementaire, .notes {
+.conditions, .notes {
 	font-style: italic;
+}
+
+.texteActions, .texteModalites, .texteInfos {
+    background-repeat: no-repeat;
+    padding-left: 75px;
+    min-height: 67px;
+}
+	
+.texteActions {
+    font-weight: bold;
+    background-image: url("/public/img/actions.png");
+}
+
+.texteModalites {
+    background-image: url("/public/img/docs.png");
+}
+
+.texteInfos {
+	background-color: #e7e7e7;
+    border-radius: 20px;
+    font-style: italic;
+    background-image: url("/public/img/infos.png");
 }
 
 .notes {

@@ -6,11 +6,9 @@ public class ChapitreForDoc {
 
 	public String titre;
 	public String delai;
-	public String texteIntro;
-	public boolean parcoursDematDifferent;
-	public String parcours;
-	public String parcoursDemat;
-	public String texteComplementaire;
+	public String texteActions;
+	public String texteModalites;
+	public String texteInfos;
 	public String notes;
 	public List<String> conditions;
 

@@ -23,7 +23,17 @@ public class ChecklistDumper {
 				final Condition condition = chapitre.conditions.get(i);
 				log("        . " + condition);
 			}
+			log("    . texteActions : " + limitLengthTo10(chapitre.texteActions));
+			log("    . texteModalites : " + limitLengthTo10(chapitre.texteModalites));
+			log("    . texteInfos : " + limitLengthTo10(chapitre.texteInfos));
 		}
+	}
+
+	private String limitLengthTo10(final String s) {
+		if (s == null || s.length() < 10) {
+			return s;
+		}
+		return s.substring(0, 10) + "...";
 	}
 
 	private void log(final String string) {

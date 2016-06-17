@@ -90,19 +90,22 @@ public class Chapitre extends RetraiteModel implements Cloneable {
 
 	@Override
 	public String toString() {
-		return "Chapitre[" + id + "," + (checklist == null ? "null" : checklist.id) + "," + titre + "]";
+		return "Chapitre[id=" + id + ",checklistId=" + (checklist == null ? "null" : checklist.id) + "," + titre + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
+		result = prime * result + (closedInEdition ? 1231 : 1237);
+		result = prime * result + ((conditions == null) ? 0 : conditions.hashCode());
+		result = prime * result + ((delai == null) ? 0 : delai.hashCode());
+		result = prime * result + ((delaiSA == null) ? 0 : delaiSA.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((notes == null) ? 0 : notes.hashCode());
-		result = prime * result + ((parcours == null) ? 0 : parcours.hashCode());
-		result = prime * result + ((parcoursDemat == null) ? 0 : parcoursDemat.hashCode());
-		result = prime * result + (parcoursDematDifferent ? 1231 : 1237);
-		result = prime * result + ((texteComplementaire == null) ? 0 : texteComplementaire.hashCode());
-		result = prime * result + ((texteIntro == null) ? 0 : texteIntro.hashCode());
+		result = prime * result + ((texteActions == null) ? 0 : texteActions.hashCode());
+		result = prime * result + ((texteInfos == null) ? 0 : texteInfos.hashCode());
+		result = prime * result + ((texteModalites == null) ? 0 : texteModalites.hashCode());
 		result = prime * result + ((titre == null) ? 0 : titre.hashCode());
 		return result;
 	}
@@ -116,32 +119,47 @@ public class Chapitre extends RetraiteModel implements Cloneable {
 		if (getClass() != obj.getClass())
 			return false;
 		final Chapitre other = (Chapitre) obj;
+		if (closedInEdition != other.closedInEdition)
+			return false;
+		if (conditions == null) {
+			if (other.conditions != null)
+				return false;
+		} else if (!conditions.equals(other.conditions))
+			return false;
+		if (delai == null) {
+			if (other.delai != null)
+				return false;
+		} else if (!delai.equals(other.delai))
+			return false;
+		if (delaiSA == null) {
+			if (other.delaiSA != null)
+				return false;
+		} else if (!delaiSA.equals(other.delaiSA))
+			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
 		if (notes == null) {
 			if (other.notes != null)
 				return false;
 		} else if (!notes.equals(other.notes))
 			return false;
-		if (parcours == null) {
-			if (other.parcours != null)
+		if (texteActions == null) {
+			if (other.texteActions != null)
 				return false;
-		} else if (!parcours.equals(other.parcours))
+		} else if (!texteActions.equals(other.texteActions))
 			return false;
-		if (parcoursDemat == null) {
-			if (other.parcoursDemat != null)
+		if (texteInfos == null) {
+			if (other.texteInfos != null)
 				return false;
-		} else if (!parcoursDemat.equals(other.parcoursDemat))
+		} else if (!texteInfos.equals(other.texteInfos))
 			return false;
-		if (parcoursDematDifferent != other.parcoursDematDifferent)
-			return false;
-		if (texteComplementaire == null) {
-			if (other.texteComplementaire != null)
+		if (texteModalites == null) {
+			if (other.texteModalites != null)
 				return false;
-		} else if (!texteComplementaire.equals(other.texteComplementaire))
-			return false;
-		if (texteIntro == null) {
-			if (other.texteIntro != null)
-				return false;
-		} else if (!texteIntro.equals(other.texteIntro))
+		} else if (!texteModalites.equals(other.texteModalites))
 			return false;
 		if (titre == null) {
 			if (other.titre != null)

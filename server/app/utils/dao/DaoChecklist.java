@@ -77,10 +77,10 @@ public class DaoChecklist {
 	}
 
 	private void updateHtml(final Chapitre chapitre) {
-		chapitre.texteIntro = htmlCleaner.clean(chapitre.texteIntro);
-		chapitre.parcours = htmlCleaner.clean(chapitre.parcours);
-		chapitre.parcoursDemat = htmlCleaner.clean(chapitre.parcoursDemat);
-		chapitre.texteComplementaire = htmlCleaner.clean(chapitre.texteComplementaire);
+		final String ta = chapitre.texteActions;
+		chapitre.texteActions = htmlCleaner.clean(ta);
+		chapitre.texteModalites = htmlCleaner.clean(chapitre.texteModalites);
+		chapitre.texteInfos = htmlCleaner.clean(chapitre.texteInfos);
 	}
 
 }
