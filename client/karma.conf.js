@@ -65,6 +65,8 @@ module.exports = function (config) {
             'app/src/commons/utils/array-utils/array-utils.spec.js',
             'app/src/commons/utils/http-buffer/http-buffer.js',
             'app/src/commons/utils/http-buffer/http-buffer.spec.js',
+            'app/src/commons/utils/object-utils/object-utils.js',
+            'app/src/commons/utils/object-utils/object-utils.spec.js',
             'app/src/commons/utils/pasted-text-cleaner/pasted-text-cleaner.js',
             'app/src/commons/utils/pasted-text-cleaner/pasted-text-cleaner.spec.js',
             'app/src/commons/utils/prompt-service/prompt-service.js',
