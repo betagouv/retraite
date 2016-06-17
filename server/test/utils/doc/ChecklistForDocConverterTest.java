@@ -1,5 +1,7 @@
 package utils.doc;
 
+import static models.Delai.Unite.ANNEES;
+import static models.Delai.Unite.MOIS;
 import static org.fest.assertions.Assertions.assertThat;
 import static utils.TestsUtilsCondition.createConditionDelai;
 import static utils.TestsUtilsCondition.createConditionRegimeDetecte;
@@ -38,11 +40,11 @@ public class ChecklistForDocConverterTest {
 				.addCondition(createConditionDelai("PLUS", "3", "ANNEES"))
 				.addCondition(createConditionStatut("nsa"));
 		createAndAddChapitre(checklist, "chap2")
-				.setDelai(createDelaiAuPlus(4, Delai.Unite.MOIS))
+				.setDelai(createDelaiAuPlus(4, MOIS))
 				.addCondition(createConditionRegimeDetecte("agirc-arrco"))
 				.addCondition(createConditionStatut("sa"));
 		final Chapitre chapitre = createAndAddChapitre(checklist, "chap3")
-				.setDelai(createDelaiEntre(7, 8, Delai.Unite.ANNEES))
+				.setDelai(createDelaiEntre(7, 8, ANNEES))
 				.addCondition(createConditionRegimeDetecte("regimes-base-hors-alignés"))
 				.addCondition(createConditionStatut("sa"))
 				.getChapitre();
@@ -99,6 +101,27 @@ public class ChecklistForDocConverterTest {
 		}
 	}
 
+	@Test
+	public void should_generate_2_delais_msa() {
+
+		final Checklist checklist = new Checklist();
+		checklist.nom = "Ma checklist";
+		checklist.type = "msa";
+		checklist.chapitres = new ArrayList<Chapitre>();
+		createAndAddChapitre(checklist, "chap1")
+				.setDelai(createDelaiDesQuePossible())
+				.setDelaiSA(createDelaiAuPlus(4, MOIS))
+				.addCondition(createConditionDelai("PLUS", "3", "ANNEES"))
+				.addCondition(createConditionStatut("nsa"));
+
+		// Test
+		final ChecklistForDoc checklistForDoc = converter.convert(checklist);
+		assertThat(checklistForDoc.type).isEqualTo("msa");
+		final ChapitreForDoc chapitre1 = checklistForDoc.chapitres.get(0);
+		assertThat(chapitre1.delai).isEqualTo("Dès que possible");
+		assertThat(chapitre1.delaiSA).isEqualTo("Au plus tard 4 mois avant la date de départ prévue");
+	}
+
 	private ChapitreHelper createAndAddChapitre(final Checklist checklist, final String titre) {
 		final Chapitre chapitre = new Chapitre();
 		chapitre.titre = titre;
@@ -121,6 +144,11 @@ public class ChecklistForDocConverterTest {
 
 		public ChapitreHelper setDelai(final Delai delai) {
 			chapitre.delai = delai;
+			return this;
+		}
+
+		public ChapitreHelper setDelaiSA(final Delai delaiSA) {
+			chapitre.delaiSA = delaiSA;
 			return this;
 		}
 
