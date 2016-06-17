@@ -26,9 +26,19 @@
 			#{/list}
 	    </div>
 	    
-	    <div class='delai'>
-	    	<p>Délai : ${chapitre.delai}</p>
-	    </div>
+		#{if checklist.type == 'msa'}
+		    <div class='delai'>
+		    	<p>Délai NSA : ${chapitre.delai}</p>
+		    </div>
+		    <div class='delai'>
+		    	<p>Délai SA : ${chapitre.delaiSA}</p>
+		    </div>
+		#{/if}
+		#{else}
+		    <div class='delai'>
+		    	<p>Délai : ${chapitre.delai}</p>
+		    </div>
+		#{/else}
 	    
 		#{if chapitre.texteActions?.length() > 0}
 	    	<h3>Actions</h3>

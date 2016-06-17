@@ -15,6 +15,7 @@ public class ChecklistForDocConverter {
 	public ChecklistForDoc convert(final Checklist checklist) {
 		final ChecklistForDoc checklistForDoc = new ChecklistForDoc();
 		checklistForDoc.nom = checklist.nom;
+		checklistForDoc.type = checklist.type;
 		checklistForDoc.chapitres = new ArrayList<ChapitreForDoc>();
 		for (final Chapitre chapitre : checklist.chapitres) {
 			checklistForDoc.chapitres.add(convert(chapitre));
@@ -26,6 +27,7 @@ public class ChecklistForDocConverter {
 		final ChapitreForDoc chapitreForDoc = new ChapitreForDoc();
 		chapitreForDoc.titre = chapitre.titre;
 		chapitreForDoc.delai = converterDelai.convert(chapitre.delai);
+		chapitreForDoc.delaiSA = converterDelai.convert(chapitre.delaiSA);
 		chapitreForDoc.texteActions = nullIfEmpty(chapitre.texteActions);
 		chapitreForDoc.texteModalites = nullIfEmpty(chapitre.texteModalites);
 		chapitreForDoc.texteInfos = nullIfEmpty(chapitre.texteInfos);

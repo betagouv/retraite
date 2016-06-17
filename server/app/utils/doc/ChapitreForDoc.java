@@ -6,6 +6,7 @@ public class ChapitreForDoc {
 
 	public String titre;
 	public String delai;
+	public String delaiSA;
 	public String texteActions;
 	public String texteModalites;
 	public String texteInfos;
