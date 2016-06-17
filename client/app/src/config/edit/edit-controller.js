@@ -8,7 +8,7 @@ angular.module('SgmapRetraiteConfig').controller('EditCtrl',
     $scope.save = function() {
         CheckList.save($scope.checklist).then(function(checklist) {
             storeChecklist(checklist, false);
-            RetraiteToaster.popSuccess("Enregistré avec Succès !");
+            RetraiteToaster.popSuccess("Enregistrée avec succès !");
         });
     };
     
@@ -304,7 +304,10 @@ angular.module('SgmapRetraiteConfig').controller('EditCtrl',
     function addWatch() {
         $scope.modified = false;
         fnRemoveWatch = $scope.$watch('checklist', function(newValue, oldValue) {
-            if (!angular.equals(newValue, oldValue)) {
+            console.log("watch : ",oldValue," --> ",newValue);
+            console.log(JSON.stringify(oldValue));
+            console.log(JSON.stringify(newValue));
+            if (!ObjectUtils.equalsIgnoringProperties(newValue, oldValue, ['closedInEdition'])) {
                 $scope.modified = true;
             }
         }, true);
