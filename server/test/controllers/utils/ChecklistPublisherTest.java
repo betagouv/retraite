@@ -1,7 +1,8 @@
 package controllers.utils;
 
+import static java.util.Arrays.asList;
+
 import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
@@ -71,7 +72,13 @@ public class ChecklistPublisherTest extends RetraiteUnitTestBase {
 	// Méthodes privées
 
 	private void assertThatPublishedObjectIsEqual(final Object obj, final Object objPublished) {
-		final List<String> fieldsToIgnore = Arrays.asList("id", "published", "modifiedButNotPublished", "checklist");
+		final List<String> fieldsToIgnore = asList(
+				"id",
+				"published",
+				"modifiedButNotPublished",
+				"checklist", // Pour les chapitres
+				"chapitre" // Pour les conditions
+		);
 		try {
 			final Field[] fields = obj.getClass().getFields();
 			for (final Field field : fields) {

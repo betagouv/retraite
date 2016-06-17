@@ -1,5 +1,7 @@
 package utils.engine.intern;
 
+import static utils.TextUtils.isLikeEmpty;
+
 import java.util.Map;
 
 import utils.RetraiteStringsUtils;
@@ -24,11 +26,6 @@ public class UserChecklistParcoursComputer {
 			return null;
 		}
 		return replaceVars(replaceLinks(parcours), userChecklistGenerationData);
-	}
-
-	private boolean isLikeEmpty(final String html) {
-		final String htmlWithoutTags = html.replaceAll("\\<.*?>", "");
-		return htmlWithoutTags.trim().isEmpty();
 	}
 
 	private String replaceVars(final String text, final UserChecklistGenerationData userChecklistGenerationData) {
