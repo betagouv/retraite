@@ -32,6 +32,7 @@ public class RetraiteEngine {
 	private final DisplayerChecklist displayerChecklist;
 	private final DisplayerQuestionCarriereLongue displayerQuestionCarriereLongue;
 	private final DisplayerSortieDepartInconnu displayerSortieDepartInconnu;
+	private final DisplayerSortiePenibilite displayerSortiePenibilite;
 
 	public RetraiteEngine(
 			final InfoRetraite infoRetraite,
@@ -44,7 +45,7 @@ public class RetraiteEngine {
 			final DisplayerAdditionalQuestions displayerAdditionalQuestions,
 			final DisplayerChecklist displayerChecklist,
 			final DisplayerQuestionCarriereLongue displayerQuestionCarriereLongue,
-			final DisplayerSortieDepartInconnu displayerSortieDepartInconnu) {
+			final DisplayerSortieDepartInconnu displayerSortieDepartInconnu, final DisplayerSortiePenibilite displayerSortiePenibilite) {
 
 		this.infoRetraite = infoRetraite;
 		this.calculateurRegimeAlignes = calculateurRegimeAlignes;
@@ -57,16 +58,13 @@ public class RetraiteEngine {
 		this.displayerChecklist = displayerChecklist;
 		this.displayerQuestionCarriereLongue = displayerQuestionCarriereLongue;
 		this.displayerSortieDepartInconnu = displayerSortieDepartInconnu;
+		this.displayerSortiePenibilite = displayerSortiePenibilite;
 	}
 
 	public RenderData processToNextStep(final PostData postData) {
 		final RenderData renderData = new RenderData();
 
-		if (postData != null && postData.hidden_step == null) {
-			throw new RetraiteException("Situation anormale : pas d'étape (step) pour le traitement");
-		}
-
-		if (postData == null) {
+		if (postData.hidden_step == null) {
 			return displayWelcome(renderData);
 		}
 
@@ -98,7 +96,7 @@ public class RetraiteEngine {
 			final RegimeAligne[] regimesAlignes = calculateurRegimeAlignes.getRegimesAlignes(postData.hidden_regimes);
 			displayerLiquidateurQuestions.fillData(postData, renderData, postData.hidden_regimes, regimesAlignes);
 			if (renderData.ecranSortie == ECRAN_SORTIE_PENIBILITE) {
-				renderData.hidden_step = "displaySortiePenibilite";
+				displayerSortiePenibilite.fillData(postData, renderData);
 				return renderData;
 			}
 			if (renderData.hidden_liquidateurStep == null) {
