@@ -33,6 +33,7 @@ public class RetraiteEngine {
 	private final DisplayerQuestionCarriereLongue displayerQuestionCarriereLongue;
 	private final DisplayerSortieDepartInconnu displayerSortieDepartInconnu;
 	private final DisplayerSortiePenibilite displayerSortiePenibilite;
+	private final DisplayerSortieTropJeune displayerSortieTropJeune;
 
 	public RetraiteEngine(
 			final InfoRetraite infoRetraite,
@@ -45,7 +46,9 @@ public class RetraiteEngine {
 			final DisplayerAdditionalQuestions displayerAdditionalQuestions,
 			final DisplayerChecklist displayerChecklist,
 			final DisplayerQuestionCarriereLongue displayerQuestionCarriereLongue,
-			final DisplayerSortieDepartInconnu displayerSortieDepartInconnu, final DisplayerSortiePenibilite displayerSortiePenibilite) {
+			final DisplayerSortieDepartInconnu displayerSortieDepartInconnu,
+			final DisplayerSortiePenibilite displayerSortiePenibilite,
+			final DisplayerSortieTropJeune displayerSortieTropJeune) {
 
 		this.infoRetraite = infoRetraite;
 		this.calculateurRegimeAlignes = calculateurRegimeAlignes;
@@ -59,6 +62,7 @@ public class RetraiteEngine {
 		this.displayerQuestionCarriereLongue = displayerQuestionCarriereLongue;
 		this.displayerSortieDepartInconnu = displayerSortieDepartInconnu;
 		this.displayerSortiePenibilite = displayerSortiePenibilite;
+		this.displayerSortieTropJeune = displayerSortieTropJeune;
 	}
 
 	public RenderData processToNextStep(final PostData postData) {
@@ -75,7 +79,7 @@ public class RetraiteEngine {
 		} else if (postData.hidden_step.equals("getUserData")) {
 			Logger.info("Connexion d'un usager : nom=" + postData.nom + " , nir=" + postData.nir + " , naissance=" + postData.naissance);
 			if (ageCalculator.getAge(postData.naissance) < 55) {
-				return displaySortieTropJeune(renderData);
+				return displaySortieTropJeune(postData, renderData);
 			}
 			final String regimes = infoRetraite.retrieveRegimes(postData.nom, postData.nir, postData.naissance);
 			if (regimes.isEmpty()) {
@@ -123,8 +127,8 @@ public class RetraiteEngine {
 		return renderData;
 	}
 
-	private RenderData displaySortieTropJeune(final RenderData renderData) {
-		renderData.hidden_step = "displaySortieTropJeune";
+	private RenderData displaySortieTropJeune(final PostData postData, final RenderData renderData) {
+		displayerSortieTropJeune.fillData(postData, renderData);
 		return renderData;
 	}
 

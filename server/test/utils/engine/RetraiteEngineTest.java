@@ -62,6 +62,7 @@ public class RetraiteEngineTest {
 	private UserChecklistGenerator userChecklistGeneratorMock;
 	private AgeCalculator ageCalculatorMock;
 	private AgeLegalEvaluator ageLegalEvaluatorMock;
+	private DisplayerSortieTropJeune displayerSortieTropJeuneMock;
 	private DisplayerLiquidateurQuestions displayerLiquidateurQuestionsMock;
 	private DisplayerSortiePenibilite displayerSortiePenibiliteMock;
 	private DisplayerSortieDepartInconnu displayerSortieDepartInconnuMock;
@@ -94,6 +95,7 @@ public class RetraiteEngineTest {
 		ageLegalEvaluatorMock = mock(AgeLegalEvaluator.class);
 		when(ageLegalEvaluatorMock.isAgeLegal("1/2/3", "11", "2017")).thenReturn(true);
 
+		displayerSortieTropJeuneMock = mock(DisplayerSortieTropJeune.class);
 		displayerLiquidateurQuestionsMock = mock(DisplayerLiquidateurQuestions.class);
 		displayerSortiePenibiliteMock = mock(DisplayerSortiePenibilite.class);
 		displayerSortieDepartInconnuMock = mock(DisplayerSortieDepartInconnu.class);
@@ -104,13 +106,14 @@ public class RetraiteEngineTest {
 
 		retraiteEngine = new RetraiteEngine(infoRetraiteMock, calculateurRegimeAlignesMock, daoFakeDataMock,
 				ageCalculatorMock, ageLegalEvaluatorMock, displayerLiquidateurQuestionsMock, displayerDepartureDateMock, displayerAdditionalQuestionsMock,
-				displayerChecklistMock, displayerQuestionCarriereLongueMock, displayerSortieDepartInconnuMock, displayerSortiePenibiliteMock);
+				displayerChecklistMock, displayerQuestionCarriereLongueMock, displayerSortieDepartInconnuMock, displayerSortiePenibiliteMock,
+				displayerSortieTropJeuneMock);
 	}
 
 	@After
 	public void assertNoMoreInteractionsOnMocks() {
 		verifyNoMoreInteractions(displayerLiquidateurQuestionsMock, displayerDepartureDateMock, displayerAdditionalQuestionsMock, displayerChecklistMock,
-				displayerQuestionCarriereLongueMock, displayerSortieDepartInconnuMock, displayerSortiePenibiliteMock);
+				displayerQuestionCarriereLongueMock, displayerSortieDepartInconnuMock, displayerSortiePenibiliteMock, displayerSortieTropJeuneMock);
 	}
 
 	@Test
@@ -193,7 +196,7 @@ public class RetraiteEngineTest {
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
 
-		assertThat(renderData.hidden_step).isEqualTo("displaySortieTropJeune");
+		verify(displayerSortieTropJeuneMock).fillData(isA(PostData.class), isA(RenderData.class));
 		assertThat(renderData.hidden_nom).isEqualTo("DUPONT");
 		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
 		assertThat(renderData.hidden_nir).isEqualTo("1 50 12 18 123 456");
