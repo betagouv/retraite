@@ -4,24 +4,21 @@ public enum RegimeAligne {
 
 	// @formatter:off
 
-	CNAV(ChecklistName.CNAV,
-			"http://CNAV quand-prendre-sa-retraite",
+	CNAV("http://CNAV quand-prendre-sa-retraite",
 			"http://CNAV mon-releve-de-carriere",
 			"http://CNAV EVA",
 			"http://CNAV urlDispositifDepartAvantAgeLegal",
 			"http://CNAV urlInfosPenibilite",
 			"http://CNAV urlInfosDepartRetraite"),
 
-	MSA(ChecklistName.MSA,
-			"http://www.msa.fr/lfr/retraite/conditions-age-depart-taux-plein",
+	MSA("http://www.msa.fr/lfr/retraite/conditions-age-depart-taux-plein",
 			"http://MSA mon-releve-de-carriere",
 			"http://MSA EVA",
 			"http://MSA urlDispositifDepartAvantAgeLegal",
 			"http://MSA urlInfosPenibilite",
 			"http://MSA urlInfosDepartRetraite"),
 
-	RSI(ChecklistName.RSI,
-			"http://rsi.fr/quand-prendre-sa-retraite",
+	RSI("http://rsi.fr/quand-prendre-sa-retraite",
 			"http://rsi.fr/mon-releve-de-carriere",
 			"http://RSI EVA",
 			"http://RSI urlDispositifDepartAvantAgeLegal",
@@ -30,7 +27,6 @@ public enum RegimeAligne {
 
 	// @formatter:on
 
-	private final ChecklistName checklistName;
 	public final String urlAgeDepart;
 	public final String urlDroits;
 	public final String urlSimulMontant;
@@ -38,24 +34,18 @@ public enum RegimeAligne {
 	public final String urlInfosPenibilite;
 	public final String urlInfosDepartRetraite;
 
-	private RegimeAligne(final ChecklistName checklistName,
-			final String urlAgeDepart,
+	private RegimeAligne(final String urlAgeDepart,
 			final String urlDroits,
 			final String urlSimulMontant,
 			final String urlDispositifDepartAvantAgeLegal,
 			final String urlInfosPenibilite,
 			final String urlInfosDepartRetraite) {
-		this.checklistName = checklistName;
 		this.urlAgeDepart = urlAgeDepart;
 		this.urlDroits = urlDroits;
 		this.urlSimulMontant = urlSimulMontant;
 		this.urlDispositifDepartAvantAgeLegal = urlDispositifDepartAvantAgeLegal;
 		this.urlInfosPenibilite = urlInfosPenibilite;
 		this.urlInfosDepartRetraite = urlInfosDepartRetraite;
-	}
-
-	public ChecklistName getChecklistName() {
-		return checklistName;
 	}
 
 }
