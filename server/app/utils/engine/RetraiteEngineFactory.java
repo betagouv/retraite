@@ -83,6 +83,7 @@ public class RetraiteEngineFactory {
 						new CalculateurRegimeAlignes()),
 				new DisplayerQuestionCarriereLongue(ageLegalEvaluator),
 				new DisplayerSortieDepartInconnu(),
-				new DisplayerSortiePenibilite());
+				new DisplayerSortiePenibilite(),
+				new DisplayerSortieTropJeune());
 	}
 }
