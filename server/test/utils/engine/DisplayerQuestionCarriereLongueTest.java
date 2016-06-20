@@ -3,6 +3,7 @@ package utils.engine;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static utils.engine.data.enums.RegimeAligne.CNAV;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +37,7 @@ public class DisplayerQuestionCarriereLongueTest {
 		postData.hidden_naissance = "03/11/1958";
 		postData.departMois = "11";
 		postData.departAnnee = "2017";
+		postData.hidden_liquidateur = CNAV;
 		final RenderData renderData = new RenderData();
 
 		final AnneesEtMois age = new AnneesEtMois(51, 6);
@@ -56,6 +58,8 @@ public class DisplayerQuestionCarriereLongueTest {
 				put("age", age);
 				put("ageLegalPourPartir", ageLegalPourPartir);
 				put("dateDepartPossible", dateDepartPossible);
+				put("urlAgeDepart", CNAV.urlAgeDepart);
+				put("urlDispositifDepartAvantAgeLegal", CNAV.urlDispositifDepartAvantAgeLegal);
 			}
 		};
 		assertThat(renderData.extras).isEqualTo(expectedExtras);
