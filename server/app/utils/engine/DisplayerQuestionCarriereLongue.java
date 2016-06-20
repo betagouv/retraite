@@ -5,6 +5,7 @@ import java.util.HashMap;
 import controllers.data.PostData;
 import models.AnneesEtMois;
 import utils.engine.data.RenderData;
+import utils.engine.data.enums.RegimeAligne;
 import utils.engine.utils.AgeLegalEvaluator;
 
 public class DisplayerQuestionCarriereLongue {
@@ -25,6 +26,9 @@ public class DisplayerQuestionCarriereLongue {
 		final AnneesEtMois ageLegalPourPartir = ageLegalEvaluator.getAgeLegalPourPartir(data.hidden_naissance);
 		renderData.extras.put("ageLegalPourPartir", ageLegalPourPartir);
 		renderData.extras.put("dateDepartPossible", ageLegalEvaluator.calculeDateEnAjoutant(data.hidden_naissance, ageLegalPourPartir));
+		final RegimeAligne regimeLiquidateur = data.hidden_liquidateur;
+		renderData.extras.put("urlAgeDepart", regimeLiquidateur.urlAgeDepart);
+		renderData.extras.put("urlDispositifDepartAvantAgeLegal", regimeLiquidateur.urlDispositifDepartAvantAgeLegal);
 	}
 
 }

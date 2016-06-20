@@ -8,45 +8,37 @@
 	<div class="col-sm-1"></div>
 	<div class="label-for-question-choice col-sm-10">
 	
-		<br/>
+		<div class='sortie'>
 		
-		Vous avez renseigné une date de départ à un âge inférieur à l'âge légal (
-		<a href='http://www.msa.fr/lfr/retraite/conditions-age-depart-taux-plein' target='_blank'>Cliquez ici pour plus de détails</a>
-		).
-		
-		<br/>
-		<br/>
-		
-		Vous souhaitez partir au #{dateDepart data:data /}, donc à l'âge de ${data.extras.age.annees} ans
-		#{if data.extras.age.mois} 
-			et ${data.extras.age.mois} mois
-		#{/if}
-		, or pour votre génération, l'age légal de départ est de ${data.extras.ageLegalPourPartir.annees} ans 
-		#{if data.extras.ageLegalPourPartir.mois} 
-			et ${data.extras.ageLegalPourPartir.mois} mois
-		#{/if}
-		, soit pour vous à la date du ${data.extras.dateDepartPossible}.
-
-		<br/>
-		<br/>
+			<p>Vous avez renseigné une date de départ à la retraite inférieur à <a href="${data.extras.urlAgeDepart}" target="_blank" title="Nouvelle fenêtre">l'âge légal</a>.</p>
+			
+			<p>Vous souhaitez partir au <b>#{dateDepart data:data /}</b>, donc à l'âge de <b>${data.extras.age.annees} ans
+			#{if data.extras.age.mois} 
+				et ${data.extras.age.mois} mois
+			#{/if}
+			</b>, or pour votre génération, l'age légal de départ est de <b>${data.extras.ageLegalPourPartir.annees} ans 
+			#{if data.extras.ageLegalPourPartir.mois} 
+				et ${data.extras.ageLegalPourPartir.mois} mois
+			#{/if}
+			</b>, soit pour vous à la date du <b>${data.extras.dateDepartPossible}</b>.</p>
 	
-		Si vous avez obtenu une attestation de situation carrières longues, cochez la case suivante puis cliquez sur "Etape suivante" :
-	
-	    <span class='col-sm-12 text-center choice'>	
-	        <label class='label-for-question-choice label-carriere-longue'><input type="checkbox" class='questions-choice' name='CARRIERE_LONGUE'/>J'ai mon attestation carrières longues</label>
-		</span>
+			<h1>Départ anticipé</h1>
+			
+			<ul>
+				<li>Vous avez obtenu une attestation de situation de carrière longue, cochez la case ci-dessous et passez à l’ "Etape suivante" :</li>
+			</ul>
 		
-		<br/><br/><br/>
+		    <span class='col-sm-12 text-center choice'>	
+		        <label class='label-for-question-choice label-carriere-longue'><input type="checkbox" class='questions-choice' name='CARRIERE_LONGUE'/>J'ai mon attestation carrières longues</label>
+			</span>
+			
+			<br/><br/><br/>
+			
+			<ul>
+				<li>Sinon, vérifiez que vous remplissez les conditions permettant de bénéficier d’un des <a href="${data.extras.urlDispositifDepartAvantAgeLegal}" target="_blank" title="Nouvelle fenêtre">dispositifs de départ avant l’âge légal</a> puis contactez un conseiller</li>
+			</ul>
 		
-		Sinon, vous devez vérifier que vous relevez d'un des dispositifs permettant ce départ anticipé. 
-		
-		<br/><br/>
-		
-		Veuillez consulter les règles concernant ces dispositifs. 
-		
-		<br/><br/>
-		
-		Veuillez ensuite contacter un conseiller afin d'être guidé dans vos démarches.
+		</div>
 		
 	</div><!--fin contenu-->
 	<div class="col-sm-1"></div>
