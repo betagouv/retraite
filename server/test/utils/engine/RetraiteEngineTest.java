@@ -55,8 +55,6 @@ import utils.wsinforetraite.InfoRetraiteWsUr;
 public class RetraiteEngineTest {
 
 	private final String allRegimes = "CNAV,CCMSA,AGIRC ARRCO";
-	private final List<ValueAndText> listeMoisAvecPremierMock = asList(vet("1", "1er Janvier"), vet("12", "1er Décembre"));
-	private final List<String> listeAnneesDepartMock = asList("2015", "2016");
 	private final List<FakeData> fakeDataMock = createFakeDataList();
 	private InfoRetraiteWsUr infoRetraiteMock;
 	private CalculateurRegimeAlignes calculateurRegimeAlignesMock;
@@ -65,6 +63,7 @@ public class RetraiteEngineTest {
 	private AgeCalculator ageCalculatorMock;
 	private AgeLegalEvaluator ageLegalEvaluatorMock;
 	private DisplayerLiquidateurQuestions displayerLiquidateurQuestionsMock;
+	private DisplayerSortiePenibilite displayerSortiePenibiliteMock;
 	private DisplayerSortieDepartInconnu displayerSortieDepartInconnuMock;
 	private DisplayerDepartureDate displayerDepartureDateMock;
 	private DisplayerAdditionalQuestions displayerAdditionalQuestionsMock;
@@ -96,6 +95,7 @@ public class RetraiteEngineTest {
 		when(ageLegalEvaluatorMock.isAgeLegal("1/2/3", "11", "2017")).thenReturn(true);
 
 		displayerLiquidateurQuestionsMock = mock(DisplayerLiquidateurQuestions.class);
+		displayerSortiePenibiliteMock = mock(DisplayerSortiePenibilite.class);
 		displayerSortieDepartInconnuMock = mock(DisplayerSortieDepartInconnu.class);
 		displayerDepartureDateMock = mock(DisplayerDepartureDate.class);
 		displayerAdditionalQuestionsMock = mock(DisplayerAdditionalQuestions.class);
@@ -104,22 +104,13 @@ public class RetraiteEngineTest {
 
 		retraiteEngine = new RetraiteEngine(infoRetraiteMock, calculateurRegimeAlignesMock, daoFakeDataMock,
 				ageCalculatorMock, ageLegalEvaluatorMock, displayerLiquidateurQuestionsMock, displayerDepartureDateMock, displayerAdditionalQuestionsMock,
-				displayerChecklistMock, displayerQuestionCarriereLongueMock, displayerSortieDepartInconnuMock);
+				displayerChecklistMock, displayerQuestionCarriereLongueMock, displayerSortieDepartInconnuMock, displayerSortiePenibiliteMock);
 	}
 
 	@After
 	public void assertNoMoreInteractionsOnMocks() {
-		verifyNoMoreInteractions(displayerLiquidateurQuestionsMock, displayerDepartureDateMock, displayerAdditionalQuestionsMock, displayerChecklistMock);
-	}
-
-	@Test
-	public void error_if_no_step() {
-		try {
-			retraiteEngine.processToNextStep(new PostData());
-			fail("Devrait déclencher une exception");
-		} catch (final RetraiteException e) {
-			assertThat(e.getMessage()).isEqualTo("Situation anormale : pas d'étape (step) pour le traitement");
-		}
+		verifyNoMoreInteractions(displayerLiquidateurQuestionsMock, displayerDepartureDateMock, displayerAdditionalQuestionsMock, displayerChecklistMock,
+				displayerQuestionCarriereLongueMock, displayerSortieDepartInconnuMock, displayerSortiePenibiliteMock);
 	}
 
 	@Test
@@ -141,7 +132,9 @@ public class RetraiteEngineTest {
 
 		// Step : (null) --> welcome
 
-		final RenderData renderData = retraiteEngine.processToNextStep(null);
+		final PostData postData = new PostData();
+
+		final RenderData renderData = retraiteEngine.processToNextStep(postData);
 
 		assertThat(renderData.hidden_step).isEqualTo("welcome");
 	}
@@ -368,7 +361,7 @@ public class RetraiteEngineTest {
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
 
 		verify(displayerLiquidateurQuestionsMock).fillData(isA(PostData.class), isA(RenderData.class), isA(String.class), isNull(RegimeAligne[].class));
-		assertThat(renderData.hidden_step).isEqualTo("displaySortiePenibilite");
+		verify(displayerSortiePenibiliteMock).fillData(isA(PostData.class), isA(RenderData.class));
 		assertThat(renderData.hidden_nom).isEqualTo("DUPONT");
 		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
 		assertThat(renderData.hidden_nir).isEqualTo("1 50 12 18 123 456");

@@ -19,7 +19,7 @@
 		#{list items:data.questionLiquidateur.choices ? data.questionLiquidateur.choices : data.questionLiquidateur.liquidateurQuestionDescriptor.questionChoices, as:'choice'}
 			<div class='choice'>
 				#{if data.questionLiquidateur.liquidateurQuestionDescriptor.questionType.toString() == "SIMPLE"}
-	            	#{if look == 'rsi'}
+	            	#{if look == 'RSI'}
 			   			<input type="radio" class='questions-choice' id="q${choice_index}" name="reponses[${data.questionLiquidateur.liquidateurQuestionDescriptor}]" value="${choice.value}" />
 			   			<label class='label-for-question-choice' for="q${choice_index}">${choice.text}</label>
 	            	#{/if}
@@ -28,7 +28,7 @@
 	            	#{/else}
 				#{/if}
 				#{else}
-	            	#{if look == 'rsi'}
+	            	#{if look == 'RSI'}
 			   			<input type="checkbox" class='questions-choice' id="q${choice_index}" value="${choice.value}" />
 			   			<label class='label-for-question-choice' for="q${choice_index}">${choice.text}</label>
 	            	#{/if}

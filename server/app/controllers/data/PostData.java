@@ -1,5 +1,6 @@
 package controllers.data;
 
+import controllers.utils.Look;
 import utils.engine.data.CommonExchangeData;
 
 public class PostData extends CommonExchangeData {
@@ -13,6 +14,7 @@ public class PostData extends CommonExchangeData {
 	public String departMois;
 	public String departAnnee;
 	public String email;
+	public Look look;
 
 	@Override
 	public String toString() {
@@ -31,6 +33,7 @@ public class PostData extends CommonExchangeData {
 		result = prime * result + ((departement == null) ? 0 : departement.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((liquidateurReponseJsonStr == null) ? 0 : liquidateurReponseJsonStr.hashCode());
+		result = prime * result + ((look == null) ? 0 : look.hashCode());
 		result = prime * result + ((naissance == null) ? 0 : naissance.hashCode());
 		result = prime * result + ((nir == null) ? 0 : nir.hashCode());
 		result = prime * result + ((nom == null) ? 0 : nom.hashCode());
@@ -72,6 +75,8 @@ public class PostData extends CommonExchangeData {
 			if (other.liquidateurReponseJsonStr != null)
 				return false;
 		} else if (!liquidateurReponseJsonStr.equals(other.liquidateurReponseJsonStr))
+			return false;
+		if (look != other.look)
 			return false;
 		if (naissance == null) {
 			if (other.naissance != null)

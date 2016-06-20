@@ -7,22 +7,12 @@ import play.mvc.Scope.Params;
 
 public class ControllersMiscUtils {
 
-	public static String getLook(final Params params) {
+	public static Look getLook(final Params params) {
 		final String lookFromParams = params.get("look");
-		if (lookFromParams != null) {
-			switch (lookFromParams.toLowerCase()) {
-			case "cnav":
-				return "cnav";
-			case "msa":
-				return "msa";
-			case "rsi":
-				return "rsi";
-			}
-		}
-		return "style";
+		return Look.valueFrom(lookFromParams);
 	}
 
-	public static String computeActionQueryParams(final boolean test, final boolean debug, final String look) {
+	public static String computeActionQueryParams(final boolean test, final boolean debug, final Look look) {
 		final List<KeyAndValue> params = new ArrayList<>();
 		if (test) {
 			params.add(new KeyAndValue("test"));
@@ -30,8 +20,8 @@ public class ControllersMiscUtils {
 		if (debug) {
 			params.add(new KeyAndValue("debug"));
 		}
-		if (!look.equals("style")) {
-			params.add(new KeyAndValue("look", look));
+		if (look.isNotGeneric()) {
+			params.add(new KeyAndValue("look", look.toString().toLowerCase()));
 		}
 		String queryParams = "";
 		for (int i = 0; i < params.size(); i++) {
