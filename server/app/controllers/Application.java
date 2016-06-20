@@ -21,6 +21,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
 
 import controllers.data.PostData;
+import controllers.utils.Look;
 import models.Checklist;
 import play.Logger;
 import play.modules.pdf.PDF;
@@ -35,13 +36,14 @@ import utils.mail.MailSenderWithSendGrid;
 
 public class Application extends RetraiteController {
 
-	public static void process(final PostData postData) {
-		if (postData != null) {
-			postData.hidden_userStatus = unbind(params.get("postData.hidden_userStatus"));
+	public static void process(PostData postData) {
+		if (postData == null) {
+			postData = new PostData();
 		}
+		postData.hidden_userStatus = unbind(params.get("postData.hidden_userStatus"));
 		final boolean test = params._contains("test");
 		final boolean debug = params._contains("debug");
-		final String look = getLook(params);
+		final Look look = postData.look = getLook(params);
 		final String actionQueryParams = computeActionQueryParams(test, debug, look);
 		if (test) {
 			Logger.warn("Traitement des données en mode TEST, recherche des régimes en BDD !");
@@ -58,7 +60,7 @@ public class Application extends RetraiteController {
 		}
 	}
 
-	public static void displayCheckList(final String key, final boolean test, final boolean debug, final String look) {
+	public static void displayCheckList(final String key, final boolean test, final boolean debug, final Look look) {
 		final DisplayCheckListData displayCheckListData = getFromCache(key);
 		if (displayCheckListData == null) {
 			displayExpired(test, debug, look);
@@ -69,7 +71,7 @@ public class Application extends RetraiteController {
 		renderTemplate("Application/steps/" + data.hidden_step + ".html", data, test, debug, page, look, actionQueryParams);
 	}
 
-	public static void displayExpired(final boolean test, final boolean debug, final String look) {
+	public static void displayExpired(final boolean test, final boolean debug, final Look look) {
 		final String actionQueryParams = computeActionQueryParams(test, debug, look);
 		render(look, actionQueryParams);
 	}

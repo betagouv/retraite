@@ -12,33 +12,33 @@ public class ControllersMiscUtilsTest {
 	public void test_getLook() {
 		{
 			final Params params = new MyParams("look", null);
-			assertThat(ControllersMiscUtils.getLook(params)).isEqualTo("style");
+			assertThat(ControllersMiscUtils.getLook(params)).isEqualTo(Look.GENERIC);
 		}
 		{
 			final Params params = new MyParams("look", "cnav");
-			assertThat(ControllersMiscUtils.getLook(params)).isEqualTo("cnav");
+			assertThat(ControllersMiscUtils.getLook(params)).isEqualTo(Look.CNAV);
 		}
 		{
 			final Params params = new MyParams("look", "msa");
-			assertThat(ControllersMiscUtils.getLook(params)).isEqualTo("msa");
+			assertThat(ControllersMiscUtils.getLook(params)).isEqualTo(Look.MSA);
 		}
 		{
 			final Params params = new MyParams("look", "rsi");
-			assertThat(ControllersMiscUtils.getLook(params)).isEqualTo("rsi");
+			assertThat(ControllersMiscUtils.getLook(params)).isEqualTo(Look.RSI);
 		}
 		{
 			final Params params = new MyParams("look", "xxx");
-			assertThat(ControllersMiscUtils.getLook(params)).isEqualTo("style");
+			assertThat(ControllersMiscUtils.getLook(params)).isEqualTo(Look.GENERIC);
 		}
 	}
 
 	@Test
 	public void test_computeActionQueryParams() {
-		assertThat(ControllersMiscUtils.computeActionQueryParams(false, false, "style")).isEqualTo("");
-		assertThat(ControllersMiscUtils.computeActionQueryParams(true, false, "style")).isEqualTo("?test");
-		assertThat(ControllersMiscUtils.computeActionQueryParams(false, true, "style")).isEqualTo("?debug");
-		assertThat(ControllersMiscUtils.computeActionQueryParams(false, false, "cnav")).isEqualTo("?look=cnav");
-		assertThat(ControllersMiscUtils.computeActionQueryParams(true, true, "rsi")).isEqualTo("?test&debug&look=rsi");
+		assertThat(ControllersMiscUtils.computeActionQueryParams(false, false, Look.GENERIC)).isEqualTo("");
+		assertThat(ControllersMiscUtils.computeActionQueryParams(true, false, Look.GENERIC)).isEqualTo("?test");
+		assertThat(ControllersMiscUtils.computeActionQueryParams(false, true, Look.GENERIC)).isEqualTo("?debug");
+		assertThat(ControllersMiscUtils.computeActionQueryParams(false, false, Look.CNAV)).isEqualTo("?look=cnav");
+		assertThat(ControllersMiscUtils.computeActionQueryParams(true, true, Look.RSI)).isEqualTo("?test&debug&look=rsi");
 	}
 
 	private static class MyParams extends Params {
