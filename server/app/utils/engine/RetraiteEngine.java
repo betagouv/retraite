@@ -31,6 +31,7 @@ public class RetraiteEngine {
 	private final DisplayerAdditionalQuestions displayerAdditionalQuestions;
 	private final DisplayerChecklist displayerChecklist;
 	private final DisplayerQuestionCarriereLongue displayerQuestionCarriereLongue;
+	private final DisplayerSortieDepartInconnu displayerSortieDepartInconnu;
 
 	public RetraiteEngine(
 			final InfoRetraite infoRetraite,
@@ -41,7 +42,9 @@ public class RetraiteEngine {
 			final DisplayerLiquidateurQuestions displayerLiquidateurQuestions,
 			final DisplayerDepartureDate displayerDepartureDate,
 			final DisplayerAdditionalQuestions displayerAdditionalQuestions,
-			final DisplayerChecklist displayerChecklist, final DisplayerQuestionCarriereLongue displayerQuestionCarriereLongue) {
+			final DisplayerChecklist displayerChecklist,
+			final DisplayerQuestionCarriereLongue displayerQuestionCarriereLongue,
+			final DisplayerSortieDepartInconnu displayerSortieDepartInconnu) {
 
 		this.infoRetraite = infoRetraite;
 		this.calculateurRegimeAlignes = calculateurRegimeAlignes;
@@ -53,29 +56,30 @@ public class RetraiteEngine {
 		this.displayerAdditionalQuestions = displayerAdditionalQuestions;
 		this.displayerChecklist = displayerChecklist;
 		this.displayerQuestionCarriereLongue = displayerQuestionCarriereLongue;
+		this.displayerSortieDepartInconnu = displayerSortieDepartInconnu;
 	}
 
-	public RenderData processToNextStep(final PostData data) {
+	public RenderData processToNextStep(final PostData postData) {
 		final RenderData renderData = new RenderData();
 
-		if (data != null && data.hidden_step == null) {
+		if (postData != null && postData.hidden_step == null) {
 			throw new RetraiteException("Situation anormale : pas d'étape (step) pour le traitement");
 		}
 
-		if (data == null) {
+		if (postData == null) {
 			return displayWelcome(renderData);
 		}
 
-		copyHiddenFields(data, renderData);
+		copyHiddenFields(postData, renderData);
 
-		if (data.hidden_step.equals("welcome")) {
+		if (postData.hidden_step.equals("welcome")) {
 			return displayGetUserData(renderData);
-		} else if (data.hidden_step.equals("getUserData")) {
-			Logger.info("Connexion d'un usager : nom=" + data.nom + " , nir=" + data.nir + " , naissance=" + data.naissance);
-			if (ageCalculator.getAge(data.naissance) < 55) {
+		} else if (postData.hidden_step.equals("getUserData")) {
+			Logger.info("Connexion d'un usager : nom=" + postData.nom + " , nir=" + postData.nir + " , naissance=" + postData.naissance);
+			if (ageCalculator.getAge(postData.naissance) < 55) {
 				return displaySortieTropJeune(renderData);
 			}
-			final String regimes = infoRetraite.retrieveRegimes(data.nom, data.nir, data.naissance);
+			final String regimes = infoRetraite.retrieveRegimes(postData.nom, postData.nir, postData.naissance);
 			if (regimes.isEmpty()) {
 				renderData.errorMessage = "Désolé, aucune information n'a pu être trouvée avec les données saisies";
 				return displayGetUserData(renderData);
@@ -85,37 +89,38 @@ public class RetraiteEngine {
 				return displaySortieAucunRegimeDeBaseAligne(renderData);
 			}
 			if (regimesAlignes.length >= 2) {
-				displayerLiquidateurQuestions.fillData(data, renderData, regimes, regimesAlignes);
+				displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
 				return renderData;
 			}
 			renderData.hidden_liquidateur = regimesAlignes[0];
-			displayerDepartureDate.fillData(data, renderData, regimes);
-		} else if (data.hidden_step.equals("displayLiquidateurQuestions")) {
-			final RegimeAligne[] regimesAlignes = calculateurRegimeAlignes.getRegimesAlignes(data.hidden_regimes);
-			displayerLiquidateurQuestions.fillData(data, renderData, data.hidden_regimes, regimesAlignes);
+			displayerDepartureDate.fillData(postData, renderData, regimes);
+		} else if (postData.hidden_step.equals("displayLiquidateurQuestions")) {
+			final RegimeAligne[] regimesAlignes = calculateurRegimeAlignes.getRegimesAlignes(postData.hidden_regimes);
+			displayerLiquidateurQuestions.fillData(postData, renderData, postData.hidden_regimes, regimesAlignes);
 			if (renderData.ecranSortie == ECRAN_SORTIE_PENIBILITE) {
 				renderData.hidden_step = "displaySortiePenibilite";
 				return renderData;
 			}
 			if (renderData.hidden_liquidateurStep == null) {
-				displayerDepartureDate.fillData(data, renderData, null);
+				displayerDepartureDate.fillData(postData, renderData, null);
 			}
-		} else if (data.hidden_step.equals("displayDepartureDate")) {
-			if (data.departInconnu) {
+		} else if (postData.hidden_step.equals("displayDepartureDate")) {
+			if (postData.departInconnu) {
+				displayerSortieDepartInconnu.fillData(postData, renderData);
 				renderData.hidden_step = "displaySortieDepartInconnu";
 				return renderData;
 			}
-			if (!ageLegalEvaluator.isAgeLegal(data.hidden_naissance, data.departMois, data.departAnnee)) {
-				return displayQuestionCarriereLongue(data, renderData);
+			if (!ageLegalEvaluator.isAgeLegal(postData.hidden_naissance, postData.departMois, postData.departAnnee)) {
+				return displayQuestionCarriereLongue(postData, renderData);
 			}
-			displayerAdditionalQuestions.fillData(data, renderData);
-		} else if (data.hidden_step.equals("displayQuestionCarriereLongue")) {
+			displayerAdditionalQuestions.fillData(postData, renderData);
+		} else if (postData.hidden_step.equals("displayQuestionCarriereLongue")) {
 			renderData.hidden_attestationCarriereLongue = true;
-			displayerAdditionalQuestions.fillData(data, renderData);
-		} else if (data.hidden_step.equals("displayAdditionalQuestions") || data.hidden_step.equals("displayCheckList")) {
-			displayerChecklist.fillData(data, renderData);
+			displayerAdditionalQuestions.fillData(postData, renderData);
+		} else if (postData.hidden_step.equals("displayAdditionalQuestions") || postData.hidden_step.equals("displayCheckList")) {
+			displayerChecklist.fillData(postData, renderData);
 		} else {
-			throw new RetraiteException("Situation anormale : l'étape '" + data.hidden_step + "' pour le traitement");
+			throw new RetraiteException("Situation anormale : l'étape '" + postData.hidden_step + "' pour le traitement");
 		}
 		return renderData;
 	}

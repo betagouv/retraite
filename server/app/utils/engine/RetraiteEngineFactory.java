@@ -81,6 +81,7 @@ public class RetraiteEngineFactory {
 										new CaisseDao())),
 						dateProvider,
 						new CalculateurRegimeAlignes()),
-				new DisplayerQuestionCarriereLongue(ageLegalEvaluator));
+				new DisplayerQuestionCarriereLongue(ageLegalEvaluator),
+				new DisplayerSortieDepartInconnu());
 	}
 }

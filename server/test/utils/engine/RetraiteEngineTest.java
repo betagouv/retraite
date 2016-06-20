@@ -65,6 +65,7 @@ public class RetraiteEngineTest {
 	private AgeCalculator ageCalculatorMock;
 	private AgeLegalEvaluator ageLegalEvaluatorMock;
 	private DisplayerLiquidateurQuestions displayerLiquidateurQuestionsMock;
+	private DisplayerSortieDepartInconnu displayerSortieDepartInconnuMock;
 	private DisplayerDepartureDate displayerDepartureDateMock;
 	private DisplayerAdditionalQuestions displayerAdditionalQuestionsMock;
 	private DisplayerChecklist displayerChecklistMock;
@@ -95,6 +96,7 @@ public class RetraiteEngineTest {
 		when(ageLegalEvaluatorMock.isAgeLegal("1/2/3", "11", "2017")).thenReturn(true);
 
 		displayerLiquidateurQuestionsMock = mock(DisplayerLiquidateurQuestions.class);
+		displayerSortieDepartInconnuMock = mock(DisplayerSortieDepartInconnu.class);
 		displayerDepartureDateMock = mock(DisplayerDepartureDate.class);
 		displayerAdditionalQuestionsMock = mock(DisplayerAdditionalQuestions.class);
 		displayerChecklistMock = mock(DisplayerChecklist.class);
@@ -102,7 +104,7 @@ public class RetraiteEngineTest {
 
 		retraiteEngine = new RetraiteEngine(infoRetraiteMock, calculateurRegimeAlignesMock, daoFakeDataMock,
 				ageCalculatorMock, ageLegalEvaluatorMock, displayerLiquidateurQuestionsMock, displayerDepartureDateMock, displayerAdditionalQuestionsMock,
-				displayerChecklistMock, displayerQuestionCarriereLongueMock);
+				displayerChecklistMock, displayerQuestionCarriereLongueMock, displayerSortieDepartInconnuMock);
 	}
 
 	@After
@@ -418,6 +420,7 @@ public class RetraiteEngineTest {
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
 
+		verify(displayerSortieDepartInconnuMock).fillData(isA(PostData.class), isA(RenderData.class));
 		assertThat(renderData.hidden_step).isEqualTo("displaySortieDepartInconnu");
 		assertThat(renderData.hidden_nom).isEqualTo("DUPONT");
 		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
