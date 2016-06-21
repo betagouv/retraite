@@ -24,7 +24,7 @@ public enum RegimeAligne {
 			"http://rsi.fr/quand-prendre-sa-retraite",
 			"http://rsi.fr/mon-releve-de-carriere",
 			"http://RSI EVA",
-			"http://RSI urlDispositifDepartAvantAgeLegal",
+			"http://www.rsi.fr/retraite-anticipee.html",
 			"http://RSI urlInfosPenibilite",
 			"http://www.rsi.fr/partir-en-retraite");
 
