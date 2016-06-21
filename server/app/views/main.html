@@ -50,15 +50,15 @@
 		
     </head>
 
-  	#{if look != 'RSI'}
+  	#{if look.toString() != 'RSI'}
 	    <header class="entete col-sm-12">
 	    	<div class="home header-inner clearfix">
 	    	<div class="col-sm-2">
 	            <div class="logo hidden-xs">
-	            	#{if look == 'CNAV'}
+	            	#{if look.toString() == 'CNAV'}
 		                <a target="_blank" href="https://www.lassuranceretraite.fr/portail-info/accueil"><img src="/public/img/sprites/logo_cnav.png" title="CNAV" alt="l'assurance retraite"></a>
 	            	#{/if}
-	            	#{if look == 'MSA'}
+	            	#{if look.toString() == 'MSA'}
 						<a target="_blank" href="http://www.msa.fr/lfr"><img src="/public/img/sprites/logoMSA_home.png" title="msa" alt="sant√© famille retraite services"></a>
 	            	#{/if}
 	            </div>
@@ -86,26 +86,28 @@
 		</div><!--fin container-->
 
 
-		<div class="col-sm-12 contenu">
-		    <footer role="contentinfo">
-		        <div class="wrapper-inner">
-		            <nav class="footer-right col-sm-7">
-		                <ul>
-		                    <li><a target="_blank" href="https://www.lassuranceretraite.fr/portail-info/accueil"><img src="/public/img/sprites/logo_cnav.png" title="cnav" alt="l'assurance retraite"></a></li>
-		                    <li><a target="_blank" href="http://www.msa.fr/lfr"><img src="/public/img/sprites/logo_MSA.png" title="MSA" alt="santé famille retraite services"></a></li>
-		                    <li><a target="_blank" href="https://www.rsi.fr/"><img src="/public/img/sprites/logo_rsi.png" title="rsi" alt="régime social des indépendants"></a></li>
-		                </ul>
-		            </nav>
-
-		            <nav class="footer-nav col-sm-5">
-		                <ul>
-		                    <li><a href="mailto:contact@retraite.beta.gouv.fr" class="footer-feedback">J'ai une question</a></li>
-		                </ul>
-		            </nav>
-		
-		        </div>
-		    </footer>
-		</div>
+	  	#{if look.toString() != 'RSI'}
+			<div class="col-sm-12 contenu">
+			    <footer role="contentinfo">
+			        <div class="wrapper-inner">
+			            <nav class="footer-right col-sm-7">
+			                <ul>
+			                    <li><a target="_blank" href="https://www.lassuranceretraite.fr/portail-info/accueil"><img src="/public/img/sprites/logo_cnav.png" title="cnav" alt="l'assurance retraite"></a></li>
+			                    <li><a target="_blank" href="http://www.msa.fr/lfr"><img src="/public/img/sprites/logo_MSA.png" title="MSA" alt="santé famille retraite services"></a></li>
+			                    <li><a target="_blank" href="https://www.rsi.fr/"><img src="/public/img/sprites/logo_rsi.png" title="rsi" alt="régime social des indépendants"></a></li>
+			                </ul>
+			            </nav>
+	
+			            <nav class="footer-nav col-sm-5">
+			                <ul>
+			                    <li><a href="mailto:contact@retraite.beta.gouv.fr" class="footer-feedback">J'ai une question</a></li>
+			                </ul>
+			            </nav>
+			
+			        </div>
+			    </footer>
+			</div>
+	   	#{/if}
 
 
 		<!-- injector:bowerjs -->
