@@ -25,7 +25,7 @@ fi
 # Vérification que la branche courante est la bonne
 
 CURRENT_GIT_BRANCH=$(git branch | grep ^* | sed 's/* //' )
-if [ ($CURRENT_GIT_BRANCH != $ENV) && ($CURRENT_GIT_BRANCH != "master" || $ENV != "recette") ]; then
+if [[ ($CURRENT_GIT_BRANCH != $ENV) && (($CURRENT_GIT_BRANCH != "master") || ($ENV != "recette")) ]]; then
 	echo
 	echo "La branche GIT courante '$CURRENT_GIT_BRANCH' n'est pas la bonne pour faire le déploiement '$ENV' !"
 	echo
