@@ -14,8 +14,6 @@
         #{stylesheet look.getCssFilename() /}
         #{stylesheet 'retraite-overwrite.css' /}
 
-        <!--<link rel="shortcut icon" type="image/png" href="http://recette-retraite.sgmap.fr/public/images/favicon.png">-->
-        
         #{get 'moreStyles' /}
         
         <!-- Hotjar Tracking -->
@@ -56,15 +54,15 @@
 	    	<div class="col-sm-2">
 	            <div class="logo hidden-xs">
 	            	#{if look.toString() == 'CNAV'}
-		                <a target="_blank" href="https://www.lassuranceretraite.fr/portail-info/accueil"><img src="/public/img/sprites/logo_cnav.png" title="CNAV" alt="l'assurance retraite"></a>
+		                <a href="https://www.lassuranceretraite.fr/portail-info/accueil" target="_blank" title="Nouvelle fenêtre"><img src="/public/img/sprites/logo_cnav.png" title="CNAV" alt="l'assurance retraite"></a>
 	            	#{/if}
 	            	#{if look.toString() == 'MSA'}
-						<a target="_blank" href="http://www.msa.fr/lfr"><img src="/public/img/sprites/logoMSA_home.png" title="msa" alt="sant√© famille retraite services"></a>
+						<a href="http://www.msa.fr/lfr" target="_blank" title="Nouvelle fenêtre"><img src="/public/img/sprites/logoMSA_home.png" title="msa" alt="sant√© famille retraite services"></a>
 	            	#{/if}
 	            </div>
 	        </div>
 	        <div class="title col-sm-10">
-	        	<a href="/${ actionQueryParams }">
+	        	<a href="/${ actionQueryParams }" title="Retour à l'accueil">
 		            <h1>Mes démarches retraite</h1>
 		            <h2>pas à pas</h2>
 	            </a>
@@ -92,15 +90,15 @@
 			        <div class="wrapper-inner">
 			            <nav class="footer-right col-sm-7">
 			                <ul>
-			                    <li><a target="_blank" href="https://www.lassuranceretraite.fr/portail-info/accueil"><img src="/public/img/sprites/logo_cnav.png" title="cnav" alt="l'assurance retraite"></a></li>
-			                    <li><a target="_blank" href="http://www.msa.fr/lfr"><img src="/public/img/sprites/logo_MSA.png" title="MSA" alt="santé famille retraite services"></a></li>
-			                    <li><a target="_blank" href="https://www.rsi.fr/"><img src="/public/img/sprites/logo_rsi.png" title="rsi" alt="régime social des indépendants"></a></li>
+			                    <li><a href="https://www.lassuranceretraite.fr/portail-info/accueil" target="_blank" title="Nouvelle fenêtre"><img src="/public/img/sprites/logo_cnav.png" title="cnav" alt="l'assurance retraite"></a></li>
+			                    <li><a href="http://www.msa.fr/lfr" target="_blank" title="Nouvelle fenêtre"><img src="/public/img/sprites/logo_MSA.png" title="MSA" alt="santé famille retraite services"></a></li>
+			                    <li><a href="https://www.rsi.fr/" target="_blank" title="Nouvelle fenêtre"><img src="/public/img/sprites/logo_rsi.png" title="rsi" alt="régime social des indépendants"></a></li>
 			                </ul>
 			            </nav>
 	
 			            <nav class="footer-nav col-sm-5">
 			                <ul>
-			                    <li><a href="mailto:contact@retraite.beta.gouv.fr" class="footer-feedback">J'ai une question</a></li>
+			                    <li><a href="mailto:contact@retraite.beta.gouv.fr" title="Contact pour poser une question sur cette application" class="footer-feedback">J'ai une question</a></li>
 			                </ul>
 			            </nav>
 			
