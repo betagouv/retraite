@@ -3,6 +3,7 @@ package controllers;
 import static controllers.utils.ControllersMiscUtils.computeActionQueryParams;
 import static controllers.utils.ControllersMiscUtils.getLook;
 import static controllers.utils.DataUnbinder.unbind;
+import static controllers.utils.Look.GENERIC;
 import static utils.dao.DaoChecklistFactory.createDaoChecklist;
 
 import java.io.ByteArrayInputStream;
@@ -54,13 +55,24 @@ public class Application extends RetraiteController {
 			final String key = UUID.randomUUID().toString();
 			putToCache(key, new DisplayCheckListData(data, page, actionQueryParams));
 			// Redirection pour avoir une URL spécifique pour hotjar
-			displayCheckList(key, test, debug, look);
+			redirectToDisplayCheckList(key, test, debug, look);
 		} else {
 			renderTemplate("Application/steps/" + data.hidden_step + ".html", data, test, debug, page, look, actionQueryParams);
 		}
 	}
 
-	public static void displayCheckList(final String key, final boolean test, final boolean debug, final Look look) {
+	/*
+	 * On passe par cette méthode pour pouvoir mettre les paramètres à null si besoin et éviter qu'ils apparaissent dans l'URL de navigation
+	 */
+	private static void redirectToDisplayCheckList(final String key, final boolean _test, final boolean _debug, final Look _look) {
+		final Boolean test = (_test ? true : null);
+		final Boolean debug = (_debug ? true : null);
+		final Look look = (_look.isNotGeneric() ? _look : null);
+		displayCheckList(key, test, debug, look);
+	}
+
+	public static void displayCheckList(final String key, final Boolean test, final Boolean debug, final Look _look) {
+		final Look look = (_look == null ? GENERIC : _look);
 		final DisplayCheckListData displayCheckListData = getFromCache(key);
 		if (displayCheckListData == null) {
 			displayExpired(test, debug, look);
@@ -174,8 +186,9 @@ public class Application extends RetraiteController {
 	public static void generateDoc(final String checklistNom, final boolean published) {
 		final Checklist checklistFromBdd = createDaoChecklist().find(checklistNom, published);
 		final ChecklistForDoc checklist = new ChecklistForDocConverter().convert(checklistFromBdd);
-		final String look = "style";
-		render(checklist, published, look);
+		final Look look = Look.GENERIC;
+		final boolean noInfoCookie = true;
+		render(checklist, published, look, noInfoCookie);
 	}
 
 	private static PDF.Options createPdfOptions() {

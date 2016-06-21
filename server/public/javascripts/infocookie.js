@@ -14,10 +14,9 @@
  * Example:
  *  - $.infoCookie('Les cookies assurent le bon fonctionnement de nos services. En utilisant ces derniers, vous acceptez l\'utilisation des cookies. <a href="" target="_blank">En savoir plus</a>.',{class:"bandeau-cookie"});
  */
-(function($)
-{
-	$.infoCookie=function(text,options)
-	{
+(function($) {
+	
+	$.infoCookie=function(text,options)	{
 		var className="cookie-notice",delay=1000,cookieName="cookie-stop",cookieDuration=12,position="top";
 		if(typeof options!=="undefined") {
 			if(typeof options.class!=="undefined") className=options.class;
@@ -29,34 +28,35 @@
 
 		var cookies=[];
 		document.cookie.split(/; +/g).forEach(function(a) {
-				a.replace(/^(.*?)=(.*)$/,function(s,a,b) {
-					cookies[a]=b;
-					return s;
-				});
+			a.replace(/^(.*?)=(.*)$/,function(s,a,b) {
+				cookies[a]=b;
+				return s;
 			});
+		});
 
 		var setCookie=function(cookieName,cookieDuration) {
-				var date=new Date();
-				date.setMonth(date.getMonth()+cookieDuration);
-				document.cookie=cookieName+'=true; expires='+date.toUTCString()+'; path=/';
-			};
+			var date=new Date();
+			date.setMonth(date.getMonth()+cookieDuration);
+			document.cookie=cookieName+'=true; expires='+date.toUTCString()+'; path=/';
+		};
 
 		var display=function(text,className,position) {
-				var div=$(document.createElement("div"));
-				div.css({"display":"none","width":"100%","position":"fixed","zIndex":"255","left":"0"})
-				   .addClass(className);
-				if(position=="top") div.css("top","0"); else div.css("bottom","0");
-				div.html(text);
-				$('<input type="button" value="ok"/>').appendTo(div).click(function() {
-						setCookie(cookieName,cookieDuration);
-						div.slideUp();
-					});
-				$(document).click(function() {
-						setCookie(cookieName,cookieDuration);
-					});
-				div.appendTo("body");
-				return div;
-			};
+			var $div=$(document.createElement("div"));
+			$div.css({"display":"none","width":"100%","position":"fixed","zIndex":"255","left":"0"})
+			   .addClass(className);
+			if(position=="top") $div.css("top","0"); else $div.css("bottom","0");
+			$div.html(text);
+			var $okButton = $('<input type="button" value="ok"/>');
+			$okButton.appendTo($div).click(function() {
+				setCookie(cookieName,cookieDuration);
+				$div.slideUp();
+			});
+			$okButton.click(function() {
+					setCookie(cookieName,cookieDuration);
+				});
+			$div.appendTo("body");
+			return $div;
+		};
 
 		if(typeof cookies[cookieName]==="undefined") {
 			var div=display(text,className,position);
@@ -70,6 +70,5 @@
 
 
 $(function() {
-	//$.infoCookie('Les cookies assurent le bon fonctionnement de nos services. En utilisant ces derniers, vous acceptez l\'utilisation des cookies. <a href="/conditions-generales-d-utilisation#cookies" target="_blank">En savoir plus</a>.',{"class":"bandeau-cookie","position":"top"});
 	$.infoCookie('Les cookies assurent le bon fonctionnement de nos services. En utilisant ces derniers, vous acceptez l\'utilisation des cookies.',{"class":"bandeau-cookie","position":"top"});
 });
