@@ -10,7 +10,7 @@
 	
 		<div class='sortie'>
 		
-			<p>Vous avez renseigné une date de départ à la retraite inférieur à <a href="${data.extras.urlAgeDepart}" target="_blank" title="Nouvelle fenêtre">l'âge légal</a>.</p>
+			<p>Vous avez renseigné une date de départ à la retraite inférieur à #{link url:data.extras.urlAgeDepart,text:"l'âge légal" /}.</p>
 			
 			<p>Vous souhaitez partir au <b>#{dateDepart data:data /}</b>, donc à l'âge de <b>${data.extras.age.annees} ans
 			#{if data.extras.age.mois} 
@@ -35,7 +35,7 @@
 			<br/><br/><br/>
 			
 			<ul>
-				<li>Sinon, vérifiez que vous remplissez les conditions permettant de bénéficier d’un des <a href="${data.extras.urlDispositifDepartAvantAgeLegal}" target="_blank" title="Nouvelle fenêtre">dispositifs de départ avant l’âge légal</a> puis contactez un conseiller</li>
+				<li>Sinon, vérifiez que vous remplissez les conditions permettant de bénéficier d’un des #{link url:data.extras.urlDispositifDepartAvantAgeLegal,text:"dispositifs de départ avant l’âge légal" /} puis contactez un conseiller</li>
 			</ul>
 		
 		</div>
