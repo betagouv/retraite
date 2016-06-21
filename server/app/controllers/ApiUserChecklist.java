@@ -4,6 +4,7 @@ import static utils.engine.intern.UserChecklistGeneratorFactory.createUserCheckl
 
 import controllers.data.ApiUserChecklistParams;
 import controllers.utils.ApiChecklistGenerator;
+import controllers.utils.Look;
 import utils.engine.data.RenderData;
 import utils.engine.intern.CalculateurRegimeAlignes;
 import utils.engine.intern.UserChecklistGenerationDataBuilder;
@@ -26,7 +27,7 @@ public class ApiUserChecklist extends RetraiteController {
 		}
 		data.isPDF = false;
 		if (apiUserChecklistParams.full) {
-			final String look = "style";
+			final Look look = Look.GENERIC;
 			renderTemplate("Application/steps/displayCheckList.html", data, look);
 		} else {
 			renderTemplate("ApiUserChecklist/getUserChecklist.html", data);
