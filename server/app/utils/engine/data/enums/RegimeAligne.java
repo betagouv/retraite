@@ -4,21 +4,24 @@ public enum RegimeAligne {
 
 	// @formatter:off
 
-	CNAV("http://CNAV quand-prendre-sa-retraite",
+	CNAV(
+			"http://CNAV quand-prendre-sa-retraite",
 			"http://CNAV mon-releve-de-carriere",
 			"http://CNAV EVA",
 			"http://CNAV urlDispositifDepartAvantAgeLegal",
 			"http://CNAV urlInfosPenibilite",
 			"http://CNAV urlInfosDepartRetraite"),
 
-	MSA("http://www.msa.fr/lfr/retraite/conditions-age-depart-taux-plein",
+	MSA(
+			"http://www.msa.fr/lfr/retraite/conditions-age-depart-taux-plein",
 			"http://MSA mon-releve-de-carriere",
 			"http://MSA EVA",
 			"http://MSA urlDispositifDepartAvantAgeLegal",
 			"http://MSA urlInfosPenibilite",
 			"http://MSA urlInfosDepartRetraite"),
 
-	RSI("http://rsi.fr/quand-prendre-sa-retraite",
+	RSI(
+			"http://rsi.fr/quand-prendre-sa-retraite",
 			"http://rsi.fr/mon-releve-de-carriere",
 			"http://RSI EVA",
 			"http://RSI urlDispositifDepartAvantAgeLegal",
