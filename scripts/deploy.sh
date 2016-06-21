@@ -22,6 +22,16 @@ if [ -n "$(git diff --exit-code)" ]; then
 	exit
 fi
 
+# Vérification que la branche courante est la bonne
+
+CURRENT_GIT_BRANCH=$(git branch | grep ^* | sed 's/* //' )
+if [ $CURRENT_GIT_BRANCH != $TARGET ]; then
+	echo
+	echo "La branche GIT courante '$CURRENT_GIT_BRANCH' n'est pas la bonne pour faire le déploiement '$TARGET' !"
+	echo
+	exit
+fi
+
 # Génération de l'application cliente
 echo
 echo "Génération de l'application cliente ..."
