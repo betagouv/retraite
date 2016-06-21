@@ -29,7 +29,8 @@ public class ApiUserChecklist extends RetraiteController {
 		if (apiUserChecklistParams.full) {
 			final Look look = Look.GENERIC;
 			final boolean noInfoCookie = true;
-			renderTemplate("Application/steps/displayCheckList.html", data, look, noInfoCookie);
+			final boolean noPdfDownload = true;
+			renderTemplate("Application/steps/displayCheckList.html", data, look, noInfoCookie, noPdfDownload);
 		} else {
 			renderTemplate("ApiUserChecklist/getUserChecklist.html", data);
 		}
