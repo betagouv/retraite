@@ -182,64 +182,6 @@
 
         </div>
 
-        <div class="panel-footer" ng-show='!chapitre.closedInEdition'>
-
-            <input type="checkbox" ng-model="showOldData"> Voir les anciennes données
-            
-            <div ng-show='showOldData'>
-
-                <hr/>
-                
-                <div class='row'>
-                    <div class='col-xs-3'>
-                        <span>Texte d'introduction :</span>
-                    </div>
-                    <div class='col-xs-9'>
-                        <text-angular ng-model="chapitre.texteIntro" ta-text-editor-setup='textAreaSetup'>
-                        </text-angular>
-                    </div>
-                </div>
-
-                <div class='row'>
-                    <div class='col-xs-12'>
-                        <input type='checkbox' ng-model='chapitre.parcoursDematDifferent'>
-                        Parcours dématérialisé et canaux traditionnels différents 
-                    </div>
-                </div>
-
-                <div class='row'>
-                    <div class='col-xs-3'>
-                        <span ng-show='!chapitre.parcoursDematDifferent'>Parcours :</span>
-                        <span ng-show='chapitre.parcoursDematDifferent'>Parcours canaux traditionnels :</span>
-                    </div>
-                    <div class='col-xs-9'>
-                        <text-angular ng-model="chapitre.parcours"></text-angular>
-                    </div>
-                </div>
-
-                <div class='row' ng-show='chapitre.parcoursDematDifferent'>
-                    <div class='col-xs-3'>
-                        Parcours Dématérialisé&nbsp;:
-                    </div>
-                    <div class='col-xs-9'>
-                        <text-angular ng-model="chapitre.parcoursDemat"></text-angular>
-                    </div>
-                </div>
-
-                <div class='row'>
-                    <div class='col-xs-3'>
-                        <span>Texte complémentaire&nbsp;:</span>
-                    </div>
-                    <div class='col-xs-9'>
-                        <text-angular ng-model="chapitre.texteComplementaire">
-                        </text-angular>
-                    </div>
-                </div>
-            
-            </div>
-            
-        </div>
-
         <div ng-show='!chapitre.closedInEdition' class="panel-footer">
             <div class='row'>
                 <div class='col-xs-3'>

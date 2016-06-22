@@ -44,7 +44,7 @@ public class UserChecklistGeneratorTest {
 		final MonthAndYear dateDepart = new MonthAndYear();
 
 		final UserChecklistGenerationData userChecklistGenerationData = new UserChecklistGenerationData(dateDepart, "973", REGIMES, REGIMES_ALIGNES,
-				false, true);
+				true);
 
 		final Checklist checklist = new Checklist();
 		final UserChecklist userChecklist = new UserChecklist();
@@ -64,7 +64,7 @@ public class UserChecklistGeneratorTest {
 		final MonthAndYear dateDepart = new MonthAndYear();
 
 		final UserChecklistGenerationData userChecklistGenerationData = new UserChecklistGenerationData(dateDepart, "973", REGIMES, REGIMES_ALIGNES,
-				false, false);
+				false);
 
 		final Checklist checklist = new Checklist();
 		final UserChecklist userChecklist = new UserChecklist();
