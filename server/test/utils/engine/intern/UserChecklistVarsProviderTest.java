@@ -43,6 +43,8 @@ public class UserChecklistVarsProviderTest {
 			{
 				put("regimes_base_hors_alignes", "Banque de France,Caisse d'assurance retraite des chirurgiens dentistes");
 				put("regimes_compl_hors_agirc_arrco", "Caisse nationale de retraite complémentaire des artistes auteurs");
+				put("regimes_hors_alignes_et_agirc_arrco",
+						"Caisse nationale de retraite complémentaire des artistes auteurs,Banque de France,Caisse d'assurance retraite des chirurgiens dentistes");
 			}
 		};
 		assertThat(vars.getMapOfValues()).isEqualTo(expectedMap);
