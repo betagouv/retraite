@@ -1,10 +1,8 @@
 package controllers.data;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 
-import controllers.utils.DataUnbinder;
 import play.mvc.Scope.Params;
 import utils.RetraiteException;
 import utils.engine.data.enums.Regime;
@@ -21,8 +19,8 @@ public class ApiUserChecklistParams {
 	public String departAnnee;
 	public RegimeAligne regimeLiquidateur;
 	public Regime[] regimes;
-	public List<UserStatus> userStatus;
 	public boolean isCarriereLongue;
+	public UserStatus userStatus;
 	public boolean published;
 	public boolean full;
 
@@ -36,12 +34,17 @@ public class ApiUserChecklistParams {
 		apiUserChecklistParams.departAnnee = getAndRemove(params, "departAnnee");
 		apiUserChecklistParams.regimeLiquidateur = getAndRemoveAsRegimeAligne(params, "regimeLiquidateur");
 		apiUserChecklistParams.regimes = Regime.fromStringList(getAndRemove(params, "regimes"));
-		apiUserChecklistParams.userStatus = new DataUnbinder().unbind(getAndRemove(params, "userStatus"));
 		apiUserChecklistParams.isCarriereLongue = asBoolean(getAndRemove(params, "isCarriereLongue"));
+		apiUserChecklistParams.userStatus = getAndRemoveAsUserStatus(params);
 		apiUserChecklistParams.published = asBoolean(getAndRemove(params, "published"));
 		apiUserChecklistParams.full = asBoolean(getAndRemove(params, "full"));
 		checkDoNotRemainParams(params);
 		return apiUserChecklistParams;
+	}
+
+	private static UserStatus getAndRemoveAsUserStatus(final Params params) {
+		final String userStatusStr = getAndRemove(params, "userStatus");
+		return userStatusStr == null ? null : UserStatus.valueOf(userStatusStr);
 	}
 
 	private static RegimeAligne getAndRemoveAsRegimeAligne(final Params params, final String key) {
@@ -72,7 +75,7 @@ public class ApiUserChecklistParams {
 	public String toString() {
 		return "ApiUserChecklistParams[nom=" + nom + ", dateNaissance=" + dateNaissance + ", nir=" + nir + ", departement=" + departement + ", departMois="
 				+ departMois + ", departAnnee=" + departAnnee + ", regimeLiquidateur=" + regimeLiquidateur + ", regimes=" + Arrays.toString(regimes)
-				+ ", isCarriereLongue=" + isCarriereLongue + ", published=" + published + ", full=" + full + "]";
+				+ ", isCarriereLongue=" + isCarriereLongue + ", userStatus=" + userStatus + ", published=" + published + ", full=" + full + "]";
 	}
 
 	private static boolean asBoolean(final String value) {

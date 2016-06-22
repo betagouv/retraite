@@ -1,5 +1,6 @@
 package controllers.utils;
 
+import static java.util.Arrays.asList;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyBoolean;
@@ -9,6 +10,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static utils.engine.data.enums.RegimeAligne.CNAV;
 import static utils.engine.data.enums.RegimeAligne.RSI;
+import static utils.engine.data.enums.UserStatus.STATUS_CONJOINT_COLLABORATEUR;
 
 import java.util.List;
 
@@ -22,6 +24,7 @@ import utils.engine.data.UserChecklistGenerationData;
 import utils.engine.data.enums.ChecklistName;
 import utils.engine.data.enums.Regime;
 import utils.engine.data.enums.RegimeAligne;
+import utils.engine.data.enums.UserStatus;
 import utils.engine.intern.CalculateurRegimeAlignes;
 import utils.engine.intern.UserChecklistGenerationDataBuilder;
 import utils.engine.intern.UserChecklistGenerator;
@@ -132,6 +135,8 @@ public class ApiChecklistGeneratorTest {
 		apiUserChecklistParams.departMois = "11";
 		apiUserChecklistParams.departAnnee = "2017";
 		apiUserChecklistParams.regimes = new Regime[] { Regime.CNAV };
+		apiUserChecklistParams.isCarriereLongue = true;
+		apiUserChecklistParams.userStatus = STATUS_CONJOINT_COLLABORATEUR;
 		apiUserChecklistParams.published = false;
 		apiUserChecklistParams.regimeLiquidateur = RSI;
 
@@ -150,9 +155,9 @@ public class ApiChecklistGeneratorTest {
 				new Regime[] { Regime.CNAV },
 				new RegimeAligne[] { RegimeAligne.CNAV },
 				RSI,
-				false,
-				false,
-				null /* ? */);
+				false /* published */,
+				true /* isCarriereLongue */,
+				asList(STATUS_CONJOINT_COLLABORATEUR));
 		verify(userChecklistGeneratorMock).generate(eq(ChecklistName.RSI), eq(userChecklistGenerationData));
 	}
 

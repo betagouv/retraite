@@ -1,5 +1,6 @@
 package controllers.utils;
 
+import java.util.Arrays;
 import java.util.List;
 
 import controllers.data.ApiUserChecklistParams;
@@ -36,7 +37,7 @@ public class ApiChecklistGenerator {
 		final String departMois = apiUserChecklistParams.departMois;
 		final String departAnnee = apiUserChecklistParams.departAnnee;
 		final RegimeAligne regimeLiquidateur = apiUserChecklistParams.regimeLiquidateur;
-		final List<UserStatus> userStatus = apiUserChecklistParams.userStatus;
+		final List<UserStatus> userStatus = asList(apiUserChecklistParams.userStatus);
 		final Regime[] regimes = apiUserChecklistParams.regimes;
 		final boolean isCarriereLongue = apiUserChecklistParams.isCarriereLongue;
 		final boolean published = apiUserChecklistParams.published;
@@ -73,6 +74,10 @@ public class ApiChecklistGenerator {
 
 		data.userChecklist = userChecklistGenerator.generate(checklistName, userChecklistGenerationData);
 		return data;
+	}
+
+	private List<UserStatus> asList(final UserStatus userStatus) {
+		return userStatus == null ? null : Arrays.asList(userStatus);
 	}
 
 	private boolean isNullOrEmpty(final String str) {
