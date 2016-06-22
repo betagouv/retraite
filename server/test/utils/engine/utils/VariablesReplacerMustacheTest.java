@@ -20,9 +20,9 @@ public class VariablesReplacerMustacheTest {
 	@Test
 	public void should_replace_variables() {
 
-		final String text = "avant {{regimes_base_hors_alignes}} apres";
+		final String text = "avant {{une_variable}} apres";
 		final Map<String, String> variables = new HashMap<>();
-		variables.put("regimes_base_hors_alignes", "toto");
+		variables.put("une_variable", "toto");
 
 		final String result = variablesReplacer.replaceVariables(text, variables);
 
