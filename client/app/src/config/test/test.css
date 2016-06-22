@@ -6,7 +6,14 @@
     width: 140px;
 }
 
-.checkbox-regime {
-    display: inline-block;
-    margin-right: 20px;
+.test-options {
+    display: inline-table;
+}
+
+.test-options li {
+    margin: 0 0 10px 0;
+}
+
+.test-options li input {
+    margin: 0 0 0 20px;
 }
