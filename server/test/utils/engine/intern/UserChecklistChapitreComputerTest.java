@@ -92,7 +92,4 @@ public class UserChecklistChapitreComputerTest {
 		return chapitre;
 	}
 
-	static enum ParcoursDematDifferent {
-		PARCOURS_DEMAT_IDENTITIQUE, PARCOURS_DEMAT_DIFFERENT
-	};
 }

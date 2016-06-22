@@ -37,25 +37,6 @@ public class Chapitre extends RetraiteModel implements Cloneable {
 	@Column(columnDefinition = "text")
 	public String texteInfos;
 
-	@Deprecated
-	@Column(columnDefinition = "text")
-	public String texteIntro;
-
-	@Deprecated
-	public boolean parcoursDematDifferent;
-
-	@Deprecated
-	@Column(columnDefinition = "text")
-	public String parcours;
-
-	@Deprecated
-	@Column(columnDefinition = "text")
-	public String parcoursDemat;
-
-	@Deprecated
-	@Column(columnDefinition = "text")
-	public String texteComplementaire;
-
 	@Column(columnDefinition = "text")
 	public String notes;
 

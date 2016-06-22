@@ -9,7 +9,6 @@ public class UserChecklistGenerationData {
 	private String departement;
 	private Regime[] regimes;
 	private RegimeAligne[] regimesAlignes;
-	private boolean parcoursDematIfExist;
 
 	public boolean isConjointCollaborateur;
 	public boolean isNSA;
@@ -19,12 +18,11 @@ public class UserChecklistGenerationData {
 	public boolean published;
 
 	public UserChecklistGenerationData(final MonthAndYear dateDepart, final String departement, final Regime[] regimes, final RegimeAligne[] regimesAlignes,
-			final boolean parcoursDematIfExist, final boolean published) {
+			final boolean published) {
 		this.dateDepart = dateDepart;
 		this.departement = departement;
 		this.regimes = regimes;
 		this.regimesAlignes = regimesAlignes;
-		this.parcoursDematIfExist = parcoursDematIfExist;
 		this.published = published;
 	}
 
@@ -47,10 +45,6 @@ public class UserChecklistGenerationData {
 		return regimesAlignes;
 	}
 
-	public boolean isParcoursDematIfExist() {
-		return parcoursDematIfExist;
-	}
-
 	public static Builder create() {
 		return new Builder();
 	}
@@ -70,11 +64,6 @@ public class UserChecklistGenerationData {
 
 		public Builder withDepartement(final String departement) {
 			userChecklistGenerationData.departement = departement;
-			return this;
-		}
-
-		public Builder withParcoursDematIfExist(final boolean parcoursDematIfExist) {
-			userChecklistGenerationData.parcoursDematIfExist = parcoursDematIfExist;
 			return this;
 		}
 

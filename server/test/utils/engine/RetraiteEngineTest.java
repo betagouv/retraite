@@ -537,13 +537,13 @@ public class RetraiteEngineTest {
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { CNAV };
 		final UserChecklist userChecklistMock = createUserChecklist();
 		final UserChecklistGenerationData userChecklistGenerationData = new UserChecklistGenerationData(dateDepart, "987", regimes, regimesAlignes,
-				false, true);
+				true);
 		final RegimeAligne regimeLiquidateur = CNAV;
 		final List<UserStatus> userStatus = asList(STATUS_CHEF);
 
 		when(calculateurRegimeAlignesMock.getRegimesAlignes("CNAV")).thenReturn(regimesAlignes);
 		when(userChecklistGenerationDataBuilderMock.build(eq(dateDepart), eq("987"), eq(regimes), eq(regimesAlignes), eq(regimeLiquidateur),
-				eq(true), eq(true), eq(true), eq(userStatus))).thenReturn(userChecklistGenerationData);
+				eq(true), eq(true), eq(userStatus))).thenReturn(userChecklistGenerationData);
 		when(userChecklistGeneratorMock.generate(same(userChecklistGenerationData), eq(regimeLiquidateur))).thenReturn(userChecklistMock);
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);

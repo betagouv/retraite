@@ -38,15 +38,13 @@ public class DisplayerChecklist {
 		final RegimeAligne[] regimesAlignes = calculateurRegimeAlignes.getRegimesAlignes(data.hidden_regimes);
 		final RegimeAligne regimeLiquidateur = data.hidden_liquidateur;
 		final Regime[] regimes = Regime.fromStringList(data.hidden_regimes);
-		// [XN-29/03/2016-En attendant de remettre les questions complémentaires, on force l'affichage du parcours démat]
-		final boolean isParcoursDemat = true;// questionComplementairesEvaluator.isParcoursDemat(complementReponses);
 		// Temp
 		final String departMois = firstNotNull(data.departMois, data.hidden_departMois);
 		final String departAnnee = firstNotNull(data.departAnnee, data.hidden_departAnnee);
 		final MonthAndYear dateDepart = new MonthAndYear(departMois, departAnnee);
 		final String departement = firstNotNull(data.departement, data.hidden_departement);
 		final UserChecklistGenerationData userChecklistGenerationData = userChecklistGenerationDataBuilder.build(dateDepart, departement,
-				regimes, regimesAlignes, regimeLiquidateur, isParcoursDemat, true, data.hidden_attestationCarriereLongue, data.hidden_userStatus);
+				regimes, regimesAlignes, regimeLiquidateur, true, data.hidden_attestationCarriereLongue, data.hidden_userStatus);
 		renderData.hidden_step = "displayCheckList";
 		try {
 			renderData.userChecklist = userChecklistGenerator.generate(userChecklistGenerationData, regimeLiquidateur);
