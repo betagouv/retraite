@@ -193,7 +193,6 @@ public class DaoChecklistTest extends RetraiteUnitTestBase {
 						+ "'texteInfos':'infos 1'"
 						+ "},{"
 						+ "'titre':'J’obtiens ma retraite',"
-						+ "'parcoursDematDifferent':false,"
 						+ "'id':" + chapitre2.id + ","
 						+ "'texteActions':'actions 2',"
 						+ "'texteModalites':'modalités 2',"

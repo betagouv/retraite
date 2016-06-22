@@ -18,14 +18,14 @@ public class UserChecklistParcoursComputer {
 		this.variablesReplacer = variablesReplacer;
 	}
 
-	public String compute(final String parcours, final UserChecklistGenerationData userChecklistGenerationData) {
-		if (parcours == null) {
+	public String compute(final String text, final UserChecklistGenerationData userChecklistGenerationData) {
+		if (text == null) {
 			return null;
 		}
-		if (isLikeEmpty(parcours)) {
+		if (isLikeEmpty(text)) {
 			return null;
 		}
-		return replaceVars(replaceLinks(parcours), userChecklistGenerationData);
+		return replaceVars(replaceLinks(text), userChecklistGenerationData);
 	}
 
 	private String replaceVars(final String text, final UserChecklistGenerationData userChecklistGenerationData) {
@@ -33,47 +33,47 @@ public class UserChecklistParcoursComputer {
 		return variablesReplacer.replaceVariables(text, vars);
 	}
 
-	private String replaceLinks(final String parcours) {
-		return replaceLinks(parcours, 0);
+	private String replaceLinks(final String text) {
+		return replaceLinks(text, 0);
 	}
 
-	private String replaceLinks(final String parcours, final int fromIndex) {
-		final int beginIndex = searchBeginIndex(parcours, fromIndex);
+	private String replaceLinks(final String text, final int fromIndex) {
+		final int beginIndex = searchBeginIndex(text, fromIndex);
 		if (beginIndex == -1) {
-			return parcours;
+			return text;
 		}
-		final int endIndex = searchEndIndex(parcours, beginIndex);
-		final String beforeLink = parcours.substring(0, beginIndex);
-		final String link = parcours.substring(beginIndex, endIndex);
+		final int endIndex = searchEndIndex(text, beginIndex);
+		final String beforeLink = text.substring(0, beginIndex);
+		final String link = text.substring(beginIndex, endIndex);
 		final String buildedLink = buildLink(link);
-		final String afterLink = parcours.substring(endIndex);
-		final String newParcours = beforeLink + buildedLink + afterLink;
-		return replaceLinks(newParcours, beforeLink.length() + buildedLink.length());
+		final String afterLink = text.substring(endIndex);
+		final String newText = beforeLink + buildedLink + afterLink;
+		return replaceLinks(newText, beforeLink.length() + buildedLink.length());
 	}
 
-	private int searchBeginIndex(final String parcours, final int fromIndex) {
-		int beginIndex = parcours.indexOf("http://", fromIndex);
+	private int searchBeginIndex(final String text, final int fromIndex) {
+		int beginIndex = text.indexOf("http://", fromIndex);
 		if (beginIndex == -1) {
-			beginIndex = parcours.indexOf("https://", fromIndex);
+			beginIndex = text.indexOf("https://", fromIndex);
 		}
 		return beginIndex;
 	}
 
-	private int searchEndIndex(final String parcours, final int beginIndex) {
+	private int searchEndIndex(final String text, final int beginIndex) {
 		final int endIndex = RetraiteStringsUtils.getMinIndex(
-				parcours.length(),
-				parcours.indexOf(" ", beginIndex),
-				parcours.indexOf("<", beginIndex));
+				text.length(),
+				text.indexOf(" ", beginIndex),
+				text.indexOf("<", beginIndex));
 		if (endIndex == -1) {
 			return -1;
 		}
-		return skipSpecialCharAfterLink(parcours, endIndex);
+		return skipSpecialCharAfterLink(text, endIndex);
 	}
 
-	private int skipSpecialCharAfterLink(final String parcours, final int endIndex) {
-		final char lastCharInLink = parcours.charAt(endIndex - 1);
+	private int skipSpecialCharAfterLink(final String text, final int endIndex) {
+		final char lastCharInLink = text.charAt(endIndex - 1);
 		if (lastCharInLink == '.') {
-			return skipSpecialCharAfterLink(parcours, endIndex - 1);
+			return skipSpecialCharAfterLink(text, endIndex - 1);
 		}
 		return endIndex;
 	}

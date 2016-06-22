@@ -34,9 +34,8 @@ public class UserChecklistVarsProviderTest {
 		final MonthAndYear dateDepart = null;
 		final Regime[] regimes = new Regime[] { CNAV, IRCEC, BFSP, AGIRC_ARRCO, CARCD };
 		final RegimeAligne[] regimesAlignes = null;
-		final boolean parcoursDematIfExist = false;
 		final UserChecklistGenerationData userChecklistGenerationData = new UserChecklistGenerationData(dateDepart, "973", regimes, regimesAlignes,
-				parcoursDematIfExist, true);
+				true);
 
 		final UserChecklistVars vars = userChecklistVarsProvider.provideVars(userChecklistGenerationData);
 

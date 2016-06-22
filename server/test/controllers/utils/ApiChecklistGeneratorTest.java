@@ -120,7 +120,7 @@ public class ApiChecklistGeneratorTest {
 	public void should_generate_data() {
 		final UserChecklistGenerationData userChecklistGenerationData = UserChecklistGenerationData.create().get();
 		when(userChecklistGenerationDataBuilderMock.build(any(MonthAndYear.class), any(String.class), any(Regime[].class), any(RegimeAligne[].class),
-				any(RegimeAligne.class), anyBoolean(), anyBoolean(), anyBoolean(), any(List.class)))
+				any(RegimeAligne.class), anyBoolean(), anyBoolean(), any(List.class)))
 						.thenReturn(userChecklistGenerationData);
 		when(calculateurRegimeAlignesMock.getRegimesAlignes(new Regime[] { Regime.CNAV })).thenReturn(new RegimeAligne[] { RegimeAligne.CNAV });
 
@@ -150,7 +150,6 @@ public class ApiChecklistGeneratorTest {
 				new Regime[] { Regime.CNAV },
 				new RegimeAligne[] { RegimeAligne.CNAV },
 				RSI,
-				false,
 				false,
 				false,
 				null /* ? */);

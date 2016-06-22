@@ -15,10 +15,10 @@ import utils.engine.data.enums.UserStatus;
 public class UserChecklistGenerationDataBuilder {
 
 	public UserChecklistGenerationData build(final MonthAndYear dateDepart, final String departement, final Regime[] regimes,
-			final RegimeAligne[] regimesAlignes, final RegimeAligne regimeLiquidateur, final boolean parcoursDematIfExist,
-			final boolean published, final boolean isCarriereLongue, final List<UserStatus> userStatus) {
+			final RegimeAligne[] regimesAlignes, final RegimeAligne regimeLiquidateur, final boolean published,
+			final boolean isCarriereLongue, final List<UserStatus> userStatus) {
 		final UserChecklistGenerationData userChecklistGenerationData = new UserChecklistGenerationData(dateDepart, departement, regimes, regimesAlignes,
-				parcoursDematIfExist, published);
+				published);
 		userChecklistGenerationData.isConjointCollaborateur = contains(userStatus, STATUS_CONJOINT_COLLABORATEUR);
 		userChecklistGenerationData.isNSA = contains(userStatus, STATUS_NSA);
 		userChecklistGenerationData.isSA = contains(userStatus, STATUS_SA);
