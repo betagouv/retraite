@@ -16,9 +16,19 @@ angular.module('SgmapRetraiteCommons').service('ObjectUtils', function () {
         propsToIgnore.forEach(function(propToIgnore) {
             delete obj[propToIgnore];  
         });
-        if (obj instanceof Object) {
-            for(var prop in obj) {
-                deletePropertiesInObject(obj[prop], propsToIgnore); 
+        for(var prop in obj) {
+            if (startsWith(prop, '$')) {
+                continue;
+            }
+            if (obj.hasOwnProperty(prop)) {
+                var subobj = obj[prop];
+                if (angular.isArray(subobj)) {
+                    angular.forEach(subobj, function(item) {
+                        deletePropertiesInObject(item, propsToIgnore);  
+                    });
+                } else if (subobj instanceof Object) {
+                    deletePropertiesInObject(subobj, propsToIgnore); 
+                }
             }
         }
     }
