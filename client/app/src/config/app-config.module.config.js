@@ -73,3 +73,6 @@ angular.module('SgmapRetraiteConfig').config(function ($urlRouterProvider, $stat
 
 });
 
+function startsWith(txt, s) {
+    return txt.indexOf(s) == 0;
+}
