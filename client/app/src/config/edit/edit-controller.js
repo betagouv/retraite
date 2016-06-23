@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('SgmapRetraiteConfig').controller('EditCtrl', 
-            function ($scope, $state, $stateParams, CheckList, RetraiteDialog, ArrayUtils, EditConditionValidator, $window, PromptService, DialogDelai, RetraiteToaster, ChecklistPublisher, PastedTextCleaner) {
+            function ($scope, $state, $stateParams, CheckList, RetraiteDialog, ArrayUtils, EditConditionValidator, $window, PromptService, DialogDelai, RetraiteToaster, ChecklistPublisher, PastedTextCleaner, ObjectUtils) {
 
     // Actions
     

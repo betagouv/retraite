@@ -28,26 +28,73 @@ describe('ObjectUtils', function () {
                 nom: "CNAV",
                 published: false,
                 modifiedButNotPublished: true,
+                // Pour tester avec les tableaux
+                chapitres: [
+                    {
+                        id: 1,
+                        titre: 'aaa',
+                        type: 'type 1'
+                    },{
+                        id: 2,
+                        titre: 'bbb',
+                        type: 'type 1'
+                    }
+                ],
+                // Pour reproduire le problème de la Resource quelque part dans l'arborescence
+                // qui contient une $promise dont la valeur (dans $$state avec Angular)
+                // pointe sur l'objet conteneur (= boucle)
+                $promise: {
+                },
                 // Ignorer les propriétés suivantes
                 type: "cnav",
-                id: 1 
-            };           
+                id: 1,
+                propThatCanBeNull: undefined
+            };    
+            checklist1.$promise.value = checklist1;
             var checklist2 = {
                 nom: "CNAV",
                 published: false,
                 modifiedButNotPublished: true,
+                chapitres: [
+                    {
+                        id: 1,
+                        titre: 'aaa',
+                        type: 'type 2' // Diff !
+                    },{
+                        id: 2,
+                        titre: 'bbb',
+                        type: 'type 3' // Diff !
+                    }
+                ],
+                $promise: {
+                },
                 // Ignorer les propriétés suivantes
                 type: "msa",
                 id: 2
             };           
+            checklist2.$promise.value = checklist2;
             var checklist1WithDiff = {
                 nom: "CNAV",
                 published: false,
                 modifiedButNotPublished: false, // Diff !
+                chapitres: [
+                    {
+                        id: 1,
+                        titre: 'aaa xxx', // Diff !
+                        type: 'type 2' // Diff !
+                    },{
+                        id: 2,
+                        titre: 'bbb',
+                        type: 'type 3' // Diff !
+                    }
+                ],
+                $promise: {
+                },
                 // Ignorer les propriétés suivantes
                 type: "msa",
                 id: 1
             };
+            checklist1WithDiff.$promise.value = checklist1WithDiff;
             
             // On vérifie que c'est différent avec toutes les propriétés
             expect(ObjectUtils.equalsIgnoringProperties(checklist1, checklist2)).toBeFalsy();

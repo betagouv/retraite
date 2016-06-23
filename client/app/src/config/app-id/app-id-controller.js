@@ -8,7 +8,4 @@ angular.module('SgmapRetraiteConfig').controller('AppIdCtrl', function (Wrapper)
                    startsWith(host, 'localhost') ? 'localhost' : 
                    'prod';
     
-    function startsWith(txt, s) {
-        return txt.indexOf(s) == 0;
-    }
 });
