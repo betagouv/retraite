@@ -67,11 +67,19 @@ angular.module('SgmapRetraiteConfig').controller('EditCtrl',
     };
     
     $scope.duplicateChapitre = function(chapitre) {
+        
+        function removeAllIdsInChapitre(newChapitre) {
+            delete newChapitre.id;
+            angular.forEach(newChapitre.conditions, function(condition) {
+                delete condition.id;
+            }); 
+        }
+        
         var chapitres = $scope.checklist.chapitres;
         for(var i = 0; i < chapitres.length; i++) {
             if (chapitres[i] == chapitre) {
                 var newChapitre = angular.copy(chapitre);
-                delete newChapitre.id;
+                removeAllIdsInChapitre(newChapitre);
                 newChapitre.titre += " - Copie";
                 chapitres.splice(i+1, 0, newChapitre);
                 return;
