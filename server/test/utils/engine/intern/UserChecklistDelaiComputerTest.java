@@ -98,7 +98,7 @@ public class UserChecklistDelaiComputerTest {
 
 		final String result = userChecklistDelaiComputer.compute(delai, dateDepart);
 
-		assertThat(result).isEqualTo("Dès que possible");
+		assertThat(result).isEqualTo("Le plus tôt possible");
 	}
 
 	// "Entre x et y mois/années"
@@ -150,7 +150,7 @@ public class UserChecklistDelaiComputerTest {
 
 		final String result = userChecklistDelaiComputer.compute(delai, dateDepart);
 
-		assertThat(result).isEqualTo("Dès que possible");
+		assertThat(result).isEqualTo("Le plus tôt possible");
 	}
 
 	@Test
@@ -170,7 +170,7 @@ public class UserChecklistDelaiComputerTest {
 
 		final String result = userChecklistDelaiComputer.compute(delai, dateDepart);
 
-		assertThat(result).isEqualTo("Dès que possible");
+		assertThat(result).isEqualTo("Le plus tôt possible");
 	}
 
 	@Test
@@ -190,7 +190,7 @@ public class UserChecklistDelaiComputerTest {
 
 		final String result = userChecklistDelaiComputer.compute(delai, dateDepart);
 
-		assertThat(result).isEqualTo("Dès que possible");
+		assertThat(result).isEqualTo("Le plus tôt possible");
 	}
 
 	// "A partir de x mois/années"
@@ -212,7 +212,7 @@ public class UserChecklistDelaiComputerTest {
 
 		final String result = userChecklistDelaiComputer.compute(delai, dateDepart);
 
-		assertThat(result).isEqualTo("Dès que possible");
+		assertThat(result).isEqualTo("Le plus tôt possible");
 	}
 
 	// "A x mois/années"
@@ -234,6 +234,6 @@ public class UserChecklistDelaiComputerTest {
 
 		final String result = userChecklistDelaiComputer.compute(delai, dateDepart);
 
-		assertThat(result).isEqualTo("Dès que possible");
+		assertThat(result).isEqualTo("Le plus tôt possible");
 	}
 }
