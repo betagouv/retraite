@@ -28,4 +28,28 @@ public class VariablesReplacerMustacheTest {
 
 		assertThat(result).isEqualTo("avant toto apres");
 	}
+
+	@Test
+	public void should_display_conditionnal_section() {
+
+		final String text = "prefix {{#une_variable}}avant {{une_variable}} apres{{/une_variable}} suffixe";
+		final Map<String, String> variables = new HashMap<>();
+		variables.put("une_variable", "toto");
+
+		final String result = variablesReplacer.replaceVariables(text, variables);
+
+		assertThat(result).isEqualTo("prefix avant toto apres suffixe");
+	}
+
+	@Test
+	public void should_not_display_conditionnal_section() {
+
+		final String text = "prefix {{#une_variable}}avant {{une_variable}} apres{{/une_variable}} suffixe";
+		final Map<String, String> variables = new HashMap<>();
+		variables.put("une_autre_variable", "toto");
+
+		final String result = variablesReplacer.replaceVariables(text, variables);
+
+		assertThat(result).isEqualTo("prefix  suffixe");
+	}
 }
