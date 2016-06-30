@@ -2,8 +2,10 @@
 	#{stylesheet 'doc.css' /}
 #{/set}
 
+#{set title:'Documentation' /}
+#{set doNotIncludeBootstrap:true /}
+
 #{extends 'main.html' /}
-#{set title:'Home' /}
 
 <div class="col-sm-12">
 
@@ -15,6 +17,12 @@
 #{else}
 	<h1 class='text-red'>Version non publiée</h1>
 #{/else}
+
+#{if !pdf}
+	<div class="text-center">
+		<a class="btn btn-success" href="/application/generateDoc?checklistNom=${checklist.nom}&published=${published}&pdf=true">Télécharger en PDF</a>
+	</div>
+#{/if}
 
 #{list items:checklist.chapitres, as:'chapitre' }
     <h2>${chapitre_index} - ${chapitre.titre}</h2>

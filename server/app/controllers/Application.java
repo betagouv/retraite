@@ -120,16 +120,19 @@ public class Application extends RetraiteController {
 		}
 
 		setResponseHeaderForPdfContentType();
-		setResponseHeaderForAttachedPdf();
+		setResponseHeaderForAttachedPdf("Mes_demarches_retraite.pdf");
 
 		if (RENDER_PDF_WITH_I_TEXT) {
-			renderPdfWith_iText(data);
+			final Map<String, Object> params = new HashMap<String, Object>();
+			params.put("data", data);
+
+			renderPdfWith_iText(params);
+			ok();
+		} else {
+			// PDF.renderPDF() ne peut pas être utilisé car il écrase les headers fixés ci-dessus
+			PDF.writePDF(response.out, data);
 			ok();
 		}
-
-		// PDF.renderPDF() ne peut pas être utilisé car il écrase les headers fixés ci-dessous
-		renderPdfWithPdfPlayModule(data);
-		ok();
 	}
 
 	// Méthodes privées
@@ -142,13 +145,13 @@ public class Application extends RetraiteController {
 		response.setHeader("Content-Type", "application/pdf");
 	}
 
-	private static void setResponseHeaderForAttachedPdf() {
-		response.setHeader("Content-Disposition", "attachment; filename=\"Mes_demarches_retraite.pdf\"");
+	private static void setResponseHeaderForAttachedPdf(final String filename) {
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
 	}
 
-	private static void renderPdfWith_iText(final RenderData data) {
+	private static void renderPdfWith_iText(final Map<String, Object> params) {
 		final Template template = TemplateLoader.load(template("Application/pdf.html"));
-		final String hmltResult = template.render(createMapWithParams(data));
+		final String hmltResult = template.render(params);
 		final String hmltResultWithFullCssPath = completePublicPathWithCurrentDirectoryPath(hmltResult);
 		try {
 			final Document document = new Document();
@@ -167,28 +170,39 @@ public class Application extends RetraiteController {
 		return hmltResult.replaceAll("/public/", getCurrentPath() + "/public/");
 	}
 
-	private static Map<String, Object> createMapWithParams(final RenderData data) {
-		final Map<String, Object> map = new HashMap<String, Object>();
-		map.put("data", data);
-		return map;
-	}
-
-	private static void renderPdfWithPdfPlayModule(final RenderData data) {
-		PDF.writePDF(response.out, data);
-	}
-
 	private static String getCurrentPath() {
 		final File f = new File(".");
 		final String absolutePath = f.getAbsolutePath();
 		return absolutePath.substring(0, absolutePath.length() - 2);
 	}
 
-	public static void generateDoc(final String checklistNom, final boolean published) {
+	public static void generateDoc(final String checklistNom, final boolean published, final boolean pdf) {
 		final Checklist checklistFromBdd = createDaoChecklist().find(checklistNom, published);
 		final ChecklistForDoc checklist = new ChecklistForDocConverter().convert(checklistFromBdd);
 		final Look look = Look.GENERIC;
 		final boolean noInfoCookie = true;
-		render(checklist, published, look, noInfoCookie);
+		if (pdf) {
+			setResponseHeaderForPdfContentType();
+			setResponseHeaderForAttachedPdf("Mes_demarches_retraite_" + checklistNom + "_documentation.pdf");
+
+			if (RENDER_PDF_WITH_I_TEXT) {
+				final Map<String, Object> params = new HashMap<String, Object>();
+				params.put("checklist", checklist);
+				params.put("published", published);
+				params.put("look", look);
+				params.put("noInfoCookie", noInfoCookie);
+				params.put("pdf", pdf);
+
+				renderPdfWith_iText(params);
+				ok();
+			} else {
+				// PDF.renderPDF() ne peut pas être utilisé car il écrase les headers fixés ci-dessus
+				PDF.writePDF(response.out, checklist, published, look, noInfoCookie, pdf);
+				ok();
+			}
+		} else {
+			render(checklist, published, look, noInfoCookie);
+		}
 	}
 
 	private static PDF.Options createPdfOptions() {
