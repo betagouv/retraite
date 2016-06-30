@@ -20,8 +20,8 @@ GET     /proto/config/                          staticDir:../client/config/
 GET     /proto                                  staticDir:../client/app/
 
 GET     /config                                 staticDir:www/
-
 GET     /public/								staticDir:/public/
+GET     /viewlogs/								staticDir:/logs/
 
 # Secure routes
 
