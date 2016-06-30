@@ -21,7 +21,10 @@ import utils.engine.utils.DateProvider;
 
 public class UserChecklistDelaiComputer {
 
+	private static final String TEXT_POUR_DELAI_DEPASSE = "Le plus tôt possible";
+
 	private static final SimpleDateFormat FORMAT_MONTH_NAME = new SimpleDateFormat("MMMM", FRENCH);
+
 	private final DateProvider dateProvider;
 
 	public UserChecklistDelaiComputer(final DateProvider dateProvider) {
@@ -55,7 +58,7 @@ public class UserChecklistDelaiComputer {
 		setCalendarToEndOfPreviousMonth(calendar);
 		calendar.add(getCalendarField(delai.unite), -delai.min);
 		if (calendar.getTime().getTime() <= dateProvider.getCurrentDate().getTime()) {
-			return "Dès que possible";
+			return TEXT_POUR_DELAI_DEPASSE;
 		}
 		return "Au plus tard fin " + FORMAT_MONTH_NAME.format(calendar.getTime()) + " " + calendar.get(Calendar.YEAR);
 	}
@@ -83,7 +86,7 @@ public class UserChecklistDelaiComputer {
 		final String monthMinStr = FORMAT_MONTH_NAME.format(calendarMin.getTime());
 		final String yearMaxStr = yearMin == yearMax ? "" : " " + yearMax;
 		if (calendarMin.getTime().getTime() <= dateProvider.getCurrentDate().getTime()) {
-			return "Dès que possible";
+			return TEXT_POUR_DELAI_DEPASSE;
 		}
 		if (calendarMax.getTime().getTime() <= dateProvider.getCurrentDate().getTime()) {
 			return "Au plus tard fin " + monthMinStr + " " + yearMin;
@@ -101,7 +104,7 @@ public class UserChecklistDelaiComputer {
 		final GregorianCalendar calendar = createCalendarForDateDepart(dateDepart);
 		calendar.add(getCalendarField(delai.unite), -delai.min);
 		if (calendar.getTime().getTime() <= dateProvider.getCurrentDate().getTime()) {
-			return "Dès que possible";
+			return TEXT_POUR_DELAI_DEPASSE;
 		}
 		return "A partir de " + FORMAT_MONTH_NAME.format(calendar.getTime()) + " " + calendar.get(Calendar.YEAR);
 	}
@@ -110,7 +113,7 @@ public class UserChecklistDelaiComputer {
 		final GregorianCalendar calendar = createCalendarForDateDepart(dateDepart);
 		calendar.add(getCalendarField(delai.unite), -delai.min);
 		if (calendar.getTime().getTime() <= dateProvider.getCurrentDate().getTime()) {
-			return "Dès que possible";
+			return TEXT_POUR_DELAI_DEPASSE;
 		}
 		return "En " + FORMAT_MONTH_NAME.format(calendar.getTime()) + " " + calendar.get(Calendar.YEAR);
 	}
