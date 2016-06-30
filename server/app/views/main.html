@@ -6,9 +6,11 @@
         <meta charset="${_response_encoding}">
 	    <meta name="viewport" content="width=device-width">
 
-		<!-- injector:bowercss -->
-		<link rel="stylesheet" href="/public/libs/bootstrap-css/css/bootstrap.min.css">
-		<!-- endinjector -->
+		#{if !doNotIncludeBootstrap}
+			<!-- injector:bowercss -->
+			<link rel="stylesheet" href="/public/libs/bootstrap-css/css/bootstrap.min.css">
+			<!-- endinjector -->
+		#{/if}
 		<link rel="stylesheet" href="/public/libs/jquery-ui/themes/base/jquery-ui.css">
         
         #{stylesheet look.getCssFilename() /}
