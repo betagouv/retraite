@@ -144,7 +144,17 @@ describe('EditCtrl', function () {
         
         beforeEach(function() {
             chapitre6 = { id: 666, titre: "Chap 6", closedInEdition: false };
-            chapitre7 = { id: 777, titre: "Chap 7", closedInEdition: true };
+            chapitre7 = { 
+                id: 777, 
+                titre: "Chap 7", 
+                conditions: [{
+                    props: {
+                        type: "carriere-longue-oui"
+                    },
+                    id: 748
+                }],
+                closedInEdition: true 
+            };
             chapitre8 = { id: 888, titre: "Chap 8", closedInEdition: false };
             chapitre9 = { id: 999, titre: "Chap 9", closedInEdition: true };
             chapitres = $scope.checklist.chapitres = [
@@ -249,6 +259,8 @@ describe('EditCtrl', function () {
                 expect(chapitres[1].id).toEqual(777);
                 expect(chapitres[2].id).not.toBeDefined();
                 expect(chapitres[2].titre).toEqual("Chap 7 - Copie");
+                expect(chapitres[2].conditions[0].props.type).toEqual("carriere-longue-oui");
+                expect(chapitres[2].conditions[0].id).not.toBeDefined();
                 expect(chapitres[3].id).toEqual(888);
                 expect(chapitres[4].id).toEqual(999);
             });
