@@ -13,7 +13,7 @@ public class UserChecklistVarsProvider {
 		final UserChecklistVars vars = new UserChecklistVars();
 		vars.put("regimes_base_hors_alignes", getRegimeBaseHorsAlignes(userChecklistGenerationData));
 		vars.put("regimes_compl_hors_agirc_arrco", getRegimeComplHorsAgircArrco(userChecklistGenerationData));
-		vars.put("regimes_hors_alignes_et_agirc_arrco", getRegimeHorsAlignesEtHorsAgircArrco(userChecklistGenerationData));
+		vars.put("regimes_hors_alignes_et_hors_agirc_arrco", getRegimeHorsAlignesEtHorsAgircArrco(userChecklistGenerationData));
 		return vars;
 	}
 
