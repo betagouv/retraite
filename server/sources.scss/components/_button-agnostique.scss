@@ -175,9 +175,15 @@ input.btn-next {
   background-color: $red-1;
 }
 
-.btn-next,
 .btn-success {
-  background: $red url("../img/sprites/next_white.png") no-repeat right 13px;
+  background-color: $red;
+}
+
+.btn-next {
+  background-image: url("../img/sprites/next_white.png");
+  background-repeat: no-repeat;
+  background-position-x: right;
+  background-position-y: 13px;
   padding-right:30px;
 }
 
@@ -267,12 +273,6 @@ input.btn-next {
 .btn:focus,
 .btn:active {
   background-color: $red-1;
-}
-
-.btn-next,
-.btn-success {
-  background: $red url("../img/sprites/next_white.png") no-repeat right 13px;
-  padding-right:30px;
 }
 
 .btn-precedente {

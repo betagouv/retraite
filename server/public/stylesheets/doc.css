@@ -53,3 +53,11 @@ h3 {
 .notes {
 	color: gray;
 }
+
+.text-center {
+	text-align: center;
+}
+
+a.btn {
+	color: white;
+}
