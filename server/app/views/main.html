@@ -48,31 +48,33 @@
 		
     </head>
 
-  	#{if look.toString() != 'RSI'}
-	    <header class="entete col-sm-12">
-	    	<div class="home header-inner clearfix">
-	    	<div class="col-sm-2">
-	            <div class="logo hidden-xs">
-	            	#{if look.toString() == 'CNAV'}
-		                <a href="https://www.lassuranceretraite.fr/portail-info/accueil" target="_blank" title="Nouvelle fenêtre"><img src="/public/img/sprites/logo_cnav.png" title="CNAV" alt="l'assurance retraite"></a>
-	            	#{/if}
-	            	#{if look.toString() == 'MSA'}
-						<a href="http://www.msa.fr/lfr" target="_blank" title="Nouvelle fenêtre"><img src="/public/img/sprites/logoMSA_home.png" title="msa" alt="sant√© famille retraite services"></a>
-	            	#{/if}
-	            </div>
-	        </div>
-	        <div class="title col-sm-10">
-	        	<a href="/${ actionQueryParams }" title="Retour à l'accueil">
-		            <h1>Mes démarches retraite</h1>
-		            <h2>pas à pas</h2>
-	            </a>
-	        </div>
-	    </header>
-   	#{/if}
-
-
     <body>
     
+	  	#{if look.toString() != 'RSI'}
+		    <header class="entete col-sm-12">
+		    	<div class="home header-inner clearfix row">
+			    	<div class="col-sm-2">
+			            <div class="logo hidden-xs">
+			            	#{if look.toString() == 'CNAV'}
+				                <a href="https://www.lassuranceretraite.fr/portail-info/accueil" target="_blank" title="Nouvelle fenêtre"><img src="/public/img/sprites/logo_cnav.png" title="CNAV" alt="l'assurance retraite"></a>
+			            	#{/if}
+			            	#{if look.toString() == 'MSA'}
+								<a href="http://www.msa.fr/lfr" target="_blank" title="Nouvelle fenêtre"><img src="/public/img/sprites/logoMSA_home.png" title="msa" alt="sant√© famille retraite services"></a>
+			            	#{/if}
+			            </div>
+			        </div>
+			        <div class="title col-sm-8">
+			        	<a href="/${ actionQueryParams }" title="Retour à l'accueil">
+				            <h1>Mes démarches retraite</h1>
+				            <h2>pas à pas</h2>
+			            </a>
+			        </div>
+			    	<div class="col-sm-2">
+			        </div>
+		    	</div>
+		    </header>
+	   	#{/if}
+	   	
         <div class="container padding-bottom #{get 'pageCssClass' /}">
 
             <div class="wrapper">
