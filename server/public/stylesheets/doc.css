@@ -1,3 +1,7 @@
+body {
+	background: none;
+}
+
 h1 {
     text-align: center;
 }
@@ -60,4 +64,23 @@ h3 {
 
 a.btn {
 	color: white;
+}
+
+body .container .wrapper,
+header.entete,
+header.entete .title {
+    background: none;
+}
+
+header.entete .title h1,
+header.entete .title h2 {
+    color: #000;
+}
+
+.texteActions, .texteModalites, .texteInfos {
+    background: none;
+    padding-left: 0;
+    min-height: auto;
+    font-style: normal;
+    font-weight: normal;
 }
