@@ -126,7 +126,7 @@ public class Application extends RetraiteController {
 			final Map<String, Object> params = new HashMap<String, Object>();
 			params.put("data", data);
 
-			renderPdfWith_iText(params);
+			renderPdfWith_iText("Application/pdf.html", params);
 			ok();
 		} else {
 			// PDF.renderPDF() ne peut pas être utilisé car il écrase les headers fixés ci-dessus
@@ -149,8 +149,8 @@ public class Application extends RetraiteController {
 		response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
 	}
 
-	private static void renderPdfWith_iText(final Map<String, Object> params) {
-		final Template template = TemplateLoader.load(template("Application/pdf.html"));
+	private static void renderPdfWith_iText(final String templateName, final Map<String, Object> params) {
+		final Template template = TemplateLoader.load(template(templateName));
 		final String hmltResult = template.render(params);
 		final String hmltResultWithFullCssPath = completePublicPathWithCurrentDirectoryPath(hmltResult);
 		try {
@@ -176,12 +176,12 @@ public class Application extends RetraiteController {
 		return absolutePath.substring(0, absolutePath.length() - 2);
 	}
 
-	public static void generateDoc(final String checklistNom, final boolean published, final boolean pdf) {
+	public static void generateDoc(final String checklistNom, final boolean published, final boolean pdf, final boolean viewPdfAsHtml) {
 		final Checklist checklistFromBdd = createDaoChecklist().find(checklistNom, published);
 		final ChecklistForDoc checklist = new ChecklistForDocConverter().convert(checklistFromBdd);
 		final Look look = Look.GENERIC;
 		final boolean noInfoCookie = true;
-		if (pdf) {
+		if (pdf && !viewPdfAsHtml) {
 			setResponseHeaderForPdfContentType();
 			setResponseHeaderForAttachedPdf("Mes_demarches_retraite_" + checklistNom + "_documentation.pdf");
 
@@ -193,7 +193,7 @@ public class Application extends RetraiteController {
 				params.put("noInfoCookie", noInfoCookie);
 				params.put("pdf", pdf);
 
-				renderPdfWith_iText(params);
+				renderPdfWith_iText("Application/generateDoc.html", params);
 				ok();
 			} else {
 				// PDF.renderPDF() ne peut pas être utilisé car il écrase les headers fixés ci-dessus
