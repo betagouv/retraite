@@ -12,12 +12,12 @@ public class ControllersMiscUtils {
 		return Look.valueFrom(lookFromParams);
 	}
 
-	public static String computeActionQueryParams(final boolean test, final boolean debug, final Look look) {
+	public static String computeActionQueryParams(final Boolean test, final Boolean debug, final Look look) {
 		final List<KeyAndValue> params = new ArrayList<>();
-		if (test) {
+		if (test != null && test) {
 			params.add(new KeyAndValue("test"));
 		}
-		if (debug) {
+		if (debug != null && debug) {
 			params.add(new KeyAndValue("debug"));
 		}
 		if (look.isNotGeneric()) {

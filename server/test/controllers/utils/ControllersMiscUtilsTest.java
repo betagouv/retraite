@@ -39,6 +39,10 @@ public class ControllersMiscUtilsTest {
 		assertThat(ControllersMiscUtils.computeActionQueryParams(false, true, Look.GENERIC)).isEqualTo("?debug");
 		assertThat(ControllersMiscUtils.computeActionQueryParams(false, false, Look.CNAV)).isEqualTo("?look=cnav");
 		assertThat(ControllersMiscUtils.computeActionQueryParams(true, true, Look.RSI)).isEqualTo("?test&debug&look=rsi");
+
+		// OK pour les "null"
+		assertThat(ControllersMiscUtils.computeActionQueryParams(false, null, Look.GENERIC)).isEqualTo("");
+		assertThat(ControllersMiscUtils.computeActionQueryParams(null, false, Look.GENERIC)).isEqualTo("");
 	}
 
 	private static class MyParams extends Params {
