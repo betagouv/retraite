@@ -1,93 +1,138 @@
 #{if _data.userChecklist}
 
 	<div class="contenu col-sm-12">
-		<div class="question">
-			<h2 style=''>${_data.hidden_nir?.startsWith('1') ? 'M.' : 'Mme'} ${_data.hidden_nom}, pour partir à la retraite le #{dateDepart data:_data /},
-				<br/>récupérez la liste de vos démarches.</h2>
-			<div class="bg-box">
 
-				#{if !_data.isPDF}
-					<div class="col-sm-12 row">
-						<div class="col-sm-1"></div>
-						<div class="col-sm-11">
-							<p class="bouton">
-								<button class="btn record" ${_noPdfDownload ? "disabled='disabled'" : ""}>Télécharger en PDF</button>
-							</p>
-						</div>
-					</div>
-				#{/if}
-
-<style type="text/css">
-ul.fleche li {
-	list-style-type: none;
-}
-ul.fleche li:before {
-    content: "→   ";
-    margin-left: -35px;
-    margin-right: 12px;
-    font-size: 18px;
-}
-body .container.information .contenu .bg-box ul.fleche li {
-    font-weight: bold;
-}
-.pj {
-	font-style: italic;
-}
-</style>
-
-				#{list items:_data.userChecklist.chapitres, as:'chapitre'}
-					<div class="col-sm-12">
-						<div class="col-sm-1"></div>
-						<div id="chap${chapitre_index}" class="panel panel-primary box-white col-sm-10">
-							<div class="img_bg">
-								#{if !_data.isPDF}
-									<div class="carre">${chapitre_index}</div>
-									<div>
-										#{if chapitre.delai}
-											<span class="delai">${chapitre.delai} :</span>
-										#{/if}
-										<h3>${chapitre.titre}</h3>
-									</div>
-								#{/if}
-								#{else}
-									<h3>${chapitre_index} - ${chapitre.titre}</h3>
-								#{/else}
-							</div>
-							<div id="panel-details-${chapitre_index}" class="panel-body panel-details">
-								#{if chapitre.texteActions?.length() > 0}
-						        	<div class='checklist-actions'>${chapitre.texteActions?.raw()}</div>
-								#{/if}
-								#{if chapitre.texteModalites}
-							        <div class='checklist-modalites'>${chapitre.texteModalites?.raw()}</div>
-								#{/if}
-								#{if chapitre.texteInfos}
-							        <div class='checklist-infos'>${chapitre.texteInfos?.raw()}</div>
-								#{/if}
-								#{if chapitre_index == 99}
-									<ul class="filet-left sanspuce">
-										<li><span class="bold">Exemple de texte</span> pouvant être mis en 
-										évidence, à voir comment dans l'outil de config...</li>
-									</ul>
-								#{/if}
-							</div>
-						</div>
-						<div class="col-sm-1"></div>
-					</div>
-				#{/list}
-
-				#{if !_data.isPDF}
-					<div class="col-sm-12 row">
-						<div class="col-sm-1"></div>
-						<div class="col-sm-11">
-							<p class="bouton">
-								<button class="btn record">Télécharger en PDF</button>
-							</p>
-						</div>
-					</div>
-				#{/if}
-
+		<h2 style=''>${_data.hidden_nir?.startsWith('1') ? 'M.' : 'Mme'} ${_data.hidden_nom}, pour partir à la retraite le #{dateDepart data:_data /},
+			<br/>récupérez la liste de vos démarches.</h2>
+	
+		#{if !_data.isPDF}
+			<div class="col-sm-12 row">
+				<div class="col-sm-1"></div>
+				<div class="col-sm-11">
+					<p class="bouton">
+						<button class="btn record" ${_noPdfDownload ? "disabled='disabled'" : ""}>Télécharger en PDF</button>
+					</p>
+				</div>
 			</div>
-		</div>
+		#{/if}
+
+		#{list items:_data.userChecklist.chapitres, as:'chapitre'}
+			<div class="contenu-titre">
+				<div class="chiffre">${chapitre_index}</div>
+	
+				<div class="boxtitre">
+					<div class="puce"></div>
+					<div class="soustitre">
+						${chapitre.delai}
+					</div>
+					<div class="titre">
+						<h2>
+							${chapitre.titre}
+						</h2>
+					</div>
+					<!--titre-->
+				</div>
+				<!--boxtitre-->
+			</div>
+			<!--contenu-titre-->
+
+			<div class="contenu-texte">
+				<div class="border-left">
+					<div class="box1">
+						<div class="big-chiffre">${chapitre_index}</div>
+						<div class="texte1niv">
+							#{if chapitre.texteActions?.length() > 0}
+								<div class="texte">
+									${chapitre.texteActions?.raw()}
+								</div>
+							#{/if}
+
+							#{if chapitre.texteActions?.length() > 0 && chapitre.texteModalites?.length() > 0}
+								<div class="separation">&nbsp;</div>
+							#{/if}
+
+							#{if chapitre.texteModalites?.length() > 0}
+								<div class="texte">
+									${chapitre.texteModalites?.raw()}
+								</div>
+							#{/if}
+
+						</div>
+						<!--fin texte1niv-->
+					</div>
+					<!--fin box1-->
+					#{if chapitre.texteInfos?.length() > 0}
+						<div class="box2">
+							<div class="texte2niv">
+								<div class="lettrine">&nbsp;</div>
+								<div class="texte">
+									${chapitre.texteInfos?.raw()}
+								</div>
+							</div>
+							<!--fin texte2niv-->
+	
+						</div>
+						<!--fin box2-->
+					#{/if}
+
+
+				</div>
+				<!--fin borderleft-->
+			</div>
+			<!--contenu-texte-->
+
+*{
+			<div class="col-sm-12">
+				<div class="col-sm-1"></div>
+				<div id="chap${chapitre_index}" class="panel panel-primary box-white col-sm-10">
+					<div class="img_bg">
+						#{if !_data.isPDF}
+							<div class="carre">${chapitre_index}</div>
+							<div>
+								#{if chapitre.delai}
+									<span class="delai">${chapitre.delai} :</span>
+								#{/if}
+								<h3>${chapitre.titre}</h3>
+							</div>
+						#{/if}
+						#{else}
+							<h3>${chapitre_index} - ${chapitre.titre}</h3>
+						#{/else}
+					</div>
+					<div id="panel-details-${chapitre_index}" class="panel-body panel-details">
+						#{if chapitre.texteActions?.length() > 0}
+				        	<div class='checklist-actions'>${chapitre.texteActions?.raw()}</div>
+						#{/if}
+						#{if chapitre.texteModalites}
+					        <div class='checklist-modalites'>${chapitre.texteModalites?.raw()}</div>
+						#{/if}
+						#{if chapitre.texteInfos}
+					        <div class='checklist-infos'>${chapitre.texteInfos?.raw()}</div>
+						#{/if}
+						#{if chapitre_index == 99}
+							<ul class="filet-left sanspuce">
+								<li><span class="bold">Exemple de texte</span> pouvant être mis en 
+								évidence, à voir comment dans l'outil de config...</li>
+							</ul>
+						#{/if}
+					</div>
+				</div>
+				<div class="col-sm-1"></div>
+			</div>
+}*
+		#{/list}
+
+		#{if !_data.isPDF}
+			<div class="col-sm-12 row">
+				<div class="col-sm-1"></div>
+				<div class="col-sm-11">
+					<p class="bouton">
+						<button class="btn record">Télécharger en PDF</button>
+					</p>
+				</div>
+			</div>
+		#{/if}
+
 	</div>
 	
 	#{displayUserInfos data:_data /}

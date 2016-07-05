@@ -9,8 +9,10 @@ module.exports = function(grunt) {
         config: {
             app: 'app',
             temp: 'temp',
-            sourcesScss: 'sources.scss',
             bowerDir: 'public/libs',
+            sourcesScss: 'sources.scss',		// Sources SASS
+            scssPages: 'pages',					// Sources SASS pour toutes les pages sauf l'écran final de présentation de la checklist 
+            scssChecklist: 'checklist',			// Sources SASS pour l'écran final de présentation de la checklist 
             // Imposé par Play!
             destJs: 'public/javascripts',
             destCss: 'public/stylesheets'
@@ -81,25 +83,38 @@ module.exports = function(grunt) {
         },
         
         sass: {
-            dist: {
+            pages: {
                 options: {
                 	// paths for @import directives
                     loadPath: [
-                        '<%= config.sourcesScss %>'
+                        '<%= config.sourcesScss %>/<%= config.scssPages %>'
                     ],
                     style: 'expanded'
                 },
                 files: [{
 					expand: true,
-					cwd: '<%= config.sourcesScss %>',
+					cwd: '<%= config.sourcesScss %>/<%= config.scssPages %>',
 					src: ['*.scss'],
-					dest: '<%= config.destCss %>',
+					dest: '<%= config.destCss %>/<%= config.scssPages %>',
 					ext: '.css'
 				}]
-                /*files: {
-                    '<%= config.destCss %>/style.css': '<%= config.sourcesScss %>/style.scss'
-                }*/
-            }
+            },
+	        checklist: {
+	        	options: {
+	        		// paths for @import directives
+	        		loadPath: [
+	        		           '<%= config.sourcesScss %>/<%= config.scssChecklist %>'
+	        		           ],
+	        		           style: 'expanded'
+	        	},
+	        	files: [{
+	        		expand: true,
+	        		cwd: '<%= config.sourcesScss %>/<%= config.scssChecklist %>',
+	        		src: ['*.scss'],
+	        		dest: '<%= config.destCss %>/<%= config.scssChecklist %>',
+	        		ext: '.css'
+	        	}]
+	        }
         },
 
         karma: {

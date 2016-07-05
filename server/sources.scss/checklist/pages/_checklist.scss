@@ -1,0 +1,504 @@
+/* =============================================================================
+   checklist
+============================================================================= */
+body .container.checklist{
+	margin:0 auto;
+	padding-left:0;
+	padding-right:0;
+
+
+	.wrapper {
+		background: #e7e7e7;
+		padding-bottom: 50px;
+	}
+
+	.contenu {
+		background-color: #fff;
+		padding-bottom:0;
+		margin-bottom:0;
+
+		h2 {
+			font-size: 3.2rem;
+			color: $blue;
+			text-align: center;
+			font-family: $font-stack-alt;
+			font-weight: bold;
+		}
+
+		.question {
+			margin-bottom: 0;
+
+			h2 {
+				padding-bottom: 16px;
+				background: url("../../img/sprites/bg_title_information.png") repeat-x left bottom;
+				margin-bottom:0;
+			}
+		}
+
+		.bg-box {
+			background-color: #f5f5f5;
+			overflow:hidden;
+			color: $grey;
+			font-size: 2.0rem;
+		}
+
+		ul.sanspuce {
+			list-style: none;
+
+			li {
+				margin-bottom:20px;
+				font-weight: normal;
+			}
+		}
+
+		ul.sanspuce.col-right li {
+			//border-bottom: 1px solid $blue;//
+			overflow:hidden;
+			font-weight: 600;
+			//line-height: 28px;
+			line-height: 1.45;
+		}
+
+	 	a:link,
+		a:visited {
+			color: $blue;
+			font-weight: bold;
+		}
+
+		.bg-box {
+			.box-white {
+				background-color: #fff;
+			}
+
+			.bg-box ol li a:link,
+			.bg-box ol li a:visited {
+				color:$blue;
+			}
+
+			.panel {
+				border:1px solid $grey-5;
+				box-shadow:0 0 3px 3px #e9e9e9;
+				padding: 17px 0 0;
+				border-radius: none;
+			}
+
+			.img_bg {
+				background: url("../../img/sprites/bg_title_information.png") repeat-x left bottom;
+				min-height: 63px;
+				overflow:hidden;
+				vertical-align: middel;
+			}
+
+			.carre {
+				background-color: $blue;
+				font-family: $font-stack-alt;
+				font-weight: 300;
+				width:40px;
+				height: 46px;
+				font-size: 2.8rem;
+				display: block;
+				color: #faf8f1;
+				overflow:hidden;
+				float:left;
+				text-align: center;
+				margin-right: 15px;
+				margin-left:21px;
+				vertical-align: middel;
+			}
+
+			h3 {
+				font-family: $font-stack-alt;
+				font-weight: bold;
+				color: $grey;
+				font-size: 2.2rem;
+				padding-bottom:8px;
+				margin: 0 15px 10px 76px;
+				text-transform: uppercase;
+			}
+
+			.panel-heading {
+				background-color: $grey-6;
+				border-bottom: none;
+				color: $grey;
+				font-size: 1.8rem;
+				padding-bottom:0;
+			}
+
+			.panel-body {
+				padding-bottom:0;
+				background-color: $grey-6;
+				color: $grey;
+				font-size: 1.8rem;
+			}
+
+			.delai {
+				color: $blue;
+				font-family: $font-stack-alt;
+				font-weight: normal;
+				font-style: normal;
+				font-size: 2.0rem;
+				text-align: center;
+				padding-bottom: 15px;
+				cursor:default;
+
+				span.calendar {
+					background: url("#{$pathImg}/icon_calendar.png") no-repeat left center;
+					display: inline-block;
+					height: 31px;
+					width: 31px;
+					position: relative;
+					margin-right: 10px;
+					top:5px;
+				}
+			}
+
+			ul li {
+				font-weight: normal;
+			}
+
+			ul.filet-left {
+				border-left: 2px solid $blue;
+				overflow:hidden;
+				font-weight: normal;
+				margin-left:23px;
+				padding-left: 15px;
+				padding-right: 15px;
+			}
+
+			p {
+				padding-left: 32px;
+			}
+
+			.blue {
+				color:$blue;
+			}
+
+			.bold {
+				font-weight: bold;
+			}
+
+			.first {
+				margin-bottom :15px;
+			}
+
+			.precision {
+				border-left: 2px solid $blue;
+				font-style: normal;
+				overflow:hidden;
+				font-weight: normal;
+				margin-left:23px;
+				padding: 0 15px;
+				margin-bottom:15px;
+
+				p {
+					padding-left:0;
+				}
+			}
+
+			.info {
+				border-left: 2px solid $blue;
+				font-style: normal;
+				overflow:hidden;
+				font-weight: normal;
+				margin: 0 0 15px 23px;
+				padding: 0 15px;
+				text-align: left;
+
+				p {
+					padding-left:0;
+				}
+			}
+		}
+	}
+
+	.hiddeninfos {
+		padding-top:10px;
+		color :#e7e7e7;
+		display:none;
+	}
+}
+
+body .padding-bottom{
+	padding-bottom:20px;
+}
+
+.bloc-info {
+	border-top: 2px solid $blue;
+	padding: 10px 10px 30px;
+	background-color: #fff;
+	margin-bottom: 20px;
+	min-height: 120px;
+
+	img {
+		float: left;
+		margin-right:5%;
+		margin-left :15%;
+	}
+
+	h3 {
+		color: $grey;
+		font-size: 2.6rem;
+		text-align: left;
+		margin-left:15%;
+		font-weight: bold;
+		margin-top: 10px;
+	}
+}
+
+.liste-personnalise {
+	background: #fff url("#{$pathImg}/info.png") no-repeat 20px 0;
+	height: 99px;
+	width: 103px;
+	display: block;
+	float:left;
+	margin-left: 116px;
+	margin-right: 32px;
+}
+
+.container.checklist .contenu .contenu-titre{
+	margin:10px 15px;
+
+	.chiffre {
+		font-size:7.4rem;
+		font-weight: bold;
+		color: $blue;
+		display:inline-block;
+		float:left;
+		line-height: 1;
+	}
+
+	.boxtitre {
+		background-color: $blue;
+		border-radius: 36px;
+		padding: 8px 30px 8px 6px;
+		display:inline-block;
+
+	}
+
+	.puce {
+		background-color: #fff;
+		height: 28px;
+		width: 28px;
+		border-radius: 28px;
+		display: inline-block;
+		bottom: 9px;
+		left: 7px;
+		vertical-align: top;
+		margin:15px;
+	}
+
+	.soustitre {
+		font-size:2.2rem;
+		font-weight: 300;
+		color:#fff;
+		border-right: 1px solid #fff;
+		display:inline-block;
+		padding-right: 8px;
+		margin-right: 12px;
+		line-height: 1.2;
+		text-transform: uppercase;
+		max-width: 250px;
+	}
+
+	.titre {
+		display:inline-block;
+		line-height: 1;
+		vertical-align: top;
+		max-width: 580px;
+
+		h2 {
+		font-size:2.6rem;
+		font-weight: bold;
+		color:#fff;
+		margin:0;
+		text-align: left;
+		padding-left:0;
+		}
+	}
+}
+
+body .container.checklist .wrapper{
+	.contenu {
+		.contenu-titre.troislignes {
+			.chiffre {
+				padding-top:15px;
+			}
+
+			.puce {
+				bottom:-7px;
+				left: 7px;
+			}
+		}
+	}
+}
+
+.contenu-texte {
+	margin-left: 90px;
+	margin-right: 15px;
+	position:relative;
+	overflow:hidden;
+
+	.border-left {
+		border-left: 4px solid $grey-7;
+		padding-left: 36px;
+		overflow:hidden;
+		clear: both;
+		margin-bottom:30px;
+		min-height: 437px;
+	}
+
+	.box1 {
+		display: block;
+		clear:both;
+
+		.big-chiffre {
+			font-size: 54rem;
+			color: $grey-7;
+			line-height: 1;
+			font-weight: 300;
+			right:0;
+			overflow: hidden;
+			text-align: right;
+			position:absolute;
+			z-index:10;
+			top:-68px;
+		}
+
+		.texte1niv {
+		 	display: block;
+		 	position:relative;
+		 	overflow: hidden;
+		 	font-size: 1.4rem;
+		 	max-width:600px;
+		 	z-index:12;
+		}
+
+		p.texte {
+			color: $base-color;
+			font-weight: 300;
+			margin-bottom:12px;
+
+
+			span.accroche {
+				font-size: 1.6rem;
+				font-weight: bold;
+			}
+		}
+	}
+
+	.box2 {
+		display: block;
+		clear:both;
+		margin-top: 40px;
+		min-height: 44px;
+
+		.texte2niv {
+		 	display: block;
+		 	position:relative;
+		 	overflow: hidden;
+		 	font-size: 1.2rem;
+		 	padding-left: 50px;
+		 	max-width:600px;
+		 	margin-bottom: 15px;
+		 	z-index:12;
+
+		 	.lettrine {
+		 		background: url("../../img/sprites/picto-info.png") no-repeat 0 0;
+		 		display:inline-block;
+		 		float:left;
+		 		height:44px;
+		 		width: 16px;
+		 	}
+
+		 	.texte {
+		 		color:$grey-8;
+		 		margin-left:25px;
+		 	}
+		}
+	}
+
+	.separation {
+		background-color: $grey-7;
+		width: 20%;
+		border-radius: 5px;
+		overflow:hidden;
+		display: block;
+		margin: 20px auto;
+		text-align: center;
+		clear: both;
+		height:10px;
+	}
+}
+
+
+/*@media (min-width: @screen-sm-min) {     768px*/
+@media screen and (max-width: 532px) {
+		ul.sanspuce li {
+			font-size:87%;
+		}
+
+	footer .footer-right {
+		float: none;
+		text-align:center;
+
+		ul {
+			padding-top:10px;
+			overflow:hidden;
+		}
+	}
+}
+
+
+/*@media (min-width: @screen-sm-min) {     768px*/
+@media screen and (max-width: 637px) {
+
+	.wrapper .contenu .contenu-titre .boxtitre {
+		padding-right:20px;
+	}
+
+	.contenu-titre {
+		padding-top: 15px;
+	}
+
+	.container.checklist .contenu .contenu-titre .titre h2{
+		padding-left:60px;
+	}
+
+	.container.checklist .contenu .contenu-titre .titre {
+		display: block;
+	}
+}
+
+
+
+
+/*@media (min-width: @screen-sm-min) {     991px*/
+@media screen and (max-width: 991px) {
+
+	body .container.checklist .contenu .bg-box p {
+	  padding-left: 0;
+	}
+
+	button.btn {
+		margin-right:5px;
+	}
+
+	ul.sanspuce.text-right {
+		width:47%;
+		float:left;
+		padding-right: 3%;
+	}
+
+	.bloc-info {
+		padding-right: 5px;
+	}
+
+	.contenu-titre {
+		padding-top: 15px;
+	}
+
+	.container.checklist .contenu .contenu-titre .soustitre {
+		margin-right:3px;
+	}
+}
+

@@ -1,0 +1,12 @@
+/* =============================================================================
+   Box sizing
+============================================================================= */
+
+// Apply a natural box layout model to all elements (Only IE8+)
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
