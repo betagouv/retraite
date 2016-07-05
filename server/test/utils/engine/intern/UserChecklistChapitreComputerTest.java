@@ -82,6 +82,26 @@ public class UserChecklistChapitreComputerTest {
 		assertThat(userChapitre.delai).isEqualTo("Conversion delai SA");
 	}
 
+	@Test
+	public void should_choice_normal_delai_if_no_SA_delai() {
+
+		final Chapitre chapitre = createChapitre("chap1");
+		chapitre.delai = new Delai();
+		chapitre.delaiSA = null;
+
+		final UserChecklistGenerationData userChecklistGenerationData = UserChecklistGenerationData.create()
+				.withDateDepart(DATE_DEPART)
+				.get();
+		userChecklistGenerationData.isSA = true;
+
+		when(userChecklistDelaiComputerMock.compute(same(chapitre.delai), same(DATE_DEPART))).thenReturn("Conversion delai");
+		when(userChecklistDelaiComputerMock.compute(same(chapitre.delaiSA), same(DATE_DEPART))).thenReturn("Conversion delai SA");
+
+		final UserChapitre userChapitre = userChecklistChapitreComputer.compute(chapitre, userChecklistGenerationData);
+
+		assertThat(userChapitre.delai).isEqualTo("Conversion delai");
+	}
+
 	private Chapitre createChapitre(final String titre) {
 		final Chapitre chapitre = new Chapitre();
 		chapitre.titre = titre;
