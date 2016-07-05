@@ -83,7 +83,7 @@ public class Application extends RetraiteController {
 		renderTemplate("Application/steps/" + data.hidden_step + ".html", data, test, debug, page, look, actionQueryParams);
 	}
 
-	public static void displayExpired(final boolean test, final boolean debug, final Look look) {
+	public static void displayExpired(final Boolean test, final Boolean debug, final Look look) {
 		final String actionQueryParams = computeActionQueryParams(test, debug, look);
 		render(look, actionQueryParams);
 	}

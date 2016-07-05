@@ -13,7 +13,7 @@
 		#{/if}
 		<link rel="stylesheet" href="/public/libs/jquery-ui/themes/base/jquery-ui.css">
         
-        #{stylesheet look.getCssFilename() /}
+        #{stylesheet (pageChecklist ? 'checklist' : 'pages')+'/'+look.getCssFilename() /}
         #{stylesheet 'retraite-overwrite.css' /}
 
         #{get 'moreStyles' /}
