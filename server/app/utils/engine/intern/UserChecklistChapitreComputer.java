@@ -1,6 +1,7 @@
 package utils.engine.intern;
 
 import models.Chapitre;
+import models.Delai;
 import utils.engine.data.UserChapitre;
 import utils.engine.data.UserChecklistGenerationData;
 
@@ -30,9 +31,12 @@ public class UserChecklistChapitreComputer {
 		if (userChecklistDelaiComputer == null) {
 			new Exception("userChecklistDelaiComputer null !").printStackTrace();
 		}
-		return userChecklistDelaiComputer.compute(
-				userChecklistGenerationData.isSA ? chapitre.delaiSA : chapitre.delai,
-				userChecklistGenerationData.getDateDepart());
+		final Delai delai = selectDelai(chapitre, userChecklistGenerationData);
+		return userChecklistDelaiComputer.compute(delai, userChecklistGenerationData.getDateDepart());
+	}
+
+	private Delai selectDelai(final Chapitre chapitre, final UserChecklistGenerationData userChecklistGenerationData) {
+		return userChecklistGenerationData.isSA && chapitre.delaiSA != null ? chapitre.delaiSA : chapitre.delai;
 	}
 
 }
