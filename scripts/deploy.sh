@@ -3,7 +3,8 @@
 ENV="$1"
 REMOTE_USER=$ENV
 REMOTE_DIR=$ENV
-SERVER_NAME=retraite.infra.beta.gouv.fr
+# SERVER_NAME=retraite.infra.beta.gouv.fr
+SERVER_NAME=vm_retraite
 
 # Vérifications
 if [ -n "$(git diff --cached --exit-code)" ]; then
