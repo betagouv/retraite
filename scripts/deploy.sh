@@ -3,6 +3,7 @@
 ENV="$1"
 REMOTE_USER=$ENV
 REMOTE_DIR=$ENV
+SERVER_NAME=retraite.infra.beta.gouv.fr
 
 # Vérifications
 if [ -n "$(git diff --cached --exit-code)" ]; then
@@ -89,14 +90,14 @@ git tag "deploy.$ENV.$(date +%Y-%m-%d_%H-%M-%S)"
 echo
 echo "Déploiement..."
 echo
-rsync -rv --exclude-from=rsync.exclude.txt --delete . $REMOTE_USER@vm_retraite:/home/$REMOTE_DIR/retraite
+rsync -rv --exclude-from=rsync.exclude.txt --delete . $REMOTE_USER@$SERVER_NAME:/home/$REMOTE_DIR/retraite
 if [ $? != 0 ]; then
     echo
     echo "Il y a eu une erreur : arrêt du déploiement !"
     echo
     exit $?
 fi
-ssh $REMOTE_USER@vm_retraite "cd /home/$REMOTE_DIR/retraite && source ../set-retraite-env.sh && /home/deploy/play-1.4.2/play evolutions:apply --%$ENV && /home/deploy/play-1.4.2/play deps --sync && /home/deploy/play-1.4.2/play restart --%$ENV"
+ssh $REMOTE_USER@$SERVER_NAME "cd /home/$REMOTE_DIR/retraite && source ../set-retraite-env.sh && /home/deploy/play-1.4.2/play evolutions:apply --%$ENV && /home/deploy/play-1.4.2/play deps --sync && /home/deploy/play-1.4.2/play restart --%$ENV"
 if [ $? != 0 ]; then
     echo
     echo "Il y a eu une erreur : arrêt du déploiement !"
