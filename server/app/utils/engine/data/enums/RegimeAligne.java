@@ -17,16 +17,16 @@ public enum RegimeAligne {
 			"https://monespaceprive.msa.fr/lfr/c/bookmarks/open_entry?entryId=39902446", // ou https://monespaceprive.msa.fr (Rubrique : Mes services en ligne / Mes déclarations, mes demandes / Retraite / Informations sur ma retraite)
 			"https://monespaceprive.msa.fr/lfr/c/bookmarks/open_entry?entryId=39902446", // ou https://monespaceprive.msa.fr (Rubrique : Mes services en ligne / Mes déclarations, mes demandes / Retraite / Informations sur ma retraite)
 			"http://www.msa.fr/retraite/depart",
-			"http://MSA urlInfosPenibilite",
+			"http://www.msa.fr/retraite/penibilite",
 			"http://www.msa.fr/retraite"),
 
 	RSI(
 			"http://rsi.fr/quand-prendre-sa-retraite",
 			"http://rsi.fr/mon-releve-de-carriere",
-			"http://www.info-retraite.fr/",
-			"http://www.rsi.fr/retraite-anticipee.html",
-			"http://www.rsi.fr/retraite-pour-penibilite",
-			"http://www.rsi.fr/partir-en-retraite");
+			"http://info-retraite.fr/",
+			"http://rsi.fr/retraite-anticipee.html",
+			"http://rsi.fr/retraite-pour-penibilite",
+			"http://rsi.fr/partir-en-retraite");
 
 	// @formatter:on
 
