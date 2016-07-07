@@ -14,18 +14,18 @@ public enum RegimeAligne {
 
 	MSA(
 			"http://www.msa.fr/lfr/retraite/conditions-age-depart-taux-plein",
-			"http://MSA mon-releve-de-carriere",
-			"http://MSA EVA",
-			"http://MSA urlDispositifDepartAvantAgeLegal",
+			"https://monespaceprive.msa.fr/lfr/c/bookmarks/open_entry?entryId=39902446", // ou https://monespaceprive.msa.fr (Rubrique : Mes services en ligne / Mes déclarations, mes demandes / Retraite / Informations sur ma retraite)
+			"https://monespaceprive.msa.fr/lfr/c/bookmarks/open_entry?entryId=39902446", // ou https://monespaceprive.msa.fr (Rubrique : Mes services en ligne / Mes déclarations, mes demandes / Retraite / Informations sur ma retraite)
+			"http://www.msa.fr/retraite/depart",
 			"http://MSA urlInfosPenibilite",
-			"http://MSA urlInfosDepartRetraite"),
+			"http://www.msa.fr/retraite"),
 
 	RSI(
 			"http://rsi.fr/quand-prendre-sa-retraite",
 			"http://rsi.fr/mon-releve-de-carriere",
-			"http://RSI EVA",
+			"http://www.info-retraite.fr/",
 			"http://www.rsi.fr/retraite-anticipee.html",
-			"http://RSI urlInfosPenibilite",
+			"http://www.rsi.fr/retraite-pour-penibilite",
 			"http://www.rsi.fr/partir-en-retraite");
 
 	// @formatter:on
