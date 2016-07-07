@@ -23,6 +23,11 @@ body .container.checklist{
 			font-family: $font-stack-alt;
 			font-weight: bold;
 		}
+		
+		h2.intro-checklist {
+			margin-top: 50px;
+			margin-bottom: 50px;
+		}
 
 		.question {
 			margin-bottom: 0;
