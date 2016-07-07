@@ -285,10 +285,11 @@ body .padding-bottom{
 		left: 7px;
 		vertical-align: top;
 		margin:15px;
+		vertical-align: middle;
 	}
 
 	.soustitre {
-		font-size:2.2rem;
+		font-size:1.9rem;
 		font-weight: 300;
 		color:#fff;
 		border-right: 1px solid #fff;
@@ -297,22 +298,24 @@ body .padding-bottom{
 		margin-right: 12px;
 		line-height: 1.2;
 		text-transform: uppercase;
-		max-width: 250px;
+		width: 250px;
+		vertical-align: middle;
 	}
 
 	.titre {
 		display:inline-block;
 		line-height: 1;
 		vertical-align: top;
-		max-width: 580px;
+		width: 580px;
+		vertical-align: middle;
 
 		h2 {
-		font-size:2.6rem;
-		font-weight: bold;
-		color:#fff;
-		margin:0;
-		text-align: left;
-		padding-left:0;
+			font-size:2.2rem;
+			font-weight: bold;
+			color:#fff;
+			margin:0;
+			text-align: left;
+			padding-left:0;
 		}
 	}
 }
@@ -344,7 +347,7 @@ body .container.checklist .wrapper{
 		overflow:hidden;
 		clear: both;
 		margin-bottom:30px;
-		min-height: 437px;
+		min-height: 200px;
 	}
 
 	.box1 {
@@ -352,7 +355,7 @@ body .container.checklist .wrapper{
 		clear:both;
 
 		.big-chiffre {
-			font-size: 54rem;
+			font-size: 30rem;
 			color: $grey-7;
 			line-height: 1;
 			font-weight: 300;
@@ -361,7 +364,7 @@ body .container.checklist .wrapper{
 			text-align: right;
 			position:absolute;
 			z-index:10;
-			top:-68px;
+			top:-40px;
 		}
 
 		.texte1niv {
@@ -402,17 +405,21 @@ body .container.checklist .wrapper{
 		 	margin-bottom: 15px;
 		 	z-index:12;
 
-		 	.lettrine {
-		 		background: url("../../img/sprites/picto-info.png") no-repeat 0 0;
-		 		display:inline-block;
-		 		float:left;
-		 		height:44px;
-		 		width: 16px;
-		 	}
-
 		 	.texte {
+		 		position: relative;
 		 		color:$grey-8;
 		 		margin-left:25px;
+		 		border-left: solid 30px lightgray;
+		 		padding-left: 5px;
+		 		min-height: 47px;
+	
+			 	.lettrine {
+			 		background: url("../../img/sprites/picto-info-white.png") no-repeat 0 0;
+			 		position: absolute;
+			 		height:44px;
+			 		width: 16px;
+			 		left: -22px;
+			 	}
 		 	}
 		}
 	}
