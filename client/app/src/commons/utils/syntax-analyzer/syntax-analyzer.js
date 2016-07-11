@@ -17,6 +17,10 @@ angular.module('SgmapRetraiteCommons').service('SyntaxAnalyzer', function () {
             return true; 
         }
         if (begin < end) {
+            var beginNext = text.indexOf('{{', begin+2);
+            if (beginNext != -1 && beginNext < end) {
+                return true;
+            }
             var next = text.substr(end+1);
             return isMustacheVarsSyntaxError(next);
         }
