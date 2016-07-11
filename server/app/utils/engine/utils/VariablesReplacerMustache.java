@@ -1,6 +1,5 @@
 package utils.engine.utils;
 
-import java.io.IOException;
 import java.util.Map;
 
 import com.github.jknack.handlebars.Context;
@@ -31,7 +30,7 @@ public class VariablesReplacerMustache implements VariablesReplacer {
 			final String result = template.apply(context);
 			context.destroy();
 			return result;
-		} catch (final IOException e) {
+		} catch (final Exception e) {
 			throw new RetraiteException("Error replacing variables", e);
 		}
 	}

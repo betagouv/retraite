@@ -3,6 +3,7 @@ package utils.engine.intern;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -13,6 +14,7 @@ import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
+import utils.RetraiteException;
 import utils.engine.data.UserChecklistGenerationData;
 import utils.engine.data.UserChecklistVars;
 import utils.engine.utils.VariablesReplacer;
@@ -101,6 +103,17 @@ public class UserChecklistParcoursComputerTest {
 		final String after = userChecklistParcoursComputer.compute(before, null);
 
 		assertThat(after).isEqualTo("titi");
+	}
+
+	@Test
+	public void should_log_and_continue_if_error_replacing_vars() {
+		doThrow(new RetraiteException("xxx")).when(variablesReplacerMock).replaceVariables(any(String.class), eq(variables));
+
+		final String before = "toto";
+
+		final String after = userChecklistParcoursComputer.compute(before, null);
+
+		assertThat(after).isEqualTo("toto");
 	}
 
 	// Méthodes privées
