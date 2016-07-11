@@ -151,7 +151,7 @@
                     <img src="img/actions.png">
                 </div>
                 <div class='col-xs-9'>
-                    <text-angular ng-model="chapitre.texteActions" ta-text-editor-setup='textAreaSetup'>
+                    <text-angular ng-model="chapitre.texteActions" ng-class="{'edit-syntax-error':isSyntaxError(chapitre.texteActions)}" ta-text-editor-setup='textAreaSetup'>
                     </text-angular>
                 </div>
             </div>
@@ -163,7 +163,7 @@
                     <img src="img/docs.png">
                 </div>
                 <div class='col-xs-9'>
-                    <text-angular ng-model="chapitre.texteModalites" ta-text-editor-setup='textAreaSetup' class='text-angular-modalites'>
+                    <text-angular ng-model="chapitre.texteModalites" ng-class="{'edit-syntax-error':isSyntaxError(chapitre.texteModalites)}" ta-text-editor-setup='textAreaSetup' class='text-angular-modalites'>
                     </text-angular>
                 </div>
             </div>
@@ -175,7 +175,7 @@
                     <img src="img/infos.png">
                 </div>
                 <div class='col-xs-9'>
-                    <text-angular ng-model="chapitre.texteInfos" ta-text-editor-setup='textAreaSetup'>
+                    <text-angular ng-model="chapitre.texteInfos" ng-class="{'edit-syntax-error':isSyntaxError(chapitre.texteInfos)}" ta-text-editor-setup='textAreaSetup'>
                     </text-angular>
                 </div>
             </div>

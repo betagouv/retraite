@@ -111,6 +111,10 @@ ul.config-list li .label {
     display: inline;
 }
 
+.edit-syntax-error .ta-editor {
+    background-color: #d9534f;
+}
+
 /* Editeur HTML */
 
 .ta-scroll-window.form-control {
