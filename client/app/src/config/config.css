@@ -115,6 +115,11 @@ ul.config-list li .label {
     background-color: #d9534f;
 }
 
+.count-syntax-errors {
+    float: right;
+    color: #d9534f;
+}
+
 /* Editeur HTML */
 
 .ta-scroll-window.form-control {
