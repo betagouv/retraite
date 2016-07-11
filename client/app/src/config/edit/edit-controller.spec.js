@@ -4,9 +4,9 @@ describe('EditCtrl', function () {
     
     beforeEach(module('SgmapRetraiteConfig'));
     
-    var $scope, controller, CheckList, RetraiteDialog, EditConditionValidator, $window, PromptService, DialogDelai, RetraiteToaster, ChecklistPublisher;
+    var $scope, controller, CheckList, RetraiteDialog, EditConditionValidator, $window, PromptService, DialogDelai, RetraiteToaster, ChecklistPublisher, SyntaxAnalyzer;
     
-    beforeEach(inject(function ($rootScope, $controller, _CheckList_, _RetraiteDialog_, _EditConditionValidator_, _$window_, _PromptService_, _DialogDelai_, _RetraiteToaster_, _ChecklistPublisher_) {
+    beforeEach(inject(function ($rootScope, $controller, _CheckList_, _RetraiteDialog_, _EditConditionValidator_, _$window_, _PromptService_, _DialogDelai_, _RetraiteToaster_, _ChecklistPublisher_, _SyntaxAnalyzer_) {
 
         CheckList = _CheckList_;
         RetraiteDialog = _RetraiteDialog_;
@@ -16,6 +16,7 @@ describe('EditCtrl', function () {
         DialogDelai = _DialogDelai_;
         RetraiteToaster = _RetraiteToaster_;
         ChecklistPublisher = _ChecklistPublisher_;
+        SyntaxAnalyzer = _SyntaxAnalyzer_;
         
     }));
     
@@ -948,5 +949,27 @@ describe('EditCtrl', function () {
         
         
     });
+    
+    describe('isSyntaxError', function () {
+        
+        it('should return false if SyntaxAnalyzer.isSyntaxError return false', function () {
+
+            spyOn(SyntaxAnalyzer, 'isSyntaxError').and.returnValue(false);
+            expect($scope.isSyntaxError("yyy")).toBeFalsy();
+            expect(SyntaxAnalyzer.isSyntaxError).toHaveBeenCalledWith("yyy");
+            
+        });
+        
+        it('should return true if SyntaxAnalyzer.isSyntaxError return true', function () {
+
+            spyOn(SyntaxAnalyzer, 'isSyntaxError').and.returnValue(true);
+            expect($scope.isSyntaxError("xxx")).toBeTruthy();
+            expect(SyntaxAnalyzer.isSyntaxError).toHaveBeenCalledWith("xxx");
+            
+        });
+        
+        
+    });
+    
 });
 
