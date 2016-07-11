@@ -5,8 +5,11 @@ import static org.fest.assertions.Assertions.assertThat;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import utils.RetraiteException;
 
 public class VariablesReplacerMustacheTest {
 
@@ -51,5 +54,19 @@ public class VariablesReplacerMustacheTest {
 		final String result = variablesReplacer.replaceVariables(text, variables);
 
 		assertThat(result).isEqualTo("prefix  suffixe");
+	}
+
+	@Test
+	public void should_throw_exception_if_internal_exception() {
+
+		final String text = "avant {{une_variable apres"; // Erreur, manque }}
+		final Map<String, String> variables = new HashMap<>();
+
+		try {
+			variablesReplacer.replaceVariables(text, variables);
+			Assert.fail("Devrait déclencher une RetraiteException");
+		} catch (final RetraiteException e) {
+		}
+
 	}
 }
