@@ -23,6 +23,7 @@ describe('SyntaxAnalyzer', function () {
             // Manque }}
             expect(SyntaxAnalyzer.isSyntaxError("debut {{var1 fin")).toBeTruthy();
             expect(SyntaxAnalyzer.isSyntaxError("debut {{var1}}{{var2 fin")).toBeTruthy();
+            expect(SyntaxAnalyzer.isSyntaxError("debut {{var1{{var2}} fin")).toBeTruthy();
             
         });
 

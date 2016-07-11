@@ -968,6 +968,34 @@ describe('EditCtrl', function () {
             
         });
         
+    });
+    
+    describe('countSyntaxErrors', function () {
+        
+        beforeEach(function() {
+            var chapitre6 = { id: 666, titre: "Chap 6", closedInEdition: false };
+            var chapitre8 = { id: 888, titre: "Chap 8", closedInEdition: false };
+            var chapitre9 = { id: 999, titre: "Chap 9", closedInEdition: true };
+            $scope.checklist.chapitres = [
+                chapitre6, chapitre8, chapitre9
+            ];
+        });
+        
+        it('should return 0 if no error', function () {
+
+            spyOn(SyntaxAnalyzer, 'isSyntaxError').and.returnValue(false);
+            expect($scope.countSyntaxErrors()).toEqual(0);
+            expect(SyntaxAnalyzer.isSyntaxError.calls.count()).toEqual(9);
+            
+        });
+        
+        it('should return 0 if no error', function () {
+
+            spyOn(SyntaxAnalyzer, 'isSyntaxError').and.returnValues(false, true, false, true);
+            expect($scope.countSyntaxErrors()).toEqual(2);
+            expect(SyntaxAnalyzer.isSyntaxError.calls.count()).toEqual(9);
+            
+        });
         
     });
     

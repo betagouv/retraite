@@ -3,6 +3,13 @@
     <h1>{{checklist.nom}}</h1>
 
     <a href='' ng-click='openAllChapitres()'>Tout ouvrir</a> | <a href='' ng-click='closeAllChapitres()'>Tout fermer</a>
+    <span ng-show='countSyntaxErrors() > 0' class='count-syntax-errors'>
+        Il y a au moins
+        <ng-pluralize count="countSyntaxErrors()"
+                when="{'1': '1 erreur de synthaxe',
+                       'other': '{} erreurs de synthaxe'}">
+        </ng-pluralize>
+    </span>
 
     <div ng-if='modified===true' class='label label-danger label-published'>Checklist modifiée et non enregistrée</div>
     <div ng-if='checklist.modifiedButNotPublished===true' class='label label-warning label-published'>Checklist Non publiée</div>
