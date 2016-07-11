@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('SgmapRetraiteConfig').controller('EditCtrl', 
-            function ($scope, $state, $stateParams, CheckList, RetraiteDialog, ArrayUtils, EditConditionValidator, $window, PromptService, DialogDelai, RetraiteToaster, ChecklistPublisher, PastedTextCleaner, ObjectUtils) {
+            function ($scope, $state, $stateParams, CheckList, RetraiteDialog, ArrayUtils, EditConditionValidator, $window, PromptService, DialogDelai, RetraiteToaster, ChecklistPublisher, PastedTextCleaner, ObjectUtils, SyntaxAnalyzer) {
 
     // Actions
     
@@ -305,6 +305,12 @@ angular.module('SgmapRetraiteConfig').controller('EditCtrl',
         }
     });
     
+    // Utilitaire
+    
+    $scope.isSyntaxError = function(text) {
+        return SyntaxAnalyzer.isSyntaxError(text);
+    }
+    
     // Données
 
     var fnRemoveWatch;
@@ -312,9 +318,6 @@ angular.module('SgmapRetraiteConfig').controller('EditCtrl',
     function addWatch() {
         $scope.modified = false;
         fnRemoveWatch = $scope.$watch('checklist', function(newValue, oldValue) {
-            console.log("watch : ",oldValue," --> ",newValue);
-            console.log(JSON.stringify(oldValue));
-            console.log(JSON.stringify(newValue));
             if (!ObjectUtils.equalsIgnoringProperties(newValue, oldValue, ['closedInEdition'])) {
                 $scope.modified = true;
             }
