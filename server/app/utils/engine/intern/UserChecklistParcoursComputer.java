@@ -4,6 +4,8 @@ import static utils.TextUtils.isLikeEmpty;
 
 import java.util.Map;
 
+import play.Logger;
+import utils.RetraiteException;
 import utils.RetraiteStringsUtils;
 import utils.engine.data.UserChecklistGenerationData;
 import utils.engine.utils.VariablesReplacer;
@@ -30,7 +32,12 @@ public class UserChecklistParcoursComputer {
 
 	private String replaceVars(final String text, final UserChecklistGenerationData userChecklistGenerationData) {
 		final Map<String, String> vars = userChecklistVarsProvider.provideVars(userChecklistGenerationData).getMapOfValues();
-		return variablesReplacer.replaceVariables(text, vars);
+		try {
+			return variablesReplacer.replaceVariables(text, vars);
+		} catch (final RetraiteException e) {
+			Logger.error(e, "Erreur lors du remplacement des variables");
+			return text;
+		}
 	}
 
 	private String replaceLinks(final String text) {
