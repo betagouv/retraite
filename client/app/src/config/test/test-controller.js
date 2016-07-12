@@ -91,7 +91,7 @@ angular.module('SgmapRetraiteConfig').controller('TestCtrl', function ($scope, A
         dateNaissance: "07/10/1954",
         departement: "01",
         departMois: 1,
-        departAnnee: 2017,
+        departAnnee: 2020,
         regimeLiquidateur: 'CNAV',
         regimes: []
     };
