@@ -52,7 +52,7 @@ describe('TestCtrl', function () {
         
         expect($scope.data.nom).toEqual("DUPONT");
         expect($scope.data.departMois).toEqual(1);
-        expect($scope.data.departAnnee).toEqual(2017);
+        expect($scope.data.departAnnee).toEqual(2020);
         expect($scope.data.regimeLiquidateur).toEqual('CNAV');
         expect($scope.data.regimes).toEqual([]);
     });
