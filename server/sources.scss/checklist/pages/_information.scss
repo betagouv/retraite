@@ -141,24 +141,6 @@ body .container.checklist{
 			font-weight: bold;
 		}
 
-		ol {
-			list-style-type: none;
-			text-align: center;
-
-			li {
-				padding-bottom:5px;
-				font-size:2.0rem;
-				font-family: $font-stack;
-				font-weight: normal;
-
-				a:link,
-				a:visited {
-					color: $blue;
-					font-weight: normal;
-				}
-			}
-		}
-
 		.bg-box {
 			.box-white {
 				background-color: #fff;

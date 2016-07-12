@@ -17,3 +17,8 @@
 .test-options li input {
     margin: 0 0 0 20px;
 }
+
+#iframe-test-result {
+    width: 1210px;
+    margin-left: -170px;
+}
