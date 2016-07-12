@@ -60,7 +60,7 @@ public class UserChecklistDelaiComputer {
 		if (calendar.getTime().getTime() <= dateProvider.getCurrentDate().getTime()) {
 			return TEXT_POUR_DELAI_DEPASSE;
 		}
-		return "Au plus tard fin " + FORMAT_MONTH_NAME.format(calendar.getTime()) + " " + calendar.get(Calendar.YEAR);
+		return "Au plus tard<br/>fin " + FORMAT_MONTH_NAME.format(calendar.getTime()) + " " + calendar.get(Calendar.YEAR);
 	}
 
 	private String entre(final Delai delai, final MonthAndYear dateDepart) {
@@ -84,12 +84,12 @@ public class UserChecklistDelaiComputer {
 
 		final String monthMaxStr = FORMAT_MONTH_NAME.format(calendarMax.getTime());
 		final String monthMinStr = FORMAT_MONTH_NAME.format(calendarMin.getTime());
-		final String yearMaxStr = yearMin == yearMax ? "" : " " + yearMax;
+		final String yearMaxStr = yearMin == yearMax ? " " : " " + yearMax + "<br/>";
 		if (calendarMin.getTime().getTime() <= dateProvider.getCurrentDate().getTime()) {
 			return TEXT_POUR_DELAI_DEPASSE;
 		}
 		if (calendarMax.getTime().getTime() <= dateProvider.getCurrentDate().getTime()) {
-			return "Au plus tard fin " + monthMinStr + " " + yearMin;
+			return "Au plus tard<br/>fin " + monthMinStr + " " + yearMin;
 		}
 
 		if (sameMinAndMax(delai) || sameMonthAndSameYear(monthMin, monthMax, yearMin, yearMax)) {
@@ -97,7 +97,7 @@ public class UserChecklistDelaiComputer {
 			return "En " + monthStr + " " + yearMin;
 		}
 
-		return "De " + monthMaxStr + yearMaxStr + " à fin " + monthMinStr + " " + yearMin;
+		return "De " + monthMaxStr + yearMaxStr + "à fin " + monthMinStr + " " + yearMin;
 	}
 
 	private String aPartir(final Delai delai, final MonthAndYear dateDepart) {
@@ -106,7 +106,7 @@ public class UserChecklistDelaiComputer {
 		if (calendar.getTime().getTime() <= dateProvider.getCurrentDate().getTime()) {
 			return TEXT_POUR_DELAI_DEPASSE;
 		}
-		return "A partir de " + FORMAT_MONTH_NAME.format(calendar.getTime()) + " " + calendar.get(Calendar.YEAR);
+		return "A partir de<br/>" + FORMAT_MONTH_NAME.format(calendar.getTime()) + " " + calendar.get(Calendar.YEAR);
 	}
 
 	private String simple(final Delai delai, final MonthAndYear dateDepart) {
