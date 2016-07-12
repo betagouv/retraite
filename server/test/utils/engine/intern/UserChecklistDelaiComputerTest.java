@@ -68,7 +68,7 @@ public class UserChecklistDelaiComputerTest {
 
 		final String result = userChecklistDelaiComputer.compute(delai, dateDepart);
 
-		assertThat(result).isEqualTo("Au plus tard fin janvier 2017");
+		assertThat(result).isEqualTo("Au plus tard<br/>fin janvier 2017");
 	}
 
 	@Test
@@ -78,7 +78,7 @@ public class UserChecklistDelaiComputerTest {
 
 		final String result = userChecklistDelaiComputer.compute(delai, dateDepart);
 
-		assertThat(result).isEqualTo("Au plus tard fin juin 2017");
+		assertThat(result).isEqualTo("Au plus tard<br/>fin juin 2017");
 	}
 
 	@Test
@@ -88,7 +88,7 @@ public class UserChecklistDelaiComputerTest {
 
 		final String result = userChecklistDelaiComputer.compute(delai, dateDepart);
 
-		assertThat(result).isEqualTo("Au plus tard fin octobre 2016");
+		assertThat(result).isEqualTo("Au plus tard<br/>fin octobre 2016");
 	}
 
 	@Test
@@ -130,7 +130,7 @@ public class UserChecklistDelaiComputerTest {
 
 		final String result = userChecklistDelaiComputer.compute(delai, dateDepart);
 
-		assertThat(result).isEqualTo("De décembre 2016 à fin janvier 2017");
+		assertThat(result).isEqualTo("De décembre 2016<br/>à fin janvier 2017");
 	}
 
 	@Test
@@ -140,7 +140,7 @@ public class UserChecklistDelaiComputerTest {
 
 		final String result = userChecklistDelaiComputer.compute(delai, dateDepart);
 
-		assertThat(result).isEqualTo("Au plus tard fin mars 2016");
+		assertThat(result).isEqualTo("Au plus tard<br/>fin mars 2016");
 	}
 
 	@Test
@@ -202,7 +202,7 @@ public class UserChecklistDelaiComputerTest {
 
 		final String result = userChecklistDelaiComputer.compute(delai, dateDepart);
 
-		assertThat(result).isEqualTo("A partir de février 2017");
+		assertThat(result).isEqualTo("A partir de<br/>février 2017");
 	}
 
 	@Test
