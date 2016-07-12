@@ -6,8 +6,11 @@
 		*{ Site internet }*
 		
 		#{if _caisse.site}
-			<span class="glyphicon glyphicon-cloud">&nbsp;</span>
-			<a href='${_caisse.site}' target='_blank' title="Nouvelle fenêtre">${_caisse.site}</a>
+			<div class="siteinternet">
+				<span class="nuage"></span>
+				<a href='${_caisse.site}' target='_blank' title="Nouvelle fenêtre">${_caisse.site}</a>
+				<br/>
+			</div>
 		#{/if}
 		
 		*{ Téléphone }*
