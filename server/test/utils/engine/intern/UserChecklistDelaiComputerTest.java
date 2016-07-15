@@ -47,7 +47,7 @@ public class UserChecklistDelaiComputerTest {
 		assertThat(result).isEqualTo("");
 	}
 
-	// "Dès que possible"
+	// "Le plus tôt possible"
 
 	@Test
 	public void des_que_possible() {
@@ -56,7 +56,7 @@ public class UserChecklistDelaiComputerTest {
 
 		final String result = userChecklistDelaiComputer.compute(delai, dateDepart);
 
-		assertThat(result).isEqualTo("Dès que possible");
+		assertThat(result).isEqualTo("Le plus tôt possible");
 	}
 
 	// "Au plus tard x mois/années"
