@@ -340,6 +340,7 @@ body .container.checklist .wrapper{
 .contenu-texte {
 	margin-left: 132px;
 	margin-right: 15px;
+	margin-top: 20px;
 	position:relative;
 	overflow:hidden;
 
@@ -373,7 +374,7 @@ body .container.checklist .wrapper{
 		 	display: block;
 		 	position:relative;
 		 	overflow: hidden;
-		 	font-size: 1.4rem;
+		 	font-size: 1.6rem;
 		 	max-width:660px;
 		 	z-index:12;
 		}
@@ -383,11 +384,6 @@ body .container.checklist .wrapper{
 			font-weight: 300;
 			margin-bottom:12px;
 			text-align: justify; 
-
-			b {
-				font-size: 1.6rem;
-				font-weight: bold;
-			}
 		}
 	}
 
