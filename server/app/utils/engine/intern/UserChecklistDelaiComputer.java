@@ -50,7 +50,7 @@ public class UserChecklistDelaiComputer {
 		if (delai.type == SIMPLE) {
 			return simple(delai, dateDepart);
 		}
-		return "Dès que possible";
+		return "Le plus tôt possible";
 	}
 
 	private String auPlus(final Delai delai, final MonthAndYear dateDepart) {

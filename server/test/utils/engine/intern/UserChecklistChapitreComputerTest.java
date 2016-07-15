@@ -36,7 +36,7 @@ public class UserChecklistChapitreComputerTest {
 	@Test
 	public void should_copy_standard_fields() {
 
-		when(userChecklistDelaiComputerMock.compute(any(Delai.class), any(MonthAndYear.class))).thenReturn("Dès que possible");
+		when(userChecklistDelaiComputerMock.compute(any(Delai.class), any(MonthAndYear.class))).thenReturn("Le plus tôt possible");
 		when(userChecklistParcoursComputerMock.compute(any(String.class), any(UserChecklistGenerationData.class))).thenAnswer(new Answer<String>() {
 
 			@Override
@@ -56,7 +56,7 @@ public class UserChecklistChapitreComputerTest {
 		final UserChapitre userChapitre = userChecklistChapitreComputer.compute(chapitre, userChecklistGenerationData);
 
 		assertThat(userChapitre.titre).isEqualTo("chap1");
-		assertThat(userChapitre.delai).isEqualTo("Dès que possible");
+		assertThat(userChapitre.delai).isEqualTo("Le plus tôt possible");
 		assertThat(userChapitre.texteActions).isEqualTo("actions chap1 computed");
 		assertThat(userChapitre.texteModalites).isEqualTo("modalités chap1 computed");
 		assertThat(userChapitre.texteInfos).isEqualTo("infos chap1 computed");

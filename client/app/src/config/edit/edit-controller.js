@@ -243,7 +243,7 @@ angular.module('SgmapRetraiteConfig').controller('EditCtrl',
             return "Aucun";
         }
         if (delai.type === 'DESQUE') {
-            return "Dès que possible";
+            return "Le plus tôt possible";
         }
         if (delai.type === 'AUPLUS') {
             return "Au plus tard "+delai.min+" "+(delai.unite === 'MOIS' ? "mois" : (delai.min === 1 ? "année" : "années"));

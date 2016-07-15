@@ -62,7 +62,7 @@ public class ChecklistForDocConverterTest {
 		{
 			final ChapitreForDoc chapitre1 = checklistForDoc.chapitres.get(0);
 			assertThat(chapitre1.titre).isEqualTo("chap1");
-			assertThat(chapitre1.delai).isEqualTo("Dès que possible");
+			assertThat(chapitre1.delai).isEqualTo("Le plus tôt possible");
 			assertThat(chapitre1.texteActions).isEqualTo("Actions chap1");
 			assertThat(chapitre1.texteModalites).isEqualTo("Modalités chap1");
 			assertThat(chapitre1.texteInfos).isEqualTo("Infos chap1");
@@ -118,7 +118,7 @@ public class ChecklistForDocConverterTest {
 		final ChecklistForDoc checklistForDoc = converter.convert(checklist);
 		assertThat(checklistForDoc.type).isEqualTo("msa");
 		final ChapitreForDoc chapitre1 = checklistForDoc.chapitres.get(0);
-		assertThat(chapitre1.delai).isEqualTo("Dès que possible");
+		assertThat(chapitre1.delai).isEqualTo("Le plus tôt possible");
 		assertThat(chapitre1.delaiSA).isEqualTo("Au plus tard 4 mois avant la date de départ prévue");
 	}
 

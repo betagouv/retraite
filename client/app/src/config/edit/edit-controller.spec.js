@@ -750,7 +750,7 @@ describe('EditCtrl', function () {
                     unite: 'MOIS'
                 };
                 var str = $scope.delaiToHumanStr(delai);
-                expect(str).toEqual("Dès que possible");
+                expect(str).toEqual("Le plus tôt possible");
             });
         
         });

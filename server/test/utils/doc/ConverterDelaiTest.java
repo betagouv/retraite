@@ -29,7 +29,7 @@ public class ConverterDelaiTest {
 
 		assertThat(converterDelai.convert(createDelaiAucun())).isEqualTo("Aucun");
 
-		assertThat(converterDelai.convert(createDelaiDesQuePossible())).isEqualTo("Dès que possible");
+		assertThat(converterDelai.convert(createDelaiDesQuePossible())).isEqualTo("Le plus tôt possible");
 
 		assertThat(converterDelai.convert(createDelaiAuPlus(3, MOIS))).isEqualTo("Au plus tard 3 mois avant la date de départ prévue");
 		assertThat(converterDelai.convert(createDelaiAuPlus(8, ANNEES))).isEqualTo("Au plus tard 8 années avant la date de départ prévue");
