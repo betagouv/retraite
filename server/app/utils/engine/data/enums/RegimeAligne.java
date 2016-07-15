@@ -5,12 +5,12 @@ public enum RegimeAligne {
 	// @formatter:off
 
 	CNAV(
-			"http://CNAV quand-prendre-sa-retraite",
-			"http://CNAV mon-releve-de-carriere",
-			"http://CNAV EVA",
-			"http://CNAV urlDispositifDepartAvantAgeLegal",
-			"http://CNAV urlInfosPenibilite",
-			"http://CNAV urlInfosDepartRetraite"),
+			"https://www.lassuranceretraite.fr/portail-info/home/salaries/age-et-montant-de-ma-retraite/a-quel-age-vais-je-partir.html;CMS_PUB=7F81DF2223FB37F324C1DD5309DF6D28",
+			"https://www.lassuranceretraite.fr/portail-info/home/salaries/mon-releve-de-carriere.html;CMS_PUB=E0F9E2DF7A8CB8BD51E22B21F4D5A573",
+			"https://www.lassuranceretraite.fr/portail-services-ihm/index.html#/sec/afficherIframe/EVA",
+			"https://www.lassuranceretraite.fr/portail-info/home/salaries/age-et-montant-de-ma-retraite/a-quel-age-vais-je-partir/departs-anticipes.html;CMS_PUB=7F81DF2223FB37F324C1DD5309DF6D28#header-b464966e-8d3d-4af3-85ef-5ab77cd8d041",
+			"https://www.lassuranceretraite.fr/portail-info/home/salaries/mes-droits-selon-de-mon-parcours/penibilite-au-travail.html",
+			"https://www.lassuranceretraite.fr/portail-info/home/salaries/mes-demarches/je-demande-ma-retraite/mes-demarches-pour-partir.html"),
 
 	MSA(
 			"http://www.msa.fr/lfr/retraite/conditions-age-depart-taux-plein",
