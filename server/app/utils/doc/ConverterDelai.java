@@ -13,7 +13,7 @@ public class ConverterDelai {
 		case AUCUN:
 			return "Aucun";
 		case DESQUE:
-			return "Dès que possible";
+			return "Le plus tôt possible";
 		case AUPLUS:
 			return "Au plus tard " + delai.min + " " + (delai.unite == Unite.MOIS ? "mois" : (delai.min == 1 ? "année" : "années"))
 					+ " avant la date de départ prévue";
