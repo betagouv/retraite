@@ -47,6 +47,8 @@ public class UserChecklistParcoursComputerTest {
 		});
 	}
 
+	// Opérations de base sur les textes
+
 	@Test
 	public void should_do_nothing_for_null() {
 
@@ -64,6 +66,8 @@ public class UserChecklistParcoursComputerTest {
 
 		assertThat(after).isEqualTo("texte simple");
 	}
+
+	// Remplacement des liens
 
 	@Test
 	public void should_replace_one_http_link() {
@@ -88,12 +92,24 @@ public class UserChecklistParcoursComputerTest {
 	@Test
 	public void should_replace_multiple_http_links_and_followed_by_different_characters() {
 
-		final String before = "soit http://a/a. ou <i>https://b/b.PDF</i> fin";
+		final String before = "soit https://a/a. ou <i>http://b/b.PDF</i> fin";
 
 		final String after = userChecklistParcoursComputer.compute(before, null);
 
-		assertThat(after).isEqualTo("soit " + link("http://a/a", "a/a") + ". ou <i>" + link("https://b/b.PDF", "b/b") + "</i> fin");
+		assertThat(after).isEqualTo("soit " + link("https://a/a", "a/a") + ". ou <i>" + link("http://b/b.PDF", "b/b") + "</i> fin");
 	}
+
+	@Test
+	public void should_replace_one_http_link_using_specified_text() {
+
+		final String before = "xxx [[ ceci est mon texte http://monsite.com/path/page.html ]] yyy";
+
+		final String after = userChecklistParcoursComputer.compute(before, null);
+
+		assertThat(after).isEqualTo("xxx " + link("http://monsite.com/path/page.html", "ceci est mon texte") + " yyy");
+	}
+
+	// Remplacement des variables
 
 	@Test
 	public void should_replace_vars() {
