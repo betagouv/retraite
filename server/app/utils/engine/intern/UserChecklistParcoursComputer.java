@@ -118,8 +118,14 @@ public class UserChecklistParcoursComputer {
 		}
 		final String linkTrimed = link.trim();
 		final int index = linkTrimed.indexOf("http");
+		System.out.println("index=" + index);
 		if (index == -1) {
+			// Pas d'URL : on renvoie le texte
 			return linkTrimed;
+		}
+		if (index == 0) {
+			// Pas de texte, on traite comme un lien simple
+			return buildLinkSimple(linkTrimed);
 		}
 		final String textForLink = linkTrimed.substring(0, index).trim();
 		final String url = linkTrimed.substring(index);
