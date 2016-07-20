@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import controllers.utils.Look;
 import models.Caisse;
 import models.PeriodeDepartLegal;
 import utils.DateUtils;
@@ -27,7 +28,8 @@ public class Validations extends RetraiteController {
 				renderDataParDepartement.set(checklistName, caisse);
 			}
 		}
-		render(data);
+		final Look look = Look.GENERIC;
+		render(data, look);
 	}
 
 	public static void testsAgeDepart() {

@@ -1,0 +1,16 @@
+div.validations-caisses {
+	margin-top: 150px;
+	font-size: 1.6rem;
+}
+
+table.validations-caisses {
+}
+
+table.validations-caisses td {
+	vertical-align: top;
+}
+
+table.validations-caisses thead {
+	font-weight: bold;
+}
+	

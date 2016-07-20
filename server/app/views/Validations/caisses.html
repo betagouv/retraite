@@ -5,34 +5,53 @@
 	#{stylesheet 'validations-caisses.css' /}
 #{/set}
 
-<table class='validations-caisses'>
-	<tr>
-		<td>Département</td>
-		<td>CNAV</td>
-		<td>MSA</td>
-		<td>RSI</td>
-	</tr>
-	
-	#{list items:data, as:'dataParDepartement'}
-	
-		<tr>
-			<td nowrap>${dataParDepartement.departement.nom}</td>
-			<td nowrap>
-				#{if dataParDepartement.caisseCNAV}
-					#{displayCaisse caisse:dataParDepartement.caisseCNAV /}
-				#{/if}
-			</td>
-			<td nowrap>
-				#{if dataParDepartement.caisseMSA}
-					#{displayCaisse caisse:dataParDepartement.caisseMSA /}
-				#{/if}
-			</td>
-			<td nowrap>
-				#{if dataParDepartement.caisseRSI}
-					#{displayCaisse caisse:dataParDepartement.caisseRSI /}
-				#{/if}
-			</td>
-		</tr>
-	
-	#{/list}
-</table>
+<div class='validations-caisses'>
+
+	Informations :
+	<ul>
+		<li>Chaque agence couvre 1 ou plusieurs départements, donc un lien est fait entre chaque 
+			département et l'agence correspondante
+		<li>L'agence est donc sélectionnée en fonction du département de résidence précisé par l'utilisateur
+		<li>Pour chaque agence, les informations suivantes sont possibles :
+		<ul>
+			<li>Site internet (optionnel)
+			<li>Téléphone (optionnel)
+			<li>Adresse (4 lignes possibles dont 1 obligatoire)
+		</ul>
+	</ul>
+	 
+	<table class='validations-caisses'>
+		<thead>
+			<tr>
+				<td>Département</td>
+				<td>CNAV</td>
+				<td>MSA</td>
+				<td>RSI</td>
+			</tr>
+		</thead>
+		
+		#{list items:data, as:'dataParDepartement'}
+		
+			<tr>
+				<td nowrap>${dataParDepartement.departement.nom}</td>
+				<td nowrap>
+					#{if dataParDepartement.caisseCNAV}
+						#{displayCaisse caisse:dataParDepartement.caisseCNAV /}
+					#{/if}
+				</td>
+				<td nowrap>
+					#{if dataParDepartement.caisseMSA}
+						#{displayCaisse caisse:dataParDepartement.caisseMSA /}
+					#{/if}
+				</td>
+				<td nowrap>
+					#{if dataParDepartement.caisseRSI}
+						#{displayCaisse caisse:dataParDepartement.caisseRSI /}
+					#{/if}
+				</td>
+			</tr>
+		
+		#{/list}
+	</table>
+
+</div>
