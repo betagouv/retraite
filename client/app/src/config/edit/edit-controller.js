@@ -313,17 +313,19 @@ angular.module('SgmapRetraiteConfig').controller('EditCtrl',
     
     $scope.countSyntaxErrors = function() {
         var count = 0;
-        angular.forEach($scope.checklist.chapitres, function(chapitre) {
-            if (SyntaxAnalyzer.isSyntaxError(chapitre.texteActions)) {
-                count=count+1;
-            }
-            if (SyntaxAnalyzer.isSyntaxError(chapitre.texteModalites)) {
-                count=count+1;
-            }
-            if (SyntaxAnalyzer.isSyntaxError(chapitre.texteInfos)) {
-                count=count+1;
-            }
-        });
+        if ($scope.checklist) {
+            angular.forEach($scope.checklist.chapitres, function(chapitre) {
+                if (SyntaxAnalyzer.isSyntaxError(chapitre.texteActions)) {
+                    count=count+1;
+                }
+                if (SyntaxAnalyzer.isSyntaxError(chapitre.texteModalites)) {
+                    count=count+1;
+                }
+                if (SyntaxAnalyzer.isSyntaxError(chapitre.texteInfos)) {
+                    count=count+1;
+                }
+            });
+        }
         return count;
     }
     

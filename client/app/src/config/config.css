@@ -120,6 +120,14 @@ ul.config-list li .label {
     color: #d9534f;
 }
 
+.dialog-link label {
+    width: 140px;
+}
+
+.dialog-link input.form-control {
+    width: 390px;
+}
+
 /* Editeur HTML */
 
 .ta-scroll-window.form-control {
