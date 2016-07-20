@@ -92,6 +92,8 @@ module.exports = function (config) {
             'app/src/config/directives/iframe-auto-size.js',
             'app/src/config/edit/dialogs/dialog-delai/dialog-delai.js',
             'app/src/config/edit/dialogs/dialog-delai/dialog-delai.spec.js',
+            'app/src/config/edit/dialogs/dialog-link/dialog-link.js',
+            'app/src/config/edit/dialogs/dialog-link/dialog-link.spec.js',
             'app/src/config/edit/dialogs/dialog-variables/dialog-variables.js',
             'app/src/config/edit/dialogs/dialog-variables/dialog-variables.spec.js',
             'app/src/config/edit/edit-controller.js',
