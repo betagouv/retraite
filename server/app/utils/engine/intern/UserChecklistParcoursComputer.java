@@ -45,28 +45,51 @@ public class UserChecklistParcoursComputer {
 	}
 
 	private String replaceLinks(final String text, final int fromIndex) {
-		final int beginIndex = searchBeginIndex(text, fromIndex);
-		if (beginIndex == -1) {
+		final BeginIndex beginIndex = searchBeginIndex(text, fromIndex);
+		if (beginIndex == BeginIndex.NONE) {
 			return text;
 		}
-		final int endIndex = searchEndIndex(text, beginIndex);
-		final String beforeLink = text.substring(0, beginIndex);
-		final String link = text.substring(beginIndex, endIndex);
-		final String buildedLink = buildLink(link);
-		final String afterLink = text.substring(endIndex);
+		final int endIndex = searchEndIndexForLink(beginIndex.type, text, beginIndex.index);
+		final String beforeLink = text.substring(0, beginIndex.index);
+		final String link = text.substring(beginIndex.type == BeginIndexType.SIMPLE ? beginIndex.index : beginIndex.index + 2, endIndex);
+		final String buildedLink = buildLink(beginIndex.type, link);
+		final String afterLink = text.substring(beginIndex.type == BeginIndexType.SIMPLE ? endIndex : endIndex + 2);
 		final String newText = beforeLink + buildedLink + afterLink;
 		return replaceLinks(newText, beforeLink.length() + buildedLink.length());
 	}
 
-	private int searchBeginIndex(final String text, final int fromIndex) {
-		int beginIndex = text.indexOf("http://", fromIndex);
-		if (beginIndex == -1) {
-			beginIndex = text.indexOf("https://", fromIndex);
+	private int searchEndIndexForLink(final BeginIndexType type, final String text, final int beginIndex) {
+		if (type == BeginIndexType.SIMPLE) {
+			return searchEndIndexForSimpleLink(text, beginIndex);
 		}
-		return beginIndex;
+		return searchEndIndexForAdvancedLink(text, beginIndex);
 	}
 
-	private int searchEndIndex(final String text, final int beginIndex) {
+	private BeginIndex searchBeginIndex(final String text, final int fromIndex) {
+		final int beginIndexHttp = text.indexOf("http://", fromIndex);
+		final int beginIndexHttps = text.indexOf("https://", fromIndex);
+		final int beginIndexBrackets = text.indexOf("[[", fromIndex);
+		final int beginIndex = minIndex(minIndex(beginIndexHttp, beginIndexHttps), beginIndexBrackets);
+		if (beginIndex != -1) {
+			if (beginIndex == beginIndexBrackets) {
+				return new BeginIndex(BeginIndexType.ADVANCED, beginIndex);
+			}
+			return new BeginIndex(BeginIndexType.SIMPLE, beginIndex);
+		}
+		return BeginIndex.NONE;
+	}
+
+	private int minIndex(final int index1, final int index2) {
+		if (index1 == -1) {
+			return index2;
+		}
+		if (index2 == -1) {
+			return index1;
+		}
+		return Math.min(index1, index2);
+	}
+
+	private int searchEndIndexForSimpleLink(final String text, final int beginIndex) {
 		final int endIndex = RetraiteStringsUtils.getMinIndex(
 				text.length(),
 				text.indexOf(" ", beginIndex),
@@ -77,6 +100,10 @@ public class UserChecklistParcoursComputer {
 		return skipSpecialCharAfterLink(text, endIndex);
 	}
 
+	private int searchEndIndexForAdvancedLink(final String text, final int beginIndex) {
+		return text.indexOf("]]", beginIndex);
+	}
+
 	private int skipSpecialCharAfterLink(final String text, final int endIndex) {
 		final char lastCharInLink = text.charAt(endIndex - 1);
 		if (lastCharInLink == '.') {
@@ -85,8 +112,24 @@ public class UserChecklistParcoursComputer {
 		return endIndex;
 	}
 
-	private String buildLink(final String link) {
-		return "<a href='" + link + "' target='_blank' title='Nouvelle fenêtre'>" + convertTextForLink(link) + "</a>";
+	private String buildLink(final BeginIndexType type, final String link) {
+		if (type == BeginIndexType.SIMPLE) {
+			return buildLinkSimple(link);
+		}
+		final String linkTrimed = link.trim();
+		final int index = linkTrimed.indexOf("http");
+		final String textForLink = linkTrimed.substring(0, index).trim();
+		final String url = linkTrimed.substring(index);
+		return buildLink(url, textForLink);
+	}
+
+	private String buildLinkSimple(final String link) {
+		final String textForLink = convertTextForLink(link);
+		return buildLink(link, textForLink);
+	}
+
+	private String buildLink(final String url, final String textForLink) {
+		return "<a href='" + url + "' target='_blank' title='Nouvelle fenêtre'>" + textForLink + "</a>";
 	}
 
 	private String convertTextForLink(final String link) {
@@ -109,6 +152,28 @@ public class UserChecklistParcoursComputer {
 			return convertTextForLink(link.substring(0, link.length() - ".pdf".length()));
 		}
 		return link;
+	}
+
+	private static enum BeginIndexType {
+		SIMPLE, ADVANCED
+	}
+
+	private static class BeginIndex {
+
+		public static final BeginIndex NONE = new BeginIndex();
+
+		private final BeginIndexType type;
+		private final int index;
+
+		public BeginIndex(final BeginIndexType type, final int index) {
+			this.type = type;
+			this.index = index;
+		}
+
+		private BeginIndex() {
+			this(null, -1);
+		}
+
 	}
 
 }
