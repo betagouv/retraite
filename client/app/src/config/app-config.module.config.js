@@ -37,17 +37,12 @@ angular.module('SgmapRetraiteConfig').config(function ($urlRouterProvider, $stat
             controller: 'LoginCtrl'
         });
 
-    $provide.decorator('taOptions', function($delegate, taRegisterTool, DialogVariables) {
+    $provide.decorator('taOptions', function($delegate, taRegisterTool, DialogVariables, DialogLink) {
 
         taRegisterTool('addVariable', {
             iconclass: "fa fa-th",
             buttontext: "Ajouter une variable...",
-            /*action: function (item) {
-                if (item.text) {
-                    this.$editor().wrapSelection('insertHtml', item.text + '***');
-                }
-            }*/
-            action: function(a,b,c,d){
+            action: function(){
                 var selection = window.getSelection();
                 var range = selection.getRangeAt(0);
                 DialogVariables.display().then(function(variable) {
@@ -57,14 +52,29 @@ angular.module('SgmapRetraiteConfig').config(function ($urlRouterProvider, $stat
                     selection.removeAllRanges();
                     selection.addRange(range);
                 });
-                //this.$editor().wrapSelection('forecolor', 'red');
-                
-                
+            }
+        });
+
+        taRegisterTool('addLink', {
+            iconclass: "fa fa-th",
+            buttontext: "Ajouter un lien...",
+            action: function(){
+                var selection = window.getSelection();
+                var range = selection.getRangeAt(0);
+                var selectedText = selection.toString();
+                DialogLink.display(selectedText).then(function(result) {
+                    range.deleteContents();
+                    var textNode = document.createTextNode("[["+result.text+" "+result.url+"]]");
+                    range.insertNode(textNode);
+                    range.setStartAfter(textNode);
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                });
             }
         });
 
         $delegate.toolbar = [
-            ['bold'],['ul', 'ol'],['addVariable']
+            ['bold'],['ul', 'ol'],['addVariable', 'addLink']
         ];
         return $delegate;
     });
