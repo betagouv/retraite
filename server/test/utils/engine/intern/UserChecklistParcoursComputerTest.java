@@ -119,6 +119,16 @@ public class UserChecklistParcoursComputerTest {
 		assertThat(after).isEqualTo("xxx ceci est mon texte yyy");
 	}
 
+	@Test
+	public void should_replace_one_http_link_using_specified_text_without_text() {
+
+		final String before = "xxx [[ http://monsite.com/path/page.html ]] yyy";
+
+		final String after = userChecklistParcoursComputer.compute(before, null);
+
+		assertThat(after).isEqualTo("xxx " + link("http://monsite.com/path/page.html", "monsite.com/path/page") + " yyy");
+	}
+
 	// Remplacement des variables
 
 	@Test
