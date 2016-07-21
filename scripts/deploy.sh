@@ -97,7 +97,7 @@ if [ $? != 0 ]; then
     echo
     exit $?
 fi
-ssh $REMOTE_USER@$SERVER_NAME "cd /home/$REMOTE_DIR/retraite && source ../set-retraite-env.sh && /home/deploy/play-1.4.2/play evolutions:apply --%$ENV && /home/deploy/play-1.4.2/play deps --sync && /home/deploy/play-1.4.2/play restart --%$ENV"
+ssh $REMOTE_USER@$SERVER_NAME "cd /home/$REMOTE_DIR/retraite && source ../set-retraite-env.sh && cat ../mail.log4j.$ENV.properties >> conf/log4j.$ENV.properties && /home/deploy/play-1.4.2/play evolutions:apply --%$ENV && /home/deploy/play-1.4.2/play deps --sync && /home/deploy/play-1.4.2/play restart --%$ENV"
 if [ $? != 0 ]; then
     echo
     echo "Il y a eu une erreur : arrêt du déploiement !"
