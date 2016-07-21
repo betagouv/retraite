@@ -37,13 +37,14 @@ public class UserChecklistGenerationDataBuilderTest {
 		final List<UserStatus> userStatus = asList(STATUS_NSA, STATUS_CONJOINT_COLLABORATEUR, STATUS_SA);
 
 		final UserChecklistGenerationData userChecklistGenerationData = userChecklistGenerationDataBuilder.build(dateDepart, "973", regimes, regimesAlignes,
-				regimeLiquidateur, false, true, userStatus);
+				regimeLiquidateur, false, true, userStatus, true);
 
 		assertThat(userChecklistGenerationData.getDateDepart()).isSameAs(dateDepart);
 		assertThat(userChecklistGenerationData.getDepartement()).isEqualTo("973");
 		assertThat(userChecklistGenerationData.getRegimes()).isSameAs(regimes);
 		assertThat(userChecklistGenerationData.getRegimesAlignes()).isSameAs(regimesAlignes);
 		assertThat(userChecklistGenerationData.published).isFalse();
+		assertThat(userChecklistGenerationData.isPDF).isTrue();
 
 		// [XN-29/03/2016-En attendant de remettre les questions complémentaires, on force l'affichage des chapitres]
 		// verify(liquidateurReponsesEvaluatorMock).isCarriereAReconstituer(complementReponses);
@@ -64,12 +65,13 @@ public class UserChecklistGenerationDataBuilderTest {
 		final List<UserStatus> userStatus = null;
 
 		final UserChecklistGenerationData userChecklistGenerationData = userChecklistGenerationDataBuilder.build(dateDepart, "973", regimes, regimesAlignes,
-				regimeLiquidateur, false, true, userStatus);
+				regimeLiquidateur, false, true, userStatus, true);
 
 		assertThat(userChecklistGenerationData.isConjointCollaborateur).isFalse();
 		assertThat(userChecklistGenerationData.isNSA).isFalse();
 		assertThat(userChecklistGenerationData.isSA).isFalse();
 		assertThat(userChecklistGenerationData.isCarriereLongue).isTrue();
+		assertThat(userChecklistGenerationData.isPDF).isTrue();
 	}
 
 }

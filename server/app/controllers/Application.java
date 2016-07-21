@@ -108,9 +108,10 @@ public class Application extends RetraiteController {
 	private static final boolean AS_HTML = false;
 	private static final boolean RENDER_PDF_WITH_I_TEXT = false;
 
-	public static void pdf(final PostData postData, final String html) {
+	public static void pdf(final PostData postData) {
 
 		final boolean test = params._contains("test");
+		postData.isPDF = true;
 		final RenderData data = RetraiteEngineFactory.create(test).processToNextStep(postData);
 		data.isPDF = true;
 

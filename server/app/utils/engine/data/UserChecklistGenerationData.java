@@ -16,14 +16,16 @@ public class UserChecklistGenerationData {
 	public boolean isCarriereLongue;
 
 	public boolean published;
+	public boolean isPDF;
 
 	public UserChecklistGenerationData(final MonthAndYear dateDepart, final String departement, final Regime[] regimes, final RegimeAligne[] regimesAlignes,
-			final boolean published) {
+			final boolean published, final boolean isPDF) {
 		this.dateDepart = dateDepart;
 		this.departement = departement;
 		this.regimes = regimes;
 		this.regimesAlignes = regimesAlignes;
 		this.published = published;
+		this.isPDF = isPDF;
 	}
 
 	private UserChecklistGenerationData() {

@@ -35,7 +35,7 @@ public class UserChecklistVarsProviderTest {
 		final Regime[] regimes = new Regime[] { CNAV, IRCEC, BFSP, AGIRC_ARRCO, CARCD };
 		final RegimeAligne[] regimesAlignes = null;
 		final UserChecklistGenerationData userChecklistGenerationData = new UserChecklistGenerationData(dateDepart, "973", regimes, regimesAlignes,
-				true);
+				true, false);
 
 		final UserChecklistVars vars = userChecklistVarsProvider.provideVars(userChecklistGenerationData);
 

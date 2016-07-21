@@ -44,7 +44,7 @@ public class DisplayerChecklist {
 		final MonthAndYear dateDepart = new MonthAndYear(departMois, departAnnee);
 		final String departement = firstNotNull(data.departement, data.hidden_departement);
 		final UserChecklistGenerationData userChecklistGenerationData = userChecklistGenerationDataBuilder.build(dateDepart, departement,
-				regimes, regimesAlignes, regimeLiquidateur, true, data.hidden_attestationCarriereLongue, data.hidden_userStatus);
+				regimes, regimesAlignes, regimeLiquidateur, true, data.hidden_attestationCarriereLongue, data.hidden_userStatus, data.isPDF);
 		renderData.hidden_step = "displayCheckList";
 		try {
 			renderData.userChecklist = userChecklistGenerator.generate(userChecklistGenerationData, regimeLiquidateur);
