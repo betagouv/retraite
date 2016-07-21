@@ -13,22 +13,24 @@
 							<h4>Retraite de base :</h4>
 							#{displayCaisse caisse:_data.userChecklist.caisse /}
 						</td>
-						#{if _data.userChecklist.regimesComplementaires}
+						#{if _data.userChecklist.autresRegimesDeBase || _data.userChecklist.regimesComplementaires}
 							<td width="50%">
-								<h4>Autre retraite :</h4>
-					        	<ul>
-					        			<li>aaa</li>
-					        			<li>bbb</li>
-					        		#{list items:_data.userChecklist.autresRegimesDeBase, as:'regime'}
-					        			<li>${regime.nom}</li>
-					        		#{/list}
-					        	</ul>
-								<h4>Retraite complémentaire :</h4>
-					        	<ul>
-					        		#{list items:_data.userChecklist.regimesComplementaires, as:'regime'}
-					        			<li>${regime.nom}</li>
-					        		#{/list}
-					        	</ul>
+								#{if _data.userChecklist.autresRegimesDeBase}
+									<h4>Autre retraite :</h4>
+						        	<ul>
+						        		#{list items:_data.userChecklist.autresRegimesDeBase, as:'regime'}
+						        			<li>${regime.nom}</li>
+						        		#{/list}
+						        	</ul>
+								#{/if}
+								#{if _data.userChecklist.regimesComplementaires}
+									<h4>Retraite complémentaire :</h4>
+						        	<ul>
+						        		#{list items:_data.userChecklist.regimesComplementaires, as:'regime'}
+						        			<li>${regime.nom}</li>
+						        		#{/list}
+						        	</ul>
+								#{/if}
 							</td>
 						#{/if}
 					</tr>
