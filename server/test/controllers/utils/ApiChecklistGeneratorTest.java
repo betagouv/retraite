@@ -24,7 +24,6 @@ import utils.engine.data.UserChecklistGenerationData;
 import utils.engine.data.enums.ChecklistName;
 import utils.engine.data.enums.Regime;
 import utils.engine.data.enums.RegimeAligne;
-import utils.engine.data.enums.UserStatus;
 import utils.engine.intern.CalculateurRegimeAlignes;
 import utils.engine.intern.UserChecklistGenerationDataBuilder;
 import utils.engine.intern.UserChecklistGenerator;
@@ -123,7 +122,7 @@ public class ApiChecklistGeneratorTest {
 	public void should_generate_data() {
 		final UserChecklistGenerationData userChecklistGenerationData = UserChecklistGenerationData.create().get();
 		when(userChecklistGenerationDataBuilderMock.build(any(MonthAndYear.class), any(String.class), any(Regime[].class), any(RegimeAligne[].class),
-				any(RegimeAligne.class), anyBoolean(), anyBoolean(), any(List.class)))
+				any(RegimeAligne.class), anyBoolean(), anyBoolean(), any(List.class), anyBoolean()))
 						.thenReturn(userChecklistGenerationData);
 		when(calculateurRegimeAlignesMock.getRegimesAlignes(new Regime[] { Regime.CNAV })).thenReturn(new RegimeAligne[] { RegimeAligne.CNAV });
 
@@ -157,7 +156,8 @@ public class ApiChecklistGeneratorTest {
 				RSI,
 				false /* published */,
 				true /* isCarriereLongue */,
-				asList(STATUS_CONJOINT_COLLABORATEUR));
+				asList(STATUS_CONJOINT_COLLABORATEUR),
+				false /* isPDF */);
 		verify(userChecklistGeneratorMock).generate(eq(ChecklistName.RSI), eq(userChecklistGenerationData));
 	}
 

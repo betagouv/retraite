@@ -80,6 +80,17 @@ public class UserChecklistParcoursComputerTest {
 	}
 
 	@Test
+	public void should_replace_one_http_link_in_PDF_mode() {
+
+		final String before = "xxx http://monsite.com/path/page.html yyy";
+
+		final UserChecklistGenerationData userChecklistGenerationData = new UserChecklistGenerationData(null, null, null, null, false, true /* isPDF */);
+		final String after = userChecklistParcoursComputer.compute(before, userChecklistGenerationData);
+
+		assertThat(after).isEqualTo("xxx " + link("http://monsite.com/path/page.html", "http://monsite.com/path/page.html") + " yyy");
+	}
+
+	@Test
 	public void should_replace_one_https_link_and_nothing_after_link() {
 
 		final String before = "xxx https://www.monsite.com/path/page.htm";
@@ -107,6 +118,18 @@ public class UserChecklistParcoursComputerTest {
 		final String after = userChecklistParcoursComputer.compute(before, null);
 
 		assertThat(after).isEqualTo("xxx " + link("http://monsite.com/path/page.html", "ceci est mon texte") + " yyy");
+	}
+
+	@Test
+	public void should_replace_one_http_link_using_specified_text_in_PDF_mode() {
+
+		final String before = "xxx [[ ceci est mon texte http://monsite.com/path/page.html ]] yyy";
+
+		final UserChecklistGenerationData userChecklistGenerationData = new UserChecklistGenerationData(null, null, null, null, false, true /* isPDF */);
+		final String after = userChecklistParcoursComputer.compute(before, userChecklistGenerationData);
+
+		assertThat(after).isEqualTo("xxx " + link("http://monsite.com/path/page.html", "ceci est mon texte") + " ("
+				+ link("http://monsite.com/path/page.html", "http://monsite.com/path/page.html") + ") yyy");
 	}
 
 	@Test

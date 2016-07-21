@@ -22,4 +22,6 @@ public class CommonExchangeData {
 	public RegimeAligne hidden_liquidateur;
 	public List<UserStatus> hidden_userStatus;
 
+	public boolean isPDF;
+
 }
