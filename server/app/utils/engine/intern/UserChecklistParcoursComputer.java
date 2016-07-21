@@ -27,7 +27,8 @@ public class UserChecklistParcoursComputer {
 		if (isLikeEmpty(text)) {
 			return null;
 		}
-		return replaceVars(replaceLinks(text), userChecklistGenerationData);
+		final boolean isPDF = userChecklistGenerationData != null && userChecklistGenerationData.isPDF;
+		return replaceVars(replaceLinks(text, isPDF), userChecklistGenerationData);
 	}
 
 	private String replaceVars(final String text, final UserChecklistGenerationData userChecklistGenerationData) {
@@ -40,11 +41,11 @@ public class UserChecklistParcoursComputer {
 		}
 	}
 
-	private String replaceLinks(final String text) {
-		return replaceLinks(text, 0);
+	private String replaceLinks(final String text, final boolean isPDF) {
+		return replaceLinks(text, 0, isPDF);
 	}
 
-	private String replaceLinks(final String text, final int fromIndex) {
+	private String replaceLinks(final String text, final int fromIndex, final boolean isPDF) {
 		final BeginIndex beginIndex = searchBeginIndex(text, fromIndex);
 		if (beginIndex == BeginIndex.NONE) {
 			return text;
@@ -52,10 +53,10 @@ public class UserChecklistParcoursComputer {
 		final int endIndex = searchEndIndexForLink(beginIndex.type, text, beginIndex.index);
 		final String beforeLink = text.substring(0, beginIndex.index);
 		final String link = text.substring(beginIndex.type == BeginIndexType.SIMPLE ? beginIndex.index : beginIndex.index + 2, endIndex);
-		final String buildedLink = buildLink(beginIndex.type, link);
+		final String buildedLink = buildLink(beginIndex.type, link, isPDF);
 		final String afterLink = text.substring(beginIndex.type == BeginIndexType.SIMPLE ? endIndex : endIndex + 2);
 		final String newText = beforeLink + buildedLink + afterLink;
-		return replaceLinks(newText, beforeLink.length() + buildedLink.length());
+		return replaceLinks(newText, beforeLink.length() + buildedLink.length(), isPDF);
 	}
 
 	private int searchEndIndexForLink(final BeginIndexType type, final String text, final int beginIndex) {
@@ -112,29 +113,31 @@ public class UserChecklistParcoursComputer {
 		return endIndex;
 	}
 
-	private String buildLink(final BeginIndexType type, final String link) {
+	private String buildLink(final BeginIndexType type, final String link, final boolean isPDF) {
 		if (type == BeginIndexType.SIMPLE) {
-			return buildLinkSimple(link);
+			return buildLinkSimple(link, isPDF);
 		}
 		final String linkTrimed = link.trim();
 		final int index = linkTrimed.indexOf("http");
-		System.out.println("index=" + index);
 		if (index == -1) {
 			// Pas d'URL : on renvoie le texte
 			return linkTrimed;
 		}
 		if (index == 0) {
 			// Pas de texte, on traite comme un lien simple
-			return buildLinkSimple(linkTrimed);
+			return buildLinkSimple(linkTrimed, isPDF);
 		}
 		final String textForLink = linkTrimed.substring(0, index).trim();
 		final String url = linkTrimed.substring(index);
-		return buildLink(url, textForLink);
+		String htmlLink = buildLink(url, textForLink);
+		if (isPDF) {
+			htmlLink += " (" + buildLink(url, url) + ")";
+		}
+		return htmlLink;
 	}
 
-	private String buildLinkSimple(final String link) {
-		final String textForLink = convertTextForLink(link);
-		return buildLink(link, textForLink);
+	private String buildLinkSimple(final String link, final boolean isPDF) {
+		return buildLink(link, isPDF ? link : convertTextForLink(link));
 	}
 
 	private String buildLink(final String url, final String textForLink) {

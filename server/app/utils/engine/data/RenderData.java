@@ -26,8 +26,6 @@ public class RenderData extends CommonExchangeData {
 
 	public String errorMessage;
 
-	public boolean isPDF;
-
 	public List<InfoRetraiteResultRegime> regimesInfos;
 
 	public EcranSortie ecranSortie;

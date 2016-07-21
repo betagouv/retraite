@@ -76,11 +76,11 @@ public class DisplayerChecklistTest {
 		final Regime[] regimes = new Regime[] { Regime.CNAV };
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { CNAV };
 		final UserChecklistGenerationData userChecklistGenerationData = new UserChecklistGenerationData(dateDepart, "973", regimes, regimesAlignes,
-				true);
+				true, false);
 
 		when(calculateurRegimeAlignesMock.getRegimesAlignes("CNAV")).thenReturn(regimesAlignes);
 		when(userChecklistGenerationDataBuilderMock.build(eq(dateDepart), eq("973"), eq(regimes), eq(regimesAlignes), eq(postData.hidden_liquidateur),
-				eq(true), eq(true), eq(postData.hidden_userStatus))).thenReturn(userChecklistGenerationData);
+				eq(true), eq(true), eq(postData.hidden_userStatus), eq(false))).thenReturn(userChecklistGenerationData);
 		when(userChecklistGeneratorMock.generate(same(userChecklistGenerationData), eq(postData.hidden_liquidateur))).thenReturn(userChecklistMock);
 		final RenderData renderData = new RenderData();
 
@@ -108,7 +108,7 @@ public class DisplayerChecklistTest {
 
 		when(calculateurRegimeAlignesMock.getRegimesAlignes(anyString())).thenReturn(new RegimeAligne[] { CNAV });
 		when(userChecklistGenerationDataBuilderMock.build(any(MonthAndYear.class), any(String.class), any(Regime[].class), any(RegimeAligne[].class),
-				any(RegimeAligne.class), eq(true), eq(true), any(List.class))).thenReturn(userChecklistGenerationData);
+				any(RegimeAligne.class), eq(true), eq(true), any(List.class), eq(false))).thenReturn(userChecklistGenerationData);
 
 		// Simulation Exception
 		doThrow(new RetraiteException("xxx")).when(userChecklistGeneratorMock).generate(any(UserChecklistGenerationData.class), any(RegimeAligne.class));
