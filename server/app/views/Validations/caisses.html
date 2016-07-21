@@ -7,7 +7,8 @@
 
 <div class='validations-caisses'>
 
-	Informations :
+	<h1>Informations :</h1>
+	
 	<ul>
 		<li>Chaque agence couvre 1 ou plusieurs départements, donc un lien est fait entre chaque 
 			département et l'agence correspondante
@@ -20,6 +21,80 @@
 		</ul>
 	</ul>
 	 
+	<h1>Correspondance entre département et caisse :</h1>
+
+	<table class='validations-caisses'>
+		<thead>
+			<tr>
+				<td>Département</td>
+				<td>CNAV</td>
+				<td>MSA</td>
+				<td>RSI</td>
+			</tr>
+		</thead>
+		
+		#{list items:data, as:'dataParDepartement'}
+		
+			<tr>
+				<td nowrap>${dataParDepartement.departement.nom}</td>
+				<td nowrap>
+					#{if dataParDepartement.caisseCNAV}
+						${dataParDepartement.caisseCNAV.nom}
+					#{/if}
+				</td>
+				<td nowrap>
+					#{if dataParDepartement.caisseMSA}
+						${dataParDepartement.caisseMSA.nom}
+					#{/if}
+				</td>
+				<td nowrap>
+					#{if dataParDepartement.caisseRSI}
+						${dataParDepartement.caisseRSI.nom}
+					#{/if}
+				</td>
+			</tr>
+		
+		#{/list}
+	</table>
+
+	<h1>Liste des caisses :</h1>
+	
+	<table class='validations-caisses'>
+		<thead>
+			<tr>
+				<td>CNAV</td>
+				<td>MSA</td>
+				<td>RSI</td>
+			</tr>
+		</thead>
+		<tr>
+			<td>
+				<ul>
+					#{list items:caissesCNAV, as:'caisse'}
+						<li>#{displayCaisse caisse:caisse /}
+					#{/list}
+				</ul>
+			</td>
+			<td>
+				<ul>
+					#{list items:caissesMSA, as:'caisse'}
+						<li>#{displayCaisse caisse:caisse /}
+					#{/list}
+				</ul>
+			</td>
+			<td>
+				<ul>
+					#{list items:caissesRSI, as:'caisse'}
+						<li>#{displayCaisse caisse:caisse /}
+					#{/list}
+				</ul>
+			</td>
+		</tr>
+	</table>
+	
+		
+	<h1>Données présentées à l'utilisateur en fonction du département de résidence :</h1>
+	
 	<table class='validations-caisses'>
 		<thead>
 			<tr>
