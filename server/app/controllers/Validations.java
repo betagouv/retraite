@@ -1,6 +1,9 @@
 package controllers;
 
 import static java.util.Calendar.MONTH;
+import static utils.engine.data.enums.ChecklistName.CNAV;
+import static utils.engine.data.enums.ChecklistName.MSA;
+import static utils.engine.data.enums.ChecklistName.RSI;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -18,18 +21,29 @@ import utils.engine.utils.AgeLegalEvaluator;
 public class Validations extends RetraiteController {
 
 	public static void caisses() {
+
+		final CaisseDao caisseDao = new CaisseDao();
+
+		// Données générales
 		final List<RenderDataParDepartement> data = new ArrayList<>();
 		final List<RenderDepartement> departements = createListeDepartements();
 		for (final RenderDepartement departement : departements) {
 			final RenderDataParDepartement renderDataParDepartement = new RenderDataParDepartement(departement);
 			data.add(renderDataParDepartement);
 			for (final ChecklistName checklistName : ChecklistName.values()) {
-				final Caisse caisse = new CaisseDao().find(checklistName, departement.numero);
+				final Caisse caisse = caisseDao.find(checklistName, departement.numero);
 				renderDataParDepartement.set(checklistName, caisse);
 			}
 		}
+
+		// Lsite des caisses
+		final List<Caisse> caissesCNAV = caisseDao.findCaissesList(CNAV);
+		final List<Caisse> caissesMSA = caisseDao.findCaissesList(MSA);
+		final List<Caisse> caissesRSI = caisseDao.findCaissesList(RSI);
+
+		// Rendu
 		final Look look = Look.GENERIC;
-		render(data, look);
+		render(data, look, caissesCNAV, caissesMSA, caissesRSI);
 	}
 
 	public static void testsAgeDepart() {
