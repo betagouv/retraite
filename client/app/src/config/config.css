@@ -135,6 +135,10 @@ ul.config-list li .label {
     height: 145px;
 }
 
+.btn[disabled] {
+    opacity: .30;
+}
+
 /* Sous-menu dropdown */
 
 .dropdown-submenu {
