@@ -59,7 +59,9 @@ public class Validations extends RetraiteController {
 		render(listPeriodesDepartLegal, listTestsAgeDepart);
 	}
 
-	public static void sorties() {
+	public static void sorties(final String regime) {
+
+		final RegimeAligne regimeForUrls = regime == null ? RegimeAligne.CNAV : RegimeAligne.valueOf(regime);
 
 		final Look look = Look.GENERIC;
 		final List<InfoRetraiteResultRegime> regimesInfos = Arrays.asList(
@@ -78,13 +80,13 @@ public class Validations extends RetraiteController {
 		};
 		final Map<String, Object> extras = new HashMap<String, Object>() {
 			{
-				put("urlAgeDepart", RegimeAligne.CNAV.urlAgeDepart);
-				put("urlDispositifDepartAvantAgeLegal", RegimeAligne.CNAV.urlDispositifDepartAvantAgeLegal);
-				put("urlDroits", RegimeAligne.CNAV.urlDroits);
-				put("urlSimulMontant", RegimeAligne.CNAV.urlSimulMontant);
-				put("urlInfosDepartRetraite", RegimeAligne.CNAV.urlInfosDepartRetraite);
-				put("urlInfosPenibilite", RegimeAligne.CNAV.urlInfosPenibilite);
-				put("urlSimulMontant", RegimeAligne.CNAV.urlSimulMontant);
+				put("urlAgeDepart", regimeForUrls.urlAgeDepart);
+				put("urlDispositifDepartAvantAgeLegal", regimeForUrls.urlDispositifDepartAvantAgeLegal);
+				put("urlDroits", regimeForUrls.urlDroits);
+				put("urlSimulMontant", regimeForUrls.urlSimulMontant);
+				put("urlInfosDepartRetraite", regimeForUrls.urlInfosDepartRetraite);
+				put("urlInfosPenibilite", regimeForUrls.urlInfosPenibilite);
+				put("urlSimulMontant", regimeForUrls.urlSimulMontant);
 				put("age", age);
 				put("ageLegalPourPartir", ageLegalPourPartir);
 			}
