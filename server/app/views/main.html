@@ -52,7 +52,7 @@
 
     <body>
     
-	  	#{if look.toString() != 'RSI'}
+	  	#{if look.toString() != 'RSI' && !withoutPageLayout}
 		    <header class="entete col-sm-12">
 		    	<div class="home header-inner clearfix row">
 			    	<div class="col-sm-2">
@@ -88,7 +88,7 @@
 		</div><!--fin container-->
 
 
-	  	#{if look.toString() != 'RSI'}
+	  	#{if look.toString() != 'RSI' && !withoutPageLayout}
 			<div class="col-sm-12 contenu">
 			    <footer role="contentinfo">
 			        <div class="wrapper-inner">
