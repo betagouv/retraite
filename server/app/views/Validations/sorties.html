@@ -7,7 +7,18 @@
 
 <div class='visu-ecrans-sortie'>
 	
-	<h1>Ecrans de sortie</h1>
+	<form>
+		<h1>
+			Ecrans de sortie pour 
+			<select name="regime" onchange='this.form.submit();'>
+			
+				<option>CNAV</option>
+				<option>MSA</option>
+				<option>RSI</option>
+			</select>
+		</h1>
+	
+	</form>
 	
 	${content.raw()}
 	
