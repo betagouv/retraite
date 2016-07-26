@@ -14,6 +14,7 @@ import utils.engine.data.UserChecklistGenerationData;
 import utils.engine.data.enums.Regime;
 import utils.engine.data.enums.RegimeAligne;
 import utils.engine.intern.CalculateurRegimeAlignes;
+import utils.engine.intern.StepFormsDataProvider;
 import utils.engine.intern.UserChecklistGenerationDataBuilder;
 import utils.engine.intern.UserChecklistGenerator;
 import utils.engine.utils.DateProvider;
@@ -24,14 +25,16 @@ public class DisplayerChecklist {
 	private final UserChecklistGenerator userChecklistGenerator;
 	private final DateProvider dateProvider;
 	private final CalculateurRegimeAlignes calculateurRegimeAlignes;
+	private final StepFormsDataProvider stepFormsDataProvider;
 
 	public DisplayerChecklist(final UserChecklistGenerationDataBuilder userChecklistGenerationDataBuilder,
 			final UserChecklistGenerator userChecklistGenerator, final DateProvider dateProvider,
-			final CalculateurRegimeAlignes calculateurRegimeAlignes) {
+			final CalculateurRegimeAlignes calculateurRegimeAlignes, final StepFormsDataProvider stepFormsDataProvider) {
 		this.userChecklistGenerationDataBuilder = userChecklistGenerationDataBuilder;
 		this.userChecklistGenerator = userChecklistGenerator;
 		this.dateProvider = dateProvider;
 		this.calculateurRegimeAlignes = calculateurRegimeAlignes;
+		this.stepFormsDataProvider = stepFormsDataProvider;
 	}
 
 	public void fillData(final PostData data, final RenderData renderData) {
@@ -58,6 +61,7 @@ public class DisplayerChecklist {
 		if (departMois != null && departAnnee != null) {
 			renderData.userInfos.put("Date de départ envisagée", "01/" + (departMois.length() == 1 ? "0" : "") + departMois + "/" + departAnnee);
 		}
+		renderData.userInfos.put("Département de résidence", stepFormsDataProvider.getDepartementName(departement));
 	}
 
 }

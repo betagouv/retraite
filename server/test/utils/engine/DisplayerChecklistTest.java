@@ -14,7 +14,7 @@ import static utils.engine.data.enums.UserStatus.STATUS_CHEF;
 import static utils.engine.data.enums.UserStatus.STATUS_INVALIDITE_RSI;
 import static utils.engine.data.enums.UserStatus.STATUS_NSA;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +30,7 @@ import utils.engine.data.UserChecklistGenerationData;
 import utils.engine.data.enums.Regime;
 import utils.engine.data.enums.RegimeAligne;
 import utils.engine.intern.CalculateurRegimeAlignes;
+import utils.engine.intern.StepFormsDataProvider;
 import utils.engine.intern.UserChecklistGenerationDataBuilder;
 import utils.engine.intern.UserChecklistGenerator;
 import utils.engine.utils.DateProvider;
@@ -50,7 +51,7 @@ public class DisplayerChecklistTest {
 		final DateProvider dateProviderFake = new DateProviderFake(23, 12, 2015);
 		calculateurRegimeAlignesMock = mock(CalculateurRegimeAlignes.class);
 		displayerChecklist = new DisplayerChecklist(userChecklistGenerationDataBuilderMock, userChecklistGeneratorMock, dateProviderFake,
-				calculateurRegimeAlignesMock);
+				calculateurRegimeAlignesMock, new StepFormsDataProvider(dateProviderFake));
 	}
 
 	@Test
@@ -89,11 +90,12 @@ public class DisplayerChecklistTest {
 		assertThat(renderData.hidden_step).isEqualTo("displayCheckList");
 		assertThat(renderData.userChecklist).isSameAs(userChecklistMock);
 
-		final Map<String, String> expectedUserInfos = new HashMap<String, String>() {
+		final Map<String, String> expectedUserInfos = new LinkedHashMap<String, String>() {
 			{
 				put("Document produit le", "23/12/2015");
 				put("Nom de naissance", "DUPONT");
 				put("Date de départ envisagée", "01/02/2017");
+				put("Département de résidence", "Guyane");
 			}
 		};
 		assertThat(renderData.userInfos).isEqualTo(expectedUserInfos);
