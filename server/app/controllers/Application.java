@@ -37,7 +37,21 @@ import utils.mail.MailSenderWithSendGrid;
 
 public class Application extends RetraiteController {
 
-	public static void process(PostData postData) {
+	public static void process(final PostData postData) {
+		try {
+			_process(postData);
+		} catch (final Exception e) {
+			Logger.error(e, "Error processing request !");
+			oupsPleaseComeBack();
+		}
+	}
+
+	public static void oupsPleaseComeBack() {
+		final Look look = getLook(params);
+		render(look);
+	}
+
+	private static void _process(PostData postData) {
 		if (postData == null) {
 			postData = new PostData();
 		}
