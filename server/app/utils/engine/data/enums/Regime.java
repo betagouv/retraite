@@ -70,6 +70,7 @@ public enum Regime {
 		final String[] regimesStr = stringList
 				.trim()
 				.replace("AGIRC ARRCO", "AGIRC_ARRCO")
+				.replace("AGIRC-ARRCO", "AGIRC_ARRCO")
 				.replace("ORGANIC", "RSI")
 				.replace("CANCAVA", "RSI")
 				.replace("CCMSA", "MSA")
@@ -78,7 +79,7 @@ public enum Regime {
 			try {
 				regimes.add(Regime.valueOf(regimeStr));
 			} catch (final IllegalArgumentException e) {
-				Logger.error("Nom de regime innatendu : '" + regimeStr + "'");
+				Logger.error(new Exception("stack"), "Nom de regime innatendu : '" + regimeStr + "' . Liste reçue : " + stringList);
 			}
 		}
 		return regimes.toArray(new Regime[regimes.size()]);

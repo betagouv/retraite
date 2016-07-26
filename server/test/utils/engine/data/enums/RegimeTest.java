@@ -22,6 +22,8 @@ public class RegimeTest {
 
 		assertThat(Regime.fromStringList("AGIRC ARRCO,CNAV")).containsOnly(AGIRC_ARRCO, CNAV);
 
+		assertThat(Regime.fromStringList("AGIRC-ARRCO,CNAV")).containsOnly(AGIRC_ARRCO, CNAV);
+
 		assertThat(Regime.fromStringList("CNAV,ORGANIC")).containsOnly(CNAV, RSI);
 
 		assertThat(Regime.fromStringList("AGIRC ARRCO,IRCANTEC,CCMSA,CNAV,CANCAVA")).containsOnly(AGIRC_ARRCO, IRCANTEC, MSA, CNAV, RSI);
