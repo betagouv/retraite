@@ -1,3 +1,3 @@
 #!/bin/sh
 
-./scripts/deploy.sh recette
+./scripts/deploy.sh recette $*
