@@ -15,9 +15,8 @@ public enum QuestionChoiceValue {
 		if (jsonStr == null) {
 			return null;
 		}
-		final List<String> responses = null;// fromJson(jsonStr, List.class);
+		final List<String> responses = fromJson(jsonStr, List.class);
 		return QuestionChoiceValue.valueOf(responses.get(0));
-		// return QuestionChoiceValue.valueOf(responses.get(0));
 	}
 
 	public static List<QuestionChoiceValue> getFromJsonArray(final String jsonStr) {
