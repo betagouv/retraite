@@ -12,16 +12,21 @@ import com.google.gson.reflect.TypeToken;
 
 public class JsonUtils {
 
-	private static Gson gson = new GsonBuilder().setExclusionStrategies(new GsonProjectExclusionStrategy()).serializeSpecialFloatingPointValues()
+	private static Gson gson = new GsonBuilder()
+			.setExclusionStrategies(new GsonProjectExclusionStrategy()).serializeSpecialFloatingPointValues()
+			.create();
+
+	private static Gson gsonDisabledHtmlEscaping = new GsonBuilder()
+			.setExclusionStrategies(new GsonProjectExclusionStrategy()).serializeSpecialFloatingPointValues()
+			.disableHtmlEscaping()
 			.create();
 
 	public static String toJson(final Object object) {
-		if (object instanceof Map) {
-			final Type typeOfMap = new TypeToken<Map>() {
-			}.getType();
-			return gson.toJson(object, typeOfMap);
-		}
-		return gson.toJson(object);
+		return toJson(object, gson);
+	}
+
+	public static String toJsonDisablingHtmlEscaping(final Object object) {
+		return toJson(object, gsonDisabledHtmlEscaping);
 	}
 
 	public static <T> T fromJson(final String jsonString, final Class<T> typeToCreate) {
@@ -38,6 +43,15 @@ public class JsonUtils {
 
 	public static String convertQuotesForJson(final String text) {
 		return text.replace("\\'", "£££").replace("'", "\"").replace("£££", "'");
+	}
+
+	private static String toJson(final Object object, final Gson gson) {
+		if (object instanceof Map) {
+			final Type typeOfMap = new TypeToken<Map>() {
+			}.getType();
+			return gson.toJson(object, typeOfMap);
+		}
+		return gson.toJson(object);
 	}
 
 	private static class GsonProjectExclusionStrategy implements ExclusionStrategy {
