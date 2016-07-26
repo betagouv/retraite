@@ -6,21 +6,23 @@ REMOTE_DIR=$ENV
 SERVER_NAME=retraite.infra.beta.gouv.fr
 
 # Vérifications
-if [ -n "$(git diff --cached --exit-code)" ]; then
-	echo
-	git status
-	echo
-	echo "Il y a des modifications à commiter (a)"
-	echo
-	exit
-fi
-if [ -n "$(git diff --exit-code)" ]; then
-	echo
-	git status
-	echo
-	echo "Il y a des modifications à commiter (b)"
-	echo
-	exit
+if [ "$2" != "--force" ]; then
+    if [ -n "$(git diff --cached --exit-code)" ]; then
+        echo
+        git status
+        echo
+        echo "Il y a des modifications à commiter (a)"
+        echo
+        exit
+    fi
+    if [ -n "$(git diff --exit-code)" ]; then
+        echo
+        git status
+        echo
+        echo "Il y a des modifications à commiter (b)"
+        echo
+        exit
+    fi
 fi
 
 # Vérification que la branche courante est la bonne
