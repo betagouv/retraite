@@ -28,6 +28,7 @@ import play.Logger;
 import play.modules.pdf.PDF;
 import play.templates.Template;
 import play.templates.TemplateLoader;
+import utils.JsonUtils;
 import utils.doc.ChecklistForDoc;
 import utils.doc.ChecklistForDocConverter;
 import utils.engine.RetraiteEngineFactory;
@@ -41,7 +42,9 @@ public class Application extends RetraiteController {
 		try {
 			_process(postData);
 		} catch (final Exception e) {
-			Logger.error(e, "Error processing request !");
+			final String userAgent = request.headers.get("user-agent").value();
+			final String requestInfos = request.toString() + " " + paramsAsStr();
+			Logger.error(e, "Error processing request ! userAgent=" + userAgent + ", requestInfos=" + requestInfos);
 			oupsPleaseComeBack();
 		}
 	}
@@ -73,6 +76,14 @@ public class Application extends RetraiteController {
 		} else {
 			renderTemplate("Application/steps/" + data.hidden_step + ".html", data, test, debug, page, look, actionQueryParams);
 		}
+	}
+
+	private static String paramsAsStr() {
+		return JsonUtils.toJsonDisablingHtmlEscaping(params)
+				.replace("%5B", "[")
+				.replace("%5D", "]")
+				.replace("%2F", "/")
+				.replace("%22", "\"");
 	}
 
 	/*
