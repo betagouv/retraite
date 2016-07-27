@@ -78,7 +78,7 @@ public class RetraiteEngine {
 			return displayGetUserData(renderData);
 		} else if (postData.hidden_step.equals("getUserData")) {
 			Logger.info("Connexion d'un usager : nom=" + postData.nom + " , nir=" + postData.nir + " , naissance=" + postData.naissance);
-			if (ageCalculator.getAge(postData.naissance) < 55) {
+			if (ageCalculator.getAge(postData.naissance) < 55 && !postData.isForce55) {
 				return displaySortieTropJeune(postData, renderData);
 			}
 			final String regimes = infoRetraite.retrieveRegimes(postData.nom, postData.nir, postData.naissance);

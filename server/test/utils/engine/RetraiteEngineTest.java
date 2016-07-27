@@ -204,6 +204,28 @@ public class RetraiteEngineTest {
 	}
 
 	@Test
+	public void step_display_departure_date_si_age_trop_jeune_mais_option_force55() {
+
+		// Step : getUserData --> displayDepartureDate
+
+		final PostData postData = new PostData();
+		postData.hidden_step = "getUserData";
+		postData.nom = "DUPONT";
+		postData.naissance = "1/2/3";
+		postData.nir = "1 50 12 18 123 456";
+		postData.departement = "65";
+		postData.isForce55 = true;
+
+		when(ageCalculatorMock.getAge("1/2/3")).thenReturn(54);
+		when(calculateurRegimeAlignesMock.getRegimesAlignes(anyString())).thenReturn(new RegimeAligne[] { CNAV });
+
+		final RenderData renderData = retraiteEngine.processToNextStep(postData);
+
+		verify(displayerDepartureDateMock).fillData(isA(PostData.class), isA(RenderData.class), eq(allRegimes));
+		assertThat(renderData.hidden_liquidateur).isEqualTo(CNAV);
+	}
+
+	@Test
 	public void step_display_sortie_aucun_regime_de_base_aligne() {
 
 		// Step : getUserData --> displaySortieAucunRegimeDeBaseAligne
