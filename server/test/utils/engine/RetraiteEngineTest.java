@@ -15,8 +15,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import static utils.engine.data.enums.EcranSortie.ECRAN_SORTIE_PENIBILITE;
-import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_A;
-import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_B;
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor.QUESTION_A;
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor.QUESTION_B;
 import static utils.engine.data.enums.RegimeAligne.CNAV;
 import static utils.engine.data.enums.RegimeAligne.MSA;
 import static utils.engine.data.enums.RegimeAligne.RSI;
@@ -334,6 +334,7 @@ public class RetraiteEngineTest {
 		assertThat(renderData.hidden_departement).isEqualTo("987");
 		assertThat(renderData.hidden_regimes).isEqualTo("d,e");
 		assertThat(renderData.hidden_liquidateur).isEqualTo(RSI);
+		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_A);
 		assertThat(renderData.hidden_liquidateurReponseJsonStr).isEqualTo(liquidateurReponseJsonStr);
 	}
 

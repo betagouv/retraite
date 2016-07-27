@@ -22,7 +22,7 @@ public class RenderData extends CommonExchangeData {
 
 	// public List<QuestionLiquidateur> questionsLiquidateur;
 
-	public QuestionLiquidateur2 questionLiquidateur = new QuestionLiquidateur2();
+	public QuestionLiquidateur questionLiquidateur = new QuestionLiquidateur();
 
 	public String errorMessage;
 
@@ -30,7 +30,10 @@ public class RenderData extends CommonExchangeData {
 
 	public EcranSortie ecranSortie;
 
-	public Map<String, String> userInfos;
+	public StringPairsList userInfos;
 
 	public Map<String, Object> extras;
+
+	public StringPairsList questionsAndResponses;
+
 }
