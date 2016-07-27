@@ -31,7 +31,7 @@ public class InfoRetraiteConnector {
 					param("name", name.trim()),
 					param("nir", formatNir(nir)),
 					param("dtnai", dateNaissance));
-			if (response.getStatus() == 404) {
+			if (isStatus4xx(response)) {
 				// Pas de réponse trouvée avec les informations fournies
 				return null;
 			}
@@ -47,6 +47,10 @@ public class InfoRetraiteConnector {
 		} catch (final Exception e) {
 			throw new RetraiteException("Error requesting WS conseiller.info-retraite.fr", e);
 		}
+	}
+
+	private boolean isStatus4xx(final HttpResponse response) {
+		return response.getStatus() / 100 == 4;
 	}
 
 	private String formatNir(final String nir) {
