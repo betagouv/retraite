@@ -59,10 +59,29 @@ public class InfoRetraiteConnectorTest {
 	}
 
 	@Test
-	public void should_return_null_if_not_found() {
+	public void should_return_null_if_not_found_404() {
 
 		final HttpResponse response = createResponse()
 				.withStatus(404, "Not found");
+		when(wsUtilsMock.doPost(
+				"https://www.conseiller.info-retraite.fr/api/mesregimes",
+				new WsCookie(PLAY_SESSION),
+				new WsParam("csrfToken", CSRF_TOKEN),
+				new WsParam("name", "MACHIN"),
+				new WsParam("nir", "1223344555666"),
+				new WsParam("dtnai", "07/04/2000")))
+						.thenReturn(response);
+
+		final String result = infoRetraiteConnector.get("MACHIN", "1223344555666", "07/04/2000");
+
+		assertThat(result).isNull();
+	}
+
+	@Test
+	public void should_return_null_if_not_found_400() {
+
+		final HttpResponse response = createResponse()
+				.withStatus(400, "Not found");
 		when(wsUtilsMock.doPost(
 				"https://www.conseiller.info-retraite.fr/api/mesregimes",
 				new WsCookie(PLAY_SESSION),
