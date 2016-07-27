@@ -2,14 +2,13 @@ package utils.engine;
 
 import static utils.engine.EngineUtils.firstNotNull;
 
-import java.util.HashMap;
-
 import controllers.data.PostData;
 import play.Logger;
 import utils.DateUtils;
 import utils.RetraiteException;
 import utils.engine.data.MonthAndYear;
 import utils.engine.data.RenderData;
+import utils.engine.data.StringPairsList;
 import utils.engine.data.UserChecklistGenerationData;
 import utils.engine.data.enums.Regime;
 import utils.engine.data.enums.RegimeAligne;
@@ -26,15 +25,18 @@ public class DisplayerChecklist {
 	private final DateProvider dateProvider;
 	private final CalculateurRegimeAlignes calculateurRegimeAlignes;
 	private final StepFormsDataProvider stepFormsDataProvider;
+	private final ResponsesHistoryToStringsConverter responsesHistoryToStringsConverter;
 
 	public DisplayerChecklist(final UserChecklistGenerationDataBuilder userChecklistGenerationDataBuilder,
 			final UserChecklistGenerator userChecklistGenerator, final DateProvider dateProvider,
-			final CalculateurRegimeAlignes calculateurRegimeAlignes, final StepFormsDataProvider stepFormsDataProvider) {
+			final CalculateurRegimeAlignes calculateurRegimeAlignes, final StepFormsDataProvider stepFormsDataProvider,
+			final ResponsesHistoryToStringsConverter responsesHistoryToStringsConverter) {
 		this.userChecklistGenerationDataBuilder = userChecklistGenerationDataBuilder;
 		this.userChecklistGenerator = userChecklistGenerator;
 		this.dateProvider = dateProvider;
 		this.calculateurRegimeAlignes = calculateurRegimeAlignes;
 		this.stepFormsDataProvider = stepFormsDataProvider;
+		this.responsesHistoryToStringsConverter = responsesHistoryToStringsConverter;
 	}
 
 	public void fillData(final PostData data, final RenderData renderData) {
@@ -55,13 +57,15 @@ public class DisplayerChecklist {
 			Logger.error(e, "Impossible de déterminer le régime liquidateur");
 			renderData.errorMessage = "Désolé, impossible de déterminer le régime liquidateur...";
 		}
-		renderData.userInfos = new HashMap<>();
-		renderData.userInfos.put("Document produit le", DateUtils.format(dateProvider.getCurrentDate()));
-		renderData.userInfos.put("Nom de naissance", data.hidden_nom);
+		renderData.userInfos = new StringPairsList();
+		renderData.userInfos.add("Document produit le", DateUtils.format(dateProvider.getCurrentDate()));
+		renderData.userInfos.add("Nom de naissance", data.hidden_nom);
 		if (departMois != null && departAnnee != null) {
-			renderData.userInfos.put("Date de départ envisagée", "01/" + (departMois.length() == 1 ? "0" : "") + departMois + "/" + departAnnee);
+			renderData.userInfos.add("Date de départ envisagée", "01/" + (departMois.length() == 1 ? "0" : "") + departMois + "/" + departAnnee);
 		}
-		renderData.userInfos.put("Département de résidence", stepFormsDataProvider.getDepartementName(departement));
+		renderData.userInfos.add("Département de résidence", stepFormsDataProvider.getDepartementName(departement));
+
+		renderData.questionsAndResponses = responsesHistoryToStringsConverter.convert(data.hidden_liquidateurReponsesHistory);
 	}
 
 }
