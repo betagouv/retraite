@@ -21,7 +21,7 @@ import static utils.engine.data.enums.QuestionType.SIMPLE;
 
 import utils.engine.data.QuestionChoice;
 
-public enum LiquidateurQuestionDescriptor2 {
+public enum LiquidateurQuestionDescriptor {
 
 	// @formatter:off
 
@@ -90,12 +90,16 @@ public enum LiquidateurQuestionDescriptor2 {
 	private final QuestionMandatoryOrOptionnal questionMandatoryOrOptionnal;
 	private final QuestionChoice[] questionChoices;
 
-	LiquidateurQuestionDescriptor2(final String title, final QuestionType questionType, final QuestionMandatoryOrOptionnal questionMandatoryOrOptionnal,
+	LiquidateurQuestionDescriptor(final String title, final QuestionType questionType, final QuestionMandatoryOrOptionnal questionMandatoryOrOptionnal,
 			final QuestionChoice... questionChoices) {
 		this.title = title;
 		this.questionType = questionType;
 		this.questionMandatoryOrOptionnal = questionMandatoryOrOptionnal;
 		this.questionChoices = questionChoices;
+	}
+
+	public String getTitle() {
+		return title;
 	}
 
 	public QuestionChoice[] getQuestionChoices() {
@@ -107,13 +111,13 @@ public enum LiquidateurQuestionDescriptor2 {
 	}
 
 	public boolean isLast() {
-		final LiquidateurQuestionDescriptor2[] values = values();
+		final LiquidateurQuestionDescriptor[] values = values();
 		return this == values[values.length - 1];
 	}
 
-	public boolean isBefore(final LiquidateurQuestionDescriptor2 otherStep) {
-		final LiquidateurQuestionDescriptor2[] values = values();
-		for (final LiquidateurQuestionDescriptor2 desc : values) {
+	public boolean isBefore(final LiquidateurQuestionDescriptor otherStep) {
+		final LiquidateurQuestionDescriptor[] values = values();
+		for (final LiquidateurQuestionDescriptor desc : values) {
 			if (desc == otherStep) {
 				return false;
 			}

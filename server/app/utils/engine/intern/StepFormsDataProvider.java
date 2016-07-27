@@ -3,7 +3,9 @@ package utils.engine.intern;
 import static java.util.Arrays.asList;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import utils.engine.data.Departement;
 import utils.engine.data.ValueAndText;
@@ -11,14 +13,10 @@ import utils.engine.utils.DateProvider;
 
 public class StepFormsDataProvider {
 
-	private final DateProvider dateProvider;
+	private static ArrayList<Departement> departements;
+	private static Map<String, String> mapDepartementsNumber2Name;
 
-	public StepFormsDataProvider(final DateProvider dateProvider) {
-		this.dateProvider = dateProvider;
-	}
-
-	public List<Departement> getListDepartements() {
-		final ArrayList<Departement> departements = new ArrayList<>();
+	static {
 		final String[][] data = {
 				{ "01", "Ain" },
 				{ "02", "Aisne" },
@@ -122,9 +120,23 @@ public class StepFormsDataProvider {
 				{ "974", "La Réunion" },
 				{ "976", "Mayotte" }
 		};
+		departements = new ArrayList<>();
+		mapDepartementsNumber2Name = new HashMap();
 		for (int i = 0; i < data.length; i++) {
-			departements.add(new Departement(data[i][0], data[i][1]));
+			final String number = data[i][0];
+			final String name = data[i][1];
+			departements.add(new Departement(number, name));
+			mapDepartementsNumber2Name.put(number, name);
 		}
+
+	}
+	private final DateProvider dateProvider;
+
+	public StepFormsDataProvider(final DateProvider dateProvider) {
+		this.dateProvider = dateProvider;
+	}
+
+	public List<Departement> getListDepartements() {
 		return departements;
 	}
 
@@ -149,5 +161,9 @@ public class StepFormsDataProvider {
 			annees.add(String.valueOf(currentYear + i));
 		}
 		return annees;
+	}
+
+	public String getDepartementName(final String departementNumber) {
+		return mapDepartementsNumber2Name.get(departementNumber);
 	}
 }

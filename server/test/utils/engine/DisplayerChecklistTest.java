@@ -14,9 +14,7 @@ import static utils.engine.data.enums.UserStatus.STATUS_CHEF;
 import static utils.engine.data.enums.UserStatus.STATUS_INVALIDITE_RSI;
 import static utils.engine.data.enums.UserStatus.STATUS_NSA;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,11 +23,13 @@ import controllers.data.PostData;
 import utils.RetraiteException;
 import utils.engine.data.MonthAndYear;
 import utils.engine.data.RenderData;
+import utils.engine.data.StringPairsList;
 import utils.engine.data.UserChecklist;
 import utils.engine.data.UserChecklistGenerationData;
 import utils.engine.data.enums.Regime;
 import utils.engine.data.enums.RegimeAligne;
 import utils.engine.intern.CalculateurRegimeAlignes;
+import utils.engine.intern.StepFormsDataProvider;
 import utils.engine.intern.UserChecklistGenerationDataBuilder;
 import utils.engine.intern.UserChecklistGenerator;
 import utils.engine.utils.DateProvider;
@@ -39,6 +39,7 @@ public class DisplayerChecklistTest {
 	private UserChecklistGenerationDataBuilder userChecklistGenerationDataBuilderMock;
 	private UserChecklistGenerator userChecklistGeneratorMock;
 	private CalculateurRegimeAlignes calculateurRegimeAlignesMock;
+	private ResponsesHistoryToStringsConverter responsesHistoryToStringsConverterMock;
 
 	private DisplayerChecklist displayerChecklist;
 
@@ -49,8 +50,9 @@ public class DisplayerChecklistTest {
 		userChecklistGeneratorMock = mock(UserChecklistGenerator.class);
 		final DateProvider dateProviderFake = new DateProviderFake(23, 12, 2015);
 		calculateurRegimeAlignesMock = mock(CalculateurRegimeAlignes.class);
+		responsesHistoryToStringsConverterMock = mock(ResponsesHistoryToStringsConverter.class);
 		displayerChecklist = new DisplayerChecklist(userChecklistGenerationDataBuilderMock, userChecklistGeneratorMock, dateProviderFake,
-				calculateurRegimeAlignesMock);
+				calculateurRegimeAlignesMock, new StepFormsDataProvider(dateProviderFake), responsesHistoryToStringsConverterMock);
 	}
 
 	@Test
@@ -70,6 +72,7 @@ public class DisplayerChecklistTest {
 		postData.hidden_attestationCarriereLongue = true;
 		postData.hidden_liquidateur = CNAV;
 		postData.hidden_userStatus = asList(STATUS_NSA, STATUS_INVALIDITE_RSI, STATUS_CHEF);
+		postData.hidden_liquidateurReponsesHistory = "responses history";
 		postData.departement = "973";
 
 		final MonthAndYear dateDepart = new MonthAndYear("2", "2017");
@@ -82,6 +85,14 @@ public class DisplayerChecklistTest {
 		when(userChecklistGenerationDataBuilderMock.build(eq(dateDepart), eq("973"), eq(regimes), eq(regimesAlignes), eq(postData.hidden_liquidateur),
 				eq(true), eq(true), eq(postData.hidden_userStatus), eq(false))).thenReturn(userChecklistGenerationData);
 		when(userChecklistGeneratorMock.generate(same(userChecklistGenerationData), eq(postData.hidden_liquidateur))).thenReturn(userChecklistMock);
+		final StringPairsList questionsAndResponses = new StringPairsList() {
+			{
+				add("a", "x");
+				add("b", "y");
+			}
+		};
+		when(responsesHistoryToStringsConverterMock.convert("responses history")).thenReturn(questionsAndResponses);
+
 		final RenderData renderData = new RenderData();
 
 		displayerChecklist.fillData(postData, renderData);
@@ -89,14 +100,16 @@ public class DisplayerChecklistTest {
 		assertThat(renderData.hidden_step).isEqualTo("displayCheckList");
 		assertThat(renderData.userChecklist).isSameAs(userChecklistMock);
 
-		final Map<String, String> expectedUserInfos = new HashMap<String, String>() {
+		final StringPairsList expectedUserInfos = new StringPairsList() {
 			{
-				put("Document produit le", "23/12/2015");
-				put("Nom de naissance", "DUPONT");
-				put("Date de départ envisagée", "01/02/2017");
+				add("Document produit le", "23/12/2015");
+				add("Nom de naissance", "DUPONT");
+				add("Date de départ envisagée", "01/02/2017");
+				add("Département de résidence", "Guyane");
 			}
 		};
 		assertThat(renderData.userInfos).isEqualTo(expectedUserInfos);
+		assertThat(renderData.questionsAndResponses).isEqualTo(questionsAndResponses);
 	}
 
 	@Test

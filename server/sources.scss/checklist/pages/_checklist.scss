@@ -35,11 +35,18 @@ body .container.checklist{
 			}
 		}
 
-		.bg-box {
-			background-color: #f5f5f5;
-			overflow:hidden;
-			color: $grey;
-			font-size: 2.0rem;
+		.mes-infos {
+			.mes-infos-label, .mes-infos-data {
+				margin-bottom: 20px;
+			}
+			
+			.mes-infos-label {
+				text-align: right;
+			}
+			
+			.mes-infos-data {
+				font-weight: 600;
+			}
 		}
 
 		ul.sanspuce {
@@ -66,6 +73,11 @@ body .container.checklist{
 		}
 
 		.bg-box {
+			background-color: #f5f5f5;
+			overflow:hidden;
+			color: $grey;
+			font-size: 2.0rem;
+
 			.box-white {
 				background-color: #fff;
 			}
@@ -208,6 +220,7 @@ body .container.checklist{
 					padding-left:0;
 				}
 			}
+			
 		}
 	}
 

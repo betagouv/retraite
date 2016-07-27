@@ -1,21 +1,21 @@
 package utils.engine.data.enums;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_A;
-import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_B;
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor.QUESTION_A;
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor.QUESTION_B;
 
 import org.junit.Test;
 
-public class LiquidateurQuestionDescriptor2Test {
+public class LiquidateurQuestionDescriptorTest {
 
 	@Test
 	public void test_isLast() {
-		final LiquidateurQuestionDescriptor2[] values = LiquidateurQuestionDescriptor2.values();
+		final LiquidateurQuestionDescriptor[] values = LiquidateurQuestionDescriptor.values();
 		for (int i = 0; i < values.length - 1; i++) {
-			final LiquidateurQuestionDescriptor2 desc = values[i];
+			final LiquidateurQuestionDescriptor desc = values[i];
 			assertThat(desc.isLast()).isFalse();
 		}
-		final LiquidateurQuestionDescriptor2 desc = values[values.length - 1];
+		final LiquidateurQuestionDescriptor desc = values[values.length - 1];
 		assertThat(desc.isLast()).isTrue();
 	}
 
