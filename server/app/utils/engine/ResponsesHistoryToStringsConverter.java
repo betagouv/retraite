@@ -1,9 +1,11 @@
 package utils.engine;
 
-import java.util.List;
-import java.util.Map;
+import static utils.JsonUtils.fromJson;
 
-import utils.JsonUtils;
+import java.util.List;
+
+import utils.engine.data.QuestionAndResponses;
+import utils.engine.data.QuestionAndResponsesList;
 import utils.engine.data.StringPair;
 import utils.engine.data.StringPairsList;
 import utils.engine.data.enums.LiquidateurQuestionDescriptor;
@@ -12,11 +14,11 @@ import utils.engine.data.enums.QuestionChoiceValue;
 public class ResponsesHistoryToStringsConverter {
 
 	public StringPairsList convert(final String liquidateurReponsesHistory) {
-		final Map<String, List<String>> map = JsonUtils.fromJson(liquidateurReponsesHistory, Map.class);
 		final StringPairsList result = new StringPairsList();
-		for (final String key : map.keySet()) {
-			final LiquidateurQuestionDescriptor liquidateurQuestionDescriptor = LiquidateurQuestionDescriptor.valueOf(key);
-			result.add(createQuestionAndResponse(liquidateurQuestionDescriptor, map.get(key)));
+		final List<QuestionAndResponses> list = fromJson(liquidateurReponsesHistory, QuestionAndResponsesList.class);
+		for (final QuestionAndResponses questionAndResponses : list) {
+			final LiquidateurQuestionDescriptor liquidateurQuestionDescriptor = LiquidateurQuestionDescriptor.valueOf(questionAndResponses.question);
+			result.add(createQuestionAndResponse(liquidateurQuestionDescriptor, questionAndResponses.responses));
 		}
 		return result;
 	}
@@ -28,6 +30,9 @@ public class ResponsesHistoryToStringsConverter {
 				responsesStr += ",";
 			}
 			responsesStr += liquidateurQuestionDescriptor.getChoice(QuestionChoiceValue.valueOf(response)).getText();
+		}
+		if (responsesStr.isEmpty()) {
+			responsesStr = "Aucune";
 		}
 		return new StringPair(liquidateurQuestionDescriptor.getTitle(), responsesStr);
 	}

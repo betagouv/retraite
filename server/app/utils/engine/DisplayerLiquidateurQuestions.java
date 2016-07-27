@@ -29,11 +29,11 @@ import static utils.engine.data.enums.UserStatus.STATUS_NSA;
 import static utils.engine.data.enums.UserStatus.STATUS_SA;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import controllers.data.PostData;
+import utils.engine.data.QuestionAndResponses;
+import utils.engine.data.QuestionAndResponsesList;
 import utils.engine.data.QuestionChoice;
 import utils.engine.data.RegimeLiquidateurAndUserStatus;
 import utils.engine.data.RenderData;
@@ -72,19 +72,19 @@ public class DisplayerLiquidateurQuestions {
 
 	private void storeReponseHistory(final PostData data, final RenderData renderData) {
 		if (data.hidden_liquidateurStep != null) {
-			final Map<String, List> map = mapFrom(renderData.hidden_liquidateurReponsesHistory);
+			final QuestionAndResponsesList list = listFrom(renderData.hidden_liquidateurReponsesHistory);
 			final List reponse = fromJson(data.liquidateurReponseJsonStr, List.class);
-			map.put(data.hidden_liquidateurStep.toString(), reponse);
-			renderData.hidden_liquidateurReponsesHistory = toJson(map);
+			list.add(new QuestionAndResponses(data.hidden_liquidateurStep.toString(), reponse));
+			renderData.hidden_liquidateurReponsesHistory = toJson(list);
 		}
 	}
 
-	private Map<String, List> mapFrom(final String hidden_liquidateurReponsesHistory) {
-		Map<String, List> map = new HashMap<>();
+	private QuestionAndResponsesList listFrom(final String hidden_liquidateurReponsesHistory) {
+		QuestionAndResponsesList list = new QuestionAndResponsesList();
 		if (hidden_liquidateurReponsesHistory != null && !hidden_liquidateurReponsesHistory.isEmpty()) {
-			map = fromJson(hidden_liquidateurReponsesHistory, map.getClass());
+			list = fromJson(hidden_liquidateurReponsesHistory, list.getClass());
 		}
-		return map;
+		return list;
 	}
 
 	private void processNextStep(final PostData data, final RenderData renderData, final String regimes, final RegimeAligne[] regimesAlignes) {
