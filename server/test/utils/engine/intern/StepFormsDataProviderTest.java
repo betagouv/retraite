@@ -66,6 +66,12 @@ public class StepFormsDataProviderTest {
 
 	}
 
+	@Test
+	public void should_return_department_name() {
+		assertThat(stepFormsDataProvider.getDepartementName("14")).isEqualTo("Calvados");
+		assertThat(stepFormsDataProvider.getDepartementName("973")).isEqualTo("Guyane");
+	}
+
 	private List<String> createExpectedAnneesList(final int currentYear, final int count) {
 		final ArrayList<String> list = new ArrayList<>();
 		for (int i = 0; i < count; i++) {
