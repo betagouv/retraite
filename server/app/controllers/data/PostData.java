@@ -15,6 +15,7 @@ public class PostData extends CommonExchangeData {
 	public String departAnnee;
 	public String email;
 	public Look look;
+	public boolean isForce55;
 
 	@Override
 	public String toString() {

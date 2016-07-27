@@ -61,8 +61,9 @@ public class Application extends RetraiteController {
 		postData.hidden_userStatus = unbind(params.get("postData.hidden_userStatus"));
 		final boolean test = params._contains("test");
 		final boolean debug = params._contains("debug");
+		postData.isForce55 = params._contains("force55");
 		final Look look = postData.look = getLook(params);
-		final String actionQueryParams = computeActionQueryParams(test, debug, look);
+		final String actionQueryParams = computeActionQueryParams(test, debug, look, postData.isForce55);
 		if (test) {
 			Logger.warn("Traitement des données en mode TEST, recherche des régimes en BDD !");
 		}
@@ -109,7 +110,7 @@ public class Application extends RetraiteController {
 	}
 
 	public static void displayExpired(final Boolean test, final Boolean debug, final Look look) {
-		final String actionQueryParams = computeActionQueryParams(test, debug, look);
+		final String actionQueryParams = computeActionQueryParams(test, debug, look, false);
 		render(look, actionQueryParams);
 	}
 

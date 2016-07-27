@@ -12,7 +12,7 @@ public class ControllersMiscUtils {
 		return Look.valueFrom(lookFromParams);
 	}
 
-	public static String computeActionQueryParams(final Boolean test, final Boolean debug, final Look look) {
+	public static String computeActionQueryParams(final Boolean test, final Boolean debug, final Look look, final Boolean force55) {
 		final List<KeyAndValue> params = new ArrayList<>();
 		if (test != null && test) {
 			params.add(new KeyAndValue("test"));
@@ -22,6 +22,9 @@ public class ControllersMiscUtils {
 		}
 		if (look.isNotGeneric()) {
 			params.add(new KeyAndValue("look", look.toString().toLowerCase()));
+		}
+		if (force55 != null && force55) {
+			params.add(new KeyAndValue("force55"));
 		}
 		String queryParams = "";
 		for (int i = 0; i < params.size(); i++) {
