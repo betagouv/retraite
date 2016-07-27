@@ -1,12 +1,14 @@
 package utils.engine;
 
+import static utils.JsonUtils.fromJson;
+import static utils.JsonUtils.toJson;
 import static utils.engine.EngineUtils.contains;
-import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_A;
-import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_B;
-import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_C;
-import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_D;
-import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_E;
-import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_F;
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor.QUESTION_A;
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor.QUESTION_B;
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor.QUESTION_C;
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor.QUESTION_D;
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor.QUESTION_E;
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor.QUESTION_F;
 import static utils.engine.data.enums.QuestionChoiceValue.CONJOINT_INDEP;
 import static utils.engine.data.enums.QuestionChoiceValue.DEUX_ACTIVITES;
 import static utils.engine.data.enums.QuestionChoiceValue.INDEP;
@@ -27,13 +29,15 @@ import static utils.engine.data.enums.UserStatus.STATUS_NSA;
 import static utils.engine.data.enums.UserStatus.STATUS_SA;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import controllers.data.PostData;
 import utils.engine.data.QuestionChoice;
 import utils.engine.data.RegimeLiquidateurAndUserStatus;
 import utils.engine.data.RenderData;
-import utils.engine.data.enums.LiquidateurQuestionDescriptor2;
+import utils.engine.data.enums.LiquidateurQuestionDescriptor;
 import utils.engine.data.enums.RegimeAligne;
 import utils.engine.data.enums.UserStatus;
 
@@ -59,14 +63,32 @@ public class DisplayerLiquidateurQuestions {
 	public void fillData(final PostData data, final RenderData renderData, final String regimes, final RegimeAligne[] regimesAlignes) {
 		renderData.hidden_step = "displayLiquidateurQuestions";
 		renderData.hidden_regimes = regimes;
+		storeReponseHistory(data, renderData);
 		processNextStep(data, renderData, regimes, regimesAlignes);
 		if (renderData.questionLiquidateur.liquidateurQuestionDescriptor != null) {
 			renderData.hidden_liquidateurStep = renderData.questionLiquidateur.liquidateurQuestionDescriptor;
 		}
 	}
 
+	private void storeReponseHistory(final PostData data, final RenderData renderData) {
+		if (data.hidden_liquidateurStep != null) {
+			final Map<String, List> map = mapFrom(renderData.hidden_liquidateurReponsesHistory);
+			final List reponse = fromJson(data.liquidateurReponseJsonStr, List.class);
+			map.put(data.hidden_liquidateurStep.toString(), reponse);
+			renderData.hidden_liquidateurReponsesHistory = toJson(map);
+		}
+	}
+
+	private Map<String, List> mapFrom(final String hidden_liquidateurReponsesHistory) {
+		Map<String, List> map = new HashMap<>();
+		if (hidden_liquidateurReponsesHistory != null && !hidden_liquidateurReponsesHistory.isEmpty()) {
+			map = fromJson(hidden_liquidateurReponsesHistory, map.getClass());
+		}
+		return map;
+	}
+
 	private void processNextStep(final PostData data, final RenderData renderData, final String regimes, final RegimeAligne[] regimesAlignes) {
-		final LiquidateurQuestionDescriptor2 previousStep = data.hidden_liquidateurStep;
+		final LiquidateurQuestionDescriptor previousStep = data.hidden_liquidateurStep;
 
 		callQuestionSolversAndStoreResult(data, renderData, regimesAlignes, previousStep);
 		if (renderData.ecranSortie != null) {
@@ -111,7 +133,7 @@ public class DisplayerLiquidateurQuestions {
 	}
 
 	private void callQuestionSolversAndStoreResult(final PostData data, final RenderData renderData, final RegimeAligne[] regimesAlignes,
-			final LiquidateurQuestionDescriptor2 previousStep) {
+			final LiquidateurQuestionDescriptor previousStep) {
 		if (previousStep == null) {
 			return;
 		}
@@ -233,7 +255,7 @@ public class DisplayerLiquidateurQuestions {
 		return choices;
 	}
 
-	private boolean isBefore(final LiquidateurQuestionDescriptor2 step1, final LiquidateurQuestionDescriptor2 step2) {
+	private boolean isBefore(final LiquidateurQuestionDescriptor step1, final LiquidateurQuestionDescriptor step2) {
 		return step1 == null || step1.isBefore(step2);
 	}
 

@@ -9,12 +9,12 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import static utils.engine.data.enums.EcranSortie.ECRAN_SORTIE_PENIBILITE;
-import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_A;
-import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_B;
-import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_C;
-import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_D;
-import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_E;
-import static utils.engine.data.enums.LiquidateurQuestionDescriptor2.QUESTION_F;
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor.QUESTION_A;
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor.QUESTION_B;
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor.QUESTION_C;
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor.QUESTION_D;
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor.QUESTION_E;
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor.QUESTION_F;
 import static utils.engine.data.enums.QuestionChoiceValue.CONJOINT_INDEP;
 import static utils.engine.data.enums.QuestionChoiceValue.DEUX_ACTIVITES;
 import static utils.engine.data.enums.QuestionChoiceValue.INDEP;
@@ -149,6 +149,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverAMock);
+		assertThat(renderData.hidden_liquidateurReponsesHistory).isEqualTo("{\"QUESTION_A\":[\"NSA\"]}");
 		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_B);
 		assertThat(renderData.hidden_liquidateur).isNull();
 		assertThat(renderData.hidden_userStatus).containsOnly(STATUS_NSA);
@@ -242,6 +243,7 @@ public class DisplayerLiquidateurQuestionsTest {
 
 		postData.hidden_liquidateurStep = QUESTION_B;
 		postData.liquidateurReponseJsonStr = "[\"INDEP\"]";
+		renderData.hidden_liquidateurReponsesHistory = "{\"QUESTION_A\":[\"NSA\"]}";
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { RSI };
 
 		when(questionSolverBMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
@@ -250,6 +252,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverBMock);
+		assertThat(renderData.hidden_liquidateurReponsesHistory).isEqualTo("{\"QUESTION_A\":[\"NSA\"],\"QUESTION_B\":[\"INDEP\"]}");
 		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_C);
 		assertThat(renderData.hidden_liquidateur).isNull();
 		assertThat(renderData.hidden_userStatus).isNull();
