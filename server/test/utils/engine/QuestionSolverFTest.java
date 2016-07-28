@@ -12,7 +12,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import utils.engine.data.RegimeLiquidateurAndUserStatus;
-import utils.engine.data.enums.EcranSortie;
 import utils.engine.data.enums.QuestionChoiceValue;
 import utils.engine.data.enums.RegimeAligne;
 import utils.engine.data.enums.UserStatus;
@@ -50,10 +49,6 @@ public class QuestionSolverFTest {
 		private final String liquidateurReponseJsonStr;
 		private RegimeLiquidateurAndUserStatus solved;
 
-		public TestContext() {
-			this.liquidateurReponseJsonStr = null;
-		}
-
 		public TestContext(final QuestionChoiceValue[] choiceValues) {
 			this.liquidateurReponseJsonStr = toJson(choiceValues);
 		}
@@ -75,12 +70,6 @@ public class QuestionSolverFTest {
 					.overridingErrorMessage("status=" + solved.getStatus() + " is not equal to expected value " + toString(status))
 					.isEqualTo(status);
 			return this;
-		}
-
-		public void andIsEcranSortie(final EcranSortie ecranSortie) {
-			assertThat(solved.getEcranSortie())
-					.overridingErrorMessage("ecranSortie=" + solved.getEcranSortie() + " is not equal to expected value " + toString(ecranSortie))
-					.isEqualTo(ecranSortie);
 		}
 
 		private String toString(final Object o) {
