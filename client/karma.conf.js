@@ -113,14 +113,6 @@ module.exports = function (config) {
             'app/src/config/utils/edit-condition-validator/edit-condition-validator.js',
             'app/src/config/utils/edit-condition-validator/edit-condition-validator.spec.js',
             'app/src/constants.js',
-            'app/src/exploit/exploit.js',
-            'app/src/exploit/exploit.module.config.js',
-            'app/src/exploit/getUserData/getUserData.config.js',
-            'app/src/exploit/getUserData/getUserData.controller.js',
-            'app/src/exploit/getUserData/getUserData.controller.spec.js',
-            'app/src/exploit/main-controller.js',
-            'app/src/exploit/services/InfoRetraite/InfoRetraite.js',
-            'app/src/exploit/services/InfoRetraite/InfoRetraite.spec.js',
             <!-- endinjector -->
             
             // fixtures
