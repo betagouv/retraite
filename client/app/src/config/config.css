@@ -17,6 +17,48 @@ body.config {
     background-color: white;
 }
 
+@media screen and (min-width: 768px) {
+    .container {
+        max-width: 900px;
+    }
+    /* Remove the padding we set earlier */
+    
+    .header,
+    .marketing,
+    .footer {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    /* Space out the masthead */
+    
+    .header {
+        margin-bottom: 30px;
+    }
+    /* Remove the bottom border on the jumbotron for visual effect */
+    
+    .jumbotron {
+        border-bottom: 0;
+    }
+}
+
+.navbar-fixed-top {
+    /* Marge supplémentaire à cause de la petite barre d'état sur l'iPad */
+    padding-top: 15px;
+}
+
+h1, .h1, h2, .h2, h3, .h3 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+a {
+    text-decoration: underline;    
+}
+
 .label-published {
     display: block;
     width: 100%;
