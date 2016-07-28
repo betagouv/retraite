@@ -85,4 +85,17 @@ public enum Regime {
 		return regimes.toArray(new Regime[regimes.size()]);
 	}
 
+	public static Regime valueOfNom(final String nom) {
+		if (nom.equals("AGIRC-ARRCO")) {
+			return AGIRC_ARRCO;
+		}
+		if (nom.equals("CCMSA")) {
+			return MSA;
+		}
+		if (nom.equals("ORGANIC") || nom.equals("CANCAVA")) {
+			return RSI;
+		}
+		return valueOf(nom);
+	}
+
 }

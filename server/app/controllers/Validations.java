@@ -64,7 +64,7 @@ public class Validations extends RetraiteController {
 		final RegimeAligne regimeForUrls = regime == null ? RegimeAligne.CNAV : RegimeAligne.valueOf(regime);
 
 		final Look look = Look.GENERIC;
-		final List<InfoRetraiteResultRegime> regimesInfos = Arrays.asList(
+		final List<InfoRetraiteResultRegime> regimesInfosAucunRegimeDeBaseAligne = Arrays.asList(
 				createInfoRetraiteResultRegime(1), createInfoRetraiteResultRegime(2));
 		final Map<String, Object> age = new HashMap<String, Object>() {
 			{
@@ -93,7 +93,7 @@ public class Validations extends RetraiteController {
 		};
 		final Map<String, Object> data = new HashMap<String, Object>() {
 			{
-				put("regimesInfos", regimesInfos);
+				put("regimesInfosAucunRegimeDeBaseAligne", regimesInfosAucunRegimeDeBaseAligne);
 				put("extras", extras);
 				put("hidden_departMois", "4");
 				put("hidden_departAnnee", "2020");

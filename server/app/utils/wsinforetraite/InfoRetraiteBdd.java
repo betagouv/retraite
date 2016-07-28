@@ -31,12 +31,6 @@ public class InfoRetraiteBdd implements InfoRetraite {
 		return new InfoRetraiteResult(Status.FOUND, regimesInfos);
 	}
 
-	@Override
-	public String retrieveRegimes(final String name, final String nir, final String dateNaissance) {
-		final FakeData fakeData = find(name, nir);
-		return fakeData == null ? "" : fakeData.regimes;
-	}
-
 	private FakeData find(final String name, final String nir) {
 		return FakeData.find(name.trim(), nir.replace(" ", ""));
 	}

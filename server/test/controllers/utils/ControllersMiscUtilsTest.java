@@ -34,15 +34,15 @@ public class ControllersMiscUtilsTest {
 
 	@Test
 	public void test_computeActionQueryParams() {
-		assertThat(ControllersMiscUtils.computeActionQueryParams(false, false, Look.GENERIC)).isEqualTo("");
-		assertThat(ControllersMiscUtils.computeActionQueryParams(true, false, Look.GENERIC)).isEqualTo("?test");
-		assertThat(ControllersMiscUtils.computeActionQueryParams(false, true, Look.GENERIC)).isEqualTo("?debug");
-		assertThat(ControllersMiscUtils.computeActionQueryParams(false, false, Look.CNAV)).isEqualTo("?look=cnav");
-		assertThat(ControllersMiscUtils.computeActionQueryParams(true, true, Look.RSI)).isEqualTo("?test&debug&look=rsi");
+		assertThat(ControllersMiscUtils.computeActionQueryParams(false, false, Look.GENERIC, false)).isEqualTo("");
+		assertThat(ControllersMiscUtils.computeActionQueryParams(true, false, Look.GENERIC, false)).isEqualTo("?test");
+		assertThat(ControllersMiscUtils.computeActionQueryParams(false, true, Look.GENERIC, false)).isEqualTo("?debug");
+		assertThat(ControllersMiscUtils.computeActionQueryParams(false, false, Look.CNAV, false)).isEqualTo("?look=cnav");
+		assertThat(ControllersMiscUtils.computeActionQueryParams(true, true, Look.RSI, false)).isEqualTo("?test&debug&look=rsi");
 
 		// OK pour les "null"
-		assertThat(ControllersMiscUtils.computeActionQueryParams(false, null, Look.GENERIC)).isEqualTo("");
-		assertThat(ControllersMiscUtils.computeActionQueryParams(null, false, Look.GENERIC)).isEqualTo("");
+		assertThat(ControllersMiscUtils.computeActionQueryParams(false, null, Look.GENERIC, false)).isEqualTo("");
+		assertThat(ControllersMiscUtils.computeActionQueryParams(null, false, Look.GENERIC, false)).isEqualTo("");
 	}
 
 	private static class MyParams extends Params {

@@ -1,8 +1,10 @@
 package utils.engine;
 
-import static java.util.Arrays.asList;
+import static utils.JsonUtils.fromJson;
+import static utils.JsonUtils.toJson;
 import static utils.engine.EngineUtils.firstNotNull;
 import static utils.engine.data.enums.EcranSortie.ECRAN_SORTIE_PENIBILITE;
+import static utils.wsinforetraite.InfoRetraiteResult.Status.FOUND;
 
 import java.lang.reflect.Field;
 
@@ -11,6 +13,7 @@ import play.Logger;
 import utils.RetraiteException;
 import utils.dao.DaoFakeData;
 import utils.engine.data.CommonExchangeData;
+import utils.engine.data.InfoRetraiteResultRegimeList;
 import utils.engine.data.RenderData;
 import utils.engine.data.enums.RegimeAligne;
 import utils.engine.intern.CalculateurRegimeAlignes;
@@ -81,24 +84,26 @@ public class RetraiteEngine {
 			if (ageCalculator.getAge(postData.naissance) < 55 && !postData.isForce55) {
 				return displaySortieTropJeune(postData, renderData);
 			}
-			final String regimes = infoRetraite.retrieveRegimes(postData.nom, postData.nir, postData.naissance);
-			if (regimes.isEmpty()) {
+			final InfoRetraiteResult regimesInformations = infoRetraite.retrieveAllInformations(postData.nom, postData.nir, postData.naissance);
+			if (regimesInformations.status != FOUND) {
 				renderData.errorMessage = "Désolé, aucune information n'a pu être trouvée avec les données saisies";
 				return displayGetUserData(renderData);
 			}
+			final String regimes = renderData.hidden_regimes = regimesInformations.extractRegimes();
+			renderData.hidden_regimesInfosJsonStr = toJson(regimesInformations.regimes);
 			final RegimeAligne[] regimesAlignes = calculateurRegimeAlignes.getRegimesAlignes(regimes);
 			if (regimesAlignes.length == 0) {
-				return displaySortieAucunRegimeDeBaseAligne(renderData);
+				return displaySortieAucunRegimeDeBaseAligne(postData, renderData);
 			}
 			if (regimesAlignes.length >= 2) {
-				displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+				displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 				return renderData;
 			}
 			renderData.hidden_liquidateur = regimesAlignes[0];
 			displayerDepartureDate.fillData(postData, renderData, regimes);
 		} else if (postData.hidden_step.equals("displayLiquidateurQuestions")) {
 			final RegimeAligne[] regimesAlignes = calculateurRegimeAlignes.getRegimesAlignes(postData.hidden_regimes);
-			displayerLiquidateurQuestions.fillData(postData, renderData, postData.hidden_regimes, regimesAlignes);
+			displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 			if (renderData.ecranSortie == ECRAN_SORTIE_PENIBILITE) {
 				displayerSortiePenibilite.fillData(postData, renderData);
 				return renderData;
@@ -132,11 +137,9 @@ public class RetraiteEngine {
 		return renderData;
 	}
 
-	private RenderData displaySortieAucunRegimeDeBaseAligne(final RenderData renderData) {
-		final InfoRetraiteResult allInformations = infoRetraite.retrieveAllInformations(renderData.hidden_nom, renderData.hidden_nir,
-				renderData.hidden_naissance);
+	private RenderData displaySortieAucunRegimeDeBaseAligne(final PostData postData, final RenderData renderData) {
 		renderData.hidden_step = "displaySortieAucunRegimeDeBaseAligne";
-		renderData.regimesInfos = asList(allInformations.regimes);
+		renderData.regimesInfosAucunRegimeDeBaseAligne = fromJson(postData.hidden_regimesInfosJsonStr, InfoRetraiteResultRegimeList.class);
 		return renderData;
 	}
 
