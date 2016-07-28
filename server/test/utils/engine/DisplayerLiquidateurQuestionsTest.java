@@ -52,8 +52,6 @@ public class DisplayerLiquidateurQuestionsTest {
 
 	private PostData postData;
 	private RenderData renderData;
-	private final String regimes = "CNAV,CCMSA,AGIRC ARRCO";
-
 	private QuestionSolverA questionSolverAMock;
 	private QuestionSolverB questionSolverBMock;
 	private QuestionSolverC questionSolverCMock;

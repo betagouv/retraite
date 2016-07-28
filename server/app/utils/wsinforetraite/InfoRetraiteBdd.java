@@ -35,12 +35,4 @@ public class InfoRetraiteBdd implements InfoRetraite {
 		return FakeData.find(name.trim(), nir.replace(" ", ""));
 	}
 
-	private FakeData createFakeData(final String name, final String nir, final String regimes) {
-		final FakeData fakeData = new FakeData();
-		fakeData.nom = name;
-		fakeData.nir = nir;
-		fakeData.regimes = regimes;
-		return fakeData;
-	}
-
 }
