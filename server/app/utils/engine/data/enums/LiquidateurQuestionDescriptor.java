@@ -82,7 +82,6 @@ public enum LiquidateurQuestionDescriptor {
 
 	// @formatter:on
 
-	@SuppressWarnings("unused")
 	private final String title;
 	@SuppressWarnings("unused")
 	private final QuestionType questionType;

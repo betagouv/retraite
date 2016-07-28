@@ -2,7 +2,6 @@ package utils.engine.data;
 
 import java.util.List;
 
-@SuppressWarnings("unused")
 public class QuestionAndResponses {
 
 	public final String question;

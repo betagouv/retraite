@@ -116,36 +116,4 @@ public class ChecklistPublisherTest extends RetraiteUnitTestBase {
 			assertThatPublishedObjectIsEqual(subobj, subobjPublished);
 		}
 	}
-
-	private void assertAllIdsAreNull(final Object obj) {
-		try {
-			final Field[] fields = obj.getClass().getFields();
-			for (final Field field : fields) {
-				final Object value = field.get(obj);
-				if (value == null) {
-					continue;
-				}
-				if (field.getName().equalsIgnoreCase("id")) {
-					assertThat(value)
-							.overridingErrorMessage("Field '" + field.getName() + "' in object of type " + obj.getClass() + " must be null")
-							.isNull();
-				} else if (field.getType().isAssignableFrom(List.class)) {
-					final List list = (List) value;
-					for (final Object subobj : list) {
-						assertAllIdsAreNull(subobj);
-					}
-				} else if (field.getType().isArray()) {
-					final Object[] list = (Object[]) value;
-					for (final Object subobj : list) {
-						assertAllIdsAreNull(subobj);
-					}
-				} else if (!field.getType().isPrimitive()) {
-					assertAllIdsAreNull(value);
-				}
-			}
-		} catch (final Exception e) {
-			e.printStackTrace();
-			fail("Error checking ids null : " + e.getMessage());
-		}
-	}
 }
