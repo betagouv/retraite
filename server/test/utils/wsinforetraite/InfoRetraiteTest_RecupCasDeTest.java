@@ -38,7 +38,7 @@ public class InfoRetraiteTest_RecupCasDeTest extends RetraiteUnitTestBase {
 				line = line.trim();
 				final String[] nirEtNom = line.split(",");
 
-				final String regimes = infoRetraite.retrieveRegimes(nirEtNom[1], nirEtNom[0], "1/2/3");
+				final String regimes = infoRetraite.retrieveAllInformations(nirEtNom[1], nirEtNom[0], "1/2/3").extractRegimes();
 
 				allRegimes.addAll(Arrays.asList(regimes.split(",")));
 

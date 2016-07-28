@@ -31,6 +31,7 @@ public class UserChecklistComputerTest {
 
 	private UserChecklistChapitreFilter userChecklistChapitreFilterMock;
 	private UserChecklistChapitreComputer userChecklistChapitreComputerMock;
+	private AutreRegimeComputer autreRegimeComputerMock;
 	private CaisseDao caisseDaoMock;
 
 	private UserChecklistComputer userChecklistComputer;
@@ -39,8 +40,10 @@ public class UserChecklistComputerTest {
 	public void setUp() throws Exception {
 		userChecklistChapitreFilterMock = mock(UserChecklistChapitreFilter.class);
 		userChecklistChapitreComputerMock = mock(UserChecklistChapitreComputer.class);
+		autreRegimeComputerMock = mock(AutreRegimeComputer.class);
 		caisseDaoMock = mock(CaisseDao.class);
-		userChecklistComputer = new UserChecklistComputer(userChecklistChapitreFilterMock, userChecklistChapitreComputerMock, caisseDaoMock);
+		userChecklistComputer = new UserChecklistComputer(userChecklistChapitreFilterMock, userChecklistChapitreComputerMock, caisseDaoMock,
+				autreRegimeComputerMock);
 	}
 
 	@Test
@@ -63,6 +66,7 @@ public class UserChecklistComputerTest {
 		final UserChecklistGenerationData userChecklistGenerationData = UserChecklistGenerationData.create()
 				.withDepartement("972")
 				.withRegimes(new Regime[] { AGIRC_ARRCO, CNAV, IRCANTEC, CARCD })
+				.withRegimesInfosJsonStr("[{\"nom\":\"CNAV\",\"adresse\":\"addr CNAV\",\"tel1\":\"tel CNAV\",\"email1\":\"mail CNAV\"}]")
 				.get();
 
 		// Test
@@ -71,9 +75,9 @@ public class UserChecklistComputerTest {
 		// Vérifications
 		assertThat(userChecklist.nom).isEqualTo(checklist.nom);
 		assertThat(userChecklist.caisse).isEqualTo(caisse);
-		assertThat(userChecklist.autresRegimesDeBase).isEqualTo(new Regime[] { CARCD });
-		assertThat(userChecklist.regimesComplementaires).isEqualTo(new Regime[] { AGIRC_ARRCO, IRCANTEC });
 		assertThat(userChecklist.chapitres).hasSize(2);
+
+		verify(autreRegimeComputerMock).compute(userChecklist, userChecklistGenerationData.regimesInfosJsonStr);
 
 		verify(userChecklistChapitreComputerMock, times(2)).compute(any(Chapitre.class), any(UserChecklistGenerationData.class));
 		verifyNoMoreInteractions(userChecklistChapitreComputerMock);

@@ -11,8 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import utils.RetraiteException;
-import utils.wsinforetraite.InfoRetraiteResult.InfoRetraiteResultRegime;
-import utils.wsinforetraite.InfoRetraiteResult.Status;
 
 public class InfoRetraiteWsUrTest {
 
@@ -51,38 +49,5 @@ public class InfoRetraiteWsUrTest {
 
 		final InfoRetraiteResult resultExpected = new InfoRetraiteResult(ERROR, null);
 		assertThat(result).isEqualTo(resultExpected);
-	}
-
-	@Test
-	public void retrieveRegimes_should_do_request_decode_and_return_result() {
-
-		when(infoRetraiteConnectorMock.get("DUPONT", "1223344555666", "07/04/2000")).thenReturn(JSON_RESULT);
-		final InfoRetraiteResult resultExpected = new InfoRetraiteResult(FOUND, new InfoRetraiteResult.InfoRetraiteResultRegime[] {
-				createInfoRetraiteResultRegime("a"),
-				createInfoRetraiteResultRegime("b c ")
-		});
-		when(infoRetraiteDecoderMock.decode(JSON_RESULT)).thenReturn(resultExpected);
-
-		final String regimes = infoRetraite.retrieveRegimes("DUPONT", "1223344555666", "07/04/2000");
-
-		assertThat(regimes).isEqualTo("a,b c");
-	}
-
-	@Test
-	public void retrieveRegimes_should_do_request_decode_and_return_empty_if_not_found() {
-
-		when(infoRetraiteConnectorMock.get("DUPONT", "1223344555666", "07/04/2000")).thenReturn(JSON_RESULT);
-		final InfoRetraiteResult resultExpected = new InfoRetraiteResult(Status.NOTFOUND, null);
-		when(infoRetraiteDecoderMock.decode(JSON_RESULT)).thenReturn(resultExpected);
-
-		final String regimes = infoRetraite.retrieveRegimes("DUPONT", "1223344555666", "07/04/2000");
-
-		assertThat(regimes).isEqualTo("");
-	}
-
-	private InfoRetraiteResultRegime createInfoRetraiteResultRegime(final String regime) {
-		final InfoRetraiteResultRegime infoRetraiteResultRegime = new InfoRetraiteResultRegime();
-		infoRetraiteResultRegime.nom = regime;
-		return infoRetraiteResultRegime;
 	}
 }

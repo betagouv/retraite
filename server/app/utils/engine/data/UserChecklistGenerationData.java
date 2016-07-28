@@ -17,15 +17,17 @@ public class UserChecklistGenerationData {
 
 	public boolean published;
 	public boolean isPDF;
+	public String regimesInfosJsonStr;
 
 	public UserChecklistGenerationData(final MonthAndYear dateDepart, final String departement, final Regime[] regimes, final RegimeAligne[] regimesAlignes,
-			final boolean published, final boolean isPDF) {
+			final boolean published, final boolean isPDF, final String regimesInfosJsonStr) {
 		this.dateDepart = dateDepart;
 		this.departement = departement;
 		this.regimes = regimes;
 		this.regimesAlignes = regimesAlignes;
 		this.published = published;
 		this.isPDF = isPDF;
+		this.regimesInfosJsonStr = regimesInfosJsonStr;
 	}
 
 	private UserChecklistGenerationData() {
@@ -91,6 +93,11 @@ public class UserChecklistGenerationData {
 
 		public Builder withCarriereLonge(final boolean isCarriereLongue) {
 			userChecklistGenerationData.isCarriereLongue = isCarriereLongue;
+			return this;
+		}
+
+		public Builder withRegimesInfosJsonStr(final String regimesInfosJsonStr) {
+			userChecklistGenerationData.regimesInfosJsonStr = regimesInfosJsonStr;
 			return this;
 		}
 

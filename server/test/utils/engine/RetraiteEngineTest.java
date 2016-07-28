@@ -14,6 +14,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
+import static utils.JsonUtils.toJson;
+import static utils.TestsUtils.createInfoRetraiteResult;
+import static utils.TestsUtils.createInfoRetraiteResultRegime;
 import static utils.engine.data.enums.EcranSortie.ECRAN_SORTIE_PENIBILITE;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor.QUESTION_A;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor.QUESTION_B;
@@ -21,6 +24,7 @@ import static utils.engine.data.enums.RegimeAligne.CNAV;
 import static utils.engine.data.enums.RegimeAligne.MSA;
 import static utils.engine.data.enums.RegimeAligne.RSI;
 import static utils.engine.data.enums.UserStatus.STATUS_CHEF;
+import static utils.wsinforetraite.InfoRetraiteResult.Status.NOTFOUND;
 
 import java.util.List;
 
@@ -38,7 +42,6 @@ import utils.engine.data.MonthAndYear;
 import utils.engine.data.RenderData;
 import utils.engine.data.UserChecklist;
 import utils.engine.data.UserChecklistGenerationData;
-import utils.engine.data.ValueAndText;
 import utils.engine.data.enums.Regime;
 import utils.engine.data.enums.RegimeAligne;
 import utils.engine.data.enums.UserStatus;
@@ -48,13 +51,13 @@ import utils.engine.intern.UserChecklistGenerator;
 import utils.engine.utils.AgeCalculator;
 import utils.engine.utils.AgeLegalEvaluator;
 import utils.wsinforetraite.InfoRetraiteResult;
-import utils.wsinforetraite.InfoRetraiteResult.InfoRetraiteResultRegime;
-import utils.wsinforetraite.InfoRetraiteResult.Status;
 import utils.wsinforetraite.InfoRetraiteWsUr;
 
 public class RetraiteEngineTest {
 
-	private final String allRegimes = "CNAV,CCMSA,AGIRC ARRCO";
+	private final InfoRetraiteResult allRegimesInfos = createInfoRetraiteResult(Regime.CNAV, Regime.MSA, Regime.AGIRC_ARRCO);
+	private final String allRegimesInfosAsJson = toJson(allRegimesInfos.regimes);
+	private final String allRegimesStr = "CNAV,CCMSA,AGIRC ARRCO";
 	private final List<FakeData> fakeDataMock = createFakeDataList();
 	private InfoRetraiteWsUr infoRetraiteMock;
 	private CalculateurRegimeAlignes calculateurRegimeAlignesMock;
@@ -78,7 +81,7 @@ public class RetraiteEngineTest {
 	public void setUp() throws Exception {
 
 		infoRetraiteMock = mock(InfoRetraiteWsUr.class);
-		when(infoRetraiteMock.retrieveRegimes("DUPONT", "1 50 12 18 123 456", "1/2/3")).thenReturn(allRegimes);
+		when(infoRetraiteMock.retrieveAllInformations("DUPONT", "1 50 12 18 123 456", "1/2/3")).thenReturn(allRegimesInfos);
 
 		userChecklistGeneratorMock = mock(UserChecklistGenerator.class);
 
@@ -168,7 +171,8 @@ public class RetraiteEngineTest {
 		postData.departement = "65";
 
 		// Pour ce test uniquement, on change le mock pour ne rien renvoyer
-		when(infoRetraiteMock.retrieveRegimes("DUPONT", "1 50 12 18 123 456", "1/2/3")).thenReturn("");
+		final InfoRetraiteResult infoRetraiteResult = new InfoRetraiteResult(NOTFOUND, null);
+		when(infoRetraiteMock.retrieveAllInformations("DUPONT", "1 50 12 18 123 456", "1/2/3")).thenReturn(infoRetraiteResult);
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
 
@@ -221,7 +225,7 @@ public class RetraiteEngineTest {
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
 
-		verify(displayerDepartureDateMock).fillData(isA(PostData.class), isA(RenderData.class), eq(allRegimes));
+		verify(displayerDepartureDateMock).fillData(isA(PostData.class), isA(RenderData.class), eq(allRegimesStr));
 		assertThat(renderData.hidden_liquidateur).isEqualTo(CNAV);
 	}
 
@@ -236,12 +240,8 @@ public class RetraiteEngineTest {
 		postData.naissance = "1/2/3";
 		postData.nir = "1 50 12 18 123 456";
 		postData.departement = "65";
+		postData.hidden_regimesInfosJsonStr = "[{\"nom\":\"CARPIMKO\",\"adresse\":\"addr CARPIMKO\",\"tel1\":\"tel CARPIMKO\",\"email1\":\"mail CARPIMKO\"}]";
 
-		final InfoRetraiteResultRegime infoRegimeCarpimko = createInfoRetraiteResultRegime("CARPIMKO");
-		final InfoRetraiteResult infoRetraiteResult = new InfoRetraiteResult(Status.FOUND, new InfoRetraiteResultRegime[] {
-				infoRegimeCarpimko
-		});
-		when(infoRetraiteMock.retrieveAllInformations("DUPONT", "1 50 12 18 123 456", "1/2/3")).thenReturn(infoRetraiteResult);
 		when(calculateurRegimeAlignesMock.getRegimesAlignes(anyString())).thenReturn(new RegimeAligne[] {});
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
@@ -251,7 +251,7 @@ public class RetraiteEngineTest {
 		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
 		assertThat(renderData.hidden_nir).isEqualTo("1 50 12 18 123 456");
 		assertThat(renderData.hidden_departement).isEqualTo("65");
-		assertThat(renderData.regimesInfos).containsExactly(infoRegimeCarpimko);
+		assertThat(renderData.regimesInfosAucunRegimeDeBaseAligne).containsExactly(createInfoRetraiteResultRegime("CARPIMKO"));
 	}
 
 	@Test
@@ -270,11 +270,13 @@ public class RetraiteEngineTest {
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
 
-		verify(displayerDepartureDateMock).fillData(isA(PostData.class), isA(RenderData.class), eq(allRegimes));
+		verify(displayerDepartureDateMock).fillData(isA(PostData.class), isA(RenderData.class), eq(allRegimesStr));
 		assertThat(renderData.hidden_nom).isEqualTo("DUPONT");
 		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
 		assertThat(renderData.hidden_nir).isEqualTo("1 50 12 18 123 456");
 		assertThat(renderData.hidden_departement).isEqualTo("65");
+		assertThat(renderData.hidden_regimes).isEqualTo(allRegimesStr);
+		assertThat(renderData.hidden_regimesInfosJsonStr).isEqualTo(allRegimesInfosAsJson);
 		assertThat(renderData.hidden_liquidateur).isEqualTo(CNAV);
 	}
 
@@ -294,11 +296,13 @@ public class RetraiteEngineTest {
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
 
-		verify(displayerLiquidateurQuestionsMock).fillData(isA(PostData.class), isA(RenderData.class), isA(String.class), isA(RegimeAligne[].class));
+		verify(displayerLiquidateurQuestionsMock).fillData(isA(PostData.class), isA(RenderData.class), isA(RegimeAligne[].class));
 		assertThat(renderData.hidden_nom).isEqualTo("DUPONT");
 		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
 		assertThat(renderData.hidden_nir).isEqualTo("1 50 12 18 123 456");
 		assertThat(renderData.hidden_departement).isEqualTo("65");
+		assertThat(renderData.hidden_regimes).isEqualTo(allRegimesStr);
+		assertThat(renderData.hidden_regimesInfosJsonStr).isEqualTo(allRegimesInfosAsJson);
 	}
 
 	@Test
@@ -316,7 +320,7 @@ public class RetraiteEngineTest {
 
 		retraiteEngine.processToNextStep(postData);
 
-		verify(displayerLiquidateurQuestionsMock).fillData(isA(PostData.class), isA(RenderData.class), isA(String.class), isA(RegimeAligne[].class));
+		verify(displayerLiquidateurQuestionsMock).fillData(isA(PostData.class), isA(RenderData.class), isA(RegimeAligne[].class));
 	}
 
 	@Test
@@ -344,12 +348,11 @@ public class RetraiteEngineTest {
 				renderData.hidden_liquidateurStep = QUESTION_A;
 				return null;
 			}
-		}).when(displayerLiquidateurQuestionsMock).fillData(any(PostData.class), any(RenderData.class), any(String.class),
-				any(RegimeAligne[].class));
+		}).when(displayerLiquidateurQuestionsMock).fillData(any(PostData.class), any(RenderData.class), any(RegimeAligne[].class));
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
 
-		verify(displayerLiquidateurQuestionsMock).fillData(isA(PostData.class), isA(RenderData.class), isA(String.class), isA(RegimeAligne[].class));
+		verify(displayerLiquidateurQuestionsMock).fillData(isA(PostData.class), isA(RenderData.class), isA(RegimeAligne[].class));
 		assertThat(renderData.hidden_nom).isEqualTo("DUPONT");
 		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
 		assertThat(renderData.hidden_nir).isEqualTo("1 50 12 18 123 456");
@@ -381,12 +384,11 @@ public class RetraiteEngineTest {
 				renderData.ecranSortie = ECRAN_SORTIE_PENIBILITE;
 				return null;
 			}
-		}).when(displayerLiquidateurQuestionsMock).fillData(any(PostData.class), any(RenderData.class), any(String.class),
-				any(RegimeAligne[].class));
+		}).when(displayerLiquidateurQuestionsMock).fillData(any(PostData.class), any(RenderData.class), any(RegimeAligne[].class));
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
 
-		verify(displayerLiquidateurQuestionsMock).fillData(isA(PostData.class), isA(RenderData.class), isA(String.class), isNull(RegimeAligne[].class));
+		verify(displayerLiquidateurQuestionsMock).fillData(isA(PostData.class), isA(RenderData.class), isNull(RegimeAligne[].class));
 		verify(displayerSortiePenibiliteMock).fillData(isA(PostData.class), isA(RenderData.class));
 		assertThat(renderData.hidden_nom).isEqualTo("DUPONT");
 		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
@@ -414,7 +416,7 @@ public class RetraiteEngineTest {
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
 
-		verify(displayerLiquidateurQuestionsMock).fillData(isA(PostData.class), isA(RenderData.class), isA(String.class), isNull(RegimeAligne[].class));
+		verify(displayerLiquidateurQuestionsMock).fillData(isA(PostData.class), isA(RenderData.class), isNull(RegimeAligne[].class));
 		verify(displayerDepartureDateMock).fillData(isA(PostData.class), isA(RenderData.class), (String) isNull());
 		assertThat(renderData.hidden_nom).isEqualTo("DUPONT");
 		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
@@ -560,13 +562,13 @@ public class RetraiteEngineTest {
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { CNAV };
 		final UserChecklist userChecklistMock = createUserChecklist();
 		final UserChecklistGenerationData userChecklistGenerationData = new UserChecklistGenerationData(dateDepart, "987", regimes, regimesAlignes,
-				true, false);
+				true, false, "[{\"nom\":\"CNAV\"}");
 		final RegimeAligne regimeLiquidateur = CNAV;
 		final List<UserStatus> userStatus = asList(STATUS_CHEF);
 
 		when(calculateurRegimeAlignesMock.getRegimesAlignes("CNAV")).thenReturn(regimesAlignes);
 		when(userChecklistGenerationDataBuilderMock.build(eq(dateDepart), eq("987"), eq(regimes), eq(regimesAlignes), eq(regimeLiquidateur),
-				eq(true), eq(true), eq(userStatus), eq(false))).thenReturn(userChecklistGenerationData);
+				eq(true), eq(true), eq(userStatus), eq(false), eq(""))).thenReturn(userChecklistGenerationData);
 		when(userChecklistGeneratorMock.generate(same(userChecklistGenerationData), eq(regimeLiquidateur))).thenReturn(userChecklistMock);
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
@@ -592,16 +594,6 @@ public class RetraiteEngineTest {
 
 	private List<FakeData> createFakeDataList() {
 		return asList(new FakeData(), new FakeData());
-	}
-
-	private ValueAndText vet(final String value, final String text) {
-		return new ValueAndText(value, text);
-	}
-
-	private InfoRetraiteResultRegime createInfoRetraiteResultRegime(final String nom) {
-		final InfoRetraiteResultRegime infoRetraiteResultRegime = new InfoRetraiteResultRegime();
-		infoRetraiteResultRegime.nom = nom;
-		return infoRetraiteResultRegime;
 	}
 
 }

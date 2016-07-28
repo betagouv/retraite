@@ -5,7 +5,6 @@ import java.util.Map;
 
 import models.FakeData;
 import utils.engine.data.enums.EcranSortie;
-import utils.wsinforetraite.InfoRetraiteResult.InfoRetraiteResultRegime;
 
 public class RenderData extends CommonExchangeData {
 
@@ -26,7 +25,7 @@ public class RenderData extends CommonExchangeData {
 
 	public String errorMessage;
 
-	public List<InfoRetraiteResultRegime> regimesInfos;
+	public InfoRetraiteResultRegimeList regimesInfosAucunRegimeDeBaseAligne;
 
 	public EcranSortie ecranSortie;
 

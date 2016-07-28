@@ -17,6 +17,17 @@ public class InfoRetraiteResult {
 		this.regimes = regimes;
 	}
 
+	public String extractRegimes() {
+		String regimesStr = "";
+		for (final InfoRetraiteResultRegime infoRetraiteResultRegime : regimes) {
+			if (!regimesStr.isEmpty()) {
+				regimesStr += ",";
+			}
+			regimesStr += infoRetraiteResultRegime.nom.trim();
+		}
+		return regimesStr;
+	}
+
 	@Override
 	public String toString() {
 		return "InfoRetraiteResult[status=" + status + ",items=" + Arrays.toString(regimes) + "]";

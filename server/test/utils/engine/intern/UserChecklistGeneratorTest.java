@@ -42,10 +42,8 @@ public class UserChecklistGeneratorTest {
 	public void should_generate_checklist_using_collaborators_for_published() {
 
 		final MonthAndYear dateDepart = new MonthAndYear();
-
 		final UserChecklistGenerationData userChecklistGenerationData = new UserChecklistGenerationData(dateDepart, "973", REGIMES, REGIMES_ALIGNES,
-				true, false);
-
+				true, false, "");
 		final Checklist checklist = new Checklist();
 		final UserChecklist userChecklist = new UserChecklist();
 
@@ -62,10 +60,8 @@ public class UserChecklistGeneratorTest {
 	public void should_generate_checklist_using_collaborators_for_not_published() {
 
 		final MonthAndYear dateDepart = new MonthAndYear();
-
 		final UserChecklistGenerationData userChecklistGenerationData = new UserChecklistGenerationData(dateDepart, "973", REGIMES, REGIMES_ALIGNES,
-				false, false);
-
+				false, false, "");
 		final Checklist checklist = new Checklist();
 		final UserChecklist userChecklist = new UserChecklist();
 

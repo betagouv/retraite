@@ -19,7 +19,9 @@
 									<h4>Autre retraite :</h4>
 						        	<ul>
 						        		#{list items:_data.userChecklist.autresRegimesDeBase, as:'regime'}
-						        			<li>${regime.nom}</li>
+						        			<li>
+       											#{displayRegimeAutre regime:regime /}
+						        			</li>
 						        		#{/list}
 						        	</ul>
 								#{/if}
@@ -27,7 +29,9 @@
 									<h4>Retraite complémentaire :</h4>
 						        	<ul>
 						        		#{list items:_data.userChecklist.regimesComplementaires, as:'regime'}
-						        			<li>${regime.nom}</li>
+						        			<li>
+       											#{displayRegimeAutre regime:regime /}
+						        			</li>
 						        		#{/list}
 						        	</ul>
 								#{/if}

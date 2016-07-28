@@ -66,6 +66,7 @@ public class DisplayerChecklistTest {
 		postData.hidden_naissance = "1/2/3";
 		postData.hidden_nir = "1 50 12 18 123 456";
 		postData.hidden_regimes = "CNAV";
+		postData.hidden_regimesInfosJsonStr = "[{\"nom\":\"CNAV\",\"adresse\":\"addr CNAV\"}]";
 		postData.hidden_liquidateurReponseJsonStr = null;
 		postData.hidden_departMois = "2";
 		postData.hidden_departAnnee = "2017";
@@ -79,11 +80,12 @@ public class DisplayerChecklistTest {
 		final Regime[] regimes = new Regime[] { Regime.CNAV };
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { CNAV };
 		final UserChecklistGenerationData userChecklistGenerationData = new UserChecklistGenerationData(dateDepart, "973", regimes, regimesAlignes,
-				true, false);
+				true, false, "[{\"nom\":\"CNAV\"}");
 
 		when(calculateurRegimeAlignesMock.getRegimesAlignes("CNAV")).thenReturn(regimesAlignes);
 		when(userChecklistGenerationDataBuilderMock.build(eq(dateDepart), eq("973"), eq(regimes), eq(regimesAlignes), eq(postData.hidden_liquidateur),
-				eq(true), eq(true), eq(postData.hidden_userStatus), eq(false))).thenReturn(userChecklistGenerationData);
+				eq(true), eq(true), eq(postData.hidden_userStatus), eq(false), eq("[{\"nom\":\"CNAV\",\"adresse\":\"addr CNAV\"}]")))
+						.thenReturn(userChecklistGenerationData);
 		when(userChecklistGeneratorMock.generate(same(userChecklistGenerationData), eq(postData.hidden_liquidateur))).thenReturn(userChecklistMock);
 		final StringPairsList questionsAndResponses = new StringPairsList() {
 			{
@@ -120,8 +122,8 @@ public class DisplayerChecklistTest {
 		final UserChecklistGenerationData userChecklistGenerationData = UserChecklistGenerationData.create().get();
 
 		when(calculateurRegimeAlignesMock.getRegimesAlignes(anyString())).thenReturn(new RegimeAligne[] { CNAV });
-		when(userChecklistGenerationDataBuilderMock.build(any(MonthAndYear.class), any(String.class), any(Regime[].class), any(RegimeAligne[].class),
-				any(RegimeAligne.class), eq(true), eq(true), any(List.class), eq(false))).thenReturn(userChecklistGenerationData);
+		when(userChecklistGenerationDataBuilderMock.build(any(MonthAndYear.class), anyString(), any(Regime[].class), any(RegimeAligne[].class),
+				any(RegimeAligne.class), eq(true), eq(true), any(List.class), eq(false), anyString())).thenReturn(userChecklistGenerationData);
 
 		// Simulation Exception
 		doThrow(new RetraiteException("xxx")).when(userChecklistGeneratorMock).generate(any(UserChecklistGenerationData.class), any(RegimeAligne.class));
