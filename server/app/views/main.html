@@ -18,7 +18,7 @@
 
         #{get 'moreStyles' /}
         
-		#{if !test && !debug}
+		#{if !test && !debug && !force55}
 			#{if appid=='recette'}
 	        	<!-- Hotjar Tracking -->
 				<!-- appid=${appid} -->
@@ -131,7 +131,7 @@
 
     </body>
     
-	#{if gacode && !test && !debug}
+	#{if gacode && !test && !debug && !force55}
 		
 		<script>
 		

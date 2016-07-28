@@ -61,9 +61,9 @@ public class Application extends RetraiteController {
 		postData.hidden_userStatus = unbind(params.get("postData.hidden_userStatus"));
 		final boolean test = params._contains("test");
 		final boolean debug = params._contains("debug");
-		postData.isForce55 = params._contains("force55");
+		final boolean force55 = postData.isForce55 = params._contains("force55");
 		final Look look = postData.look = getLook(params);
-		final String actionQueryParams = computeActionQueryParams(test, debug, look, postData.isForce55);
+		final String actionQueryParams = computeActionQueryParams(test, debug, look, force55);
 		if (test) {
 			Logger.warn("Traitement des données en mode TEST, recherche des régimes en BDD !");
 		}
@@ -73,9 +73,9 @@ public class Application extends RetraiteController {
 			final String key = UUID.randomUUID().toString();
 			putToCache(key, new DisplayCheckListData(data, page, actionQueryParams));
 			// Redirection pour avoir une URL spécifique pour hotjar
-			redirectToDisplayCheckList(key, test, debug, look);
+			redirectToDisplayCheckList(key, test, debug, look, force55);
 		} else {
-			renderTemplate("Application/steps/" + data.hidden_step + ".html", data, test, debug, page, look, actionQueryParams);
+			renderTemplate("Application/steps/" + data.hidden_step + ".html", data, test, debug, page, look, force55, actionQueryParams);
 		}
 	}
 
@@ -90,28 +90,29 @@ public class Application extends RetraiteController {
 	/*
 	 * On passe par cette méthode pour pouvoir mettre les paramètres à null si besoin et éviter qu'ils apparaissent dans l'URL de navigation
 	 */
-	private static void redirectToDisplayCheckList(final String key, final boolean _test, final boolean _debug, final Look _look) {
+	private static void redirectToDisplayCheckList(final String key, final boolean _test, final boolean _debug, final Look _look, final boolean _force55) {
 		final Boolean test = (_test ? true : null);
 		final Boolean debug = (_debug ? true : null);
 		final Look look = (_look.isNotGeneric() ? _look : null);
-		displayCheckList(key, test, debug, look);
+		final Boolean force55 = (_force55 ? true : null);
+		displayCheckList(key, test, debug, look, force55);
 	}
 
-	public static void displayCheckList(final String key, final Boolean test, final Boolean debug, final Look _look) {
+	public static void displayCheckList(final String key, final Boolean test, final Boolean debug, final Look _look, final Boolean force55) {
 		final Look look = (_look == null ? GENERIC : _look);
 		final DisplayCheckListData displayCheckListData = getFromCache(key);
 		if (displayCheckListData == null) {
-			displayExpired(test, debug, look);
+			displayExpired(test, debug, look, force55);
 		}
 		final CommonExchangeData data = displayCheckListData.data;
 		final String page = displayCheckListData.page;
 		final String actionQueryParams = displayCheckListData.actionQueryParams;
-		renderTemplate("Application/steps/" + data.hidden_step + ".html", data, test, debug, page, look, actionQueryParams);
+		renderTemplate("Application/steps/" + data.hidden_step + ".html", data, test, debug, page, look, force55, actionQueryParams);
 	}
 
-	public static void displayExpired(final Boolean test, final Boolean debug, final Look look) {
-		final String actionQueryParams = computeActionQueryParams(test, debug, look, false);
-		render(look, actionQueryParams);
+	public static void displayExpired(final Boolean test, final Boolean debug, final Look look, final Boolean force55) {
+		final String actionQueryParams = computeActionQueryParams(test, debug, look, force55);
+		render(test, debug, look, force55, actionQueryParams);
 	}
 
 	public static void sendMail(final PostData postData) {
