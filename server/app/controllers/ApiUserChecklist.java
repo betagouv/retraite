@@ -9,6 +9,9 @@ import utils.engine.data.RenderData;
 import utils.engine.intern.CalculateurRegimeAlignes;
 import utils.engine.intern.UserChecklistGenerationDataBuilder;
 
+/**
+ * Ce contrôleur est utilisé par la partie "test" de la config pour afficher la checklist
+ */
 public class ApiUserChecklist extends RetraiteController {
 
 	public static void getUserChecklist() {

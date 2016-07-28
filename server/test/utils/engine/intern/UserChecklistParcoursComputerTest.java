@@ -84,7 +84,7 @@ public class UserChecklistParcoursComputerTest {
 
 		final String before = "xxx http://monsite.com/path/page.html yyy";
 
-		final UserChecklistGenerationData userChecklistGenerationData = new UserChecklistGenerationData(null, null, null, null, false, true /* isPDF */);
+		final UserChecklistGenerationData userChecklistGenerationData = new UserChecklistGenerationData(null, null, null, null, false, true /* isPDF */, "");
 		final String after = userChecklistParcoursComputer.compute(before, userChecklistGenerationData);
 
 		assertThat(after).isEqualTo("xxx " + link("http://monsite.com/path/page.html", "http://monsite.com/path/page.html") + " yyy");
@@ -125,7 +125,7 @@ public class UserChecklistParcoursComputerTest {
 
 		final String before = "xxx [[ ceci est mon texte http://monsite.com/path/page.html ]] yyy";
 
-		final UserChecklistGenerationData userChecklistGenerationData = new UserChecklistGenerationData(null, null, null, null, false, true /* isPDF */);
+		final UserChecklistGenerationData userChecklistGenerationData = new UserChecklistGenerationData(null, null, null, null, false, true /* isPDF */, "");
 		final String after = userChecklistParcoursComputer.compute(before, userChecklistGenerationData);
 
 		assertThat(after).isEqualTo("xxx " + link("http://monsite.com/path/page.html", "ceci est mon texte") + " ("

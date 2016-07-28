@@ -3,7 +3,6 @@ package utils.engine.data;
 import java.util.List;
 
 import models.Caisse;
-import utils.engine.data.enums.Regime;
 
 public class UserChecklist {
 
@@ -11,9 +10,9 @@ public class UserChecklist {
 
 	public Caisse caisse;
 
-	public Regime[] autresRegimesDeBase;
+	public InfoRetraiteResultRegimeList autresRegimesDeBase;
 
-	public Regime[] regimesComplementaires;
+	public InfoRetraiteResultRegimeList regimesComplementaires;
 
 	public List<UserChapitre> chapitres;
 

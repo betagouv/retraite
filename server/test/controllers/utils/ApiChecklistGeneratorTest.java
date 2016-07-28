@@ -4,6 +4,7 @@ import static java.util.Arrays.asList;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -121,8 +122,8 @@ public class ApiChecklistGeneratorTest {
 	@Test
 	public void should_generate_data() {
 		final UserChecklistGenerationData userChecklistGenerationData = UserChecklistGenerationData.create().get();
-		when(userChecklistGenerationDataBuilderMock.build(any(MonthAndYear.class), any(String.class), any(Regime[].class), any(RegimeAligne[].class),
-				any(RegimeAligne.class), anyBoolean(), anyBoolean(), any(List.class), anyBoolean()))
+		when(userChecklistGenerationDataBuilderMock.build(any(MonthAndYear.class), anyString(), any(Regime[].class), any(RegimeAligne[].class),
+				any(RegimeAligne.class), anyBoolean(), anyBoolean(), any(List.class), anyBoolean(), anyString()))
 						.thenReturn(userChecklistGenerationData);
 		when(calculateurRegimeAlignesMock.getRegimesAlignes(new Regime[] { Regime.CNAV })).thenReturn(new RegimeAligne[] { RegimeAligne.CNAV });
 
@@ -157,7 +158,8 @@ public class ApiChecklistGeneratorTest {
 				false /* published */,
 				true /* isCarriereLongue */,
 				asList(STATUS_CONJOINT_COLLABORATEUR),
-				false /* isPDF */);
+				false /* isPDF */,
+				null /* regimesInfosJsonStr : Pour l'instant, pas besoin de tester les autres interlocuteurs */);
 		verify(userChecklistGeneratorMock).generate(eq(ChecklistName.RSI), eq(userChecklistGenerationData));
 	}
 

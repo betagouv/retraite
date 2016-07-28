@@ -10,11 +10,14 @@
 	#{if debug}
 		<div class="form-group row col-sm-12">
 			A ce stade : 
-			Régime liquidateur = '${data.hidden_liquidateur}', 
-			états (hidden_userStatus) = '${data.hidden_userStatus}', 
-			liquidateurStep='${data.hidden_liquidateurStep}',
-			liquidateurReponseJsonStr='${data.hidden_liquidateurReponseJsonStr}',
-			liquidateurReponsesHistory='${data.hidden_liquidateurReponsesHistory}'
+			<ul>
+			<li>Régime liquidateur = '${data.hidden_liquidateur}'
+			<li>états (hidden_userStatus) = '${data.hidden_userStatus}' 
+			<li>liquidateurStep='${data.hidden_liquidateurStep}'
+			<li>liquidateurReponseJsonStr='${data.hidden_liquidateurReponseJsonStr}'
+			<li>liquidateurReponsesHistory='${data.hidden_liquidateurReponsesHistory}'
+			<li>regimesInfosJsonStr='${data.hidden_regimesInfosJsonStr}'
+			</ul>
 		</div>
 	#{/if}
 </form>

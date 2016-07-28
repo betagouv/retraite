@@ -98,10 +98,9 @@ public class DisplayerLiquidateurQuestionsTest {
 	@Test
 	public void should_set_step_and_store_regimes() {
 
-		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, null);
+		displayerLiquidateurQuestions.fillData(postData, renderData, null);
 
 		assertThat(renderData.hidden_step).isEqualTo("displayLiquidateurQuestions");
-		assertThat(renderData.hidden_regimes).isEqualTo(regimes);
 	}
 
 	@Test
@@ -112,7 +111,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		postData.hidden_liquidateurStep = null;
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { CNAV, MSA };
 
-		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 
 		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_A);
 		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_A);
@@ -127,7 +126,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		postData.hidden_liquidateurStep = null;
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { CNAV };
 
-		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 
 		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_B);
 		assertThat(renderData.questionLiquidateur.liquidateurQuestionDescriptor).isEqualTo(QUESTION_B);
@@ -146,7 +145,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		when(questionSolverAMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus(null, STATUS_NSA));
 
-		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverAMock);
 		assertThat(renderData.hidden_liquidateurReponsesHistory).isEqualTo("[{\"question\":\"QUESTION_A\",\"responses\":[\"NSA\"]}]");
@@ -165,7 +164,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		postData.hidden_liquidateurStep = QUESTION_A;
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { RSI };
 
-		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverAMock);
 		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_B);
@@ -185,7 +184,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		when(questionSolverAMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus(MSA, STATUS_NSA));
 
-		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverAMock);
 		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_C);
@@ -208,7 +207,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		when(questionSolverAMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus(MSA, null));
 
-		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverAMock);
 		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_E);
@@ -230,7 +229,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		when(questionSolverAMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus(CNAV, null));
 
-		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverAMock);
 		assertThat(renderData.hidden_liquidateurStep).isNull();
@@ -249,7 +248,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		when(questionSolverBMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
 
-		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverBMock);
 		assertThat(renderData.hidden_liquidateurReponsesHistory)
@@ -274,7 +273,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		when(questionSolverBMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
 
-		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverBMock);
 		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_C);
@@ -295,7 +294,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		when(questionSolverBMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus(RSI, STATUS_CHEF));
 
-		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverBMock);
 		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_C);
@@ -319,7 +318,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		when(questionSolverBMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
 
-		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverBMock);
 		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_D);
@@ -343,7 +342,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		when(questionSolverBMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus(MSA, STATUS_NSA));
 
-		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverBMock);
 		assertThat(renderData.hidden_liquidateurStep).isNull();
@@ -362,7 +361,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		when(questionSolverCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus(ECRAN_SORTIE_PENIBILITE));
 
-		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverCMock);
 		assertThat(renderData.hidden_liquidateurStep).isNull();
@@ -382,7 +381,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		when(questionSolverCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
 
-		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverCMock);
 		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_D);
@@ -405,7 +404,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		when(questionSolverCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
 
-		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverCMock);
 		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_D);
@@ -428,7 +427,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		when(questionSolverCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
 
-		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverCMock);
 		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_E);
@@ -451,7 +450,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		when(questionSolverCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
 
-		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverCMock);
 		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_F);
@@ -475,7 +474,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		when(questionSolverCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
 
-		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverCMock);
 		assertThat(renderData.hidden_liquidateurStep).isNull();
@@ -495,7 +494,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		when(questionSolverCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
 
-		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverCMock);
 		assertThat(renderData.hidden_liquidateurStep).isNull();
@@ -515,7 +514,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		when(questionSolverCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
 
-		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverCMock);
 		assertThat(renderData.hidden_liquidateurStep).isNull();
@@ -535,7 +534,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		when(questionSolverCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
 
-		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverCMock);
 		assertThat(renderData.hidden_liquidateurStep).isNull();
@@ -554,7 +553,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		when(questionSolverCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
 
-		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverDMock);
 		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_E);
@@ -577,7 +576,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		when(questionSolverCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
 
-		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverDMock);
 		assertThat(renderData.hidden_liquidateurStep).isEqualTo(QUESTION_F);
@@ -601,7 +600,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		when(questionSolverCMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus());
 
-		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverDMock);
 		assertThat(renderData.hidden_liquidateurStep).isNull();
@@ -613,7 +612,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		postData.hidden_liquidateurStep = QUESTION_E;
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { CNAV };
 
-		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverEMock);
 		assertThat(renderData.hidden_liquidateurStep).isNull();
@@ -631,7 +630,7 @@ public class DisplayerLiquidateurQuestionsTest {
 		when(questionSolverFMock.solve(regimesAlignes, postData.liquidateurReponseJsonStr))
 				.thenReturn(new RegimeLiquidateurAndUserStatus(RSI, STATUS_CHEF));
 
-		displayerLiquidateurQuestions.fillData(postData, renderData, regimes, regimesAlignes);
+		displayerLiquidateurQuestions.fillData(postData, renderData, regimesAlignes);
 
 		verifySolverIsCalled(questionSolverFMock);
 		assertThat(renderData.hidden_liquidateurStep).isNull();

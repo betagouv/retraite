@@ -60,11 +60,10 @@ public class DisplayerLiquidateurQuestions {
 		this.questionSolverF = questionSolverF;
 	}
 
-	public void fillData(final PostData data, final RenderData renderData, final String regimes, final RegimeAligne[] regimesAlignes) {
+	public void fillData(final PostData data, final RenderData renderData, final RegimeAligne[] regimesAlignes) {
 		renderData.hidden_step = "displayLiquidateurQuestions";
-		renderData.hidden_regimes = regimes;
 		storeReponseHistory(data, renderData);
-		processNextStep(data, renderData, regimes, regimesAlignes);
+		processNextStep(data, renderData, regimesAlignes);
 		if (renderData.questionLiquidateur.liquidateurQuestionDescriptor != null) {
 			renderData.hidden_liquidateurStep = renderData.questionLiquidateur.liquidateurQuestionDescriptor;
 		}
@@ -87,7 +86,7 @@ public class DisplayerLiquidateurQuestions {
 		return list;
 	}
 
-	private void processNextStep(final PostData data, final RenderData renderData, final String regimes, final RegimeAligne[] regimesAlignes) {
+	private void processNextStep(final PostData data, final RenderData renderData, final RegimeAligne[] regimesAlignes) {
 		final LiquidateurQuestionDescriptor previousStep = data.hidden_liquidateurStep;
 
 		callQuestionSolversAndStoreResult(data, renderData, regimesAlignes, previousStep);

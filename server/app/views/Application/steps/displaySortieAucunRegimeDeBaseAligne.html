@@ -13,7 +13,7 @@
 	<p>Pour demander votre retraite, nous vous invitons à prendre contact avec le/les organismes auxquels vous avez cotisé :</p>
 
 	<ul>
-		#{list items:data.regimesInfos, as:'regimeInfos'}
+		#{list items:data.regimesInfosAucunRegimeDeBaseAligne, as:'regimeInfos'}
 			<li>
 				${regimeInfos.regime}<br>
 				${regimeInfos.nom}<br>
