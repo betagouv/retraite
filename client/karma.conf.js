@@ -57,10 +57,12 @@ module.exports = function (config) {
 
             <!-- injector:js -->
             'app/src/commons/commons.js',
+            'app/src/commons/data/api-caisses/api-caisses-departemantal.js',
+            'app/src/commons/data/api-caisses/api-caisses-departemantal.spec.js',
+            'app/src/commons/data/api-regimes/api-regimes.js',
+            'app/src/commons/data/api-regimes/api-regimes.spec.js',
             'app/src/commons/data/checklist/checklist.js',
             'app/src/commons/data/checklist/checklist.spec.js',
-            'app/src/commons/data/regimes/regimes.js',
-            'app/src/commons/data/regimes/regimes.spec.js',
             'app/src/commons/utils/array-utils/array-utils.js',
             'app/src/commons/utils/array-utils/array-utils.spec.js',
             'app/src/commons/utils/http-buffer/http-buffer.js',
@@ -87,6 +89,8 @@ module.exports = function (config) {
             'app/src/config/app-config.module.run.js',
             'app/src/config/app-id/app-id-controller.js',
             'app/src/config/app-id/app-id-controller.spec.js',
+            'app/src/config/caisses/caisses-controller.js',
+            'app/src/config/caisses/caisses-controller.spec.js',
             'app/src/config/configlist/configlist-controller.js',
             'app/src/config/configlist/configlist-controller.spec.js',
             'app/src/config/directives/iframe-auto-size.js',

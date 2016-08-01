@@ -30,6 +30,7 @@
         </div>
 
         <button ui-sref="test" class="btn btn-success" type="button">Tester</button>
+        <button ui-sref="caisses({name:checklist.nom})" class="btn btn-success" type="button">Caisses</button>
         <button ng-click='save()' class="btn" ng-class="{'btn-danger': modified, 'btn-default':!modified}" type="button">Enregistrer</button>
         <button ng-click='publish()' class="btn" ng-class="{'btn-warning': checklist.modifiedButNotPublished, 'btn-default':!checklist.modifiedButNotPublished}" type="button">Publier</button>
     </div>

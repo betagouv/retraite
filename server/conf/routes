@@ -37,6 +37,9 @@ POST    /api/checklist							ApiRestChecklists.createChecklist
 PUT     /api/checklist/{id}						ApiRestChecklists.updateChecklist
 DELETE  /api/checklist/{id}						ApiRestChecklists.deleteChecklist
 
+# CheckLists
+GET     /api/caissedepartementale/{name}		ApiRestCaisseDepartementale.getAll
+
 # API WebServices
 GET		/api/inforetraite						ApiInfoRetraite.get
 GET		/api/checklistpublish					ApiChecklistPublish.get
