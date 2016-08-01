@@ -4,7 +4,7 @@ describe('EditCaisseCtrl', function () {
     
     beforeEach(module('SgmapRetraiteConfig'));
     
-    var $scope, controller, ApiCaisse;
+    var $rootScope, $scope, controller, ApiCaisse;
     
     beforeEach(inject(function (_ApiCaisse_) {
         ApiCaisse = _ApiCaisse_;
@@ -33,8 +33,9 @@ describe('EditCaisseCtrl', function () {
         });
     });
 
-    beforeEach(inject(function ($rootScope, $controller) {
+    beforeEach(inject(function (_$rootScope_, $controller) {
 
+        $rootScope = _$rootScope_;
         $scope = $rootScope.$new();
         var $stateParams = {
             name: "CNAV",
@@ -54,13 +55,17 @@ describe('EditCaisseCtrl', function () {
 
     describe('save', function() {
         
+        var caisseSaved = false;
+        
         it('should have init data in scope', function () {
             
             spyOn(ApiCaisse, 'save');
+            spyOn($rootScope, '$broadcast');
 
             $scope.save(mockCaisse);
             
             expect(ApiCaisse.save).toHaveBeenCalledWith(mockCaisse);
+            expect($rootScope.$broadcast).toHaveBeenCalledWith('caisseSaved');
         });
 
     });
