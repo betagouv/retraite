@@ -114,6 +114,27 @@ ul.config-list li .label {
     left: 34px;
 }
 
+ul.caisse-list li {
+	list-style: none;
+    margin: 30px 0;
+    padding: 20px;
+    
+    cursor: pointer;
+
+	border: solid 1px #337ab7;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}
+
+ul.caisse-list li div.name {
+    font-weight: bold;
+}
+
+.edit-caisse div {
+    margin: 10px 0;
+}
+
 .configListeChapitres {
     overflow-y: auto;
 }
