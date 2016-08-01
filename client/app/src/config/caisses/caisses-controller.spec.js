@@ -4,7 +4,7 @@ describe('CaissesCtrl', function () {
     
     beforeEach(module('SgmapRetraiteConfig'));
     
-    var $scope, controller, ApiCaisseFilter;
+    var $rootScope, $scope, controller, ApiCaisseFilter;
     
     beforeEach(inject(function (_ApiCaisseFilter_) {
         ApiCaisseFilter = _ApiCaisseFilter_;
@@ -40,8 +40,9 @@ describe('CaissesCtrl', function () {
         });
     });
 
-    beforeEach(inject(function ($rootScope, $controller) {
+    beforeEach(inject(function (_$rootScope_, $controller) {
 
+        $rootScope = _$rootScope_;
         $scope = $rootScope.$new();
         var $stateParams = {
             name: "CNAV"
@@ -56,6 +57,13 @@ describe('CaissesCtrl', function () {
     
     it('should have init data in scope', function () {
         expect($scope.caisses).toEqual(mockCaisses);
+    });
+
+    it('should refresh if event caisseSaved', function () {
+        
+        $rootScope.$broadcast('caisseSaved');
+        
+        expect(ApiCaisseFilter.allForChecklistName.calls.count()).toEqual(2);
     });
 
 });

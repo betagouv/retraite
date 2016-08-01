@@ -1,11 +1,12 @@
 'use strict';
 
-angular.module('SgmapRetraiteConfig').controller('EditCaisseCtrl', function ($scope, $stateParams, ApiCaisse) {
+angular.module('SgmapRetraiteConfig').controller('EditCaisseCtrl', function ($rootScope, $scope, $stateParams, ApiCaisse) {
 
     // Actions
     
     $scope.save = function() {
         ApiCaisse.save($scope.caisse);
+        $rootScope.$broadcast('caisseSaved');
     };
     
     // Données
