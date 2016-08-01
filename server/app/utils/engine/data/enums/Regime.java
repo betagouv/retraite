@@ -86,7 +86,7 @@ public enum Regime {
 	}
 
 	public static Regime valueOfNom(final String nom) {
-		if (nom.equals("AGIRC-ARRCO")) {
+		if (nom.equals("AGIRC-ARRCO") || nom.equals("AGIRC ARRCO")) {
 			return AGIRC_ARRCO;
 		}
 		if (nom.equals("CCMSA")) {
