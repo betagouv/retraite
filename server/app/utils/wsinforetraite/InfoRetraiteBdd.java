@@ -17,8 +17,8 @@ public class InfoRetraiteBdd implements InfoRetraite {
 		for (int i = 0; i < regimes.length; i++) {
 			final String regime = regimes[i];
 			regimesInfos[i] = new InfoRetraiteResultRegime();
-			regimesInfos[i].regime = regime;
-			regimesInfos[i].nom = regime + ":nom";
+			regimesInfos[i].regime = regime + ":nom_regime";
+			regimesInfos[i].nom = regime;
 			regimesInfos[i].adresse = regime + ":adresse";
 			regimesInfos[i].internet = regime + ":internet";
 			regimesInfos[i].tel1 = regime + ":tel1";

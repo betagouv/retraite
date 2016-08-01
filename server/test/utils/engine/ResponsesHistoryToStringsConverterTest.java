@@ -24,7 +24,18 @@ public class ResponsesHistoryToStringsConverterTest {
 	}
 
 	@Test
-	public void test() {
+	public void should_return_empty_list_if_no_history() {
+
+		final String liquidateurReponsesHistory = "";
+
+		final StringPairsList questionsAndResponses = responsesHistoryToStringsConverter.convert(liquidateurReponsesHistory);
+
+		final StringPairsList expected = new StringPairsList();
+		assertThat(questionsAndResponses).isEqualTo(expected);
+	}
+
+	@Test
+	public void should_return_list_of_pairs() {
 
 		final String liquidateurReponsesHistory = "[{\"question\":\"QUESTION_A\",\"responses\":[\"NSA\"]},{\"question\":\"QUESTION_B\",\"responses\":[\"INDEP\"]},{\"question\":\"QUESTION_C\",\"responses\":[]},{\"question\":\"QUESTION_C\",\"responses\":[\"INDEP_AVANT_73\",\"INVALIDITE_RSI\"]}]";
 
