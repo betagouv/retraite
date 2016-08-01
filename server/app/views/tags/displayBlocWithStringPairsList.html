@@ -1,19 +1,21 @@
-<div class="contenu col-sm-12">
-	<div class="question mes-infos">
-		<h2>${_title} :</h2>
-		<div class="bg-box">
-		
-			#{list items:_list, as:'pair'}
-				<div class="row">
-					<div class="col-sm-6 mes-infos-label">
-						${pair.key} :
+#{if _list}
+	<div class="contenu col-sm-12">
+		<div class="question mes-infos">
+			<h2>${_title} :</h2>
+			<div class="bg-box">
+			
+				#{list items:_list, as:'pair'}
+					<div class="row">
+						<div class="col-sm-6 mes-infos-label">
+							${pair.key} :
+						</div>
+						<div class="col-sm-6 mes-infos-data">
+							${pair.value}
+						</div>
 					</div>
-					<div class="col-sm-6 mes-infos-data">
-						${pair.value}
-					</div>
-				</div>
-			#{/list}
-
+				#{/list}
+	
+			</div>
 		</div>
 	</div>
-</div>
+#{/if}
