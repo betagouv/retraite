@@ -15,10 +15,12 @@ public class ResponsesHistoryToStringsConverter {
 
 	public StringPairsList convert(final String liquidateurReponsesHistory) {
 		final StringPairsList result = new StringPairsList();
-		final List<QuestionAndResponses> list = fromJson(liquidateurReponsesHistory, QuestionAndResponsesList.class);
-		for (final QuestionAndResponses questionAndResponses : list) {
-			final LiquidateurQuestionDescriptor liquidateurQuestionDescriptor = LiquidateurQuestionDescriptor.valueOf(questionAndResponses.question);
-			result.add(createQuestionAndResponse(liquidateurQuestionDescriptor, questionAndResponses.responses));
+		if (!liquidateurReponsesHistory.isEmpty()) {
+			final List<QuestionAndResponses> list = fromJson(liquidateurReponsesHistory, QuestionAndResponsesList.class);
+			for (final QuestionAndResponses questionAndResponses : list) {
+				final LiquidateurQuestionDescriptor liquidateurQuestionDescriptor = LiquidateurQuestionDescriptor.valueOf(questionAndResponses.question);
+				result.add(createQuestionAndResponse(liquidateurQuestionDescriptor, questionAndResponses.responses));
+			}
 		}
 		return result;
 	}
