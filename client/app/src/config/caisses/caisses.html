@@ -17,15 +17,20 @@
             </div>
 
             <div class='tel' ng-if='caisse.telephone'>
-                Tél : {{caisse.telephone}}
+                <label>Tél : </label>{{caisse.telephone}}
             </div>
 
             <div class='fax' ng-if='caisse.fax'>
-                {{caisse.fax}}
+                <label>Fax : </label>{{caisse.fax}}
             </div>
 
             <div class='site' ng-if='caisse.site'>
-                {{caisse.site}}
+                <label>Site : </label>{{caisse.site}}
+            </div>
+
+            <div class='site' ng-if='caisse.departements'>
+                <label>Départements : </label>
+                <span ng-repeat='departement in caisse.departements' class="badge">{{departement}}</span>
             </div>
         </li>
 
