@@ -22,6 +22,11 @@ angular.module('SgmapRetraiteConfig').config(function ($urlRouterProvider, $stat
             templateUrl: rootPathToViews+'/test/test.html',
             controller: 'TestCtrl'
         })
+        .state ('caisses', {
+            url:'/caisses/{name}',
+            templateUrl: rootPathToViews+'/caisses/caisses.html',
+            controller: 'CaissesCtrl'
+        })
     
         // Login
     

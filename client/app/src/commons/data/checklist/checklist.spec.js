@@ -16,7 +16,7 @@ describe('CheckList', function () {
     beforeEach(function() {
     });
 
-    describe('query', function () {
+    describe('all', function () {
 
         it('should call REST server and return result', function (done) {
 
