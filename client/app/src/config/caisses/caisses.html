@@ -1,4 +1,40 @@
-<select size="x">
-  <option ng-repeat='caisse in caisses'>{{caisse}}</option>
+<div class='col-sm-6'>
+    <ul class='caisse-list'>
 
-</select>
+        <li ng-repeat='caisse in caisses' class='caisse' ui-sref='caisses.edit({name:name,id:caisse.id})'>
+            <div class='name'>
+                {{caisse.nom}}
+            </div>
+
+            <div class='address'>
+                {{caisse.adresse1}}
+                <br ng-if='caisse.adresse2'/>
+                {{caisse.adresse2}}
+                <br ng-if='caisse.adresse3'/>
+                {{caisse.adresse3}}
+                <br ng-if='caisse.adresse4'/>
+                {{caisse.adresse4}}
+            </div>
+
+            <div class='tel' ng-if='caisse.telephone'>
+                Tél : {{caisse.telephone}}
+            </div>
+
+            <div class='fax' ng-if='caisse.fax'>
+                {{caisse.fax}}
+            </div>
+
+            <div class='site' ng-if='caisse.site'>
+                {{caisse.site}}
+            </div>
+        </li>
+
+    </ul>
+</div>
+
+<div class='col-sm-6'>
+    
+    <!-- Visualisation de la caisse sélectionnée (via sous état du routeur) -->
+    <div ui-view></div>
+
+</div>

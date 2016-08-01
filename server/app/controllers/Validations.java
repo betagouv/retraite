@@ -38,7 +38,7 @@ public class Validations extends RetraiteController {
 			final RenderDataParDepartement renderDataParDepartement = new RenderDataParDepartement(departement);
 			data.add(renderDataParDepartement);
 			for (final ChecklistName checklistName : ChecklistName.values()) {
-				final Caisse caisse = caisseDao.find(checklistName, departement.numero);
+				final Caisse caisse = caisseDao.findForDepartment(checklistName, departement.numero);
 				renderDataParDepartement.set(checklistName, caisse);
 			}
 		}

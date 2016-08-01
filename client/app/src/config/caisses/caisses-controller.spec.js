@@ -4,10 +4,10 @@ describe('CaissesCtrl', function () {
     
     beforeEach(module('SgmapRetraiteConfig'));
     
-    var $scope, controller, ApiCaisseDepartementale;
+    var $scope, controller, ApiCaisseFilter;
     
-    beforeEach(inject(function (_ApiCaisseDepartementale_) {
-        ApiCaisseDepartementale = _ApiCaisseDepartementale_;
+    beforeEach(inject(function (_ApiCaisseFilter_) {
+        ApiCaisseFilter = _ApiCaisseFilter_;
     }));
     
     var mockCaisses = [{
@@ -25,7 +25,7 @@ describe('CaissesCtrl', function () {
     }];
 
     beforeEach(function() {
-        spyOn(ApiCaisseDepartementale, 'all').and.callFake(function(name) {
+        spyOn(ApiCaisseFilter, 'allForChecklistName').and.callFake(function(name) {
             
             if (name == "CNAV") {
                 return {
