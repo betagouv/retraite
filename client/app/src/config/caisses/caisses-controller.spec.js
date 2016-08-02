@@ -4,10 +4,13 @@ describe('CaissesCtrl', function () {
     
     beforeEach(module('SgmapRetraiteConfig'));
     
-    var $rootScope, $scope, controller, ApiCaisseFilter;
+    var $rootScope, $scope, controller, ApiCaisseFilter, PromptService, WsCaisseDepartement, $state;
     
-    beforeEach(inject(function (_ApiCaisseFilter_) {
+    beforeEach(inject(function (_ApiCaisseFilter_, _PromptService_, _WsCaisseDepartement_, _$state_) {
         ApiCaisseFilter = _ApiCaisseFilter_;
+        PromptService = _PromptService_;
+        WsCaisseDepartement = _WsCaisseDepartement_;
+        $state = _$state_;
     }));
     
     var mockCaisses = [{
@@ -64,6 +67,55 @@ describe('CaissesCtrl', function () {
         $rootScope.$broadcast('caisseSaved');
         
         expect(ApiCaisseFilter.allForChecklistName.calls.count()).toEqual(2);
+    });
+    
+    describe('confirmeDepartementDelete', function() {
+        
+        beforeEach(function () {
+            spyOn(WsCaisseDepartement, 'deleteDepartement').and.returnValue({
+                then: function(callback) {
+                    callback();
+                }
+            });
+            spyOn($state, 'reload');
+        });
+        
+        it('should ask confirmation and del if confirmed', function () {
+            
+            spyOn(PromptService, 'promptQuestion').and.returnValue({
+                then: function(callback) {
+                    // Confirm !
+                    callback();
+                }
+            });
+
+            var caisseId = 29;
+            var departement = "14";
+            
+            $scope.confirmeDepartementDelete(caisseId, departement);
+
+            expect(PromptService.promptQuestion).toHaveBeenCalledWith("Confirmation", jasmine.stringMatching('Etes-vous sûr'));
+            expect(WsCaisseDepartement.deleteDepartement).toHaveBeenCalledWith(caisseId, departement);
+            expect($state.reload).toHaveBeenCalled();
+        });
+        
+        it('should ask confirmation and do nothing if not confirmed', function () {
+            
+            spyOn(PromptService, 'promptQuestion').and.returnValue({
+                then: function(callback) {
+                    // Do nothing to not confirm
+                }
+            });
+
+            var caisseId = 29;
+            var departement = "14";
+            
+            $scope.confirmeDepartementDelete(caisseId, departement);
+
+            expect(PromptService.promptQuestion).toHaveBeenCalledWith("Confirmation", jasmine.stringMatching('Etes-vous sûr'));
+            expect(WsCaisseDepartement.deleteDepartement).not.toHaveBeenCalled();
+        });
+        
     });
 
 });

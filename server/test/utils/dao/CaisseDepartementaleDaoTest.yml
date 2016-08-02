@@ -1,0 +1,34 @@
+Caisse(caisseCnav1):
+    nom: "Caisse CNAV 1"
+
+Caisse(caisseCnav2):
+    nom: "Caisse CNAV 2"
+
+Caisse(caisseMsa1):
+    nom: "Caisse MSA 1"
+
+CaisseDepartementale(caisseDep1):
+    checklistName: "CNAV"
+    departement: "05"
+    caisse: caisseCnav1
+
+CaisseDepartementale(caisseDep2):
+    checklistName: "CNAV"
+    departement: "13"
+    caisse: caisseCnav1
+
+CaisseDepartementale(caisseDep3):
+    checklistName: "CNAV"
+    departement: "14"
+    caisse: caisseCnav2
+
+CaisseDepartementale(caisseDep4):
+    checklistName: "CNAV"
+    departement: "50"
+    caisse: caisseCnav2
+
+CaisseDepartementale(caisseDep5):
+    checklistName: "MSA"
+    departement: "05"
+    caisse: caisseMsa1
+
