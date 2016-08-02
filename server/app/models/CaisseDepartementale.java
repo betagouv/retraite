@@ -20,4 +20,9 @@ public class CaisseDepartementale extends RetraiteModel {
 	@ManyToOne
 	public Caisse caisse;
 
+	@Override
+	public String toString() {
+		return "CaisseDepartementale[id=" + id + ", checklistName=" + checklistName + ", departement=" + departement + ", caisse=" + caisse + "]";
+	}
+
 }

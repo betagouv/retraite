@@ -78,6 +78,8 @@ module.exports = function (config) {
             'app/src/config/data/api-user-checklist/api-user-checklist.spec.js',
             'app/src/config/data/checklist/checklist.js',
             'app/src/config/data/checklist/checklist.spec.js',
+            'app/src/config/data/ws-caisse-departement/ws-caisse-departement.js',
+            'app/src/config/data/ws-caisse-departement/ws-caisse-departement.spec.js',
             'app/src/config/directives/iframe-auto-size.js',
             'app/src/config/edit-caisse/edit-caisse.controller.js',
             'app/src/config/edit-caisse/edit-caisse.controller.spec.js',

@@ -47,6 +47,8 @@ PUT     /api/caisse/{id}						ApiRestCaisse.saveCaisse
 GET		/api/inforetraite						ApiInfoRetraite.get
 GET		/api/checklistpublish					ApiChecklistPublish.get
 
+GET		/ws/caissedepartement/deletedepartement	WsCaisseDepartement.deleteDepartement
+
 # Specials
 *		/demarches								Application.displayCheckList
 

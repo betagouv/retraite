@@ -90,7 +90,7 @@ describe('EditCtrl', function () {
             
             spyOn(PromptService, 'promptQuestion').and.returnValue({
                 then: function(callback) {
-                    // Do nothing to not confir
+                    // Do nothing to not confirm
                 }
             });
 
