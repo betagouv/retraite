@@ -2,7 +2,7 @@
 
 describe('EditConditionValidator', function () {
 
-    beforeEach(module('SgmapRetraiteCommons'));
+    beforeEach(module('SgmapRetraiteConfig'));
 
     var EditConditionValidator;
 
