@@ -57,8 +57,6 @@ module.exports = function (config) {
 
             <!-- injector:js -->
             'app/src/commons/commons.js',
-            'app/src/commons/utils/array-utils/array-utils.js',
-            'app/src/commons/utils/array-utils/array-utils.spec.js',
             'app/src/commons/utils/http-buffer/http-buffer.js',
             'app/src/commons/utils/http-buffer/http-buffer.spec.js',
             'app/src/commons/utils/object-utils/object-utils.js',
@@ -116,6 +114,8 @@ module.exports = function (config) {
             'app/src/config/test/test-controller.spec.js',
             'app/src/config/user-service/user-service.js',
             'app/src/config/user-service/user-service.spec.js',
+            'app/src/config/utils/array-utils/array-utils.js',
+            'app/src/config/utils/array-utils/array-utils.spec.js',
             'app/src/config/utils/checklist-publisher/checklist-publisher.js',
             'app/src/config/utils/checklist-publisher/checklist-publisher.spec.js',
             'app/src/config/utils/edit-condition-validator/edit-condition-validator.js',
