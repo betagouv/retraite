@@ -140,13 +140,6 @@ ul.config-list li .label {
 
 .caisse-list  ul li div.name {
     font-weight: bold;
-        font-size: 2rem;
-}
-
-.caisse-list  ul li span.badge {
-    background-color: #187224;
-    margin: 0 5px;
-    font-size: 1.4rem;
 }
 
 .edit-caisse div {
