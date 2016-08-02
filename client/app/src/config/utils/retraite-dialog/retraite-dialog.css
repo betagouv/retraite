@@ -1,0 +1,11 @@
+.ngdialog-content {
+    padding: 10px;
+}
+
+.ngdialog-content .panel {
+    margin-bottom: 0px;
+}
+
+.dialog-error {
+    color: orange;
+}
