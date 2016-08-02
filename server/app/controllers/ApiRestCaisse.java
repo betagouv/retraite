@@ -5,13 +5,14 @@ import java.util.List;
 import models.Caisse;
 import play.Logger;
 import utils.dao.CaisseDao;
+import utils.data.CaisseForEdition;
 import utils.engine.data.enums.ChecklistName;
 
 public class ApiRestCaisse extends SecuredRetraiteController {
 
 	public static void getAllForChecklistName(final String name) {
-		final List<Caisse> caisses = new CaisseDao().findCaissesList(ChecklistName.valueOf(name));
-		renderJSON(caisses);
+		final List<CaisseForEdition> caissesForEdition = new CaisseDao().findCaissesListForEdition(ChecklistName.valueOf(name));
+		renderJSON(caissesForEdition);
 	}
 
 	public static void getAll(final String name) {
