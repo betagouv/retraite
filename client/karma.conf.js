@@ -61,10 +61,6 @@ module.exports = function (config) {
             'app/src/commons/utils/http-buffer/http-buffer.spec.js',
             'app/src/commons/utils/retraite-dialog/retraite-dialog.js',
             'app/src/commons/utils/retraite-dialog/retraite-dialog.spec.js',
-            'app/src/commons/utils/retraite-toaster/retraite-toaster.js',
-            'app/src/commons/utils/retraite-toaster/retraite-toaster.spec.js',
-            'app/src/commons/utils/syntax-analyzer/syntax-analyzer.js',
-            'app/src/commons/utils/syntax-analyzer/syntax-analyzer.spec.js',
             'app/src/commons/utils/template-loader/template-loader.js',
             'app/src/commons/utils/template-loader/template-loader.spec.js',
             'app/src/commons/utils/wrapper.js',
@@ -120,6 +116,10 @@ module.exports = function (config) {
             'app/src/config/utils/pasted-text-cleaner/pasted-text-cleaner.spec.js',
             'app/src/config/utils/prompt-service/prompt-service.js',
             'app/src/config/utils/prompt-service/prompt-service.spec.js',
+            'app/src/config/utils/retraite-toaster/retraite-toaster.js',
+            'app/src/config/utils/retraite-toaster/retraite-toaster.spec.js',
+            'app/src/config/utils/syntax-analyzer/syntax-analyzer.js',
+            'app/src/config/utils/syntax-analyzer/syntax-analyzer.spec.js',
             'app/src/constants.js',
             <!-- endinjector -->
             
