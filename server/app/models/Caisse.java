@@ -24,6 +24,11 @@ public class Caisse extends RetraiteModel {
 	public String site;
 
 	@Override
+	public String toString() {
+		return "Caisse[id=" + id + ",nom=" + nom + "]";
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
