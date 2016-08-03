@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('SgmapRetraiteCommons').factory('httpBuffer', ['$injector', function ($injector) {
+angular.module('SgmapRetraiteConfig').factory('httpBuffer', ['$injector', function ($injector) {
         
     var $http;
     var buffer;

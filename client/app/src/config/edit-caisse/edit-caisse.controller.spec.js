@@ -4,6 +4,17 @@ describe('EditCaisseCtrl', function () {
     
     beforeEach(module('SgmapRetraiteConfig'));
     
+    beforeEach(module(function($provide) {
+        
+        // Subterfuge pour éviter l'erreur suivante apparemment lié au chargement de $state dans les tests :
+        // Error: Unexpected request: GET src/config/configlist/configlist.html
+        
+        $provide.service('$state', function() {
+            this.go = function(newState) {};
+            this.reload = function() {};
+        });
+    }));
+
     var $rootScope, $scope, controller, ApiCaisse;
     
     beforeEach(inject(function (_ApiCaisse_) {

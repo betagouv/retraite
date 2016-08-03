@@ -15,7 +15,7 @@ angular.module('SgmapRetraiteConfig').service('RetraiteDialog', function ($q, ng
 
         $q.all({
             templateHtmlContent: TemplateLoader.loadTemplateUrl(options.templateUrl),
-            templateHtmlDialog: TemplateLoader.loadTemplateUrl('src/commons/utils/retraite-dialog/retraite-dialog.html')
+            templateHtmlDialog: TemplateLoader.loadTemplateUrl('src/config/utils/retraite-dialog/retraite-dialog.html')
         }).then(function onSuccess(result) {
             
             var templateHtml = result.templateHtmlDialog;
@@ -27,6 +27,7 @@ angular.module('SgmapRetraiteConfig').service('RetraiteDialog', function ($q, ng
                 template: templateHtml,
                 controller: function ($scope) {
                     $scope.value = angular.copy(options.value);
+                    $scope.data = angular.copy(options.data);
                     $scope.validateDialog = function () {
                         var error;
                         if (options.canValidate) {
