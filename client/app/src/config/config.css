@@ -119,6 +119,7 @@ ul.config-list li .label {
     overflow: scroll;
 	border: solid 1px #337ab7;
     border-radius: 4px;
+    padding: 0 10px;
 }
 
 .caisse-list ul {
@@ -148,6 +149,10 @@ ul.config-list li .label {
     margin: 0 5px;
     font-size: 1.4rem;
     font-weight: normal;
+}
+
+.caisse-list + button {
+    margin-top: 10px;
 }
 
 .edit-caisse div {
