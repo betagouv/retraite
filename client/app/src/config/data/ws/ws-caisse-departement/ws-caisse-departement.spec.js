@@ -88,6 +88,39 @@ describe('WsCaisseDepartement', function () {
         
     });
     
+    describe('addCaisse', function() {
+        
+        it('should call WS for addCaisse and resolve promise if success', function (done) {
+
+            $httpBackend.expectGET('/ws/caissedepartement/addcaisse?checklistName=CNAV&departement=14')
+                .respond({caisseId:92});
+
+            WsCaisseDepartement.addCaisse('CNAV', 14).then(function success(data) {
+                expect(data.caisseId).toEqual(92);
+                done();
+            }, function error() {
+                // Ne devrait pas venir ici
+            });
+
+            $httpBackend.flush();
+        });
+
+        it('should call WS for addCaisse and reject promise if error', function (done) {
+
+            $httpBackend.expectGET('/ws/caissedepartement/addcaisse?checklistName=CNAV&departement=14')
+                .respond(500);
+
+            WsCaisseDepartement.addCaisse('CNAV', 14).then(function success() {
+                // Ne devrait pas venir ici
+            }, function error() {
+                done();
+            });
+
+            $httpBackend.flush();
+        });
+        
+    });
+    
 });
 
 
