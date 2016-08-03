@@ -4,6 +4,17 @@ describe('LoginCtrl', function () {
     
     beforeEach(module('SgmapRetraiteConfig'));
     
+    beforeEach(module(function($provide) {
+        
+        // Subterfuge pour éviter l'erreur suivante apparemment lié au chargement de $state dans les tests :
+        // Error: Unexpected request: GET src/config/configlist/configlist.html
+        
+        $provide.service('$state', function() {
+            this.go = function(newState) {};
+            this.reload = function() {};
+        });
+    }));
+
     var $scope, controller, UserService, $state;
     
     beforeEach(inject(function ($rootScope, $controller, _UserService_, _$state_) {
