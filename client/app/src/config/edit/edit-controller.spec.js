@@ -4,6 +4,16 @@ describe('EditCtrl', function () {
     
     beforeEach(module('SgmapRetraiteConfig'));
     
+    beforeEach(module(function($provide) {
+        
+        // Le TU ne passe pas si je supprime ce fake service, je ne sais pas pourquoi ...
+        
+        $provide.service('$state', function() {
+            this.go = function(newState) {};
+            this.reload = function() {};
+        });
+    }));
+
     var $scope, controller, CheckList, RetraiteDialog, EditConditionValidator, $window, PromptService, DialogDelai, RetraiteToaster, ChecklistPublisher, SyntaxAnalyzer;
     
     beforeEach(inject(function ($rootScope, $controller, _CheckList_, _RetraiteDialog_, _EditConditionValidator_, _$window_, _PromptService_, _DialogDelai_, _RetraiteToaster_, _ChecklistPublisher_, _SyntaxAnalyzer_) {
@@ -90,7 +100,7 @@ describe('EditCtrl', function () {
             
             spyOn(PromptService, 'promptQuestion').and.returnValue({
                 then: function(callback) {
-                    // Do nothing to not confir
+                    // Do nothing to not confirm
                 }
             });
 

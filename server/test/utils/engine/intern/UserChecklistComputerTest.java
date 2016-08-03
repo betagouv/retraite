@@ -51,7 +51,7 @@ public class UserChecklistComputerTest {
 
 		final Caisse caisse = new Caisse();
 
-		when(caisseDaoMock.find(ChecklistName.CNAV, "972")).thenReturn(caisse);
+		when(caisseDaoMock.findForDepartment(ChecklistName.CNAV, "972")).thenReturn(caisse);
 		// Mock pour le filtrage des chapitres : on exclut le 2e
 		when(userChecklistChapitreFilterMock.isToBeDisplayed(any(Chapitre.class), any(UserChecklistGenerationData.class))).thenReturn(true, false, true);
 

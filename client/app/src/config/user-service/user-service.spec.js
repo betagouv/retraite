@@ -6,7 +6,8 @@ describe('UserService', function () {
 
     beforeEach(module(function($provide) {
         
-        // Le TU ne passe pas si je supprime ce fake service, je ne sais pas pourquoi ...
+        // Subterfuge pour éviter l'erreur suivante apparemment lié au chargement de $state dans les tests :
+        // Error: Unexpected request: GET src/config/configlist/configlist.html
         
         $provide.service('$state', function() {
             this.go = function(newState) {};
