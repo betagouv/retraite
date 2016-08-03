@@ -48,6 +48,7 @@ GET		/api/inforetraite						ApiInfoRetraite.get
 GET		/api/checklistpublish					ApiChecklistPublish.get
 
 GET		/ws/caissedepartement/deletedepartement	WsCaisseDepartement.deleteDepartement
+GET		/ws/caissedepartement/adddepartement	WsCaisseDepartement.addDepartement
 
 # Specials
 *		/demarches								Application.displayCheckList
