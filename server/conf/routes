@@ -37,9 +37,19 @@ POST    /api/checklist							ApiRestChecklists.createChecklist
 PUT     /api/checklist/{id}						ApiRestChecklists.updateChecklist
 DELETE  /api/checklist/{id}						ApiRestChecklists.deleteChecklist
 
+# Caisse
+GET     /api/caissefilter/{name}				ApiRestCaisse.getAllForChecklistName
+GET     /api/caisse								ApiRestCaisse.getAll
+GET     /api/caisse/{id}						ApiRestCaisse.get
+PUT     /api/caisse/{id}						ApiRestCaisse.saveCaisse
+
 # API WebServices
 GET		/api/inforetraite						ApiInfoRetraite.get
 GET		/api/checklistpublish					ApiChecklistPublish.get
+
+GET		/ws/caissedepartement/deletedepartement	WsCaisseDepartement.deleteDepartement
+GET		/ws/caissedepartement/adddepartement	WsCaisseDepartement.addDepartement
+GET		/ws/caissedepartement/addcaisse			WsCaisseDepartement.addCaisse
 
 # Specials
 *		/demarches								Application.displayCheckList

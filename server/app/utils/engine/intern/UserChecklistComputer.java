@@ -30,7 +30,7 @@ public class UserChecklistComputer {
 		final UserChecklist userChecklist = new UserChecklist();
 		userChecklist.nom = checklist.nom;
 		final ChecklistName checklistName = ChecklistName.valueOf(checklist.nom);
-		userChecklist.caisse = caisseDao.find(checklistName, userChecklistGenerationData.getDepartement());
+		userChecklist.caisse = caisseDao.findForDepartment(checklistName, userChecklistGenerationData.getDepartement());
 		userChecklist.chapitres = compute(checklist.chapitres, userChecklistGenerationData);
 		autreRegimeComputer.compute(userChecklist, userChecklistGenerationData.regimesInfosJsonStr);
 		return userChecklist;

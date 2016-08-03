@@ -1,7 +1,6 @@
 'use strict';
 
 angular.module('SgmapRetraiteConfig', [
-    'SgmapRetraiteCommons',
     'ngAnimate',
     'ngDialog',
     'ngCookies',

@@ -114,6 +114,51 @@ ul.config-list li .label {
     left: 34px;
 }
 
+.caisse-list {
+    height: 500px;
+    overflow: scroll;
+	border: solid 1px #337ab7;
+    border-radius: 4px;
+    padding: 0 10px;
+}
+
+.caisse-list ul {
+    padding-left: 0;
+}
+
+.caisse-list ul li {
+	list-style: none;
+    margin: 20px 0;
+    padding: 20px;
+    
+    cursor: pointer;
+
+	border: solid 1px #337ab7;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}
+
+.caisse-list  ul li div.name {
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.caisse-list  ul li span.badge {
+    background-color: #187224;
+    margin: 0 5px;
+    font-size: 1.4rem;
+    font-weight: normal;
+}
+
+.caisse-list + button {
+    margin-top: 10px;
+}
+
+.edit-caisse div {
+    margin: 10px 0;
+}
+
 .configListeChapitres {
     overflow-y: auto;
 }
