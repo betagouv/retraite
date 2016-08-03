@@ -5,6 +5,7 @@ import static play.test.Fixtures.loadModels;
 import static utils.engine.data.enums.ChecklistName.CNAV;
 import static utils.engine.data.enums.ChecklistName.MSA;
 
+import org.fest.assertions.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -58,6 +59,27 @@ public class CaisseDepartementaleDaoTest extends RetraiteUnitTestBase {
 		assertThat(CaisseDepartementale.find("byChecklistName", MSA).fetch()).hasSize(0);
 		assertThat(CaisseDepartementale.find("byChecklistNameAndDepartement", MSA, "05").fetch()).hasSize(0);
 		assertThat(Caisse.count()).isEqualTo(2);
+	}
+
+	@Test
+	public void addDepartement_should_add_CaisseDepartementale() {
+
+		// Avant
+		assertThat(CaisseDepartementale.count()).isEqualTo(5);
+		assertThat(CaisseDepartementale.find("byChecklistName", CNAV).fetch()).hasSize(4);
+		assertThat(CaisseDepartementale.find("byChecklistNameAndDepartement", CNAV, "15").fetch()).hasSize(0);
+		assertThat(Caisse.count()).isEqualTo(3);
+
+		final CaisseDepartementale caisseDepartementaleAdded = dao.addDepartement(CNAV, retrieveCaisse("Caisse CNAV 2").id, "15");
+
+		Assertions.assertThat(caisseDepartementaleAdded.checklistName).isEqualTo(CNAV);
+		Assertions.assertThat(caisseDepartementaleAdded.departement).isEqualTo("15");
+		Assertions.assertThat(caisseDepartementaleAdded.caisse.nom).isEqualTo("Caisse CNAV 2");
+		// Après : 1 CaisseDepartementale en plus pour CNAV et 15
+		assertThat(CaisseDepartementale.count()).isEqualTo(6);
+		assertThat(CaisseDepartementale.find("byChecklistName", CNAV).fetch()).hasSize(5);
+		assertThat(CaisseDepartementale.find("byChecklistNameAndDepartement", CNAV, "15").fetch()).hasSize(1);
+		assertThat(Caisse.count()).isEqualTo(3);
 	}
 
 	private Caisse retrieveCaisse(final String name) {

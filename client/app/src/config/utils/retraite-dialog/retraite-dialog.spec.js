@@ -4,6 +4,17 @@ describe('RetraiteDialog', function () {
 
     beforeEach(module('SgmapRetraiteConfig'));
 
+    beforeEach(module(function($provide) {
+        
+        // Subterfuge pour éviter l'erreur suivante apparemment lié au chargement de $state dans les tests :
+        // Error: Unexpected request: GET src/config/configlist/configlist.html
+        
+        $provide.service('$state', function() {
+            this.go = function(newState) {};
+            this.reload = function() {};
+        });
+    }));
+
     var RetraiteDialog, $timeout, ngDialog, TemplateLoader;
 
     beforeEach(inject(function (_RetraiteDialog_, _$timeout_, _ngDialog_, _TemplateLoader_) {
@@ -49,6 +60,7 @@ describe('RetraiteDialog', function () {
             expect(mockScope.value).toEqual(obj1);
             // Il faut éditer une copie de l'objet pour ne pas modifier l'original
             expect(mockScope.value).not.toBe(obj1);
+            expect(mockScope.data.sample).toEqual("of data for dialog");
             
             $timeout(function() {
                 mockScope.value = obj2;
@@ -60,6 +72,9 @@ describe('RetraiteDialog', function () {
         var options = {
             title: "Mon titre",
             templateUrl: 'a/b/tempContent.html',
+            data: {
+                sample: "of data for dialog"
+            },
             value: obj1,
             canValidate: function() {}
         };
