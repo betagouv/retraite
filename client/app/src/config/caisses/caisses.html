@@ -30,7 +30,7 @@
             </div>
             <div class='site' ng-if='caisse.departements'>
                 <label>Départements : </label>
-                <span ng-repeat='departement in caisse.departements' class='badge' ng-click='confirmeDepartementDelete(caisse.id, departement)'>{{departement}}</span>
+                <span ng-repeat='departement in caisse.departements' class='badge' ng-click='confirmeDepartementDelete(caisse, departement)'>{{departement}}</span>
                 <span class='badge' ng-click='addDepartement(name, caisse.id)' title='Ajouter un département...'>+</span>
              </div>
         </li>

@@ -102,13 +102,16 @@ describe('CaissesCtrl', function () {
                 }
             });
 
-            var caisseId = 29;
+            var caisse = {
+                id:29,
+                departements: ["05", "14", "74"]
+            };
             var departement = "14";
             
-            $scope.confirmeDepartementDelete(caisseId, departement);
+            $scope.confirmeDepartementDelete(caisse, departement);
 
             expect(PromptService.promptQuestion).toHaveBeenCalledWith("Confirmation", jasmine.stringMatching('Etes-vous sûr'));
-            expect(WsCaisseDepartement.deleteDepartement).toHaveBeenCalledWith(caisseId, departement);
+            expect(WsCaisseDepartement.deleteDepartement).toHaveBeenCalledWith(29, "14");
             expect($state.reload).toHaveBeenCalled();
         });
         
@@ -120,13 +123,69 @@ describe('CaissesCtrl', function () {
                 }
             });
 
-            var caisseId = 29;
+            var caisse = {
+                id:29,
+                departements: ["05", "14", "74"]
+            };
             var departement = "14";
             
-            $scope.confirmeDepartementDelete(caisseId, departement);
+            $scope.confirmeDepartementDelete(caisse, departement);
 
             expect(PromptService.promptQuestion).toHaveBeenCalledWith("Confirmation", jasmine.stringMatching('Etes-vous sûr'));
+            expect(PromptService.promptQuestion).not.toHaveBeenCalledWith("Confirmation", jasmine.stringMatching('Attention, sans département, cette caisse sera supprimée. Etes-vous sûr de vouloir continuer ?'));
             expect(WsCaisseDepartement.deleteDepartement).not.toHaveBeenCalled();
+        });
+        
+        it('should ask confirmation for Caisse deletion if only one departement attached and del if confirmed', function () {
+            
+            spyOn(PromptService, 'promptQuestion').and.returnValue({
+                then: function(callback) {
+                    // Confirm !
+                    callback();
+                }
+            });
+
+            var caisse = {
+                id:29,
+                departements: ["05"]
+            };
+            var departement = "14";
+            
+            $scope.confirmeDepartementDelete(caisse, departement);
+
+            expect(PromptService.promptQuestion).toHaveBeenCalledWith("Confirmation", jasmine.stringMatching('Etes-vous sûr de vouloir supprimer ce département ?'));
+            expect(PromptService.promptQuestion).toHaveBeenCalledWith("Confirmation", jasmine.stringMatching('Attention, sans département, cette caisse sera supprimée. Etes-vous sûr de vouloir continuer ?'));
+            expect(WsCaisseDepartement.deleteDepartement).toHaveBeenCalledWith(29, "14");
+            expect($state.reload).toHaveBeenCalled();
+        });
+        
+        it('should ask confirmation for Caisse deletion if only one departement attached do nothing if not confirmed twice', function () {
+            
+            var promptQuestionValidated = {
+                then: function(callback) {
+                    // Confirm !
+                    callback();
+                }
+            };
+            var promptQuestionCanceled = {
+                then: function(callback) {
+                    // Do nothing to not confirm
+                }
+            };
+            spyOn(PromptService, 'promptQuestion').and.returnValues(promptQuestionValidated, promptQuestionCanceled);
+
+            var caisse = {
+                id:29,
+                departements: ["05"]
+            };
+            var departement = "14";
+            
+            $scope.confirmeDepartementDelete(caisse, departement);
+
+            expect(PromptService.promptQuestion).toHaveBeenCalledWith("Confirmation", jasmine.stringMatching('Etes-vous sûr de vouloir supprimer ce département ?'));
+            expect(PromptService.promptQuestion).toHaveBeenCalledWith("Confirmation", jasmine.stringMatching('Attention, sans département, cette caisse sera supprimée. Etes-vous sûr de vouloir continuer ?'));
+            expect(WsCaisseDepartement.deleteDepartement).not.toHaveBeenCalledWith(29, "14");
+            expect($state.reload).not.toHaveBeenCalled();
         });
         
     });
