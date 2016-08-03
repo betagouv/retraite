@@ -4,10 +4,10 @@ angular.module('SgmapRetraiteConfig').controller('CaissesCtrl', function ($rootS
 
     // Actions
     
-    $scope.confirmeDepartementDelete = function(caisseId, departement) {
+    $scope.confirmeDepartementDelete = function(caisse, departement) {
         PromptService.promptQuestion("Confirmation", "Etes-vous sûr de vouloir supprimer ce département ?").then(function() {
-            WsCaisseDepartement.deleteDepartement(caisseId, departement).then(function() {
-                $state.reload();
+            PromptService.promptQuestion("Confirmation", "Attention, sans département, cette caisse sera supprimée. Etes-vous sûr de vouloir continuer ?").then(function() {
+                deleteDepartement(caisse.id, departement);
             });
         });
     };
@@ -52,5 +52,13 @@ angular.module('SgmapRetraiteConfig').controller('CaissesCtrl', function ($rootS
     $scope.name = $stateParams.name;
     load();
     
+    
+    // Privé
+    
+    function deleteDepartement(caisseId, departement) {
+        WsCaisseDepartement.deleteDepartement(caisseId, departement).then(function() {
+            $state.reload();
+        });
+    };
 });
 
