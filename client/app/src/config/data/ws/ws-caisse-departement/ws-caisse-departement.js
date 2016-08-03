@@ -10,6 +10,10 @@ angular.module('SgmapRetraiteConfig').service('WsCaisseDepartement', function ($
         return callWs('adddepartement', caisseId, departement, checklistName);
     };
     
+    this.addCaisse = function(checklistName, departement) {
+        return callWs('addcaisse', null, departement, checklistName);
+    };
+    
     // Privé
     
     function callWs(operation, caisseId, departement, checklistName) {
@@ -17,12 +21,15 @@ angular.module('SgmapRetraiteConfig').service('WsCaisseDepartement', function ($
         if (checklistName) {
             url += 'checklistName='+checklistName+'&';
         }
-        url += 'caisseId='+caisseId+'&departement='+departement;
+        if (caisseId) {
+            url += 'caisseId='+caisseId+'&';
+        }
+        url += 'departement='+departement;
         
         var deferred = $q.defer();
         $http.get(url)
-            .then(function() {
-                deferred.resolve();
+            .then(function(respond) {
+                deferred.resolve(respond.data);
             }, function onError(error) {
                 deferred.reject(error);
             });

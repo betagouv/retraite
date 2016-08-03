@@ -1,41 +1,51 @@
-<div class='col-sm-6 caisse-list'>
-    <ul class=''>
+<div class='col-sm-6'>
+    
+    Cliquez sur un département pour le supprimer d'une caisse.
+    <br/>
+    Cliquer sur une caisse pour modifier ses informations.
+    
+    <div class='caisse-list'>
+        <ul class=''>
 
-        <li ng-repeat='caisse in caisses' class='caisse' ui-sref='caisses.edit({name:name,id:caisse.id})'>
+            <li ng-repeat='caisse in caisses' id='caisse-{{caisse.id}}' class='caisse' ui-sref='caisses.edit({name:name,id:caisse.id})'>
 
-            <div class='name'>
-                {{caisse.nom}} [{{caisse.id}}]
-            </div>
+                <div class='name'>
+                    {{caisse.nom}}
+                </div>
 
-            <div class='address'>
-                {{caisse.adresse1}}
-                <br ng-if='caisse.adresse2'/>
-                {{caisse.adresse2}}
-                <br ng-if='caisse.adresse3'/>
-                {{caisse.adresse3}}
-                <br ng-if='caisse.adresse4'/>
-                {{caisse.adresse4}}
-            </div>
+                <div class='address'>
+                    {{caisse.adresse1}}
+                    <br ng-if='caisse.adresse2'/>
+                    {{caisse.adresse2}}
+                    <br ng-if='caisse.adresse3'/>
+                    {{caisse.adresse3}}
+                    <br ng-if='caisse.adresse4'/>
+                    {{caisse.adresse4}}
+                </div>
 
-            <div class='tel' ng-if='caisse.telephone'>
-                <label>Tél : </label>{{caisse.telephone}}
-            </div>
+                <div class='tel' ng-if='caisse.telephone'>
+                    <label>Tél : </label>{{caisse.telephone}}
+                </div>
 
-            <div class='fax' ng-if='caisse.fax'>
-                <label>Fax : </label>{{caisse.fax}}
-            </div>
+                <div class='fax' ng-if='caisse.fax'>
+                    <label>Fax : </label>{{caisse.fax}}
+                </div>
 
-            <div class='site' ng-if='caisse.site'>
-                <label>Site : </label>{{caisse.site}}
-            </div>
-            <div class='site' ng-if='caisse.departements'>
-                <label>Départements : </label>
-                <span ng-repeat='departement in caisse.departements' class='badge' ng-click='confirmeDepartementDelete(caisse, departement)'>{{departement}}</span>
-                <span class='badge' ng-click='addDepartement(name, caisse.id)' title='Ajouter un département...'>+</span>
-             </div>
-        </li>
+                <div class='site' ng-if='caisse.site'>
+                    <label>Site : </label>{{caisse.site}}
+                </div>
+                <div class='site' ng-if='caisse.departements'>
+                    <label>Départements : </label>
+                    <span ng-repeat='departement in caisse.departements' class='badge' ng-click='confirmeDepartementDelete(caisse, departement)'>{{departement}}</span>
+                    <span class='badge' ng-click='addDepartement(name, caisse.id)' title='Ajouter un département...'>+</span>
+                 </div>
+            </li>
 
-    </ul>
+        </ul>
+    </div>
+    
+    <button class='btn btn-primary' ng-click='addCaisse(name)'>Ajouter une caisse</button>
+    
 </div>
 
 <div class='col-sm-6'>

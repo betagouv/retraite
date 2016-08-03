@@ -13,6 +13,48 @@ angular.module('SgmapRetraiteConfig').controller('CaissesCtrl', function ($rootS
     };
     
     $scope.addDepartement = function(checklistName, caisseId) {
+        var promise = callDialogToAddDepartement("Ajouter un département");
+        if (promise) {
+            promise.then(function(departement) {
+                WsCaisseDepartement.addDepartement(checklistName, caisseId, departement).then(function() {
+                    $state.reload();
+                });
+            });
+        }
+    };
+    
+    $scope.addCaisse = function(checklistName) {
+        var promise = callDialogToAddDepartement("Ajouter une caisse");
+        if (promise) {
+            promise.then(function(departement) {
+                WsCaisseDepartement.addCaisse(checklistName, departement).then(function(result) {
+                    $state.reload();
+                    PromptService.promptInformation("Information", "La caisse a été créée avec un nom par défaut, vous pouvez la retrouver dans la liste de gauche, probablement en fin de liste. Vous pouvez alors cliquer dessus pour modifier ses informations.");
+                });
+            });
+        }
+    };
+    
+    // Evénements
+    
+    $rootScope.$on('caisseSaved', function() {
+        loadAllCaissesForChecklistName();
+    });
+    
+    // Données
+    
+    function loadAllCaissesForChecklistName() {
+        ApiCaisseFilter.allForChecklistName($scope.name).$promise.then(function(caisses) {
+            $scope.caisses = caisses;
+        });
+    };
+
+    $scope.name = $stateParams.name;
+    loadAllCaissesForChecklistName();
+    
+    // Privé
+    
+    function callDialogToAddDepartement(dialogTitle) {
         
         var availableDepartements = CaissesUtils.searchAvailableDepartements($scope.caisses);
         
@@ -21,39 +63,15 @@ angular.module('SgmapRetraiteConfig').controller('CaissesCtrl', function ($rootS
             return;
         }
         
-        RetraiteDialog.display({
-            title: "Ajouter un département",
+        return RetraiteDialog.display({
+            title: dialogTitle,
             templateUrl: 'src/config/caisses/dialogs/add-departement/add-departement.html',
             value: availableDepartements[0],
             data: {
                 departements: availableDepartements
             }
-        }).then(function(departement) {
-            WsCaisseDepartement.addDepartement(checklistName, caisseId, departement).then(function() {
-                $state.reload();
-            });
         });
     };
-    
-    // Evénements
-    
-    $rootScope.$on('caisseSaved', function() {
-        load();
-    });
-    
-    // Données
-    
-    function load() {
-        ApiCaisseFilter.allForChecklistName($scope.name).$promise.then(function(caisses) {
-            $scope.caisses = caisses;
-        });
-    };
-
-    $scope.name = $stateParams.name;
-    load();
-    
-    
-    // Privé
     
     function deleteDepartement(caisseId, departement) {
         WsCaisseDepartement.deleteDepartement(caisseId, departement).then(function() {

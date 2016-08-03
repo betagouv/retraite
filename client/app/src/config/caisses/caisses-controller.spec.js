@@ -190,8 +190,6 @@ describe('CaissesCtrl', function () {
         
     });
 
-    //CaissesUtils.searchAvailableDepartements
-    
     describe('addDepartement', function() {
         
         beforeEach(function () {
@@ -283,5 +281,50 @@ describe('CaissesCtrl', function () {
         
     });
 
+    describe('addCaisse', function() {
+        
+        beforeEach(function () {
+
+            spyOn(WsCaisseDepartement, 'addCaisse').and.returnValue({
+                then: function(callback) {
+                    callback({caisseId:92});
+                }
+            });
+            
+            spyOn($state, 'reload');
+            spyOn($state, 'go');
+            
+        });
+        
+        it('should display dialog and call WS', function () {
+            
+            spyOn(CaissesUtils, 'searchAvailableDepartements').and.returnValue(["05", "14", "59"]);
+
+            spyOn(RetraiteDialog, 'display').and.callFake(function(options) {
+                expect(options.title).toEqual("Ajouter une caisse");
+                expect(options.templateUrl).toEqual('src/config/caisses/dialogs/add-departement/add-departement.html');
+                expect(options.value).toEqual("05");
+                expect(options.data.departements).toEqual(["05", "14", "59"]);
+                return {
+                    then: function(callback) {
+                        callback("14");
+                    }
+                };
+            });
+            
+            spyOn(PromptService, 'promptInformation')
+
+            $scope.addCaisse("CNAV");
+
+            expect(RetraiteDialog.display).toHaveBeenCalled();
+            expect(WsCaisseDepartement.addCaisse).toHaveBeenCalledWith("CNAV", "14");
+            expect($state.reload).toHaveBeenCalled();
+            expect($state.go).toHaveBeenCalledWith('caisses.edit', {name:"CNAV", id:92});
+            expect(PromptService.promptInformation).toHaveBeenCalledWith("Information", jasmine.stringMatching("La caisse a été créée "));
+            
+        });
+        
+    });
+    
 });
 

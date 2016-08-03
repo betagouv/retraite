@@ -49,6 +49,7 @@ GET		/api/checklistpublish					ApiChecklistPublish.get
 
 GET		/ws/caissedepartement/deletedepartement	WsCaisseDepartement.deleteDepartement
 GET		/ws/caissedepartement/adddepartement	WsCaisseDepartement.addDepartement
+GET		/ws/caissedepartement/addcaisse			WsCaisseDepartement.addCaisse
 
 # Specials
 *		/demarches								Application.displayCheckList

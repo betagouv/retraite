@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('SgmapRetraiteConfig').controller('EditCaisseCtrl', function ($rootScope, $scope, $stateParams, ApiCaisse) {
+angular.module('SgmapRetraiteConfig').controller('EditCaisseCtrl', function ($rootScope, $scope, $stateParams, ApiCaisse, $document) {
 
     // Actions
     

@@ -36,11 +36,20 @@ public class CaisseDepartementaleDao {
 					"Il existe déjà une CaisseDepartementale pour la caisse d'ID " + caisseId + " et le département " + departement
 							+ ". La caisse concernée est '" + caisse.nom + "'");
 		}
-		final CaisseDepartementale caisseDepartementaleNew = new CaisseDepartementale();
-		caisseDepartementaleNew.checklistName = checklistName;
-		caisseDepartementaleNew.departement = departement;
-		caisseDepartementaleNew.caisse = caisse;
-		return caisseDepartementaleNew.save();
+		return createAndSaveCaisseDepartementale(checklistName, departement, caisse);
+	}
+
+	public CaisseDepartementale addCaisse(final ChecklistName checklistName, final String departement) {
+		final CaisseDepartementale caisseDepartementale = CaisseDepartementale.find("byChecklistNameAndDepartement", checklistName, departement).first();
+		if (caisseDepartementale != null) {
+			throw new IllegalStateException(
+					"Il existe déjà une CaisseDepartementale pour " + checklistName + " et le département " + departement);
+		}
+
+		final Caisse caisse = new Caisse();
+		caisse.nom = "Nouvelle caisse";
+		final Caisse caisseSaved = caisse.save();
+		return createAndSaveCaisseDepartementale(checklistName, departement, caisseSaved);
 	}
 
 	// Privé
@@ -52,4 +61,11 @@ public class CaisseDepartementaleDao {
 		}
 	}
 
+	private CaisseDepartementale createAndSaveCaisseDepartementale(final ChecklistName checklistName, final String departement, final Caisse caisse) {
+		final CaisseDepartementale caisseDepartementaleNew = new CaisseDepartementale();
+		caisseDepartementaleNew.checklistName = checklistName;
+		caisseDepartementaleNew.departement = departement;
+		caisseDepartementaleNew.caisse = caisse;
+		return caisseDepartementaleNew.save();
+	}
 }
