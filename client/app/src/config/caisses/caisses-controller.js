@@ -6,9 +6,13 @@ angular.module('SgmapRetraiteConfig').controller('CaissesCtrl', function ($rootS
     
     $scope.confirmeDepartementDelete = function(caisse, departement) {
         PromptService.promptQuestion("Confirmation", "Etes-vous sûr de vouloir supprimer ce département ?").then(function() {
-            PromptService.promptQuestion("Confirmation", "Attention, sans département, cette caisse sera supprimée. Etes-vous sûr de vouloir continuer ?").then(function() {
+            if (caisse.departements.length == 1) {
+                PromptService.promptQuestion("Confirmation", "Attention, sans département, cette caisse sera supprimée. Etes-vous sûr de vouloir continuer ?").then(function() {
+                    deleteDepartement(caisse.id, departement);
+                });
+            } else {
                 deleteDepartement(caisse.id, departement);
-            });
+            }
         });
     };
     
