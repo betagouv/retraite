@@ -46,6 +46,7 @@ angular.module('SgmapRetraiteConfig').controller('CaissesCtrl', function ($rootS
     function loadAllCaissesForChecklistName() {
         ApiCaisseFilter.allForChecklistName($scope.name).$promise.then(function(caisses) {
             $scope.caisses = caisses;
+            $scope.availableDepartements = CaissesUtils.searchAvailableDepartements($scope.caisses);
         });
     };
 

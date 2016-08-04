@@ -114,6 +114,10 @@ ul.config-list li .label {
     left: 34px;
 }
 
+.available-departements {
+    color: red;
+}
+
 .caisse-list {
     height: 500px;
     overflow: scroll;
@@ -144,11 +148,15 @@ ul.config-list li .label {
     font-size: 2rem;
 }
 
-.caisse-list  ul li span.badge {
+span.badge {
     background-color: #187224;
     margin: 0 5px;
     font-size: 1.4rem;
     font-weight: normal;
+}
+
+.available-departements span.badge {
+    background-color: red;
 }
 
 .caisse-list + button {
