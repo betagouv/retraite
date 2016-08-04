@@ -30,12 +30,13 @@ public class TestsUtils {
 	}
 
 	public static InfoRetraiteResultRegime createInfoRetraiteResultRegime(final Regime regime) {
-		return TestsUtils.createInfoRetraiteResultRegime(regimeNameAsFromWs(regime.getNom()));
+		return TestsUtils.createInfoRetraiteResultRegime(regimeNameAsFromWs(regime.toString()), regime.getNom());
 	}
 
-	public static InfoRetraiteResultRegime createInfoRetraiteResultRegime(final String nom) {
+	public static InfoRetraiteResultRegime createInfoRetraiteResultRegime(final String nom, final String regime) {
 		final InfoRetraiteResultRegime infoRetraiteResultRegime = new InfoRetraiteResultRegime();
 		infoRetraiteResultRegime.nom = nom;
+		infoRetraiteResultRegime.regime = regime;
 		infoRetraiteResultRegime.adresse = "addr " + nom;
 		infoRetraiteResultRegime.email1 = "mail " + nom;
 		infoRetraiteResultRegime.tel1 = "tel " + nom;
