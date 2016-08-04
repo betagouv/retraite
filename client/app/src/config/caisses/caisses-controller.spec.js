@@ -117,6 +117,7 @@ describe('CaissesCtrl', function () {
             $scope.confirmeDepartementDelete(caisse, departement);
 
             expect(PromptService.promptQuestion).toHaveBeenCalledWith("Confirmation", jasmine.stringMatching('Etes-vous sûr'));
+            expect(PromptService.promptQuestion).not.toHaveBeenCalledWith("Confirmation", jasmine.stringMatching('Attention, sans département, cette caisse sera supprimée. Etes-vous sûr de vouloir continuer ?'));
             expect(WsCaisseDepartement.deleteDepartement).toHaveBeenCalledWith(29, "14");
             expect($state.reload).toHaveBeenCalled();
         });
