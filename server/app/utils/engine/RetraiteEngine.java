@@ -139,7 +139,7 @@ public class RetraiteEngine {
 
 	private RenderData displaySortieAucunRegimeDeBaseAligne(final PostData postData, final RenderData renderData) {
 		renderData.hidden_step = "displaySortieAucunRegimeDeBaseAligne";
-		renderData.regimesInfosAucunRegimeDeBaseAligne = fromJson(postData.hidden_regimesInfosJsonStr, InfoRetraiteResultRegimeList.class);
+		renderData.regimesInfosAucunRegimeDeBaseAligne = fromJson(renderData.hidden_regimesInfosJsonStr, InfoRetraiteResultRegimeList.class);
 		return renderData;
 	}
 

@@ -20,6 +20,8 @@ import static utils.TestsUtils.createInfoRetraiteResultRegime;
 import static utils.engine.data.enums.EcranSortie.ECRAN_SORTIE_PENIBILITE;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor.QUESTION_A;
 import static utils.engine.data.enums.LiquidateurQuestionDescriptor.QUESTION_B;
+import static utils.engine.data.enums.Regime.BFSP;
+import static utils.engine.data.enums.Regime.CARPIMKO;
 import static utils.engine.data.enums.RegimeAligne.CNAV;
 import static utils.engine.data.enums.RegimeAligne.MSA;
 import static utils.engine.data.enums.RegimeAligne.RSI;
@@ -56,8 +58,9 @@ import utils.wsinforetraite.InfoRetraiteWsUr;
 public class RetraiteEngineTest {
 
 	private final InfoRetraiteResult allRegimesInfos = createInfoRetraiteResult(Regime.CNAV, Regime.MSA, Regime.AGIRC_ARRCO);
+	private final InfoRetraiteResult regimesInfosAutres = createInfoRetraiteResult(Regime.CARPIMKO, Regime.BFSP);
 	private final String allRegimesInfosAsJson = toJson(allRegimesInfos.regimes);
-	private final String allRegimesStr = "CNAV,CCMSA,AGIRC ARRCO";
+	private final String allRegimesStr = "CNAV,CCMSA,AGIRC_ARRCO";
 	private final List<FakeData> fakeDataMock = createFakeDataList();
 	private InfoRetraiteWsUr infoRetraiteMock;
 	private CalculateurRegimeAlignes calculateurRegimeAlignesMock;
@@ -240,8 +243,8 @@ public class RetraiteEngineTest {
 		postData.naissance = "1/2/3";
 		postData.nir = "1 50 12 18 123 456";
 		postData.departement = "65";
-		postData.hidden_regimesInfosJsonStr = "[{\"nom\":\"CARPIMKO\",\"adresse\":\"addr CARPIMKO\",\"tel1\":\"tel CARPIMKO\",\"email1\":\"mail CARPIMKO\"}]";
 
+		when(infoRetraiteMock.retrieveAllInformations("DUPONT", "1 50 12 18 123 456", "1/2/3")).thenReturn(regimesInfosAutres);
 		when(calculateurRegimeAlignesMock.getRegimesAlignes(anyString())).thenReturn(new RegimeAligne[] {});
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
@@ -251,7 +254,8 @@ public class RetraiteEngineTest {
 		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
 		assertThat(renderData.hidden_nir).isEqualTo("1 50 12 18 123 456");
 		assertThat(renderData.hidden_departement).isEqualTo("65");
-		assertThat(renderData.regimesInfosAucunRegimeDeBaseAligne).containsExactly(createInfoRetraiteResultRegime("CARPIMKO"));
+		assertThat(renderData.regimesInfosAucunRegimeDeBaseAligne)
+				.containsExactly(createInfoRetraiteResultRegime(CARPIMKO), createInfoRetraiteResultRegime(BFSP));
 	}
 
 	@Test

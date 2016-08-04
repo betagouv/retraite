@@ -15,19 +15,18 @@
 	<ul>
 		#{list items:data.regimesInfosAucunRegimeDeBaseAligne, as:'regimeInfos'}
 			<li>
-				${regimeInfos.regime}<br>
-				${regimeInfos.nom}<br>
+				${regimeInfos.nom} : ${regimeInfos.regime}<br>
 				#{if regimeInfos.adresse}
 					${regimeInfos.adresse}<br>
+				#{/if}
+				#{if regimeInfos.internet}
+					${regimeInfos.internet}<br>
 				#{/if}
 				#{if regimeInfos.tel1}
 					${regimeInfos.tel1}<br>
 				#{/if}
 				#{if regimeInfos.email1}
 					${regimeInfos.email1}<br>
-				#{/if}
-				#{if regimeInfos.internet}
-					${regimeInfos.internet}<br>
 				#{/if}
 			</li>
 		#{/list}

@@ -30,7 +30,7 @@ public class InfoRetraiteResult {
 
 	@Override
 	public String toString() {
-		return "InfoRetraiteResult[status=" + status + ",items=" + Arrays.toString(regimes) + "]";
+		return "InfoRetraiteResult[status=" + status + ",regimes=" + Arrays.toString(regimes) + "]";
 	}
 
 	@Override
@@ -57,8 +57,8 @@ public class InfoRetraiteResult {
 
 	public static class InfoRetraiteResultRegime {
 		public String image;
-		public String regime;
-		public String nom;
+		public String regime; // Nom long
+		public String nom; // Nom court
 		public String adresse;
 		public String internet;
 		public String tel1;
