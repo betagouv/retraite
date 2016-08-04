@@ -22,21 +22,19 @@
 			#{/if}
 			</b>, soit pour vous à la date du <b>${data.extras.dateDepartPossible}</b>.</p>
 	
-			<h1>Départ anticipé</h1>
+			<h1>Avez-vous obtenu votre attestation carrière longue ?</h1>
 			
-			<ul>
-				<li>Vous avez obtenu une attestation de situation de carrière longue, cochez la case ci-dessous et passez à l’ "Etape suivante" :</li>
-			</ul>
+			<p>
+				Si oui, cochez la case ci-dessous et passez à l’ "Etape suivante" :
+			</p>
 		
-		    <span class='col-sm-12 text-center choice'>	
-		        <label class='label-for-question-choice label-carriere-longue'><input type="checkbox" class='questions-choice' name='CARRIERE_LONGUE'/>J'ai mon attestation carrières longues</label>
-			</span>
+		    <p class='col-sm-12 text-center choice'>	
+		        <label class='label-for-question-choice label-carriere-longue'><input type="checkbox" class='questions-choice' name='CARRIERE_LONGUE'/>J'ai mon attestation carrière longue</label>
+			</p>
 			
-			<br/><br/><br/>
-			
-			<ul>
-				<li>Sinon, vérifiez que vous remplissez les conditions permettant de bénéficier d’un des #{link url:data.extras.urlDispositifDepartAvantAgeLegal,text:"dispositifs de départ avant l’âge légal" /} puis contactez un conseiller.</li>
-			</ul>
+			<p>
+				ou vérifiez que vous remplissez les #{link url:data.extras.urlDispositifDepartAvantAgeLegal,text:"conditions d’un départ anticipé pour longue carrière" /} puis contactez un conseiller.
+			</p>
 		
 		</div>
 		
