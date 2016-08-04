@@ -61,6 +61,7 @@ public class AgeLegalEvaluatorTest {
 		// 03/11/1958 + 62 années = 03/11/2020
 		assertThat(ageLegalEvaluator.isAgeLegal("03/11/1958", "11", "2020")).isFalse();
 		assertThat(ageLegalEvaluator.isAgeLegal("03/11/1958", "12", "2020")).isTrue();
+		assertThat(ageLegalEvaluator.isAgeLegal("01/07/1970", "07", "2032")).isTrue();
 
 		// 31/12/1954 + 61 années + 7 mois = 03/07/2016
 		assertThat(ageLegalEvaluator.isAgeLegal("31/12/1954", "07", "2016")).isFalse();

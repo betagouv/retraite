@@ -38,7 +38,7 @@ public class AgeLegalEvaluator {
 	public boolean isAgeLegal(final String dateNaissance, final String departMois, final String departAnnee) {
 		final GregorianCalendar calDepartLegal = createCalendarPourDepartLegal(dateNaissance);
 		final GregorianCalendar calDepartSouhaite = createCalendar(departMois, departAnnee);
-		return calDepartSouhaite.getTimeInMillis() > calDepartLegal.getTimeInMillis();
+		return calDepartSouhaite.getTimeInMillis() >= calDepartLegal.getTimeInMillis();
 	}
 
 	public AnneesEtMois getAgeLegalPourPartir(final String dateNaissance) {
