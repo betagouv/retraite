@@ -39,6 +39,8 @@ describe('CaissesCtrl', function () {
         "adresse3": "",
         "id": 30
     }];
+    
+    var spyOnSearchAvailableDepartements;
 
     beforeEach(function() {
         spyOn(ApiCaisseFilter, 'allForChecklistName').and.callFake(function(name) {
@@ -58,6 +60,8 @@ describe('CaissesCtrl', function () {
 
     beforeEach(inject(function (_$rootScope_, $controller) {
 
+        spyOnSearchAvailableDepartements = spyOn(CaissesUtils, 'searchAvailableDepartements').and.returnValue(["05", "14", "59"]);
+
         $rootScope = _$rootScope_;
         $scope = $rootScope.$new();
         var $stateParams = {
@@ -73,6 +77,8 @@ describe('CaissesCtrl', function () {
     
     it('should have init data in scope', function () {
         expect($scope.caisses).toEqual(mockCaisses);
+        expect($scope.availableDepartements).toEqual(["05", "14", "59"]);
+        expect(CaissesUtils.searchAvailableDepartements).toHaveBeenCalledWith(mockCaisses);
     });
 
     it('should refresh if event caisseSaved', function () {
@@ -206,8 +212,6 @@ describe('CaissesCtrl', function () {
         
         it('should display dialog and call WS', function () {
             
-            spyOn(CaissesUtils, 'searchAvailableDepartements').and.returnValue(["05", "14", "59"]);
-            
             spyOn(RetraiteDialog, 'display').and.callFake(function(options) {
                 expect(options.title).toEqual("Ajouter un département");
                 expect(options.templateUrl).toEqual('src/config/caisses/dialogs/add-departement/add-departement.html');
@@ -233,8 +237,6 @@ describe('CaissesCtrl', function () {
         
         it('should display dialog and do nothing if not confirmed', function () {
             
-            spyOn(CaissesUtils, 'searchAvailableDepartements').and.returnValue(["05", "14", "59"]);
-            
             spyOn(RetraiteDialog, 'display').and.callFake(function(options) {
                 return {
                     then: function(callback) {
@@ -256,7 +258,7 @@ describe('CaissesCtrl', function () {
         
         it('should not display dialog but error message if no departement available', function () {
             
-            spyOn(CaissesUtils, 'searchAvailableDepartements').and.returnValue([]);
+            spyOnSearchAvailableDepartements.and.returnValue([]);
             
             spyOn(RetraiteDialog, 'display').and.callFake(function(options) {
                 return {
@@ -298,8 +300,6 @@ describe('CaissesCtrl', function () {
         
         it('should display dialog and call WS', function () {
             
-            spyOn(CaissesUtils, 'searchAvailableDepartements').and.returnValue(["05", "14", "59"]);
-
             spyOn(RetraiteDialog, 'display').and.callFake(function(options) {
                 expect(options.title).toEqual("Ajouter une caisse");
                 expect(options.templateUrl).toEqual('src/config/caisses/dialogs/add-departement/add-departement.html');
@@ -319,7 +319,7 @@ describe('CaissesCtrl', function () {
             expect(RetraiteDialog.display).toHaveBeenCalled();
             expect(WsCaisseDepartement.addCaisse).toHaveBeenCalledWith("CNAV", "14");
             expect($state.reload).toHaveBeenCalled();
-            expect($state.go).toHaveBeenCalledWith('caisses.edit', {name:"CNAV", id:92});
+            expect($state.go).not.toHaveBeenCalled();
             expect(PromptService.promptInformation).toHaveBeenCalledWith("Information", jasmine.stringMatching("La caisse a été créée "));
             
         });

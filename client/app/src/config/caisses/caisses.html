@@ -1,8 +1,14 @@
 <div class='col-sm-6'>
     
-    Cliquez sur un département pour le supprimer d'une caisse.
-    <br/>
-    Cliquer sur une caisse pour modifier ses informations.
+    <div>
+        Cliquez sur un département pour le supprimer d'une caisse.
+        <br/>
+        Cliquer sur une caisse pour modifier ses informations.
+    </div>
+    
+    <div ng-show='availableDepartements.length > 0' class='available-departements'>
+        Liste des départements non affectés : <span ng-repeat='departement in availableDepartements' class='badge'>{{departement}}</span>
+    </div>
     
     <div class='caisse-list'>
         <ul class=''>
