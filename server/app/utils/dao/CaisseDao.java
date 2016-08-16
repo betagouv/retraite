@@ -1,6 +1,7 @@
 package utils.dao;
 
 import static utils.JsonUtils.fromJson;
+import static utils.ObjectsUtils.copyFields;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,15 +68,7 @@ public class CaisseDao {
 
 	private CaisseForEdition createCaisseForEdition(final CaisseDepartementale caisseDepartementale) {
 		final CaisseForEdition caisseForEdition = new CaisseForEdition();
-		caisseForEdition.id = caisseDepartementale.caisse.id;
-		caisseForEdition.nom = caisseDepartementale.caisse.nom;
-		caisseForEdition.adresse1 = caisseDepartementale.caisse.adresse1;
-		caisseForEdition.adresse2 = caisseDepartementale.caisse.adresse2;
-		caisseForEdition.adresse3 = caisseDepartementale.caisse.adresse3;
-		caisseForEdition.adresse4 = caisseDepartementale.caisse.adresse4;
-		caisseForEdition.telephone = caisseDepartementale.caisse.telephone;
-		caisseForEdition.fax = caisseDepartementale.caisse.fax;
-		caisseForEdition.site = caisseDepartementale.caisse.site;
+		copyFields(caisseDepartementale.caisse, caisseForEdition);
 		return caisseForEdition;
 	}
 

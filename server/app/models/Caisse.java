@@ -23,6 +23,10 @@ public class Caisse extends RetraiteModel {
 
 	public String site;
 
+	public String linkLabel;
+
+	public String linkUrl;
+
 	@Override
 	public String toString() {
 		return "Caisse[id=" + id + ",nom=" + nom + "]";

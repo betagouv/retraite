@@ -40,6 +40,11 @@
                 <div class='site' ng-if='caisse.site'>
                     <label>Site : </label>{{caisse.site}}
                 </div>
+                
+                <div class='site' ng-if='caisse.linkLabel && caisse.linkUrl'>
+                    <label>Lien : </label> {{caisse.linkLabel}} : {{caisse.linkUrl}}
+                </div>
+                
                 <div class='site' ng-if='caisse.departements'>
                     <label>Départements : </label>
                     <span ng-repeat='departement in caisse.departements' class='badge' ng-click='confirmeDepartementDelete(caisse, departement)'>{{departement}}</span>

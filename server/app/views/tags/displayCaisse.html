@@ -13,6 +13,14 @@
 			</div>
 		#{/if}
 		
+		#{if _caisse.linkLabel && _caisse.linkUrl}
+			<div class="siteinternet">
+				<span class="nuage"></span>
+				<a href='${_caisse.linkUrl}' target='_blank' title="Nouvelle fenêtre">${_caisse.linkLabel}</a>
+				<br/>
+			</div>
+		#{/if}
+		
 		*{ Téléphone }*
 		
 		#{if _caisse.telephone}
