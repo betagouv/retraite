@@ -634,68 +634,80 @@ span.telephone {
    checklist
 ============================================================================= */
 
-.container.checklist .contenu .contenu-titre{
-  margin:10px 0;
+.container.checklist .contenu { 
+	
+	h2.intro-checklist {
+		font-size: 2.0rem;
+		/*color: $blue;*/
+		text-align: center;
+		font-weight: bold;
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
 
-  .chiffre {
-    font-size:7.4rem;
-    font-weight: bold;
-    color: $red;
-    display:inline-block;
-    float:left;
-    line-height: 1;
-    padding-right:5px;
-  }
-
-  .boxtitre {
-    background-color: $red;
-    border-radius: 36px;
-    padding: 8px 30px 8px 6px;
-    display:inline-block;
-    width:89%;
-
-  }
-
-  .puce {
-    background-color: #fff;
-    height: 28px;
-    width: 28px;
-    border-radius: 28px;
-    display: inline-block;
-    bottom: 9px;
-    left: 7px;
-    vertical-align: top;
-    margin:15px;
-    float: left;
-  }
-
-  .soustitre {
-    font-size:1.5rem;
-    font-weight: 300;
-    color:#fff;
-    border-right: 1px solid #fff;
-    display:inline-block;
-    padding-right: 8px;
-    margin-right: 12px;
-    line-height: 1.2;
-    text-transform: uppercase;
-  }
-
-  .titre {
-    display:inline-block;
-    line-height: 1;
-    vertical-align: top;
-    /*padding-left:60px;*/
-
-    h2 {
-	    font-size:2.0rem;
+	.contenu-titre {
+	  margin:10px 0;
+	
+	  .chiffre {
+	    font-size:7.4rem;
 	    font-weight: bold;
+	    color: $red;
+	    display:inline-block;
+	    float:left;
+	    line-height: 1;
+	    padding-right:5px;
+	  }
+	
+	  .boxtitre {
+	    background-color: $red;
+	    border-radius: 36px;
+	    padding: 8px 30px 8px 6px;
+	    display:inline-block;
+	    width:89%;
+	
+	  }
+	
+	  .puce {
+	    background-color: #fff;
+	    height: 28px;
+	    width: 28px;
+	    border-radius: 28px;
+	    display: inline-block;
+	    bottom: 9px;
+	    left: 7px;
+	    vertical-align: top;
+	    margin:15px;
+	    float: left;
+	  }
+	
+	  .soustitre {
+	    font-size:1.5rem;
+	    font-weight: 300;
 	    color:#fff;
-	    margin:0;
-	    text-align: left;
-	    max-width: 382px;
-    }
-  }
+	    border-right: 1px solid #fff;
+	    display:inline-block;
+	    padding-right: 8px;
+	    margin-right: 12px;
+	    line-height: 1.2;
+	    text-transform: uppercase;
+	  }
+	
+	  .titre {
+	    display:inline-block;
+	    line-height: 1;
+	    vertical-align: top;
+	    /*padding-left:60px;*/
+	
+	    h2 {
+		    font-size:2.0rem;
+		    font-weight: bold;
+		    color:#fff;
+		    margin:0;
+		    text-align: left;
+		    max-width: 382px;
+	    }
+	  }
+	}
 }
 
 body .container.checklist .wrapper{
