@@ -10,6 +10,7 @@ import static org.mockito.Matchers.isA;
 import static org.mockito.Matchers.isNull;
 import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -38,6 +39,7 @@ import org.mockito.stubbing.Answer;
 
 import controllers.data.PostData;
 import models.FakeData;
+import utils.RetraiteBadNaissanceFormatException;
 import utils.RetraiteException;
 import utils.dao.DaoFakeData;
 import utils.engine.data.MonthAndYear;
@@ -183,6 +185,30 @@ public class RetraiteEngineTest {
 		assertThat(renderData.errorMessage).startsWith("Désolé");
 		assertThat(renderData.hidden_nom).isEqualTo("DUPONT");
 		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
+		assertThat(renderData.hidden_nir).isEqualTo("1 50 12 18 123 456");
+		assertThat(renderData.hidden_departement).isEqualTo("65");
+	}
+
+	@Test
+	public void step_display_getUserData_with_error_if_error_in_date_naissance() {
+
+		// Step : getUserData --> getUserData
+
+		final PostData postData = new PostData();
+		postData.hidden_step = "getUserData";
+		postData.nom = "DUPONT";
+		postData.naissance = "00/00/1952";
+		postData.nir = "1 50 12 18 123 456";
+		postData.departement = "65";
+
+		doThrow(new RetraiteBadNaissanceFormatException("")).when(ageCalculatorMock).getAge("00/00/1952");
+
+		final RenderData renderData = retraiteEngine.processToNextStep(postData);
+
+		assertThat(renderData.hidden_step).isEqualTo("getUserData");
+		assertThat(renderData.errorMessage).startsWith("Désolé");
+		assertThat(renderData.hidden_nom).isEqualTo("DUPONT");
+		assertThat(renderData.hidden_naissance).isEqualTo("00/00/1952");
 		assertThat(renderData.hidden_nir).isEqualTo("1 50 12 18 123 456");
 		assertThat(renderData.hidden_departement).isEqualTo("65");
 	}

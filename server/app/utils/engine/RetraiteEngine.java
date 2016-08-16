@@ -10,6 +10,7 @@ import java.lang.reflect.Field;
 
 import controllers.data.PostData;
 import play.Logger;
+import utils.RetraiteBadNaissanceFormatException;
 import utils.RetraiteException;
 import utils.dao.DaoFakeData;
 import utils.engine.data.CommonExchangeData;
@@ -81,7 +82,14 @@ public class RetraiteEngine {
 			return displayGetUserData(renderData);
 		} else if (postData.hidden_step.equals("getUserData")) {
 			Logger.info("Connexion d'un usager : nom=" + postData.nom + " , nir=" + postData.nir + " , naissance=" + postData.naissance);
-			if (ageCalculator.getAge(postData.naissance) < 55 && !postData.isForce55) {
+			int age;
+			try {
+				age = ageCalculator.getAge(postData.naissance);
+			} catch (final RetraiteBadNaissanceFormatException e) {
+				renderData.errorMessage = "Désolé, il y a une erreur dans la date de naissance saisie (format attendu : jj/mm/aaaa). Veuillez corriger cette erreur et valider à nouveau.";
+				return displayGetUserData(renderData);
+			}
+			if (age < 55 && !postData.isForce55) {
 				return displaySortieTropJeune(postData, renderData);
 			}
 			final InfoRetraiteResult regimesInformations = infoRetraite.retrieveAllInformations(postData.nom, postData.nir, postData.naissance);
