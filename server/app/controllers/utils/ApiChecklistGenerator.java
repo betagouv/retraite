@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import controllers.data.ApiUserChecklistParams;
+import utils.JsonUtils;
 import utils.engine.data.MonthAndYear;
 import utils.engine.data.RenderData;
 import utils.engine.data.UserChecklistGenerationData;
@@ -14,6 +15,7 @@ import utils.engine.data.enums.UserStatus;
 import utils.engine.intern.CalculateurRegimeAlignes;
 import utils.engine.intern.UserChecklistGenerationDataBuilder;
 import utils.engine.intern.UserChecklistGenerator;
+import utils.wsinforetraite.FakeRegimeDataProvider;
 
 public class ApiChecklistGenerator {
 
@@ -66,10 +68,13 @@ public class ApiChecklistGenerator {
 		data.hidden_departMois = departMois;
 		data.hidden_departAnnee = departAnnee;
 
+		final String regimesInfosJsonStr = JsonUtils.toJson(new FakeRegimeDataProvider().create(regimes));
+		System.out.println("regimesInfosJsonStr=" + regimesInfosJsonStr);
+
 		final MonthAndYear dateDepart = new MonthAndYear(departMois, departAnnee);
 		final RegimeAligne[] regimesAlignes = calculateurRegimeAlignes.getRegimesAlignes(regimes);
 		final UserChecklistGenerationData userChecklistGenerationData = userChecklistGenerationDataBuilder.build(dateDepart, departement, regimes,
-				regimesAlignes, regimeLiquidateur, published, isCarriereLongue, userStatus, false, data.hidden_regimesInfosJsonStr);
+				regimesAlignes, regimeLiquidateur, published, isCarriereLongue, userStatus, false, regimesInfosJsonStr);
 		final ChecklistName checklistName = ChecklistName.valueOf(apiUserChecklistParams.regimeLiquidateur);
 
 		data.userChecklist = userChecklistGenerator.generate(checklistName, userChecklistGenerationData);

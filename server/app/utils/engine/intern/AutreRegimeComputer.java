@@ -12,7 +12,9 @@ public class AutreRegimeComputer {
 		userChecklist.autresRegimesDeBase = new InfoRetraiteResultRegimeList();
 		userChecklist.regimesComplementaires = new InfoRetraiteResultRegimeList();
 
+		System.out.println("regimesInfosJsonStr=" + regimesInfosJsonStr);
 		final InfoRetraiteResultRegimeList list = JsonUtils.fromJson(regimesInfosJsonStr, InfoRetraiteResultRegimeList.class);
+		System.out.println("list=" + list);
 		for (final InfoRetraiteResultRegime infos : list) {
 			final Regime regime = Regime.valueOfNom(infos.nom);
 			if (regime == Regime.AGIRC_ARRCO) {

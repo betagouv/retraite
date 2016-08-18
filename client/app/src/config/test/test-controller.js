@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('SgmapRetraiteConfig').controller('TestCtrl', function ($scope, ApiRegimes, ApiUserChecklist, $timeout, DepartementsUtils) {
+angular.module('SgmapRetraiteConfig').controller('TestCtrl', function ($scope, ApiRegimes, ApiUserChecklist, $timeout, DepartementsUtils, PromptService) {
 
     // Privé
     
@@ -19,6 +19,10 @@ angular.module('SgmapRetraiteConfig').controller('TestCtrl', function ($scope, A
     // Actions
     
     $scope.test = function(published) {
+        if ($scope.data.regimes.length == 0) {
+            PromptService.promptInformation("Erreur !", "Vous devez sélectionner au moins un régime !");
+            return;
+        }
         $scope.testUrlForIFrame = ApiUserChecklist.getChecklistUrl($scope.data, published, true);
         $scope.reloadIFrame();
     };
