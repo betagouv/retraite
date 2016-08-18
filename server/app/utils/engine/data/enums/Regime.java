@@ -79,7 +79,7 @@ public enum Regime {
 			try {
 				regimes.add(Regime.valueOf(regimeStr));
 			} catch (final IllegalArgumentException e) {
-				Logger.error(new Exception("stack"), "Nom de regime innatendu : '" + regimeStr + "' . Liste reçue : " + stringList);
+				Logger.error(new Exception("stack"), "Nom de regime innatendu : '" + regimeStr + "' . Liste reçue : '" + stringList + "'");
 			}
 		}
 		return regimes.toArray(new Regime[regimes.size()]);
