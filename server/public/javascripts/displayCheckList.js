@@ -38,6 +38,14 @@ $(function() {
 		$('#DialogSendEMail').modal();
 	});
 	
+	$('button.print').click(function(event) {
+		event.preventDefault();
+		sendGoogleAnalyticsEvent('Checklist', 'print', regimeLiquidateur);
+		window.print();
+		/*$("form").attr("action", "/application/pdf");
+		$("form").submit();*/
+	});
+	
 	$('#validSendMail').click(function(event) {
 		event.preventDefault();
 		if (isEMailProvided()) {
