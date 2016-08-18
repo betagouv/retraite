@@ -15,13 +15,14 @@ describe('TestCtrl', function () {
         });
     }));
 
-    var $scope, controller, CheckList, ApiRegimes, ApiUserChecklist;
+    var $scope, controller, CheckList, ApiRegimes, ApiUserChecklist, PromptService;
     
-    beforeEach(inject(function ($rootScope, $controller, _CheckList_, _ApiRegimes_, _ApiUserChecklist_) {
+    beforeEach(inject(function ($rootScope, $controller, _CheckList_, _ApiRegimes_, _ApiUserChecklist_, _PromptService_) {
 
         CheckList = _CheckList_;
         ApiRegimes = _ApiRegimes_;
         ApiUserChecklist = _ApiUserChecklist_;
+        PromptService = _PromptService_;
         
     }));
     
@@ -74,11 +75,28 @@ describe('TestCtrl', function () {
             $scope.data = {
                 nom: "DUPONT",
                 dateNaissance: "07/10/1954",
-                nir: "1541014123456"
+                nir: "1541014123456",
+                regimes: [
+                    {"name":"CAVIMAC","type":"BASE_ALIGNE"},
+                    {"name":"CAVAMAC","type":"BASE_AUTRE"}
+                ]
             };
 
             spyOn(ApiUserChecklist, 'getChecklistUrl').and.returnValue("bla bla bla");
             spyOn($scope, 'reloadIFrame');
+            spyOn(PromptService, 'promptInformation')
+        });
+        
+        it('should display error and do noting if no regimes selected', function () {
+            
+            $scope.data.regimes = [];
+            
+            $scope.test(true);
+
+            expect(PromptService.promptInformation).toHaveBeenCalledWith("Erreur !", jasmine.stringMatching("Vous devez sélectionner"));
+            expect($scope.testUrlForIFrame).not.toBeDefined();
+            expect(ApiUserChecklist.getChecklistUrl).not.toHaveBeenCalled();
+            expect($scope.reloadIFrame).not.toHaveBeenCalled();
         });
         
         it('should get URL for published=true', function () {
