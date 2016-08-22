@@ -149,6 +149,8 @@ public class ApiChecklistGeneratorTest {
 		assertThat(data.hidden_departMois).isEqualTo("11");
 		assertThat(data.hidden_departAnnee).isEqualTo("2017");
 
+		final String regimesInfosJsonStr = "[{\"regime\":\"CNAV regime\",\"nom\":\"CNAV\",\"adresse\":\"CNAV adresse\",\"internet\":\"CNAV internet\",\"tel1\":\"CNAV tel1\",\"tel2\":\"CNAV tel2\",\"fax\":\"CNAV fax\",\"email1\":\"CNAV email1\",\"email2\":\"CNAV email2\"}]";
+
 		verify(userChecklistGenerationDataBuilderMock).build(
 				new MonthAndYear("11", "2017"),
 				"973",
@@ -159,7 +161,7 @@ public class ApiChecklistGeneratorTest {
 				true /* isCarriereLongue */,
 				asList(STATUS_CONJOINT_COLLABORATEUR),
 				false /* isPDF */,
-				null /* regimesInfosJsonStr : Pour l'instant, pas besoin de tester les autres interlocuteurs */);
+				regimesInfosJsonStr /* regimesInfosJsonStr : Pour l'instant, pas besoin de tester les autres interlocuteurs */);
 		verify(userChecklistGeneratorMock).generate(eq(ChecklistName.RSI), eq(userChecklistGenerationData));
 	}
 
