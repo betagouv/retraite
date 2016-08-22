@@ -158,7 +158,20 @@ public class Application extends RetraiteController {
 			ok();
 		} else {
 			// PDF.renderPDF() ne peut pas être utilisé car il écrase les headers fixés ci-dessus
-			PDF.writePDF(response.out, data);
+
+			final PDF.Options pdfOptions = new PDF.Options();
+			pdfOptions.FOOTER = "<table width='100%' style='font-size: 14px;'><tbody><tr>"
+					+ "<td width='30%' align='left'>" + "" + "</td>"
+					+ "<td width='30%' align='center'>Mes démarches retraite, pas à pas</td>"
+					+ "<td width='30%' align='right'>Page <pagenumber>/<pagecount></td>"
+					+ "</tr></tbody></table>";
+
+			PDF.writePDF(response.out, data, pdfOptions);
+
+			// final Map<String, Object> params = new HashMap<String, Object>();
+			// params.put("data", data);
+			// final String hmltResultWithFullCssPath = renderToHtml("Application/pdf.html", params);
+
 			ok();
 		}
 	}
@@ -178,9 +191,7 @@ public class Application extends RetraiteController {
 	}
 
 	private static void renderPdfWith_iText(final String templateName, final Map<String, Object> params) {
-		final Template template = TemplateLoader.load(template(templateName));
-		final String hmltResult = template.render(params);
-		final String hmltResultWithFullCssPath = completePublicPathWithCurrentDirectoryPath(hmltResult);
+		final String hmltResultWithFullCssPath = renderToHtml(templateName, params);
 		try {
 			final Document document = new Document();
 			final PdfWriter writer = PdfWriter.getInstance(document, response.out);
@@ -192,6 +203,13 @@ public class Application extends RetraiteController {
 			Logger.error(e, "Erreur pendant la génération du PDF");
 			error(e);
 		}
+	}
+
+	private static String renderToHtml(final String templateName, final Map<String, Object> params) {
+		final Template template = TemplateLoader.load(template(templateName));
+		final String hmltResult = template.render(params);
+		final String hmltResultWithFullCssPath = completePublicPathWithCurrentDirectoryPath(hmltResult);
+		return hmltResultWithFullCssPath;
 	}
 
 	private static String completePublicPathWithCurrentDirectoryPath(final String hmltResult) {

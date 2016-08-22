@@ -34,34 +34,50 @@ table.pdf-interlocuteurs td.pdf-interlocuteurs-data {
 	font-weight: 600;
 }
 
-
-/*
-html {
-    font-size: 1em;
+td {
+    border: none;
 }
 
-body {
-	font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
-    font-size: 20px;
+.col-sm-6 {
+    width: 50%;
+    float: left;
 }
 
-body .container {
-    font-size: 2em;
+body .container .wrapper {
+    background: none  !important;
 }
 
-body .container.information .contenu h2 {
-    font-size: 1.5em;
+.container.checklist .contenu .contenu-titre .boxtitre-pdf {
+    background-color: #0b6ba8;
+    border-radius: 36px;
+    padding: 8px 30px 8px 6px;
 }
 
-body .container.information .contenu .bg-box h3 {
-    font-size: 6.0em;
+.container.checklist .contenu .contenu-titre .chiffre-pdf {
+    font-size: 3.4em;
+    font-weight: bold;
+    color: #fff;
 }
 
-body .container.information .contenu .bg-box .panel-body {
-    font-size: 4.0em;
+.container.checklist .contenu .contenu-titre .soustitre-pdf {
+    font-size: 1.9rem;
+    font-weight: 300;
+    color: #fff;
+    border-right: 1px solid #fff;
+    padding-right: 8px;
+    margin-right: 12px;
+    line-height: 1.2;
+    text-transform: uppercase;
+    vertical-align: middle;
 }
 
-body .container.information .delai {
-    font-size: 6.0em;
+.container.checklist .contenu .contenu-titre .titre-pdf {
+    vertical-align: top;
 }
-*/
+
+.container.checklist .contenu .contenu-titre .titre-pdf h2 {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #fff;
+    padding-left: 0;
+}
