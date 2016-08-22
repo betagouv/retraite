@@ -140,3 +140,16 @@ footer a.footer-feedback {
     font-size: 1.4rem;
     background-image: url("/public/img/infos.png");
 }
+
+.browsehappy {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  /* bottom: 0; */
+  height: 2000px;
+  z-index: 10000;
+  background: #ccc;
+  color: #000;
+  padding-top: 20px;
+}
