@@ -4,16 +4,28 @@
 			<h2>${_title} :</h2>
 			<div class="bg-box">
 			
-				#{list items:_list, as:'pair'}
-					<div class="row">
-						<div class="col-sm-6 mes-infos-label">
-							${pair.key} :
+				#{if !_isPDF}
+					#{list items:_list, as:'pair'}
+						<div class="row">
+							<div class="col-sm-6 mes-infos-label">
+								${pair.key} :
+							</div>
+							<div class="col-sm-6 mes-infos-data">
+								${pair.value}
+							</div>
 						</div>
-						<div class="col-sm-6 mes-infos-data">
-							${pair.value}
-						</div>
-					</div>
-				#{/list}
+					#{/list}
+				#{/if}
+				#{else}
+					<table width="100%">
+						#{list items:_list, as:'pair'}
+							<tr>
+								<td class="mes-infos-label" width="50%">${pair.key} :</td>
+								<td class="mes-infos-data" width="50%">${pair.value}</td>
+							</tr>
+						#{/list}
+					</table>
+				#{/else}
 	
 			</div>
 		</div>

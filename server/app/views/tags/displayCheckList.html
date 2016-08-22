@@ -14,7 +14,7 @@
 				<div class="col-sm-1"></div>
 				<div class="col-sm-11">
 					<p class="bouton">
-						<button class="btn print" ${_noPdfDownload ? "disabled='disabled'" : ""}>Imprimer</button>
+						<button class="btn record" ${_noPdfDownload ? "disabled='disabled'" : ""}>Télécharger en PDF</button>
 					</p>
 				</div>
 			</div>
@@ -22,30 +22,42 @@
 
 		#{list items:_data.userChecklist.chapitres, as:'chapitre'}
 			<div class="contenu-titre">
-				<div class="chiffre">${chapitre_index}</div>
-	
-				<div class="boxtitre">
-					<div class="puce"></div>
-					#{if chapitre.delai}
-						<div class="soustitre">
-							${chapitre.delai.raw()}
+				#{if !_data.isPDF}
+					<div class="chiffre">${chapitre_index}</div>
+					<div class="boxtitre">
+						<div class="puce"></div>
+						#{if chapitre.delai}
+							<div class="soustitre">
+								${chapitre.delai.raw()}
+							</div>
+						#{/if}
+						<div class="titre">
+							<h2>
+								${chapitre.titre}
+							</h2>
 						</div>
-					#{/if}
-					<div class="titre">
-						<h2>
-							${chapitre.titre}
-						</h2>
+						<!--titre-->
 					</div>
-					<!--titre-->
-				</div>
-				<!--boxtitre-->
+					<!--boxtitre-->
+				#{/if}
+				#{else}
+					<table class="boxtitre-pdf" width="100%">
+						<tr>
+							<td class="chiffre-pdf">${chapitre_index}</td>
+							<td class="soustitre-pdf" width="25%">${chapitre.delai.raw()}</td>
+							<td class="titre-pdf"><h2>${chapitre.titre}</h2></td>
+						</tr>
+					</table>
+				#{/else}
 			</div>
 			<!--contenu-titre-->
 
 			<div class="contenu-texte">
 				<div class="border-left">
 					<div class="box1">
-						<div class="big-chiffre">${chapitre_index}</div>
+						#{if !_data.isPDF}
+							<div class="big-chiffre">${chapitre_index}</div>
+						#{/if}
 						<div class="texte1niv">
 							#{if chapitre.texteActions?.length() > 0}
 								<div class="texte">
@@ -87,45 +99,6 @@
 			</div>
 			<!--contenu-texte-->
 
-*{
-			<div class="col-sm-12">
-				<div class="col-sm-1"></div>
-				<div id="chap${chapitre_index}" class="panel panel-primary box-white col-sm-10">
-					<div class="img_bg">
-						#{if !_data.isPDF}
-							<div class="carre">${chapitre_index}</div>
-							<div>
-								#{if chapitre.delai}
-									<span class="delai">${chapitre.delai} :</span>
-								#{/if}
-								<h3>${chapitre.titre}</h3>
-							</div>
-						#{/if}
-						#{else}
-							<h3>${chapitre_index} - ${chapitre.titre}</h3>
-						#{/else}
-					</div>
-					<div id="panel-details-${chapitre_index}" class="panel-body panel-details">
-						#{if chapitre.texteActions?.length() > 0}
-				        	<div class='checklist-actions'>${chapitre.texteActions?.raw()}</div>
-						#{/if}
-						#{if chapitre.texteModalites}
-					        <div class='checklist-modalites'>${chapitre.texteModalites?.raw()}</div>
-						#{/if}
-						#{if chapitre.texteInfos}
-					        <div class='checklist-infos'>${chapitre.texteInfos?.raw()}</div>
-						#{/if}
-						#{if chapitre_index == 99}
-							<ul class="filet-left sanspuce">
-								<li><span class="bold">Exemple de texte</span> pouvant être mis en 
-								évidence, à voir comment dans l'outil de config...</li>
-							</ul>
-						#{/if}
-					</div>
-				</div>
-				<div class="col-sm-1"></div>
-			</div>
-}*
 		#{/list}
 
 		#{if !_data.isPDF}
@@ -133,7 +106,7 @@
 				<div class="col-sm-1"></div>
 				<div class="col-sm-11">
 					<p class="bouton">
-						<button class="btn print" ${_noPdfDownload ? "disabled='disabled'" : ""}>Imprimer</button>
+						<button class="btn record" ${_noPdfDownload ? "disabled='disabled'" : ""}>Télécharger en PDF</button>
 					</p>
 				</div>
 			</div>
