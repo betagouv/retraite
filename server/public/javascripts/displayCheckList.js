@@ -46,6 +46,8 @@ $(function() {
 		$("form").submit();*/
 	});
 	
+	/* Plus d'envoi de mail pour l'instant
+	
 	$('#validSendMail').click(function(event) {
 		event.preventDefault();
 		if (isEMailProvided()) {
@@ -56,7 +58,7 @@ $(function() {
 			$("#divEmail div").addClass('has-error');
 			$("#emailMissing").removeClass('hidden');
 		}
-	});
+	});*/
 	
 	function isEMailProvided() {
 		var $emailInput = $("#email");

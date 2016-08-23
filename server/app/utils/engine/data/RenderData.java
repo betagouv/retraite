@@ -35,4 +35,18 @@ public class RenderData extends CommonExchangeData {
 
 	public StringPairsList questionsAndResponses;
 
+	@Override
+	public String toString() {
+		return "RenderData [departements=" + departements + ", userChecklist=" + userChecklist + ", listeMoisAvecPremier=" + listeMoisAvecPremier
+				+ ", listeAnneesDepart=" + listeAnneesDepart + ", fakeData=" + fakeData + ", questionLiquidateur=" + questionLiquidateur + ", errorMessage="
+				+ errorMessage + ", regimesInfosAucunRegimeDeBaseAligne=" + regimesInfosAucunRegimeDeBaseAligne + ", ecranSortie=" + ecranSortie
+				+ ", userInfos=" + userInfos + ", extras=" + extras + ", questionsAndResponses=" + questionsAndResponses + ", hidden_step=" + hidden_step
+				+ ", hidden_nom=" + hidden_nom + ", hidden_naissance=" + hidden_naissance + ", hidden_nir=" + hidden_nir + ", hidden_departement="
+				+ hidden_departement + ", hidden_regimes=" + hidden_regimes + ", hidden_regimesInfosJsonStr=" + hidden_regimesInfosJsonStr
+				+ ", hidden_liquidateurReponseJsonStr=" + hidden_liquidateurReponseJsonStr + ", hidden_departMois=" + hidden_departMois
+				+ ", hidden_departAnnee=" + hidden_departAnnee + ", hidden_attestationCarriereLongue=" + hidden_attestationCarriereLongue
+				+ ", hidden_liquidateurStep=" + hidden_liquidateurStep + ", hidden_liquidateur=" + hidden_liquidateur + ", hidden_userStatus="
+				+ hidden_userStatus + ", hidden_liquidateurReponsesHistory=" + hidden_liquidateurReponsesHistory + ", isPDF=" + isPDF + "]";
+	}
+
 }

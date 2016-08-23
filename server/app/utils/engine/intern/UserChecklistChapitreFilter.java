@@ -16,7 +16,8 @@ public class UserChecklistChapitreFilter {
 		if (chapitre.conditions == null) {
 			return true;
 		}
-		return allConditionsAreVerified(chapitre, userChecklistGenerationData);
+		final boolean isToBeDisplayed = allConditionsAreVerified(chapitre, userChecklistGenerationData);
+		return isToBeDisplayed;
 	}
 
 	private boolean allConditionsAreVerified(final Chapitre chapitre, final UserChecklistGenerationData userChecklistGenerationData) {

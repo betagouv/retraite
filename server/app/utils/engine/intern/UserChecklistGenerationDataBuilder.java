@@ -17,6 +17,7 @@ public class UserChecklistGenerationDataBuilder {
 	public UserChecklistGenerationData build(final MonthAndYear dateDepart, final String departement, final Regime[] regimes,
 			final RegimeAligne[] regimesAlignes, final RegimeAligne regimeLiquidateur, final boolean published,
 			final boolean isCarriereLongue, final List<UserStatus> userStatus, final boolean isPDF, final String regimesInfosJsonStr) {
+
 		final UserChecklistGenerationData userChecklistGenerationData = new UserChecklistGenerationData(dateDepart, departement, regimes, regimesAlignes,
 				published, false, regimesInfosJsonStr);
 		userChecklistGenerationData.isConjointCollaborateur = contains(userStatus, STATUS_CONJOINT_COLLABORATEUR);
