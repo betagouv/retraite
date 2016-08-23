@@ -43,7 +43,7 @@ public enum LiquidateurQuestionDescriptor {
 			choice("Salarié agricole", SA),
 			choice("Artisan ou commerçant", INDEP),
 			choice("Conjoint collaborateur d'un artisan commerçant", CONJOINT_INDEP),
-			choice("Deux activités en même temps", DEUX_ACTIVITES)
+			choice("Deux de ces activités en même temps", DEUX_ACTIVITES)
 	),
 
 	QUESTION_C(
