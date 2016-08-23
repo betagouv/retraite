@@ -637,19 +637,25 @@ span.telephone {
 .container.checklist .contenu { 
 	
 	h2.intro-checklist {
-		font-size: 2.0rem;
-		/*color: $blue;*/
-		text-align: center;
+		background-color: #f5f5f5;
+		border-color: #b9b9b7 #b9b9b7 #b9b9b7 #97b136;
+		border-radius: 2px;
+		border-style: solid;
+		border-width: 1px 1px 1px 25px;
+		color: #af536c;
+		font-size: 1.6rem;
 		font-weight: bold;
-		margin-top: 20px;
+		line-height: 1.8em;
 		margin-bottom: 20px;
+		margin-top: 20px;
+		text-align: center;
 	}
 
 	.contenu-titre {
 	  margin:10px 0;
 	
 	  .chiffre {
-	    font-size:7.4rem;
+	    font-size: 5rem;
 	    font-weight: bold;
 	    color: $red;
 	    display:inline-block;
@@ -660,7 +666,7 @@ span.telephone {
 	
 	  .boxtitre {
 	    background-color: $red;
-	    border-radius: 36px;
+	    border-radius: 26px;
 	    padding: 8px 30px 8px 6px;
 	    display:inline-block;
 	    width:89%;
@@ -671,17 +677,17 @@ span.telephone {
 	    background-color: #fff;
 	    height: 28px;
 	    width: 28px;
-	    border-radius: 28px;
+	    border-radius: 20px;
 	    display: inline-block;
 	    bottom: 9px;
 	    left: 7px;
 	    vertical-align: top;
-	    margin:15px;
+	    margin:10px;
 	    float: left;
 	  }
 	
 	  .soustitre {
-	    font-size:1.5rem;
+	    font-size:1.4rem;
 	    font-weight: 300;
 	    color:#fff;
 	    border-right: 1px solid #fff;
@@ -699,7 +705,7 @@ span.telephone {
 	    /*padding-left:60px;*/
 	
 	    h2 {
-		    font-size:2.0rem;
+		    font-size: 1.8rem;
 		    font-weight: bold;
 		    color:#fff;
 		    margin:0;
@@ -790,9 +796,7 @@ body .container.checklist .wrapper{
       display: block;
       position:relative;
       overflow: hidden;
-      //font-size: 1.2rem;
       font-size: 1.1rem;
-      padding-left: 50px;
       max-width:600px;
       margin-bottom: 15px;
       z-index:12;
