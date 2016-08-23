@@ -34,7 +34,6 @@ import utils.doc.ChecklistForDocConverter;
 import utils.engine.RetraiteEngineFactory;
 import utils.engine.data.CommonExchangeData;
 import utils.engine.data.RenderData;
-import utils.mail.MailSenderWithSendGrid;
 
 public class Application extends RetraiteController {
 
@@ -53,6 +52,90 @@ public class Application extends RetraiteController {
 		final Look look = getLook(params);
 		render(look);
 	}
+
+	public static void displayCheckList(final String key, final Boolean test, final Boolean debug, final Look _look, final Boolean force55) {
+		final Look look = (_look == null ? GENERIC : _look);
+		final DisplayCheckListData displayCheckListData = getFromCache(key);
+		if (displayCheckListData == null) {
+			displayExpired(test, debug, look, force55);
+		}
+		final CommonExchangeData data = displayCheckListData.data;
+		final String page = displayCheckListData.page;
+		final String actionQueryParams = displayCheckListData.actionQueryParams;
+		renderTemplate("Application/steps/" + data.hidden_step + ".html", data, test, debug, page, look, force55, actionQueryParams);
+	}
+
+	public static void displayExpired(final Boolean test, final Boolean debug, final Look look, final Boolean force55) {
+		final String actionQueryParams = computeActionQueryParams(test, debug, look, force55);
+		render(test, debug, look, force55, actionQueryParams);
+	}
+
+	// Plus d'envoi de mail pour l'instant
+	//
+	// public static void sendMail(final PostData postData) {
+	//
+	// final boolean test = params._contains("test");
+	// postData.hidden_userStatus = unbind(params.get("postData.hidden_userStatus"));
+	// final RenderData data = RetraiteEngineFactory.create(test).processToNextStep(postData);
+	// data.isPDF = true;
+	//
+	// final String htmlContent = "Bonjour,<br/><br/>Veuillez trouver ci-joint votre checklist !<br/><br/>L'Equipe <b>Parcours Retraite</b>";
+	//
+	// final File file = new File("parcours.pdf");
+	// final PDF.Options pdfOptions = createPdfOptions();
+	// PDF.writePDF(file, "Application/pdf.html", pdfOptions, data);
+	//
+	// new MailSenderWithSendGrid().sendMail("Parcours Retraite<envoi.retraite@sgmap.fr>", postData.email, "Mon parcours retraite", htmlContent, file);
+	// Logger.info("Mail envoyé à " + postData.email + " !");
+	// ok();
+	// }
+
+	private static final boolean AS_HTML = false;
+	private static final boolean RENDER_PDF_WITH_I_TEXT = false;
+
+	public static void pdf(final PostData postData) {
+
+		final boolean test = params._contains("test");
+		postData.hidden_userStatus = unbind(params.get("postData.hidden_userStatus"));
+		postData.isPDF = true;
+		final RenderData data = RetraiteEngineFactory.create(test).processToNextStep(postData);
+		data.isPDF = true;
+
+		if (AS_HTML || params._contains("html")) {
+			// Rendu HTML pour mise au point
+			render(data);
+		}
+
+		setResponseHeaderForPdfContentType();
+		setResponseHeaderForAttachedPdf("Mes_demarches_retraite.pdf");
+
+		if (RENDER_PDF_WITH_I_TEXT) {
+			final Map<String, Object> params = new HashMap<String, Object>();
+			params.put("data", data);
+
+			renderPdfWith_iText("Application/pdf.html", params);
+			ok();
+		} else {
+			// PDF.renderPDF() ne peut pas être utilisé car il écrase les headers fixés ci-dessus
+
+			final PDF.Options pdfOptions = new PDF.Options();
+			pdfOptions.FOOTER = "<table width='100%' style='font-size: 14px;'><tbody><tr>"
+					+ "<td width='30%' align='left'>" + "" + "</td>"
+					+ "<td width='30%' align='center'>Mes démarches retraite, pas à pas</td>"
+					+ "<td width='30%' align='right'>Page <pagenumber>/<pagecount></td>"
+					+ "</tr></tbody></table>";
+
+			PDF.writePDF(response.out, data, pdfOptions);
+
+			// final Map<String, Object> params = new HashMap<String, Object>();
+			// params.put("data", data);
+			// final String hmltResultWithFullCssPath = renderToHtml("Application/pdf.html", params);
+
+			ok();
+		}
+	}
+
+	// Méthodes privées
 
 	private static void _process(PostData postData) {
 		if (postData == null) {
@@ -97,86 +180,6 @@ public class Application extends RetraiteController {
 		final Boolean force55 = (_force55 ? true : null);
 		displayCheckList(key, test, debug, look, force55);
 	}
-
-	public static void displayCheckList(final String key, final Boolean test, final Boolean debug, final Look _look, final Boolean force55) {
-		final Look look = (_look == null ? GENERIC : _look);
-		final DisplayCheckListData displayCheckListData = getFromCache(key);
-		if (displayCheckListData == null) {
-			displayExpired(test, debug, look, force55);
-		}
-		final CommonExchangeData data = displayCheckListData.data;
-		final String page = displayCheckListData.page;
-		final String actionQueryParams = displayCheckListData.actionQueryParams;
-		renderTemplate("Application/steps/" + data.hidden_step + ".html", data, test, debug, page, look, force55, actionQueryParams);
-	}
-
-	public static void displayExpired(final Boolean test, final Boolean debug, final Look look, final Boolean force55) {
-		final String actionQueryParams = computeActionQueryParams(test, debug, look, force55);
-		render(test, debug, look, force55, actionQueryParams);
-	}
-
-	public static void sendMail(final PostData postData) {
-
-		final boolean test = params._contains("test");
-		final RenderData data = RetraiteEngineFactory.create(test).processToNextStep(postData);
-		data.isPDF = true;
-
-		final String htmlContent = "Bonjour,<br/><br/>Veuillez trouver ci-joint votre checklist !<br/><br/>L'Equipe <b>Parcours Retraite</b>";
-
-		final File file = new File("parcours.pdf");
-		final PDF.Options pdfOptions = createPdfOptions();
-		PDF.writePDF(file, "Application/pdf.html", pdfOptions, data);
-
-		new MailSenderWithSendGrid().sendMail("Parcours Retraite<envoi.retraite@sgmap.fr>", postData.email, "Mon parcours retraite", htmlContent, file);
-		Logger.info("Mail envoyé à " + postData.email + " !");
-		ok();
-	}
-
-	private static final boolean AS_HTML = false;
-	private static final boolean RENDER_PDF_WITH_I_TEXT = false;
-
-	public static void pdf(final PostData postData) {
-
-		final boolean test = params._contains("test");
-		postData.isPDF = true;
-		final RenderData data = RetraiteEngineFactory.create(test).processToNextStep(postData);
-		data.isPDF = true;
-
-		if (AS_HTML || params._contains("html")) {
-			// Rendu HTML pour mise au point
-			render(data);
-		}
-
-		setResponseHeaderForPdfContentType();
-		setResponseHeaderForAttachedPdf("Mes_demarches_retraite.pdf");
-
-		if (RENDER_PDF_WITH_I_TEXT) {
-			final Map<String, Object> params = new HashMap<String, Object>();
-			params.put("data", data);
-
-			renderPdfWith_iText("Application/pdf.html", params);
-			ok();
-		} else {
-			// PDF.renderPDF() ne peut pas être utilisé car il écrase les headers fixés ci-dessus
-
-			final PDF.Options pdfOptions = new PDF.Options();
-			pdfOptions.FOOTER = "<table width='100%' style='font-size: 14px;'><tbody><tr>"
-					+ "<td width='30%' align='left'>" + "" + "</td>"
-					+ "<td width='30%' align='center'>Mes démarches retraite, pas à pas</td>"
-					+ "<td width='30%' align='right'>Page <pagenumber>/<pagecount></td>"
-					+ "</tr></tbody></table>";
-
-			PDF.writePDF(response.out, data, pdfOptions);
-
-			// final Map<String, Object> params = new HashMap<String, Object>();
-			// params.put("data", data);
-			// final String hmltResultWithFullCssPath = renderToHtml("Application/pdf.html", params);
-
-			ok();
-		}
-	}
-
-	// Méthodes privées
 
 	private static String getPageNameForGoogleAnalytics(final RenderData data) {
 		return data.hidden_step + ("displayLiquidateurQuestions".equals(data.hidden_step) ? "_" + data.hidden_liquidateurStep : "");

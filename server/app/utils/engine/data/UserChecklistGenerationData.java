@@ -1,5 +1,7 @@
 package utils.engine.data;
 
+import java.util.Arrays;
+
 import utils.engine.data.enums.Regime;
 import utils.engine.data.enums.RegimeAligne;
 
@@ -51,6 +53,14 @@ public class UserChecklistGenerationData {
 
 	public static Builder create() {
 		return new Builder();
+	}
+
+	@Override
+	public String toString() {
+		return "UserChecklistGenerationData[dateDepart=" + dateDepart + ", departement=" + departement + ", regimes=" + Arrays.toString(regimes)
+				+ ", regimesAlignes=" + Arrays.toString(regimesAlignes) + ", isConjointCollaborateur=" + isConjointCollaborateur + ", isNSA=" + isNSA
+				+ ", isSA=" + isSA + ", isCarriereLongue=" + isCarriereLongue + ", published=" + published + ", isPDF=" + isPDF + ", regimesInfosJsonStr="
+				+ regimesInfosJsonStr + "]";
 	}
 
 	public static class Builder {
