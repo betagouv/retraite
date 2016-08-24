@@ -52,7 +52,7 @@ public class DisplayerAdditionalQuestionsTest {
 	public void step_display_additionnal_questions_after_carriere_longue_with_hidden_data() {
 
 		final PostData postData = new PostData();
-		postData.hidden_step = "displayQuestionCarriereLongue";
+		postData.hidden_step = "displaySortieQuestionCarriereLongue";
 		postData.hidden_departMois = "11";
 		postData.hidden_departAnnee = "2017";
 		final RenderData renderData = new RenderData();

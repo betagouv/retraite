@@ -36,14 +36,14 @@ module.exports = function (config) {
             <!-- endinjector -->
 
             <!-- injector:js -->
-            'testjs/displayQuestionCarriereLongue.spec.js',
+            'testjs/displaySortieQuestionCarriereLongue.spec.js',
             'testjs/extra.gobal.variables.for.tests.js',
             'testjs/questions.spec.js',
             'public/javascripts/displayAdditionalQuestions.js',
             'public/javascripts/displayCheckList.js',
             'public/javascripts/displayDepartureDate.js',
             'public/javascripts/displayLiquidateurQuestions.js',
-            'public/javascripts/displayQuestionCarriereLongue.js',
+            'public/javascripts/displaySortieQuestionCarriereLongue.js',
             'public/javascripts/getUserData.js',
             'public/javascripts/infocookie.js',
             'public/javascripts/questions.js',
