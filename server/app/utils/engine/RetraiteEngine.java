@@ -34,7 +34,7 @@ public class RetraiteEngine {
 	private final DisplayerDepartureDate displayerDepartureDate;
 	private final DisplayerAdditionalQuestions displayerAdditionalQuestions;
 	private final DisplayerChecklist displayerChecklist;
-	private final DisplayerQuestionCarriereLongue displayerQuestionCarriereLongue;
+	private final DisplayerSortieQuestionCarriereLongue displayerSortieQuestionCarriereLongue;
 	private final DisplayerSortieDepartInconnu displayerSortieDepartInconnu;
 	private final DisplayerSortiePenibilite displayerSortiePenibilite;
 	private final DisplayerSortieTropJeune displayerSortieTropJeune;
@@ -49,7 +49,7 @@ public class RetraiteEngine {
 			final DisplayerDepartureDate displayerDepartureDate,
 			final DisplayerAdditionalQuestions displayerAdditionalQuestions,
 			final DisplayerChecklist displayerChecklist,
-			final DisplayerQuestionCarriereLongue displayerQuestionCarriereLongue,
+			final DisplayerSortieQuestionCarriereLongue displayerQuestionCarriereLongue,
 			final DisplayerSortieDepartInconnu displayerSortieDepartInconnu,
 			final DisplayerSortiePenibilite displayerSortiePenibilite,
 			final DisplayerSortieTropJeune displayerSortieTropJeune) {
@@ -63,7 +63,7 @@ public class RetraiteEngine {
 		this.displayerDepartureDate = displayerDepartureDate;
 		this.displayerAdditionalQuestions = displayerAdditionalQuestions;
 		this.displayerChecklist = displayerChecklist;
-		this.displayerQuestionCarriereLongue = displayerQuestionCarriereLongue;
+		this.displayerSortieQuestionCarriereLongue = displayerQuestionCarriereLongue;
 		this.displayerSortieDepartInconnu = displayerSortieDepartInconnu;
 		this.displayerSortiePenibilite = displayerSortiePenibilite;
 		this.displayerSortieTropJeune = displayerSortieTropJeune;
@@ -126,10 +126,10 @@ public class RetraiteEngine {
 				return renderData;
 			}
 			if (!ageLegalEvaluator.isAgeLegal(postData.hidden_naissance, postData.departMois, postData.departAnnee)) {
-				return displayQuestionCarriereLongue(postData, renderData);
+				return displaySortieQuestionCarriereLongue(postData, renderData);
 			}
 			displayerAdditionalQuestions.fillData(postData, renderData);
-		} else if (postData.hidden_step.equals("displayQuestionCarriereLongue")) {
+		} else if (postData.hidden_step.equals("displaySortieQuestionCarriereLongue")) {
 			renderData.hidden_attestationCarriereLongue = true;
 			displayerAdditionalQuestions.fillData(postData, renderData);
 		} else if (postData.hidden_step.equals("displayAdditionalQuestions") || postData.hidden_step.equals("displayCheckList")) {
@@ -151,8 +151,8 @@ public class RetraiteEngine {
 		return renderData;
 	}
 
-	private RenderData displayQuestionCarriereLongue(final PostData data, final RenderData renderData) {
-		displayerQuestionCarriereLongue.fillData(data, renderData);
+	private RenderData displaySortieQuestionCarriereLongue(final PostData data, final RenderData renderData) {
+		displayerSortieQuestionCarriereLongue.fillData(data, renderData);
 		return renderData;
 	}
 

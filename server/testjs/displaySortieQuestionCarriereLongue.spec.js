@@ -1,11 +1,11 @@
 'use strict';
 
-describe('displayQuestionCarriereLongue', function () {
+describe('displaySortieQuestionCarriereLongue', function () {
 
 	beforeEach(function () {
 		jasmine.getFixtures().fixturesPath = 'base/testjs/spec/javascripts/fixtures';
-		loadFixtures('displayQuestionCarriereLongue.html');
-		DisplayQuestionCarriereLongue.initJquery(); 
+		loadFixtures('displaySortieQuestionCarriereLongue.html');
+		displaySortieQuestionCarriereLongue.initJquery(); 
 	});
 
     it('should be disabled initialy', function () {
@@ -16,9 +16,9 @@ describe('displayQuestionCarriereLongue', function () {
     	
     	$('[name=CARRIERE_LONGUE]').trigger( "click" );
 		
-    	$(document).on('DisplayQuestionCarriereLongue:diplayUpdated', function() {
+    	$(document).on('displaySortieQuestionCarriereLongue:diplayUpdated', function() {
 			// Il faut se désabonner de l'évènement pour éviter le mélange entre chaque TU
-			$(document).off('DisplayQuestionCarriereLongue:diplayUpdated');
+			$(document).off('displaySortieQuestionCarriereLongue:diplayUpdated');
 			expectNextButtonIsEnabled(); 
 			done();
 		}); 

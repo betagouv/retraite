@@ -112,7 +112,7 @@ public class Validations extends RetraiteController {
 		content += renderEcranSortie("Date de départ inconnu", "Application/steps/displaySortieDepartInconnu.html", args);
 		content += renderEcranSortie("Pénibilité", "Application/steps/displaySortiePenibilite.html", args);
 		content += renderEcranSortie("Trop jeune", "Application/steps/displaySortieTropJeune.html", args);
-		content += renderEcranSortie("Age < légal - Carrière longue", "Application/steps/displayQuestionCarriereLongue.html", args);
+		content += renderEcranSortie("Age < légal - Carrière longue", "Application/steps/displaySortieQuestionCarriereLongue.html", args);
 
 		render(content, look);
 	}

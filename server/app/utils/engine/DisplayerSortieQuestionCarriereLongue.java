@@ -8,16 +8,16 @@ import utils.engine.data.RenderData;
 import utils.engine.data.enums.RegimeAligne;
 import utils.engine.utils.AgeLegalEvaluator;
 
-public class DisplayerQuestionCarriereLongue {
+public class DisplayerSortieQuestionCarriereLongue {
 
 	private final AgeLegalEvaluator ageLegalEvaluator;
 
-	public DisplayerQuestionCarriereLongue(final AgeLegalEvaluator ageLegalEvaluator) {
+	public DisplayerSortieQuestionCarriereLongue(final AgeLegalEvaluator ageLegalEvaluator) {
 		this.ageLegalEvaluator = ageLegalEvaluator;
 	}
 
 	public void fillData(final PostData data, final RenderData renderData) {
-		renderData.hidden_step = "displayQuestionCarriereLongue";
+		renderData.hidden_step = "displaySortieQuestionCarriereLongue";
 		renderData.hidden_departMois = data.departMois != null ? data.departMois : data.hidden_departMois;
 		renderData.hidden_departAnnee = data.departAnnee != null ? data.departAnnee : data.hidden_departAnnee;
 		renderData.extras = new HashMap<>();

@@ -16,9 +16,9 @@ import models.AnneesEtMois;
 import utils.engine.data.RenderData;
 import utils.engine.utils.AgeLegalEvaluator;
 
-public class DisplayerQuestionCarriereLongueTest {
+public class DisplayerSortieQuestionCarriereLongueTest {
 
-	private DisplayerQuestionCarriereLongue displayerQuestionCarriereLongue;
+	private DisplayerSortieQuestionCarriereLongue displayerSortieQuestionCarriereLongue;
 	private AgeLegalEvaluator ageLegalEvaluatorMock;
 
 	@Before
@@ -26,7 +26,7 @@ public class DisplayerQuestionCarriereLongueTest {
 
 		ageLegalEvaluatorMock = mock(AgeLegalEvaluator.class);
 
-		displayerQuestionCarriereLongue = new DisplayerQuestionCarriereLongue(ageLegalEvaluatorMock);
+		displayerSortieQuestionCarriereLongue = new DisplayerSortieQuestionCarriereLongue(ageLegalEvaluatorMock);
 	}
 
 	@Test
@@ -48,9 +48,9 @@ public class DisplayerQuestionCarriereLongueTest {
 		when(ageLegalEvaluatorMock.getAgeLegalPourPartir("03/11/1958")).thenReturn(ageLegalPourPartir);
 		when(ageLegalEvaluatorMock.calculeDateEnAjoutant("03/11/1958", ageLegalPourPartir)).thenReturn(dateDepartPossible);
 
-		displayerQuestionCarriereLongue.fillData(postData, renderData);
+		displayerSortieQuestionCarriereLongue.fillData(postData, renderData);
 
-		assertThat(renderData.hidden_step).isEqualTo("displayQuestionCarriereLongue");
+		assertThat(renderData.hidden_step).isEqualTo("displaySortieQuestionCarriereLongue");
 		assertThat(renderData.hidden_departMois).isEqualTo("11");
 		assertThat(renderData.hidden_departAnnee).isEqualTo("2017");
 		final Map<String, Object> expectedExtras = new HashMap<String, Object>() {
