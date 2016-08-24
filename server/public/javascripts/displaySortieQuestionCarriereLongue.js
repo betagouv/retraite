@@ -1,6 +1,6 @@
 "use strict";
 
-var DisplayQuestionCarriereLongue = {};
+var displaySortieQuestionCarriereLongue = {};
 
 (function() {
 	
@@ -16,7 +16,7 @@ var DisplayQuestionCarriereLongue = {};
 		
 	function updateDisplay() {
 		updateNextButtonState();
-		$(document).trigger('DisplayQuestionCarriereLongue:diplayUpdated');
+		$(document).trigger('displaySortieQuestionCarriereLongue:diplayUpdated');
 	}
 	
 	function initJquery() {
@@ -28,9 +28,9 @@ var DisplayQuestionCarriereLongue = {};
 		updateDisplay();
 	}
 
-	DisplayQuestionCarriereLongue.initJquery = initJquery;
+	displaySortieQuestionCarriereLongue.initJquery = initJquery;
 
 	
 })();
 
-$(DisplayQuestionCarriereLongue.initJquery);
+$(displaySortieQuestionCarriereLongue.initJquery);

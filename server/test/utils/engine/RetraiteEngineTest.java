@@ -77,7 +77,7 @@ public class RetraiteEngineTest {
 	private DisplayerDepartureDate displayerDepartureDateMock;
 	private DisplayerAdditionalQuestions displayerAdditionalQuestionsMock;
 	private DisplayerChecklist displayerChecklistMock;
-	private DisplayerQuestionCarriereLongue displayerQuestionCarriereLongueMock;
+	private DisplayerSortieQuestionCarriereLongue displayerSortieQuestionCarriereLongueMock;
 
 	private RetraiteEngine retraiteEngine;
 	private final String liquidateurReponseJsonStr = "[\"OUI\"]";
@@ -110,18 +110,18 @@ public class RetraiteEngineTest {
 		displayerDepartureDateMock = mock(DisplayerDepartureDate.class);
 		displayerAdditionalQuestionsMock = mock(DisplayerAdditionalQuestions.class);
 		displayerChecklistMock = mock(DisplayerChecklist.class);
-		displayerQuestionCarriereLongueMock = mock(DisplayerQuestionCarriereLongue.class);
+		displayerSortieQuestionCarriereLongueMock = mock(DisplayerSortieQuestionCarriereLongue.class);
 
 		retraiteEngine = new RetraiteEngine(infoRetraiteMock, calculateurRegimeAlignesMock, daoFakeDataMock,
 				ageCalculatorMock, ageLegalEvaluatorMock, displayerLiquidateurQuestionsMock, displayerDepartureDateMock, displayerAdditionalQuestionsMock,
-				displayerChecklistMock, displayerQuestionCarriereLongueMock, displayerSortieDepartInconnuMock, displayerSortiePenibiliteMock,
+				displayerChecklistMock, displayerSortieQuestionCarriereLongueMock, displayerSortieDepartInconnuMock, displayerSortiePenibiliteMock,
 				displayerSortieTropJeuneMock);
 	}
 
 	@After
 	public void assertNoMoreInteractionsOnMocks() {
 		verifyNoMoreInteractions(displayerLiquidateurQuestionsMock, displayerDepartureDateMock, displayerAdditionalQuestionsMock, displayerChecklistMock,
-				displayerQuestionCarriereLongueMock, displayerSortieDepartInconnuMock, displayerSortiePenibiliteMock, displayerSortieTropJeuneMock);
+				displayerSortieQuestionCarriereLongueMock, displayerSortieDepartInconnuMock, displayerSortiePenibiliteMock, displayerSortieTropJeuneMock);
 	}
 
 	@Test
@@ -483,7 +483,7 @@ public class RetraiteEngineTest {
 	@Test
 	public void step_display_age_trop_jeune_question_carriere_longue() {
 
-		// Step : displayDepartureDate --> displayQuestionCarriereLongue
+		// Step : displayDepartureDate --> displaySortieQuestionCarriereLongue
 
 		final PostData postData = new PostData();
 		postData.hidden_step = "displayDepartureDate";
@@ -500,7 +500,7 @@ public class RetraiteEngineTest {
 
 		final RenderData renderData = retraiteEngine.processToNextStep(postData);
 
-		verify(displayerQuestionCarriereLongueMock).fillData(isA(PostData.class), isA(RenderData.class));
+		verify(displayerSortieQuestionCarriereLongueMock).fillData(isA(PostData.class), isA(RenderData.class));
 		assertThat(renderData.hidden_nom).isEqualTo("DUPONT");
 		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
 		assertThat(renderData.hidden_nir).isEqualTo("1 50 12 18 123 456");
@@ -513,10 +513,10 @@ public class RetraiteEngineTest {
 	@Test
 	public void step_display_additionnal_questions_after_carriere_longue() {
 
-		// Step : displayQuestionCarriereLongue --> displayAdditionalQuestions
+		// Step : displaySortieQuestionCarriereLongue --> displayAdditionalQuestions
 
 		final PostData postData = new PostData();
-		postData.hidden_step = "displayQuestionCarriereLongue";
+		postData.hidden_step = "displaySortieQuestionCarriereLongue";
 		postData.hidden_nom = "DUPONT";
 		postData.hidden_naissance = "1/2/3";
 		postData.hidden_nir = "1 50 12 18 123 456";
