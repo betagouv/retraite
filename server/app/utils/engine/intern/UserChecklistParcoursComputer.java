@@ -33,7 +33,7 @@ public class UserChecklistParcoursComputer {
 	}
 
 	private String replaceVars(final String text, final UserChecklistGenerationData userChecklistGenerationData) {
-		final Map<String, String> vars = userChecklistVarsProvider.provideVars(userChecklistGenerationData).getMapOfValues();
+		final Map<String, Object> vars = userChecklistVarsProvider.provideVars(userChecklistGenerationData).getMapOfValues();
 		try {
 			return variablesReplacer.replaceVariables(text, vars);
 		} catch (final RetraiteException e) {

@@ -24,7 +24,7 @@ public class VariablesReplacerMustacheTest {
 	public void should_replace_variables() {
 
 		final String text = "avant {{une_variable}} apres";
-		final Map<String, String> variables = new HashMap<>();
+		final Map<String, Object> variables = new HashMap<>();
 		variables.put("une_variable", "toto");
 
 		final String result = variablesReplacer.replaceVariables(text, variables);
@@ -33,23 +33,25 @@ public class VariablesReplacerMustacheTest {
 	}
 
 	@Test
-	public void should_display_conditionnal_section() {
+	public void should_display_conditionnal_sections() {
 
-		final String text = "prefix {{#une_variable}}avant {{une_variable}} apres{{/une_variable}} suffixe";
-		final Map<String, String> variables = new HashMap<>();
+		final String text = "prefix {{#une_variable}}avant {{une_variable}} apres{{/une_variable}} suffixe{{#un_booleen}} et avant le booléen{{/un_booleen}}";
+		final Map<String, Object> variables = new HashMap<>();
 		variables.put("une_variable", "toto");
+		variables.put("un_booleen", true);
 
 		final String result = variablesReplacer.replaceVariables(text, variables);
 
-		assertThat(result).isEqualTo("prefix avant toto apres suffixe");
+		assertThat(result).isEqualTo("prefix avant toto apres suffixe et avant le booléen");
 	}
 
 	@Test
-	public void should_not_display_conditionnal_section() {
+	public void should_not_display_conditionnal_sections() {
 
-		final String text = "prefix {{#une_variable}}avant {{une_variable}} apres{{/une_variable}} suffixe";
-		final Map<String, String> variables = new HashMap<>();
+		final String text = "prefix {{#une_variable}}avant {{une_variable}} apres{{/une_variable}} suffixe{{#un_booleen}} et avant le booléen{{/un_booleen}}";
+		final Map<String, Object> variables = new HashMap<>();
 		variables.put("une_autre_variable", "toto");
+		variables.put("un_booleen", false);
 
 		final String result = variablesReplacer.replaceVariables(text, variables);
 
@@ -60,7 +62,7 @@ public class VariablesReplacerMustacheTest {
 	public void should_throw_exception_if_internal_exception() {
 
 		final String text = "avant {{une_variable apres"; // Erreur, manque }}
-		final Map<String, String> variables = new HashMap<>();
+		final Map<String, Object> variables = new HashMap<>();
 
 		try {
 			variablesReplacer.replaceVariables(text, variables);
