@@ -15,6 +15,7 @@ import java.util.Map;
 import controllers.utils.Look;
 import models.Caisse;
 import models.PeriodeDepartLegal;
+import play.mvc.Before;
 import play.templates.Template;
 import play.templates.TemplateLoader;
 import utils.DateUtils;
@@ -26,6 +27,11 @@ import utils.engine.utils.AgeLegalEvaluator;
 import utils.wsinforetraite.InfoRetraiteResult.InfoRetraiteResultRegime;
 
 public class Validations extends RetraiteController {
+
+	@Before
+	public void disableGoogleAnalytics() {
+		withoutGoogleAnalytics();
+	}
 
 	public static void caisses() {
 
