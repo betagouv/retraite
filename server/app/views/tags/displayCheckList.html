@@ -94,6 +94,11 @@
 					#{/if}
 
 
+					<div class="links-urls">
+						#{list items:chapitre.urls, as:'url'}
+							<sup>${url_index}</sup> ${url}<br/>
+						#{/list}
+					</div>
 				</div>
 				<!--fin borderleft-->
 			</div>

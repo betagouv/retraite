@@ -1,5 +1,7 @@
 package utils.engine.intern;
 
+import java.util.ArrayList;
+
 import models.Chapitre;
 import models.Delai;
 import utils.engine.data.UserChapitre;
@@ -17,12 +19,14 @@ public class UserChecklistChapitreComputer {
 	}
 
 	public UserChapitre compute(final Chapitre chapitre, final UserChecklistGenerationData userChecklistGenerationData) {
+
 		final UserChapitre userChapitre = new UserChapitre();
 		userChapitre.titre = chapitre.titre;
 		userChapitre.delai = computeDelai(chapitre, userChecklistGenerationData);
-		userChapitre.texteActions = userChecklistParcoursComputer.compute(chapitre.texteActions, userChecklistGenerationData);
-		userChapitre.texteModalites = userChecklistParcoursComputer.compute(chapitre.texteModalites, userChecklistGenerationData);
-		userChapitre.texteInfos = userChecklistParcoursComputer.compute(chapitre.texteInfos, userChecklistGenerationData);
+		userChapitre.urls = new ArrayList<>();
+		userChapitre.texteActions = userChecklistParcoursComputer.compute(chapitre.texteActions, userChecklistGenerationData, userChapitre.urls);
+		userChapitre.texteModalites = userChecklistParcoursComputer.compute(chapitre.texteModalites, userChecklistGenerationData, userChapitre.urls);
+		userChapitre.texteInfos = userChecklistParcoursComputer.compute(chapitre.texteInfos, userChecklistGenerationData, userChapitre.urls);
 
 		return userChapitre;
 	}

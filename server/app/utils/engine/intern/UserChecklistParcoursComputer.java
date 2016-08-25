@@ -2,6 +2,7 @@ package utils.engine.intern;
 
 import static utils.TextUtils.isLikeEmpty;
 
+import java.util.List;
 import java.util.Map;
 
 import play.Logger;
@@ -20,7 +21,7 @@ public class UserChecklistParcoursComputer {
 		this.variablesReplacer = variablesReplacer;
 	}
 
-	public String compute(final String text, final UserChecklistGenerationData userChecklistGenerationData) {
+	public String compute(final String text, final UserChecklistGenerationData userChecklistGenerationData, final List<String> links) {
 		if (text == null) {
 			return null;
 		}
@@ -28,7 +29,7 @@ public class UserChecklistParcoursComputer {
 			return null;
 		}
 		final boolean isPDF = userChecklistGenerationData != null && userChecklistGenerationData.isPDF;
-		return replaceVars(replaceLinks(text, isPDF), userChecklistGenerationData);
+		return replaceVars(replaceLinks(text, isPDF, links), userChecklistGenerationData);
 	}
 
 	private String replaceVars(final String text, final UserChecklistGenerationData userChecklistGenerationData) {
@@ -41,11 +42,11 @@ public class UserChecklistParcoursComputer {
 		}
 	}
 
-	private String replaceLinks(final String text, final boolean isPDF) {
-		return replaceLinks(text, 0, isPDF);
+	private String replaceLinks(final String text, final boolean isPDF, final List<String> links) {
+		return replaceLinks(text, 0, isPDF, links);
 	}
 
-	private String replaceLinks(final String text, final int fromIndex, final boolean isPDF) {
+	private String replaceLinks(final String text, final int fromIndex, final boolean isPDF, final List<String> links) {
 		final BeginIndex beginIndex = searchBeginIndex(text, fromIndex);
 		if (beginIndex == BeginIndex.NONE) {
 			return text;
@@ -53,10 +54,10 @@ public class UserChecklistParcoursComputer {
 		final int endIndex = searchEndIndexForLink(beginIndex.type, text, beginIndex.index);
 		final String beforeLink = text.substring(0, beginIndex.index);
 		final String link = text.substring(beginIndex.type == BeginIndexType.SIMPLE ? beginIndex.index : beginIndex.index + 2, endIndex);
-		final String buildedLink = buildLink(beginIndex.type, link, isPDF);
+		final String buildedLink = buildLink(beginIndex.type, link, isPDF, links);
 		final String afterLink = text.substring(beginIndex.type == BeginIndexType.SIMPLE ? endIndex : endIndex + 2);
 		final String newText = beforeLink + buildedLink + afterLink;
-		return replaceLinks(newText, beforeLink.length() + buildedLink.length(), isPDF);
+		return replaceLinks(newText, beforeLink.length() + buildedLink.length(), isPDF, links);
 	}
 
 	private int searchEndIndexForLink(final BeginIndexType type, final String text, final int beginIndex) {
@@ -113,9 +114,9 @@ public class UserChecklistParcoursComputer {
 		return endIndex;
 	}
 
-	private String buildLink(final BeginIndexType type, final String link, final boolean isPDF) {
+	private String buildLink(final BeginIndexType type, final String link, final boolean isPDF, final List<String> links) {
 		if (type == BeginIndexType.SIMPLE) {
-			return buildLinkSimple(link, isPDF);
+			return buildLinkSimple(link, isPDF, links);
 		}
 		final String linkTrimed = link.trim();
 		final int index = linkTrimed.indexOf("http");
@@ -125,19 +126,25 @@ public class UserChecklistParcoursComputer {
 		}
 		if (index == 0) {
 			// Pas de texte, on traite comme un lien simple
-			return buildLinkSimple(linkTrimed, isPDF);
+			return buildLinkSimple(linkTrimed, isPDF, links);
 		}
 		final String textForLink = linkTrimed.substring(0, index).trim();
 		final String url = linkTrimed.substring(index);
 		String htmlLink = buildLink(url, textForLink);
 		if (isPDF) {
-			htmlLink += " (" + buildLink(url, url) + ")";
+			links.add(url);
+			htmlLink += "<sup>" + links.size() + "</sup>";
 		}
 		return htmlLink;
 	}
 
-	private String buildLinkSimple(final String link, final boolean isPDF) {
-		return buildLink(link, isPDF ? link : convertTextForLink(link));
+	private String buildLinkSimple(final String link, final boolean isPDF, final List<String> links) {
+		String result = buildLink(link, convertTextForLink(link));
+		if (isPDF) {
+			links.add(link);
+			result += "<sup>" + links.size() + "</sup>";
+		}
+		return result;
 	}
 
 	private String buildLink(final String url, final String textForLink) {
