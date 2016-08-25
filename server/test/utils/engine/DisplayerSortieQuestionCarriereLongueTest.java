@@ -23,9 +23,7 @@ public class DisplayerSortieQuestionCarriereLongueTest {
 
 	@Before
 	public void setUp() throws Exception {
-
 		ageLegalEvaluatorMock = mock(AgeLegalEvaluator.class);
-
 		displayerSortieQuestionCarriereLongue = new DisplayerSortieQuestionCarriereLongue(ageLegalEvaluatorMock);
 	}
 
