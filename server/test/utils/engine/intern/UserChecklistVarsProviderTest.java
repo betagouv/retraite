@@ -29,22 +29,78 @@ public class UserChecklistVarsProviderTest {
 	}
 
 	@Test
-	public void should_provide_good_variables() {
+	public void should_provide_good_variables_with_booleans_1() {
 
 		final MonthAndYear dateDepart = null;
 		final Regime[] regimes = new Regime[] { CNAV, IRCEC, BFSP, AGIRC_ARRCO, CARCD };
 		final RegimeAligne[] regimesAlignes = null;
-		final UserChecklistGenerationData userChecklistGenerationData = new UserChecklistGenerationData(dateDepart, "973", regimes, regimesAlignes,
-				true, false, "");
+		final UserChecklistGenerationData userChecklistGenerationData = UserChecklistGenerationData.create()
+				.withDateDepart(dateDepart)
+				.withDepartement("973")
+				.withRegimes(regimes)
+				.withRegimesAlignes(regimesAlignes)
+				.withPublished(true)
+				.withIsPDF(false)
+				.withRegimesInfosJsonStr("")
+				.withSA(true)
+				.withNSA(false)
+				.withConjointCollaborateur(false)
+				.withChef(true)
+				.get();
 
 		final UserChecklistVars vars = userChecklistVarsProvider.provideVars(userChecklistGenerationData);
 
-		final Map<String, String> expectedMap = new HashMap<String, String>() {
+		final Map<String, Object> expectedMap = new HashMap<String, Object>() {
 			{
 				put("regimes_base_hors_alignes", "Banque de France,Caisse d'assurance retraite des chirurgiens dentistes");
 				put("regimes_compl_hors_agirc_arrco", "Caisse nationale de retraite complémentaire des artistes auteurs");
 				put("regimes_hors_alignes_et_hors_agirc_arrco",
 						"Caisse nationale de retraite complémentaire des artistes auteurs,Banque de France,Caisse d'assurance retraite des chirurgiens dentistes");
+				put("agirc_arrco", true);
+				put("status_nsa", false);
+				put("status_sa", true);
+				put("status_chef", true);
+				put("status_conjoint", false);
+
+			}
+		};
+		assertThat(vars.getMapOfValues()).isEqualTo(expectedMap);
+	}
+
+	@Test
+	public void should_provide_good_variables_with_booleans_2() {
+
+		final MonthAndYear dateDepart = null;
+		final Regime[] regimes = new Regime[] { CNAV, IRCEC, BFSP, CARCD };
+		final RegimeAligne[] regimesAlignes = null;
+		final UserChecklistGenerationData userChecklistGenerationData = UserChecklistGenerationData.create()
+				.withDateDepart(dateDepart)
+				.withDepartement("973")
+				.withRegimes(regimes)
+				.withRegimesAlignes(regimesAlignes)
+				.withPublished(true)
+				.withIsPDF(false)
+				.withRegimesInfosJsonStr("")
+				.withSA(false)
+				.withNSA(true)
+				.withConjointCollaborateur(true)
+				.withChef(false)
+				.get();
+
+		final UserChecklistVars vars = userChecklistVarsProvider.provideVars(userChecklistGenerationData);
+
+		final Map<String, Object> expectedMap = new HashMap<String, Object>() {
+			{
+				put("regimes_base_hors_alignes", "Banque de France,Caisse d'assurance retraite des chirurgiens dentistes");
+				put("regimes_compl_hors_agirc_arrco", "Caisse nationale de retraite complémentaire des artistes auteurs");
+				put("regimes_hors_alignes_et_hors_agirc_arrco",
+						"Caisse nationale de retraite complémentaire des artistes auteurs,Banque de France,Caisse d'assurance retraite des chirurgiens dentistes");
+				put("agirc_arrco", false);
+				put("status_nsa", true);
+				put("status_sa", false);
+				put("status_chef", false);
+				put("status_conjoint", true);
+
 			}
 		};
 		assertThat(vars.getMapOfValues()).isEqualTo(expectedMap);

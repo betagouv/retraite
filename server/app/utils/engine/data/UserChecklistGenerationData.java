@@ -13,6 +13,7 @@ public class UserChecklistGenerationData {
 	private RegimeAligne[] regimesAlignes;
 
 	public boolean isConjointCollaborateur;
+	public boolean isChef;
 	public boolean isNSA;
 	public boolean isSA;
 	public boolean isCarriereLongue;
@@ -58,9 +59,9 @@ public class UserChecklistGenerationData {
 	@Override
 	public String toString() {
 		return "UserChecklistGenerationData[dateDepart=" + dateDepart + ", departement=" + departement + ", regimes=" + Arrays.toString(regimes)
-				+ ", regimesAlignes=" + Arrays.toString(regimesAlignes) + ", isConjointCollaborateur=" + isConjointCollaborateur + ", isNSA=" + isNSA
-				+ ", isSA=" + isSA + ", isCarriereLongue=" + isCarriereLongue + ", published=" + published + ", isPDF=" + isPDF + ", regimesInfosJsonStr="
-				+ regimesInfosJsonStr + "]";
+				+ ", regimesAlignes=" + Arrays.toString(regimesAlignes) + ", isConjointCollaborateur=" + isConjointCollaborateur + ", isChef=" + isChef
+				+ ", isNSA=" + isNSA + ", isSA=" + isSA + ", isCarriereLongue=" + isCarriereLongue + ", published=" + published + ", isPDF=" + isPDF
+				+ ", regimesInfosJsonStr=" + regimesInfosJsonStr + "]";
 	}
 
 	public static class Builder {
@@ -86,6 +87,21 @@ public class UserChecklistGenerationData {
 			return this;
 		}
 
+		public Builder withRegimesAlignes(final RegimeAligne... regimesAlignes) {
+			userChecklistGenerationData.regimesAlignes = regimesAlignes;
+			return this;
+		}
+
+		public Builder withPublished(final boolean published) {
+			userChecklistGenerationData.published = published;
+			return this;
+		}
+
+		public Builder withIsPDF(final boolean isPDF) {
+			userChecklistGenerationData.isPDF = isPDF;
+			return this;
+		}
+
 		public Builder withSA(final boolean isSA) {
 			userChecklistGenerationData.isSA = isSA;
 			return this;
@@ -98,6 +114,11 @@ public class UserChecklistGenerationData {
 
 		public Builder withConjointCollaborateur(final boolean isConjointCollaborateur) {
 			userChecklistGenerationData.isConjointCollaborateur = isConjointCollaborateur;
+			return this;
+		}
+
+		public Builder withChef(final boolean isChef) {
+			userChecklistGenerationData.isChef = isChef;
 			return this;
 		}
 

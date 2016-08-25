@@ -24,7 +24,7 @@ import utils.engine.utils.VariablesReplacer;
 public class UserChecklistParcoursComputerTest {
 
 	final UserChecklistVars vars = new UserChecklistVars();
-	final Map<String, String> variables = vars.getMapOfValues();
+	final Map<String, Object> variables = vars.getMapOfValues();
 
 	private UserChecklistVarsProvider userChecklistVarsProviderMock;
 	private VariablesReplacer variablesReplacerMock;

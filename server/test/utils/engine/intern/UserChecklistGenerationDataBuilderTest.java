@@ -3,6 +3,7 @@ package utils.engine.intern;
 import static java.util.Arrays.asList;
 import static org.fest.assertions.Assertions.assertThat;
 import static utils.engine.data.enums.RegimeAligne.CNAV;
+import static utils.engine.data.enums.UserStatus.STATUS_CHEF;
 import static utils.engine.data.enums.UserStatus.STATUS_CONJOINT_COLLABORATEUR;
 import static utils.engine.data.enums.UserStatus.STATUS_NSA;
 import static utils.engine.data.enums.UserStatus.STATUS_SA;
@@ -34,7 +35,7 @@ public class UserChecklistGenerationDataBuilderTest {
 		final Regime[] regimes = new Regime[] { Regime.CNAV };
 		final RegimeAligne[] regimesAlignes = new RegimeAligne[] { RegimeAligne.CNAV };
 		final RegimeAligne regimeLiquidateur = CNAV;
-		final List<UserStatus> userStatus = asList(STATUS_NSA, STATUS_CONJOINT_COLLABORATEUR, STATUS_SA);
+		final List<UserStatus> userStatus = asList(STATUS_NSA, STATUS_CONJOINT_COLLABORATEUR, STATUS_SA, STATUS_CHEF);
 
 		final UserChecklistGenerationData userChecklistGenerationData = userChecklistGenerationDataBuilder.build(dateDepart, "973", regimes, regimesAlignes,
 				regimeLiquidateur, false, true, userStatus, true, "[{\"nom\":\"CNAV\"}");
@@ -51,6 +52,7 @@ public class UserChecklistGenerationDataBuilderTest {
 		// verify(liquidateurReponsesEvaluatorMock).isCarriereAReconstituer(complementReponses);
 
 		assertThat(userChecklistGenerationData.isConjointCollaborateur).isTrue();
+		assertThat(userChecklistGenerationData.isChef).isTrue();
 		assertThat(userChecklistGenerationData.isNSA).isTrue();
 		assertThat(userChecklistGenerationData.isSA).isTrue();
 		assertThat(userChecklistGenerationData.isCarriereLongue).isTrue();
@@ -69,6 +71,7 @@ public class UserChecklistGenerationDataBuilderTest {
 				regimeLiquidateur, false, true, userStatus, true, "[{\"nom\":\"CNAV\"}");
 
 		assertThat(userChecklistGenerationData.isConjointCollaborateur).isFalse();
+		assertThat(userChecklistGenerationData.isChef).isFalse();
 		assertThat(userChecklistGenerationData.isNSA).isFalse();
 		assertThat(userChecklistGenerationData.isSA).isFalse();
 		assertThat(userChecklistGenerationData.isCarriereLongue).isTrue();

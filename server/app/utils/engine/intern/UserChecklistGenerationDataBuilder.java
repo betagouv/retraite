@@ -1,5 +1,6 @@
 package utils.engine.intern;
 
+import static utils.engine.data.enums.UserStatus.STATUS_CHEF;
 import static utils.engine.data.enums.UserStatus.STATUS_CONJOINT_COLLABORATEUR;
 import static utils.engine.data.enums.UserStatus.STATUS_NSA;
 import static utils.engine.data.enums.UserStatus.STATUS_SA;
@@ -21,6 +22,7 @@ public class UserChecklistGenerationDataBuilder {
 		final UserChecklistGenerationData userChecklistGenerationData = new UserChecklistGenerationData(dateDepart, departement, regimes, regimesAlignes,
 				published, false, regimesInfosJsonStr);
 		userChecklistGenerationData.isConjointCollaborateur = contains(userStatus, STATUS_CONJOINT_COLLABORATEUR);
+		userChecklistGenerationData.isChef = contains(userStatus, STATUS_CHEF);
 		userChecklistGenerationData.isNSA = contains(userStatus, STATUS_NSA);
 		userChecklistGenerationData.isSA = contains(userStatus, STATUS_SA);
 		// [XN-29/03/2016-En attendant de remettre les questions complémentaires, on force l'affichage des chapitres]
