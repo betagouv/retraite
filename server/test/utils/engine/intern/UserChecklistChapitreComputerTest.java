@@ -6,6 +6,8 @@ import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
@@ -37,17 +39,21 @@ public class UserChecklistChapitreComputerTest {
 	public void should_copy_standard_fields() {
 
 		when(userChecklistDelaiComputerMock.compute(any(Delai.class), any(MonthAndYear.class))).thenReturn("Le plus tôt possible");
-		when(userChecklistParcoursComputerMock.compute(any(String.class), any(UserChecklistGenerationData.class))).thenAnswer(new Answer<String>() {
+		when(userChecklistParcoursComputerMock.compute(any(String.class), any(UserChecklistGenerationData.class), any(List.class)))
+				.thenAnswer(new Answer<String>() {
 
-			@Override
-			public String answer(final InvocationOnMock invocation) throws Throwable {
-				return toString(invocation.getArguments()[0]) + " computed";
-			}
+					@Override
+					public String answer(final InvocationOnMock invocation) throws Throwable {
+						final List<String> urls = (List<String>) invocation.getArguments()[2];
+						urls.add("a");
+						urls.add("b");
+						return toString(invocation.getArguments()[0]) + " computed";
+					}
 
-			private String toString(final Object object) {
-				return object == null ? "null" : object.toString();
-			}
-		});
+					private String toString(final Object object) {
+						return object == null ? "null" : object.toString();
+					}
+				});
 
 		final Chapitre chapitre = createChapitre("chap1");
 
@@ -60,6 +66,7 @@ public class UserChecklistChapitreComputerTest {
 		assertThat(userChapitre.texteActions).isEqualTo("actions chap1 computed");
 		assertThat(userChapitre.texteModalites).isEqualTo("modalités chap1 computed");
 		assertThat(userChapitre.texteInfos).isEqualTo("infos chap1 computed");
+		assertThat(userChapitre.urls).hasSize(6);
 	}
 
 	@Test

@@ -7,6 +7,8 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Before;
@@ -52,19 +54,22 @@ public class UserChecklistParcoursComputerTest {
 	@Test
 	public void should_do_nothing_for_null() {
 
-		final String after = userChecklistParcoursComputer.compute(null, null);
+		final List<String> urls = new ArrayList<>();
 
-		assertThat(after).isNull();
+		final String result = userChecklistParcoursComputer.compute(null, null, urls);
+
+		assertThat(result).isNull();
 	}
 
 	@Test
 	public void should_do_nothing_for_simple_text() {
 
 		final String before = "texte simple";
+		final List<String> urls = new ArrayList<>();
 
-		final String after = userChecklistParcoursComputer.compute(before, null);
+		final String result = userChecklistParcoursComputer.compute(before, null, urls);
 
-		assertThat(after).isEqualTo("texte simple");
+		assertThat(result).isEqualTo("texte simple");
 	}
 
 	// Remplacement des liens
@@ -73,83 +78,93 @@ public class UserChecklistParcoursComputerTest {
 	public void should_replace_one_http_link() {
 
 		final String before = "xxx http://monsite.com/path/page.html yyy";
+		final List<String> urls = new ArrayList<>();
 
-		final String after = userChecklistParcoursComputer.compute(before, null);
+		final String result = userChecklistParcoursComputer.compute(before, null, urls);
 
-		assertThat(after).isEqualTo("xxx " + link("http://monsite.com/path/page.html", "monsite.com/path/page") + " yyy");
+		assertThat(result).isEqualTo("xxx " + link("http://monsite.com/path/page.html", "monsite.com/path/page") + " yyy");
 	}
 
 	@Test
 	public void should_replace_one_http_link_in_PDF_mode() {
 
 		final String before = "xxx http://monsite.com/path/page.html yyy";
+		final List<String> urls = new ArrayList<>();
 
 		final UserChecklistGenerationData userChecklistGenerationData = new UserChecklistGenerationData(null, null, null, null, false, true /* isPDF */, "");
-		final String after = userChecklistParcoursComputer.compute(before, userChecklistGenerationData);
+		final String result = userChecklistParcoursComputer.compute(before, userChecklistGenerationData, urls);
 
-		assertThat(after).isEqualTo("xxx " + link("http://monsite.com/path/page.html", "http://monsite.com/path/page.html") + " yyy");
+		assertThat(result).isEqualTo("xxx " + link("http://monsite.com/path/page.html", "monsite.com/path/page") + "<sup>1</sup> yyy");
+		assertThat(urls).containsExactly("http://monsite.com/path/page.html");
 	}
 
 	@Test
 	public void should_replace_one_https_link_and_nothing_after_link() {
 
 		final String before = "xxx https://www.monsite.com/path/page.htm";
+		final List<String> urls = new ArrayList<>();
 
-		final String after = userChecklistParcoursComputer.compute(before, null);
+		final String result = userChecklistParcoursComputer.compute(before, null, urls);
 
-		assertThat(after).isEqualTo("xxx " + link("https://www.monsite.com/path/page.htm", "monsite.com/path/page") + "");
+		assertThat(result).isEqualTo("xxx " + link("https://www.monsite.com/path/page.htm", "monsite.com/path/page") + "");
 	}
 
 	@Test
 	public void should_replace_multiple_http_links_and_followed_by_different_characters() {
 
 		final String before = "soit https://a/a. ou <i>http://b/b.PDF</i> fin";
+		final List<String> urls = new ArrayList<>();
 
-		final String after = userChecklistParcoursComputer.compute(before, null);
+		final String result = userChecklistParcoursComputer.compute(before, null, urls);
 
-		assertThat(after).isEqualTo("soit " + link("https://a/a", "a/a") + ". ou <i>" + link("http://b/b.PDF", "b/b") + "</i> fin");
+		assertThat(result).isEqualTo("soit " + link("https://a/a", "a/a") + ". ou <i>" + link("http://b/b.PDF", "b/b") + "</i> fin");
 	}
 
 	@Test
 	public void should_replace_one_http_link_using_specified_text() {
 
 		final String before = "xxx [[ ceci est mon texte http://monsite.com/path/page.html ]] yyy";
+		final List<String> urls = new ArrayList<>();
 
-		final String after = userChecklistParcoursComputer.compute(before, null);
+		final String result = userChecklistParcoursComputer.compute(before, null, urls);
 
-		assertThat(after).isEqualTo("xxx " + link("http://monsite.com/path/page.html", "ceci est mon texte") + " yyy");
+		assertThat(result).isEqualTo("xxx " + link("http://monsite.com/path/page.html", "ceci est mon texte") + " yyy");
+		assertThat(urls).isNullOrEmpty();
 	}
 
 	@Test
 	public void should_replace_one_http_link_using_specified_text_in_PDF_mode() {
 
 		final String before = "xxx [[ ceci est mon texte http://monsite.com/path/page.html ]] yyy";
+		final List<String> urls = new ArrayList<>();
 
 		final UserChecklistGenerationData userChecklistGenerationData = new UserChecklistGenerationData(null, null, null, null, false, true /* isPDF */, "");
-		final String after = userChecklistParcoursComputer.compute(before, userChecklistGenerationData);
+		final String result = userChecklistParcoursComputer.compute(before, userChecklistGenerationData, urls);
 
-		assertThat(after).isEqualTo("xxx " + link("http://monsite.com/path/page.html", "ceci est mon texte") + " ("
-				+ link("http://monsite.com/path/page.html", "http://monsite.com/path/page.html") + ") yyy");
+		assertThat(result).isEqualTo("xxx " + link("http://monsite.com/path/page.html", "ceci est mon texte") + "<sup>1</sup> yyy");
+		assertThat(urls).containsExactly("http://monsite.com/path/page.html");
 	}
 
 	@Test
 	public void should_replace_one_http_link_using_specified_text_without_link() {
 
 		final String before = "xxx [[ ceci est mon texte ]] yyy";
+		final List<String> urls = new ArrayList<>();
 
-		final String after = userChecklistParcoursComputer.compute(before, null);
+		final String result = userChecklistParcoursComputer.compute(before, null, urls);
 
-		assertThat(after).isEqualTo("xxx ceci est mon texte yyy");
+		assertThat(result).isEqualTo("xxx ceci est mon texte yyy");
 	}
 
 	@Test
 	public void should_replace_one_http_link_using_specified_text_without_text() {
 
 		final String before = "xxx [[ http://monsite.com/path/page.html ]] yyy";
+		final List<String> urls = new ArrayList<>();
 
-		final String after = userChecklistParcoursComputer.compute(before, null);
+		final String result = userChecklistParcoursComputer.compute(before, null, urls);
 
-		assertThat(after).isEqualTo("xxx " + link("http://monsite.com/path/page.html", "monsite.com/path/page") + " yyy");
+		assertThat(result).isEqualTo("xxx " + link("http://monsite.com/path/page.html", "monsite.com/path/page") + " yyy");
 	}
 
 	// Remplacement des variables
@@ -158,10 +173,11 @@ public class UserChecklistParcoursComputerTest {
 	public void should_replace_vars() {
 
 		final String before = "toto";
+		final List<String> urls = new ArrayList<>();
 
-		final String after = userChecklistParcoursComputer.compute(before, null);
+		final String result = userChecklistParcoursComputer.compute(before, null, urls);
 
-		assertThat(after).isEqualTo("titi");
+		assertThat(result).isEqualTo("titi");
 	}
 
 	@Test
@@ -169,10 +185,11 @@ public class UserChecklistParcoursComputerTest {
 		doThrow(new RetraiteException("xxx")).when(variablesReplacerMock).replaceVariables(any(String.class), eq(variables));
 
 		final String before = "toto";
+		final List<String> urls = new ArrayList<>();
 
-		final String after = userChecklistParcoursComputer.compute(before, null);
+		final String result = userChecklistParcoursComputer.compute(before, null, urls);
 
-		assertThat(after).isEqualTo("toto");
+		assertThat(result).isEqualTo("toto");
 	}
 
 	// Méthodes privées
