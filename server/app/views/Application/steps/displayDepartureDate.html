@@ -39,7 +39,17 @@
 				</label>
            	#{/else}
 
-			
+		</div>
+		
+		<div>
+			<br/>
+			<label class='label-for-question-choice'>
+				Pour information, pour votre génération, l'age légal de départ est de <b>${data.extras.ageLegalPourPartir.annees} ans 
+				#{if data.extras.ageLegalPourPartir.mois} 
+					et ${data.extras.ageLegalPourPartir.mois} mois
+				#{/if}
+				</b>, soit pour vous à partir du <b>${data.extras.dateDepartPossible}</b>.
+			</label>
 		</div>
 	
 	</div><!--fin contenu-->
