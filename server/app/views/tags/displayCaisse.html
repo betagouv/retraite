@@ -32,19 +32,21 @@
 
 		*{ Adresse postale }*
 		
-		<div class="adresse">
-			<span class="enveloppe"></span>
-			${_caisse?.adresse1}<br/>
-			#{if _caisse?.adresse2}
-				${_caisse?.adresse2}<br/>
-			#{/if}
-			#{if _caisse?.adresse3}
-				${_caisse?.adresse3}<br/>
-			#{/if}
-			#{if _caisse?.adresse4}
-				${_caisse?.adresse4}<br/>
-			#{/if}
-		</div>
+		#{if _caisse?.adresse1}
+			<div class="adresse">
+				<span class="enveloppe"></span>
+				${_caisse?.adresse1}<br/>
+				#{if _caisse?.adresse2}
+					${_caisse?.adresse2}<br/>
+				#{/if}
+				#{if _caisse?.adresse3}
+					${_caisse?.adresse3}<br/>
+				#{/if}
+				#{if _caisse?.adresse4}
+					${_caisse?.adresse4}<br/>
+				#{/if}
+			</div>
+		#{/if}
 	</div>
 </div>
 
