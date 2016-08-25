@@ -56,7 +56,7 @@ public class RetraiteEngineFactory {
 						new QuestionSolverD(),
 						new QuestionSolverE(),
 						new QuestionSolverF()),
-				new DisplayerDepartureDate(stepFormsDataProvider),
+				new DisplayerDepartureDate(stepFormsDataProvider, ageLegalEvaluator),
 				new DisplayerAdditionalQuestions(stepFormsDataProvider),
 				new DisplayerChecklist(
 						new UserChecklistGenerationDataBuilder(),
