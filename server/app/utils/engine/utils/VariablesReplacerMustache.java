@@ -11,7 +11,7 @@ import utils.RetraiteException;
 public class VariablesReplacerMustache implements VariablesReplacer {
 
 	@Override
-	public String replaceVariables(final String text, final Map<String, String> variables) {
+	public String replaceVariables(final String text, final Map<String, Object> variables) {
 		// Mustache
 		// final StringWriter writer = new StringWriter();
 		// final MustacheFactory mf = new DefaultMustacheFactory();
