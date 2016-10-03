@@ -1,3 +1,5 @@
+'use strict';
+
 // Permet de retailler la hauteur d'une iframe avec la hauteur de son contenu
 
 angular.module('SgmapRetraiteConfig').directive('iframeAutoHeight', [function() {
