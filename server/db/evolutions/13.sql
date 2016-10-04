@@ -1,7 +1,7 @@
 # --- !Ups
 
-ALTER TABLE Checklist ADD published boolean DEFAULT 0;
-ALTER TABLE Checklist ADD modifiedButNotPublished boolean DEFAULT 1;
+ALTER TABLE Checklist ADD published boolean DEFAULT false;
+ALTER TABLE Checklist ADD modifiedButNotPublished boolean DEFAULT true;
 
 # --- !Downs
 

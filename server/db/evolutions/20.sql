@@ -11,5 +11,5 @@ ALTER TABLE Chapitre DROP texteComplementaire;
 ALTER TABLE Chapitre ADD texteComplementaire text;
 ALTER TABLE Chapitre ADD parcoursDemat text;
 ALTER TABLE Chapitre ADD parcours text;
-ALTER TABLE Chapitre ADD parcoursDematDifferent boolean DEFAULT 0;
+ALTER TABLE Chapitre ADD parcoursDematDifferent boolean DEFAULT false;
 ALTER TABLE Chapitre ADD texteIntro text;
