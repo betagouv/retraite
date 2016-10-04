@@ -54,7 +54,7 @@ public class QuestionSolverATest {
 	}
 
 	@Test
-	public void test_RSI_MAS() {
+	public void test_RSI_MSA() {
 
 		final TestContext withRegimes = withRegimes(RSI, MSA);
 
@@ -84,7 +84,7 @@ public class QuestionSolverATest {
 	}
 
 	@Test
-	public void test_CNAV_RSI_MAS() {
+	public void test_CNAV_RSI_MSA() {
 
 		final TestContext withRegimes = withRegimes(CNAV, RSI, MSA);
 
