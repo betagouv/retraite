@@ -1,6 +1,6 @@
 # --- !Ups
 
-DELETE FROM Chapitre WHERE 1;
+TRUNCATE Chapitre;
 
 ALTER TABLE Chapitre ADD sortIndex integer NOT NULL DEFAULT '0';
 
