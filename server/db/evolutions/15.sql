@@ -1,7 +1,7 @@
 # --- !Ups
 
 create table RetraiteUser (
-    id bigint not null auto_increment,
+    id bigserial not null,
     login varchar(255),
     password varchar(255),
     authorizedChecklists varchar(255),

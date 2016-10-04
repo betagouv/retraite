@@ -1,6 +1,6 @@
 # --- !Ups
 
-ALTER TABLE Chapitre ADD closedInEdition boolean DEFAULT 0;
+ALTER TABLE Chapitre ADD closedInEdition boolean DEFAULT false;
 
 # --- !Downs
 
