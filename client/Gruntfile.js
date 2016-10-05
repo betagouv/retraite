@@ -331,6 +331,17 @@ module.exports = function(grunt) {
             }
         },
 
+		eol: {
+			to_crlf_config: {
+				options: {
+					eol: 'crlf',
+					replace: true
+				},
+				src: [ 'app/config.html']
+			}
+		},		
+		
+
         // Reads HTML for usemin blocks to enable smart builds that automatically
         // concat, minify and revision files. Creates configurations in memory so
         // additional tasks can operate on them
@@ -468,7 +479,8 @@ module.exports = function(grunt) {
             auto: {
                 singleRun: false
             }
-        },
+        }
+		
         
     });
 
@@ -508,6 +520,7 @@ module.exports = function(grunt) {
         grunt.task.run([
             'clean:dist',
             'injector',
+			'eol',
             'useminPrepare',
             'autoprefixer',
             'concat',
