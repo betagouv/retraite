@@ -8,10 +8,10 @@
 
 		#{if !doNotIncludeBootstrap}
 			<!-- injector:bowercss -->
-			<link rel="stylesheet" href="/public/libs/bootstrap-css/css/bootstrap.min.css">
+			<link rel="stylesheet" href="@{'/public/libs/bootstrap-css/css/bootstrap.min.css'}" media="screen">
 			<!-- endinjector -->
 		#{/if}
-		<link rel="stylesheet" href="/public/libs/jquery-ui/themes/base/jquery-ui.css">
+		<link rel="stylesheet" href="@{'/public/libs/jquery-ui/themes/base/jquery-ui.css'}">
         
         #{stylesheet (pageChecklist ? 'checklist' : 'pages')+'/'+look.getCssFilename() /}
         #{stylesheet 'retraite-overwrite.css' /}
@@ -73,15 +73,15 @@
 			    	<div class="col-sm-2">
 			            <div class="logo hidden-xs">
 			            	#{if look.toString() == 'CNAV'}
-				                <a href="https://www.lassuranceretraite.fr/portail-info/accueil" target="_blank" title="Nouvelle fenêtre"><img src="/public/img/sprites/logo_cnav.png" title="CNAV" alt="l'assurance retraite"></a>
+				                <a href="https://www.lassuranceretraite.fr/portail-info/accueil" target="_blank" title="Nouvelle fenêtre"><img src="@{'/public/img/sprites/logo_cnav.png'}" title="CNAV" alt="l'assurance retraite"></a>
 			            	#{/if}
 			            	#{if look.toString() == 'MSA'}
-								<a href="http://www.msa.fr/lfr" target="_blank" title="Nouvelle fenêtre"><img src="/public/img/sprites/logoMSA_home.png" title="msa" alt="sant√© famille retraite services"></a>
+								<a href="http://www.msa.fr/lfr" target="_blank" title="Nouvelle fenêtre"><img src="@{'/public/img/sprites/logoMSA_home.png'}" title="msa" alt="sant√© famille retraite services"></a>
 			            	#{/if}
 			            </div>
 			        </div>
 			        <div class="title col-sm-8">
-			        	<a href="/${ actionQueryParams }" title="Retour à l'accueil">
+			        	<a href="@{Application.process}${ actionQueryParams }" title="Retour à l'accueil">
 				            <h1>Mes démarches retraite</h1>
 				            <h2>pas à pas</h2>
 			            </a>
@@ -109,9 +109,9 @@
 			        <div class="wrapper-inner">
 			            <nav class="footer-right col-sm-7">
 			                <ul>
-			                    <li><a href="https://www.lassuranceretraite.fr/portail-info/accueil" target="_blank" title="Nouvelle fenêtre"><img src="/public/img/sprites/logo_cnav.png" title="cnav" alt="l'assurance retraite"></a></li>
-			                    <li><a href="http://www.msa.fr/lfr" target="_blank" title="Nouvelle fenêtre"><img src="/public/img/sprites/logo_MSA.png" title="MSA" alt="santé famille retraite services"></a></li>
-			                    <li><a href="https://www.rsi.fr/" target="_blank" title="Nouvelle fenêtre"><img src="/public/img/sprites/logo_rsi.png" title="rsi" alt="régime social des indépendants"></a></li>
+			                    <li><a href="https://www.lassuranceretraite.fr/portail-info/accueil" target="_blank" title="Nouvelle fenêtre"><img src="@{'/public/img/sprites/logo_cnav.png'}" title="cnav" alt="l'assurance retraite"></a></li>
+			                    <li><a href="http://www.msa.fr/lfr" target="_blank" title="Nouvelle fenêtre"><img src="@{'/public/img/sprites/logo_MSA.png'}" title="MSA" alt="santé famille retraite services"></a></li>
+			                    <li><a href="https://www.rsi.fr/" target="_blank" title="Nouvelle fenêtre"><img src="@{'/public/img/sprites/logo_rsi.png'}" title="rsi" alt="régime social des indépendants"></a></li>
 			                </ul>
 			            </nav>
 	
@@ -128,17 +128,17 @@
 
 
 		<!-- injector:bowerjs -->
-		<script src="/public/libs/jquery/dist/jquery.js"></script>
-		<script src="/public/libs/jquery.maskedinput/dist/jquery.maskedinput.js"></script>
-		<script src="/public/libs/bootstrap-css/js/bootstrap.min.js"></script>
-		<script src="/public/libs/jquery-ui/jquery-ui.js"></script>
+		<script src="@{'/public/libs/jquery/dist/jquery.js'}"></script>
+		<script src="@{'/public/libs/jquery.maskedinput/dist/jquery.maskedinput.js'}"></script>
+		<script src="@{'/public/libs/bootstrap-css/js/bootstrap.min.js'}"></script>
+		<script src="@{'/public/libs/jquery-ui/jquery-ui.js'}"></script>
 		<!-- endinjector -->
 
         #{get 'moreScripts' /}
         
-		<script src="/public/javascripts/retraite-analytics.js"></script>
+		<script src="@{'/public/javascripts/retraite-analytics.js'}"></script>
 		#{if !noInfoCookie}
-			<script src="/public/javascripts/infocookie.js"></script>
+			<script src="@{'/public/javascripts/infocookie.js'}"></script>
 		#{/if}
 
     </body>

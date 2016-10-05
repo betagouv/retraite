@@ -1,7 +1,12 @@
 #{set title:'Accueil mon pass retraite' /}
 #{extends 'main.html' /}
 
-<form action='/${ actionQueryParams }' method='POST'>
+#{if !pageChecklist}
+	<form action='@{Application.process}${ actionQueryParams }' method='POST'>
+#{/if}
+#{if pageChecklist}	
+	<form action='@{Application.pdf}${ actionQueryParams }' method='POST'>
+#{/if}	
 
 	#{stepsHiddenInputs /}
 	
