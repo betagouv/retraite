@@ -1,2 +1,5 @@
-/server/www
 fluentd-log4j-appender/
+retraite.war
+retraite/
+server/.0.current
+server/javawatch/
