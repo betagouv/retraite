@@ -28,7 +28,6 @@ $(function() {
 	$('button.record').click(function(event) {
 		event.preventDefault();
 		sendGoogleAnalyticsEvent('Checklist', 'imprimer/PDF', regimeLiquidateur);
-		$("form").attr("action", "/application/pdf");
 		$("form").submit();
 	});
 	
