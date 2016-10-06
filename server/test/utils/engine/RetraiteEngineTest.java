@@ -186,7 +186,6 @@ public class RetraiteEngineTest {
 		assertThat(renderData.hidden_nom).isEqualTo("DUPONT");
 		assertThat(renderData.hidden_naissance).isEqualTo("1/2/3");
 		assertThat(renderData.hidden_nir).isEqualTo("1 50 12 18 123 456");
-		assertThat(renderData.hidden_departement).isEqualTo("65");
 	}
 
 	@Test
