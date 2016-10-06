@@ -70,26 +70,6 @@ public class Application extends RetraiteController {
 		render(test, debug, look, force55, actionQueryParams);
 	}
 
-	// Plus d'envoi de mail pour l'instant
-	//
-	// public static void sendMail(final PostData postData) {
-	//
-	// final boolean test = params._contains("test");
-	// postData.hidden_userStatus = unbind(params.get("postData.hidden_userStatus"));
-	// final RenderData data = RetraiteEngineFactory.create(test).processToNextStep(postData);
-	// data.isPDF = true;
-	//
-	// final String htmlContent = "Bonjour,<br/><br/>Veuillez trouver ci-joint votre checklist !<br/><br/>L'Equipe <b>Parcours Retraite</b>";
-	//
-	// final File file = new File("parcours.pdf");
-	// final PDF.Options pdfOptions = createPdfOptions();
-	// PDF.writePDF(file, "Application/pdf.html", pdfOptions, data);
-	//
-	// new MailSenderWithSendGrid().sendMail("Parcours Retraite<envoi.retraite@sgmap.fr>", postData.email, "Mon parcours retraite", htmlContent, file);
-	// Logger.info("Mail envoyé à " + postData.email + " !");
-	// ok();
-	// }
-
 	private static final boolean AS_HTML = false;
 	private static final boolean RENDER_PDF_WITH_I_TEXT = false;
 

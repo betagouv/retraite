@@ -31,12 +31,6 @@ $(function() {
 		$("form").submit();
 	});
 	
-	$('button.mail').click(function(event) {
-		event.preventDefault();
-		sendGoogleAnalyticsEvent('Checklist', 'clickMail', regimeLiquidateur);
-		$('#DialogSendEMail').modal();
-	});
-	
 	$('button.print').click(function(event) {
 		event.preventDefault();
 		sendGoogleAnalyticsEvent('Checklist', 'print', regimeLiquidateur);
@@ -44,37 +38,6 @@ $(function() {
 		/*$("form").attr("action", "/application/pdf");
 		$("form").submit();*/
 	});
-	
-	/* Plus d'envoi de mail pour l'instant
-	
-	$('#validSendMail').click(function(event) {
-		event.preventDefault();
-		if (isEMailProvided()) {
-			$('#DialogSendEMail').modal('hide');
-			sendGoogleAnalyticsEvent('Checklist', 'sendMail', regimeLiquidateur);
-			sendRequestToSendByEMail();
-		} else {
-			$("#divEmail div").addClass('has-error');
-			$("#emailMissing").removeClass('hidden');
-		}
-	});*/
-	
-	function isEMailProvided() {
-		var $emailInput = $("#email");
-		var value = $emailInput.val();
-		return value && value.length > 5 && value.indexOf("@") > 0;
-	}
-	
-	function sendRequestToSendByEMail() {
-		$.ajax({
-			url: '/application/sendmail',
-			type: 'post',
-			dataType: 'json',
-			data: $("form").serialize(),
-			success: function(data) {
-			}
-		});
-	}
 	
 	function addScrollHandlerToSendEventIfScrollToBottom() {
 		
