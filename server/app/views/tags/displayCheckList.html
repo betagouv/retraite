@@ -4,9 +4,10 @@
 
 		<h2 class='intro-checklist'>
 			${_data.hidden_nir?.startsWith('1') ? 'M.' : 'Mme'} ${_data.hidden_nom}, 
-			voici la liste de vos démarches  
 			<br/>
-			pour votre départ à la retraite prévu le #{dateDepart data:_data /}
+			voici la liste de vos démarches à effectuer 
+			<br/>
+			en vue de votre départ à la retraite prévu le #{dateDepart data:_data /}.
 		</h2>
 	
 		#{if !_data.isPDF}
