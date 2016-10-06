@@ -70,5 +70,5 @@
 
 
 $(function() {
-	$.infoCookie('Les cookies assurent le bon fonctionnement de nos services. En utilisant ces derniers, vous acceptez l\'utilisation des cookies.',{"class":"bandeau-cookie","position":"top"});
+	$.infoCookie('Les cookies assurent le bon fonctionnement du service « Mes démarches retraites, pas à pas ». En poursuivant, vous acceptez l\'utilisation des cookies.',{"class":"bandeau-cookie","position":"top"});
 });
