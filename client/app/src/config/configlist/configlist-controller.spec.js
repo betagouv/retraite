@@ -4,18 +4,7 @@ describe('ConfigListCtrl', function () {
     
     beforeEach(module('SgmapRetraiteConfig'));
     
-    beforeEach(module(function($provide) {
-        
-        // Subterfuge pour éviter l'erreur suivante apparemment lié au chargement de $state dans les tests :
-        // Error: Unexpected request: GET src/config/configlist/configlist.html
-        
-        $provide.service('$state', function() {
-            this.go = function(newState) {};
-            this.reload = function() {};
-        });
-    }));
-
-    var $scope, controller, CheckList;
+    var $scope, CheckList;
     
     beforeEach(inject(function ($rootScope, $controller, _CheckList_) {
 
@@ -29,14 +18,18 @@ describe('ConfigListCtrl', function () {
         spyOn(CheckList, 'all').and.returnValue(mockCheckLists);
     });
 
+    // Création du contrôleur
+    
     beforeEach(inject(function ($rootScope, $controller, _CheckList_) {
 
         $scope = $rootScope.$new();
-        controller = $controller('ConfigListCtrl', {
+        $controller('ConfigListCtrl', {
             $scope: $scope            
         });
 
     }));
+    
+    // Test(s)
     
     it('should have init data in scope', function () {
         expect($scope.checklists).toEqual(mockCheckLists);

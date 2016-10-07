@@ -15,15 +15,16 @@ describe('UserService', function () {
         });
     }));
 
-    var UserService, $httpBackend, RetraiteToaster, httpBuffer, $state, $timeout;
+    var UserService, $httpBackend, RetraiteToaster, httpBuffer, $state, $timeout, HttpContextProvider;
     
-    beforeEach(inject(function (_UserService_, _$httpBackend_, _RetraiteToaster_, _httpBuffer_, _$state_, _$timeout_) {
+    beforeEach(inject(function (_UserService_, _$httpBackend_, _RetraiteToaster_, _httpBuffer_, _$state_, _$timeout_, _HttpContextProvider_) {
         UserService = _UserService_;
         $httpBackend = _$httpBackend_;
         RetraiteToaster = _RetraiteToaster_;
         httpBuffer = _httpBuffer_;
         $state = _$state_;
         $timeout = _$timeout_;
+        HttpContextProvider = _HttpContextProvider_;
     }));
     
     beforeEach(function () {
@@ -32,6 +33,7 @@ describe('UserService', function () {
         spyOn(httpBuffer, 'retryLastRequest');
         spyOn($state, 'go');
         spyOn($state, 'reload');
+        spyOn(HttpContextProvider, 'getHttpContext').and.returnValue('/retraite');
     });
 
     var user = {
@@ -43,7 +45,7 @@ describe('UserService', function () {
         
         it('should process login success', function (done) {
 
-            $httpBackend.expectPOST('/login?username=xnopre&password=passxnopre').respond(200);
+            $httpBackend.expectPOST('/retraite/login?username=xnopre&password=passxnopre').respond(200);
 
             UserService.login(user).then(function() {
                 expect($state.go).toHaveBeenCalledWith('configlist');
@@ -58,7 +60,7 @@ describe('UserService', function () {
 
         it('should process login error', function () {
 
-            $httpBackend.expectPOST('/login?username=xnopre&password=passxnopre').respond(401);
+            $httpBackend.expectPOST('/retraite/login?username=xnopre&password=passxnopre').respond(401);
 
             UserService.login(user);
 
@@ -74,7 +76,7 @@ describe('UserService', function () {
         
         it('should process logout', function () {
 
-            $httpBackend.expectGET('/logout').respond(200);
+            $httpBackend.expectGET('/retraite/logout').respond(200);
 
             UserService.logout();
 
