@@ -1,12 +1,12 @@
 'use strict';
 
-angular.module('SgmapRetraiteConfig').service('UserService', function ($http, httpBuffer, RetraiteToaster, $state, $rootScope) {
+angular.module('SgmapRetraiteConfig').service('UserService', function ($http, httpBuffer, RetraiteToaster, $state, $rootScope, HttpContextProvider) {
 
     var isLogging = false;
     
     this.login = function (user) {
         isLogging = true;
-        return $http.post('/login?username='+user.name+'&password='+user.pass)
+        return $http.post(HttpContextProvider.getHttpContext() + '/login?username='+user.name+'&password='+user.pass)
             .success(function (response) {
                 isLogging = false;
                 $rootScope.$broadcast('userLogged');
@@ -20,7 +20,7 @@ angular.module('SgmapRetraiteConfig').service('UserService', function ($http, ht
     };
 
     this.logout = function () {
-        $http.get('/logout').success(function() {
+        $http.get(HttpContextProvider.getHttpContext() + '/logout').success(function() {
             $state.reload();
         });
     };
