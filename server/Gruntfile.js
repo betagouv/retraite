@@ -31,7 +31,15 @@ module.exports = function(grunt) {
             bowerDependencies: {
                 options: {
                 	addRootSlash: true,
-                    relative: false
+                    relative: false,
+                    transform: function(filepath) {
+                    	if (filepath.endsWith('.css')) {
+                    		return '<link rel="stylesheet" href="@{\'' + filepath + '\'}"';
+                    	}
+                    	else if (filepath.endsWith('.js')) {
+                    		return '<script src="@{\'' + filepath + '\'}"></script>';
+                    	}
+                    }
                 },
                 files: {
                     '<%= config.app %>/views/main.html': ['bower.json'],
