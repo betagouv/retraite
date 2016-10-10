@@ -33,7 +33,12 @@ module.exports = function(grunt) {
                 	addRootSlash: true,
                     relative: false,
                     transform: function(filepath) {
-                        return '<link rel="stylesheet" href="@{\'' + filepath + '\'}"';
+                    	if (filepath.endsWith('.css')) {
+                    		return '<link rel="stylesheet" href="@{\'' + filepath + '\'}"';
+                    	}
+                    	else if (filepath.endsWith('.js')) {
+                    		return '<script src="@{\'' + filepath + '\'}"></script>';
+                    	}
                     }
                 },
                 files: {
