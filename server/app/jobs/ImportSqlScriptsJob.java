@@ -24,7 +24,7 @@ public class ImportSqlScriptsJob extends Job {
 
 		final File dirSqlImport = new File(DIRNAME);
 		final File[] files = dirSqlImport.listFiles(new SqlFileFilter());
-		if (files.length == 0) {
+		if (files == null || files.length == 0) {
 			Logger.info("No .sql files in '" + dirSqlImport.getAbsolutePath() + "' : no SQL scripts to import.");
 			return;
 		}
