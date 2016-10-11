@@ -29,7 +29,12 @@ public class UserChecklistParcoursComputer {
 			return null;
 		}
 		final boolean isPDF = userChecklistGenerationData != null && userChecklistGenerationData.isPDF;
-		return replaceVars(replaceLinks(text, isPDF, links), userChecklistGenerationData);
+		final String result = replaceVars(replaceLinks(text, isPDF, links), userChecklistGenerationData);
+
+		if (isLikeEmpty(result)) {
+			return null;
+		}
+		return result;
 	}
 
 	private String replaceVars(final String text, final UserChecklistGenerationData userChecklistGenerationData) {
