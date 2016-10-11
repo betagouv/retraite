@@ -5,6 +5,7 @@ import static utils.engine.data.enums.Regime.AGIRC_ARRCO;
 import static utils.engine.data.enums.Regime.BFSP;
 import static utils.engine.data.enums.Regime.CARCD;
 import static utils.engine.data.enums.Regime.CNAV;
+import static utils.engine.data.enums.Regime.IRCANTEC;
 import static utils.engine.data.enums.Regime.IRCEC;
 
 import java.util.HashMap;
@@ -32,7 +33,7 @@ public class UserChecklistVarsProviderTest {
 	public void should_provide_good_variables_with_booleans_1() {
 
 		final MonthAndYear dateDepart = null;
-		final Regime[] regimes = new Regime[] { CNAV, IRCEC, BFSP, AGIRC_ARRCO, CARCD };
+		final Regime[] regimes = new Regime[] { CNAV, IRCEC, BFSP, AGIRC_ARRCO, CARCD, IRCANTEC };
 		final RegimeAligne[] regimesAlignes = null;
 		final UserChecklistGenerationData userChecklistGenerationData = UserChecklistGenerationData.create()
 				.withDateDepart(dateDepart)
@@ -53,9 +54,9 @@ public class UserChecklistVarsProviderTest {
 		final Map<String, Object> expectedMap = new HashMap<String, Object>() {
 			{
 				put("regimes_base_hors_alignes", "BFSP (Banque de France), CARCD (Caisse d'assurance retraite des chirurgiens dentistes)");
-				put("regimes_compl_hors_agirc_arrco", "IRCEC (Caisse nationale de retraite complémentaire des artistes auteurs)");
+				put("regimes_compl_hors_agirc_arrco", "IRCEC (Caisse nationale de retraite complémentaire des artistes auteurs), IRCANTEC");
 				put("regimes_hors_alignes_et_hors_agirc_arrco",
-						"IRCEC (Caisse nationale de retraite complémentaire des artistes auteurs), BFSP (Banque de France), CARCD (Caisse d'assurance retraite des chirurgiens dentistes)");
+						"IRCEC (Caisse nationale de retraite complémentaire des artistes auteurs), BFSP (Banque de France), CARCD (Caisse d'assurance retraite des chirurgiens dentistes), IRCANTEC");
 				put("agirc_arrco", true);
 				put("status_nsa", false);
 				put("status_sa", true);

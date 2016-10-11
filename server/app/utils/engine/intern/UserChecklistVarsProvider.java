@@ -43,7 +43,10 @@ public class UserChecklistVarsProvider {
 	}
 
 	private String getNameFor(final Regime regime) {
-		return regime + " (" + regime.getNom() + ")";
+		if (regime.toString().equals(regime.getNom())) {
+			return regime.toString();
+		}
+		return regime.toString() + " (" + regime.getNom() + ")";
 	}
 
 	private String getRegimeComplHorsAgircArrco(final UserChecklistGenerationData userChecklistGenerationData) {
