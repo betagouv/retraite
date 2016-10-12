@@ -231,6 +231,21 @@ body .container.checklist{
 	}
 }
 
+@media screen and (max-width: 530px) {
+	body .container.checklist{
+	
+		.contenu {
+	
+			.mes-infos {
+				
+				.mes-infos-label {
+					text-align: left;
+				}
+			}
+		}
+	}
+}
+
 body .padding-bottom{
 	padding-bottom:20px;
 }
@@ -331,6 +346,26 @@ body .padding-bottom{
 			margin:0;
 			text-align: left;
 			padding-left:0;
+		}
+	}
+}
+
+@media screen and (max-width: 530px) {
+	.container.checklist .contenu .contenu-titre{
+	
+		.boxtitre {
+			width: auto;
+		}
+	
+		.puce {
+		}
+	
+		.soustitre {
+			width: auto;
+		}
+	
+		.titre {
+			width: auto;
 		}
 	}
 }
@@ -452,12 +487,40 @@ body .container.checklist .wrapper{
 	}
 }
 
+@media screen and (max-width: 530px) {
+	.contenu-texte {
+		margin-left: 0;
+		margin-right: 0;
+		
+		.border-left {
+			border-left: none;
+			min-height: 0;
+			margin-bottom: 0;
+		}
+	
+		.box1 {
+			.big-chiffre {
+				display: none;
+			}
+		}
+		.box2 {
+			min-height: 0;
+	
+			.texte2niv {
+	
+			 	.texte {
+					min-height: 0;
+				}
+			}
+		}
+	}
+}
 
 /*@media (min-width: @screen-sm-min) {     768px*/
 @media screen and (max-width: 532px) {
-		ul.sanspuce li {
-			font-size:87%;
-		}
+	ul.sanspuce li {
+		font-size:87%;
+	}
 
 	footer .footer-right {
 		float: none;

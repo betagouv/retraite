@@ -191,17 +191,17 @@ body .container.checklist .contenu {
   }
   
   .record {
-    height: 39px;
-    padding-left: 36px !important;
+    height: 49px;
+    padding-left: 46px !important;
 
     &:before {
       content: '';
       position: absolute;
       left: 0;
       top: 0;
-      width: 32px;
-      height: 34px;
-      background: url("../../img/sprites/save_black.png") no-repeat 2px 4px;
+      width: 42px;
+      height: 44px;
+      background: url("../../img/sprites/save_black.png") no-repeat 8px 8px;
     }
   }
 
