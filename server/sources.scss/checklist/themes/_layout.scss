@@ -43,8 +43,6 @@ html {
   font-family: $font;
 }
 
-
-
 body {
   background: #e7e7e7;
   margin: 0;
@@ -52,7 +50,11 @@ body {
   font-family: $font;
 }
 
-
+@media screen and (max-width: 530px) {
+	body {
+		background: none;
+	}
+}
 
 /* -----------------------------------------------------------------------------
    Wrappers
