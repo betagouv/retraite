@@ -63,6 +63,12 @@ header.entete {
 	}
 }
 
+@media screen and (max-width: 530px) {
+	header.entete {
+		background: none;
+	}
+}
+
 body .container {
 	margin:0 auto;
 	padding-left:0;
@@ -121,7 +127,20 @@ body .container {
 	}
 }
 
-
+@media screen and (max-width: 530px) {
+	body .container {
+	
+		.wrapper {
+		}
+	
+		.contenu-image {
+		}
+	
+		.contenu {
+			box-shadow: none;
+		}
+	}
+}
 
 footer {
 	padding-left:0;
