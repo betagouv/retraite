@@ -8,7 +8,7 @@
 
 		#{if !doNotIncludeBootstrap}
 			<!-- injector:bowercss -->
-			<link rel="stylesheet" href="/public/libs/bootstrap-css/css/bootstrap.min.css">
+			<link rel="stylesheet" href="@{'/public/libs/bootstrap-css/css/bootstrap.min.css'}"
 			<!-- endinjector -->
 		#{/if}
 		<link rel="stylesheet" href="@{'/public/libs/jquery-ui/themes/base/jquery-ui.css'}">
@@ -128,16 +128,16 @@
 
 
 		<!-- injector:bowerjs -->
-		<script src="/public/libs/jquery/dist/jquery.js"></script>
-		<script src="/public/libs/jquery.maskedinput/dist/jquery.maskedinput.js"></script>
-		<script src="/public/libs/bootstrap-css/js/bootstrap.min.js"></script>
-		<script src="/public/libs/jquery-ui/jquery-ui.js"></script>
+		<script src="@{'/public/libs/jquery/dist/jquery.js'}"></script>
+		<script src="@{'/public/libs/jquery.maskedinput/dist/jquery.maskedinput.js'}"></script>
+		<script src="@{'/public/libs/bootstrap-css/js/bootstrap.min.js'}"></script>
+		<script src="@{'/public/libs/jquery-ui/jquery-ui.js'}"></script>
 		<!-- endinjector -->
 
         #{get 'moreScripts' /}
         
 		<script src="@{'/public/javascripts/retraite-analytics.js'}"></script>
-		#{if !noInfoCookie}
+		#{if look.toString() != 'RSI' && !noInfoCookie}
 			<script src="@{'/public/javascripts/infocookie.js'}"></script>
 		#{/if}
 

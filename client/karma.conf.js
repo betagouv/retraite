@@ -110,6 +110,8 @@ module.exports = function (config) {
             'app/src/config/utils/edit-condition-validator/edit-condition-validator.spec.js',
             'app/src/config/utils/http-buffer/http-buffer.js',
             'app/src/config/utils/http-buffer/http-buffer.spec.js',
+            'app/src/config/utils/http-context-provider/http-context-provider.js',
+            'app/src/config/utils/http-context-provider/http-context-provider.spec.js',
             'app/src/config/utils/object-utils/object-utils.js',
             'app/src/config/utils/object-utils/object-utils.spec.js',
             'app/src/config/utils/pasted-text-cleaner/pasted-text-cleaner.js',

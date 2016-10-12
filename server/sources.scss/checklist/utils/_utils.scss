@@ -128,3 +128,18 @@
     text-decoration: underline;
   }
 }
+
+/// Links never underlined on hover/focus/active states
+/// @group utils
+///
+/// @example scss - Usage
+/// .foo {
+///   @include noUnderline;
+/// }
+@mixin noUnderline {
+  text-decoration: none;
+
+  @include hover {
+    text-decoration: none;
+  }
+}

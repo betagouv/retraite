@@ -27,7 +27,7 @@
 								#{/if}
 								#{if _data.userChecklist.regimesComplementaires}
 									<h4>Retraite complémentaire :</h4>
-						        	<ul>
+						        	<ul class='interlocuteur-autre'>
 						        		#{list items:_data.userChecklist.regimesComplementaires, as:'regime'}
 						        			<li>
        											#{displayRegimeAutre regime:regime /}
