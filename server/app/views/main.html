@@ -137,7 +137,7 @@
         #{get 'moreScripts' /}
         
 		<script src="@{'/public/javascripts/retraite-analytics.js'}"></script>
-		#{if !noInfoCookie}
+		#{if look.toString() != 'RSI' && !noInfoCookie}
 			<script src="@{'/public/javascripts/infocookie.js'}"></script>
 		#{/if}
 

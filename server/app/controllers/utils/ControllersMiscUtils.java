@@ -20,7 +20,7 @@ public class ControllersMiscUtils {
 		if (debug != null && debug) {
 			params.add(new KeyAndValue("debug"));
 		}
-		if (look.isNotGeneric()) {
+		if (look != null && look.isNotGeneric()) {
 			params.add(new KeyAndValue("look", look.toString().toLowerCase()));
 		}
 		if (force55 != null && force55) {
