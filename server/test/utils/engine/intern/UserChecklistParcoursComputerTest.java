@@ -43,8 +43,8 @@ public class UserChecklistParcoursComputerTest {
 			@Override
 			public String answer(final InvocationOnMock invocation) throws Throwable {
 				final String text = invocation.getArgumentAt(0, String.class);
-				// On renvoie le texte sauf dans le cas de "toto" pour les remplacements de variables
-				return (text.equals("toto") ? "titi" : text);
+				// On renvoie le texte sauf dans le cas de "toto" et de "vide" pour les remplacements de variables
+				return (text.replaceAll("toto", "titi").replaceAll("vide", ""));
 			}
 		});
 	}
@@ -190,6 +190,18 @@ public class UserChecklistParcoursComputerTest {
 		final String result = userChecklistParcoursComputer.compute(before, null, urls);
 
 		assertThat(result).isEqualTo("toto");
+	}
+
+
+	@Test
+	public void should_return_empty_if_empty_vars_only() {
+
+		final String before = "<p>vide</p>";
+		final List<String> urls = new ArrayList<>();
+
+		final String result = userChecklistParcoursComputer.compute(before, null, urls);
+
+		assertThat(result).isNull();
 	}
 
 	// Méthodes privées

@@ -72,7 +72,8 @@ module.exports = function(grunt) {
             app: 'app',
             temp: 'temp',
             dist: 'www',
-            bowerDir: 'lib'
+            bowerDir: 'lib',
+            bowerDest: 'app/lib'
         },
 
         watch: {
@@ -285,15 +286,6 @@ module.exports = function(grunt) {
                     relative: false
                 },
                 files: {
-                    '<%= config.app %>/index.html': [
-                        '<%= config.app %>/src/*.js',
-                        '<%= config.app %>/src/**/*.js',
-                        '!<%= config.app %>/src/**/*.spec.js',
-                        '!<%= config.app %>/src/tests_fonctionnels/**/*.js',
-                        '<%= config.app %>/css/{,*/}*.css',
-                        '<%= config.app %>/src/**/*.css',
-                        '<%= config.app %>/lib/angular-i18n/angular-locale_fr-fr.js'
-                    ],
                     '<%= config.app %>/config.html': [
                         '<%= config.app %>/src/*.js',
                         '<%= config.app %>/src/**/*.js',
@@ -301,7 +293,8 @@ module.exports = function(grunt) {
                         '!<%= config.app %>/src/tests_fonctionnels/**/*.js',
                         '<%= config.app %>/css/{,*/}*.css',
                         '<%= config.app %>/src/**/*.css',
-                        '<%= config.app %>/lib/angular-i18n/angular-locale_fr-fr.js'
+                        '<%= config.bowerDest %>/angular-i18n/angular-locale_fr-fr.js',
+                        "<%= config.bowerDest %>/font-awesome/css/font-awesome.css"
                     ]
                 }
             },
@@ -310,8 +303,9 @@ module.exports = function(grunt) {
                     relative: true
                 },
                 files: {
-                    '<%= config.app %>/index.html': ['bower.json'],
-                    '<%= config.app %>/config.html': ['bower.json']
+                    '<%= config.app %>/config.html': [
+                        'bower.json'
+                    ]
                 }
             },
             karmaDependencies: {
@@ -440,7 +434,6 @@ module.exports = function(grunt) {
                     src: [
                         'img/*.{ico,png,txt}',
                         '.htaccess',
-                        'index.html',
                         'config.html',
                         '**/*.html',
                         'css/images/*',
