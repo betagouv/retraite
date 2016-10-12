@@ -20,10 +20,8 @@
   font-size: inherit;
   font-family: inherit;
   transition: all 300ms;
-
-  @include hover {
-    text-decoration: none;
-  }
+  
+  @include noUnderline;
 
   &:active {
 
