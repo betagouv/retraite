@@ -1,27 +1,37 @@
 'use strict';
 
-angular.module('SgmapRetraiteConfig').factory('CheckList', function ($resource, $q) {
-    var resourceForCheckList = $resource('/api/checklist/:id', {
-        id: '@id'
-    }, {
-        save: {
-            method: 'PUT'
-        }
-    });
+angular.module('SgmapRetraiteConfig').service('CheckList', function ($resource, $q, HttpContextProvider) {
     
-    return {
-        all: function() {
-            return resourceForCheckList.query();
-        },
-        get: function(id) {
-            return resourceForCheckList.get({id:id});
-        },
-        save: function(checkList) {
-            var deferred = $q.defer();
-            resourceForCheckList.save(checkList, function onSuccess(checkListSaved) {
-                deferred.resolve(checkListSaved);
-            });
-            return deferred.promise;
-        }
+    var resourceForCheckList;
+    
+    this.all = function() {
+        return getResourceForCheckList().query();
     };
+    
+    this.get = function(id) {
+        return getResourceForCheckList().get({id:id});
+    };
+        
+    this.save = function(checkList) {
+        var deferred = $q.defer();
+        getResourceForCheckList().save(checkList, function onSuccess(checkListSaved) {
+            deferred.resolve(checkListSaved);
+        });
+        return deferred.promise;
+    };
+    
+    function getResourceForCheckList() {
+        
+        if (!resourceForCheckList) {            
+            resourceForCheckList = $resource(HttpContextProvider.getHttpContext() + '/api/checklist/:id', {
+                id: '@id'
+            }, {
+                save: {
+                    method: 'PUT'
+                }
+            });
+        }
+        
+        return resourceForCheckList;
+    }
 });

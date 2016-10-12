@@ -4,43 +4,32 @@ describe('CheckList', function () {
     
     beforeEach(module('SgmapRetraiteConfig'));
     
-    beforeEach(module(function($provide) {
-        
-        // Subterfuge pour éviter l'erreur suivante apparemment lié au chargement de $state dans les tests :
-        // Error: Unexpected request: GET src/config/configlist/configlist.html
-        
-        $provide.service('$state', function() {
-            this.go = function(newState) {};
-            this.reload = function() {};
-        });
-    }));
-
-    var CheckList, $httpBackend;
+    var CheckList, $httpBackend, HttpContextProvider;
     
-    beforeEach(inject(function (_CheckList_, _$httpBackend_) {
+    beforeEach(inject(function (_CheckList_, _$httpBackend_, _HttpContextProvider_) {
 
         CheckList = _CheckList_;
         $httpBackend = _$httpBackend_;
+        HttpContextProvider = _HttpContextProvider_;
         
     }));
     
     beforeEach(function() {
+        spyOn(HttpContextProvider, 'getHttpContext').and.returnValue('/retraite');
     });
-
+    
     describe('all', function () {
 
-        it('should call REST server and return result', function (done) {
+        it('should call REST server and return result', function () {
 
             var mockCheckLists = [{id:1},{id:2}];
-            
-            $httpBackend.expectGET('/api/checklist').respond(200, mockCheckLists);
+            $httpBackend.expectGET('/retraite/api/checklist').respond(200, mockCheckLists);
             
             var checklists = CheckList.all();
 
-            checklists.$promise.then(function onSuccess(data) {
-                expect(data.length).toEqual(mockCheckLists.length);
-                expect(data[1].id).toEqual(mockCheckLists[1].id);
-                done();
+            checklists.$promise.then(function onSuccess(checklistsLoaded) {
+                expect(checklistsLoaded.length).toEqual(mockCheckLists.length); 
+                expect(checklistsLoaded[1].id).toEqual(mockCheckLists[1].id);
             });
             $httpBackend.flush();
         });
@@ -49,17 +38,16 @@ describe('CheckList', function () {
 
     describe('get', function () {
 
-        it('should call REST server and return result', function (done) {
+        it('should call REST server and return result', function () {
 
             var mockCheckList = {id:2};
             
-            $httpBackend.expectGET('/api/checklist/2').respond(200, mockCheckList);
+            $httpBackend.expectGET('/retraite/api/checklist/2').respond(200, mockCheckList);
             
             var checklist = CheckList.get(2);
 
             checklist.$promise.then(function onSuccess(data) {
                 expect(data.id).toEqual(mockCheckList.id);
-                done();
             });
             $httpBackend.flush();
         });
@@ -68,17 +56,13 @@ describe('CheckList', function () {
 
     describe('save', function () {
 
-        it('should call REST server and return result', function (done) {
+        it('should call REST server and return result', function () {
 
-            var checkList = {id:2, nom: 'toto'};
+            var checkList = {id:2, nom: 'toto'};    
+            $httpBackend.expectPUT('/retraite/api/checklist/2', {id:2, nom:'toto'}).respond(200);
             
-            $httpBackend.expectPUT('/api/checklist/2', {id:2, nom:'toto'}).respond(200);
-            
-            var promise = CheckList.save(checkList);
+            CheckList.save(checkList);
 
-            promise.then(function onSuccess(data) {
-                done();
-            });
             $httpBackend.flush();
         });
 

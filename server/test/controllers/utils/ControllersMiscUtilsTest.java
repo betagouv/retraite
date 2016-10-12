@@ -36,6 +36,7 @@ public class ControllersMiscUtilsTest {
 	public void test_computeActionQueryParams() {
 		assertThat(ControllersMiscUtils.computeActionQueryParams(false, false, Look.GENERIC, false)).isEqualTo("");
 		assertThat(ControllersMiscUtils.computeActionQueryParams(true, false, Look.GENERIC, false)).isEqualTo("?test");
+		assertThat(ControllersMiscUtils.computeActionQueryParams(true, false, null, false)).isEqualTo("?test");
 		assertThat(ControllersMiscUtils.computeActionQueryParams(false, true, Look.GENERIC, false)).isEqualTo("?debug");
 		assertThat(ControllersMiscUtils.computeActionQueryParams(false, false, Look.CNAV, false)).isEqualTo("?look=cnav");
 		assertThat(ControllersMiscUtils.computeActionQueryParams(true, true, Look.RSI, false)).isEqualTo("?test&debug&look=rsi");
