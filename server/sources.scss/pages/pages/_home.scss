@@ -63,6 +63,12 @@ header.entete {
 	}
 }
 
+@media screen and (max-width: 530px) {
+	header.entete {
+		background: none;
+	}
+}
+
 body .container {
 	margin:0 auto;
 	padding-left:0;
