@@ -88,7 +88,7 @@ body {
 .container, .contenu.col-sm-10,
 .contenu-image,
 .question {
-  max-width: 536px!important;
+  max-width: 532px!important;
   padding: 0!important;
   width: 100%;
 }
@@ -451,6 +451,11 @@ ul.sanspuce.text-right {
   padding:0;
 }
 
+.interlocuteur-autre {
+	font-size:1.1rem;
+	margin-top: 19px;
+}
+
 span.enveloppe {
   display: none;
   background: url("#{$pathImg}/enveloppe1.png") no-repeat left center;
@@ -675,8 +680,8 @@ span.telephone {
 	
 	  .puce {
 	    background-color: #fff;
-	    height: 28px;
-	    width: 28px;
+	    height: 20px;
+	    width: 20px;
 	    border-radius: 20px;
 	    display: inline-block;
 	    bottom: 9px;
@@ -834,8 +839,24 @@ body .container.checklist .wrapper{
   }
 }
 
-
-
+@media screen and (max-width: 530px) {
+	.contenu-texte {
+    	margin-left: 0px;
+		margin-right: 0;
+    	
+		.border-left {
+		    border-left: none;
+		    min-height: 0;
+		}
+		
+		.box1 {
+			.big-chiffre {
+				display: none;
+			}
+		}
+  }
+	
+}
 
 
 /*@media (min-width: @screen-sm-min) {     768px*/
