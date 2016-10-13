@@ -10,7 +10,6 @@
   body {
     width: auto !important;
     margin: auto !important;
-    font-family: serif;
     font-size: 12pt;
     background-color: #fff !important;
   }
@@ -38,6 +37,10 @@
   a {
     color: #000 !important;
     text-decoration: underline !important;
+  }
+
+  .contenu-texte .box1 .big-chiffre {
+  	display: none !important;  	
   }
 
 }
