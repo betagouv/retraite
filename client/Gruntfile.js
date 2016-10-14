@@ -521,7 +521,8 @@ module.exports = function(grunt) {
             'copy:dist',
             'cssmin',
             'usemin',
-            'comments:dist'
+            'comments:dist',
+            'karma:unit'
         ]);
     });
     
