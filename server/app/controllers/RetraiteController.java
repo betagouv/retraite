@@ -17,6 +17,11 @@ public class RetraiteController extends Controller {
 		renderArgs.put("appid", Play.configuration.getProperty("appid"));
 	}
 
+	@Before
+	public static void setSecuredRequestIfNecessary() {
+		System.out.println("request = " + JsonUtils.toJson(request));
+	}
+
 	protected static void renderJSON(final Object o) {
 		Controller.renderJSON(JsonUtils.toJson(o));
 	}
