@@ -1,5 +1,5 @@
 #{list items:_questions, as:'question'}
-	<div class="contenu question ${question_isFirst ? 'marg-top' : ''} col-sm-12"
+	<div class="contenu question ${question_isFirst ? 'marg-top' : ''} col-sm-12 printable"
 		#{if question.condition}
 			condition-key='${question.condition.key}'
 			condition-value='${question.condition.value}'
