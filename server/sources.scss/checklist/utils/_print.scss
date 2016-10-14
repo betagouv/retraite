@@ -13,6 +13,15 @@
     font-size: 12pt;
     background-color: #fff !important;
   }
+  
+  body #screenContent {
+  	display: none;
+  }
+  
+  body #printContent {
+  	display: block;
+  	text-align: center;
+  }
 
   /* no orphans, no widows */
   p,
@@ -41,6 +50,10 @@
 
   .contenu-texte .box1 .big-chiffre {
   	display: none !important;  	
+  }
+  
+  #imgPrint1 {
+  	margin-top: -25px;
   }
 
 }
