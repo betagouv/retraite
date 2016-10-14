@@ -69,7 +69,6 @@ public class ApiChecklistGenerator {
 		data.hidden_departAnnee = departAnnee;
 
 		final String regimesInfosJsonStr = JsonUtils.toJson(new FakeRegimeDataProvider().create(regimes));
-		System.out.println("regimesInfosJsonStr=" + regimesInfosJsonStr);
 
 		final MonthAndYear dateDepart = new MonthAndYear(departMois, departAnnee);
 		final RegimeAligne[] regimesAlignes = calculateurRegimeAlignes.getRegimesAlignes(regimes);
