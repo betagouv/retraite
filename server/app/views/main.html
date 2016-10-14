@@ -55,7 +55,7 @@
 
     <body>
     
-		<!--[if lt IE 10]>
+		<!--[if lt IE 9]>
 		    <div class="browsehappy text-center">
 		      Vous utilisez un navigateur web obsolète et donc <strong>non sécurisé</strong>.
 		      <br>Cette application ne fonctionne pas sur celui-ci.
@@ -67,71 +67,76 @@
 		    </div>
 		<![endif]-->    
 		
-	  	#{if look.toString() != 'RSI' && !withoutPageLayout}
-		    <header class="entete col-sm-12">
-		    	<div class="home header-inner clearfix row">
-			    	<div class="col-sm-2">
-			            <div class="logo hidden-xs">
-			            	#{if look.toString() == 'CNAV'}
-				                <a href="https://www.lassuranceretraite.fr/portail-info/accueil" target="_blank" title="Nouvelle fenêtre"><img src="@{'/public/img/sprites/logo_cnav.png'}" title="CNAV" alt="l'assurance retraite"></a>
-			            	#{/if}
-			            	#{if look.toString() == 'MSA'}
-								<a href="http://www.msa.fr/lfr" target="_blank" title="Nouvelle fenêtre"><img src="@{'/public/img/sprites/logoMSA_home.png'}" title="msa" alt="sant√© famille retraite services"></a>
-			            	#{/if}
-			            </div>
-			        </div>
-			        <div class="title col-sm-8">
-			        	<a href="@{Application.process}${ actionQueryParams }" title="Retour à l'accueil">
-				            <h1>Mes démarches retraite</h1>
-				            <h2>pas à pas</h2>
-			            </a>
-			        </div>
-			    	<div class="col-sm-2">
-			        </div>
-		    	</div>
-		    </header>
-	   	#{/if}
-	   	
-        <div class="container padding-bottom #{get 'pageCssClass' /}">
-
-            <div class="wrapper">
-
-					#{doLayout /}
+		<div id="screenContent">
+		
+		  	#{if look.toString() != 'RSI' && !withoutPageLayout}
+			    <header class="entete col-sm-12">
+			    	<div class="home header-inner clearfix row printable">
+				    	<div class="col-sm-2">
+				            <div class="logo hidden-xs">
+				            	#{if look.toString() == 'CNAV'}
+					                <a href="https://www.lassuranceretraite.fr/portail-info/accueil" target="_blank" title="Nouvelle fenêtre"><img src="@{'/public/img/sprites/logo_cnav.png'}" title="CNAV" alt="l'assurance retraite"></a>
+				            	#{/if}
+				            	#{if look.toString() == 'MSA'}
+									<a href="http://www.msa.fr/lfr" target="_blank" title="Nouvelle fenêtre"><img src="@{'/public/img/sprites/logoMSA_home.png'}" title="msa" alt="sant√© famille retraite services"></a>
+				            	#{/if}
+				            </div>
+				        </div>
+				        <div class="title col-sm-8">
+				        	<a href="@{Application.process}${ actionQueryParams }" title="Retour à l'accueil">
+					            <h1>Mes démarches retraite</h1>
+					            <h2>pas à pas</h2>
+				            </a>
+				        </div>
+				    	<div class="col-sm-2">
+				        </div>
+			    	</div>
+			    </header>
+		   	#{/if}
+		   	
+	        <div class="container padding-bottom #{get 'pageCssClass' /}">
 	
-    		</div><!--fin wrapper-->
-
-		</div><!--fin container-->
-
-
-	  	#{if look.toString() != 'RSI' && !withoutPageLayout}
-			<div class="col-sm-12 contenu">
-			    <footer role="contentinfo">
-			        <div class="wrapper-inner">
-			            <nav class="footer-right col-sm-7">
-			                <ul>
-			                    <li><a href="https://www.lassuranceretraite.fr/portail-info/accueil" target="_blank" title="Nouvelle fenêtre"><img src="@{'/public/img/sprites/logo_cnav.png'}" title="cnav" alt="l'assurance retraite"></a></li>
-			                    <li><a href="http://www.msa.fr/lfr" target="_blank" title="Nouvelle fenêtre"><img src="@{'/public/img/sprites/logo_MSA.png'}" title="MSA" alt="santé famille retraite services"></a></li>
-			                    <li><a href="https://www.rsi.fr/" target="_blank" title="Nouvelle fenêtre"><img src="@{'/public/img/sprites/logo_rsi.png'}" title="rsi" alt="régime social des indépendants"></a></li>
-			                </ul>
-			            </nav>
+	            <div class="wrapper">
 	
-			            <nav class="footer-nav col-sm-5">
-			                <ul>
-			                    <li><a href="mailto:contact@retraite.beta.gouv.fr" title="Contact pour poser une question sur cette application" class="footer-feedback"> Votre avis nous intéresse,<br/>n'hésitez pas à nous transmettre vos retours et suggestions !</a></li>
-			                </ul>
-			            </nav>
-			
-			        </div>
-			    </footer>
-			</div>
-	   	#{/if}
-
+						#{doLayout /}
+		
+	    		</div><!--fin wrapper-->
+	
+			</div><!--fin container-->
+	
+	
+		  	#{if look.toString() != 'RSI' && !withoutPageLayout}
+				<div class="col-sm-12 contenu printable">
+				    <footer role="contentinfo">
+				        <div class="wrapper-inner">
+				            <nav class="footer-right col-sm-7">
+				                <ul>
+				                    <li><a href="https://www.lassuranceretraite.fr/portail-info/accueil" target="_blank" title="Nouvelle fenêtre"><img src="@{'/public/img/sprites/logo_cnav.png'}" title="cnav" alt="l'assurance retraite"></a></li>
+				                    <li><a href="http://www.msa.fr/lfr" target="_blank" title="Nouvelle fenêtre"><img src="@{'/public/img/sprites/logo_MSA.png'}" title="MSA" alt="santé famille retraite services"></a></li>
+				                    <li><a href="https://www.rsi.fr/" target="_blank" title="Nouvelle fenêtre"><img src="@{'/public/img/sprites/logo_rsi.png'}" title="rsi" alt="régime social des indépendants"></a></li>
+				                </ul>
+				            </nav>
+		
+				            <nav class="footer-nav col-sm-5">
+				                <ul>
+				                    <li><a href="mailto:contact@retraite.beta.gouv.fr" title="Contact pour poser une question sur cette application" class="footer-feedback"> Votre avis nous intéresse,<br/>n'hésitez pas à nous transmettre vos retours et suggestions !</a></li>
+				                </ul>
+				            </nav>
+				
+				        </div>
+				    </footer>
+				</div>
+		   	#{/if}
+		   	
+		</div>
+		<div id="printContent"></div>
 
 		<!-- injector:bowerjs -->
 		<script src="@{'/public/libs/jquery/dist/jquery.js'}"></script>
 		<script src="@{'/public/libs/jquery.maskedinput/dist/jquery.maskedinput.js'}"></script>
 		<script src="@{'/public/libs/bootstrap-css/js/bootstrap.min.js'}"></script>
 		<script src="@{'/public/libs/jquery-ui/jquery-ui.js'}"></script>
+		<script src="@{'/public/libs/html2canvas/build/html2canvas.js'}"></script>
 		<!-- endinjector -->
 
         #{get 'moreScripts' /}
@@ -158,6 +163,8 @@
 		</script>
 	    
 	#{/if}
+	
+	<script src="@{'/public/javascripts/printCapture.js'}"></script>
 
 </html>
 

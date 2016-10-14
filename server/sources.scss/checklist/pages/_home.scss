@@ -77,7 +77,6 @@ body .container {
 	max-width: 1024px;
 
 	.wrapper {
-		background: #e7e7e7;
 		padding-bottom: 50px;
 	}
 
@@ -94,7 +93,7 @@ body .container {
 		padding-left:0;
 		padding-right:0;
 		padding-bottom:20px;
-
+		
 		.box {
 			background: #f6f6f6 url("../../img/sprites/border_box.png") left bottom;
 			background-repeat: repeat-x;
@@ -124,6 +123,10 @@ body .container {
 		.text-right {
 			text-align:right;
 		}
+	}
+	
+	.printable .btn {
+		display: none;
 	}
 }
 
