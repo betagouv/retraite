@@ -511,7 +511,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask('build', 'Build', function (target) {
         grunt.task.run([
-            'test',
             'clean:dist',
             'injector',
 			'eol',
@@ -522,7 +521,8 @@ module.exports = function(grunt) {
             'copy:dist',
             'cssmin',
             'usemin',
-            'comments:dist'
+            'comments:dist',
+            'karma:unit'
         ]);
     });
     
