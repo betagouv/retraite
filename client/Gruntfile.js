@@ -511,6 +511,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('build', 'Build', function (target) {
         grunt.task.run([
+            'test',
             'clean:dist',
             'injector',
 			'eol',
