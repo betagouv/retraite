@@ -9,6 +9,14 @@ body, a, a:hover, a:visited {
     color: black;
 }
 
+body #screenContent {
+	display: block;
+}
+
+body #printContent {
+	display: none;
+}
+
 a {
     text-decoration: underline;
 }
