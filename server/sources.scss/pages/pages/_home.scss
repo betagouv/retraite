@@ -29,7 +29,7 @@ header.entete {
 	.title {
 		background-position: center top;
 	  background-repeat: no-repeat;
-		background-image: url("../../img/sprites/img_header.png");
+		background-image: url("#{$pathImg}/img_header.png");
 		text-align: center;
 		height:148px;
 		cursor:default;
