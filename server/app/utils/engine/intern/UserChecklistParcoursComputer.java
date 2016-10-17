@@ -136,10 +136,10 @@ public class UserChecklistParcoursComputer {
 		final String textForLink = linkTrimed.substring(0, index).trim();
 		final String url = linkTrimed.substring(index);
 		String htmlLink = buildLink(url, textForLink);
-		if (isPDF) {
+		//if (isPDF) {
 			links.add(url);
 			htmlLink += "<sup>" + links.size() + "</sup>";
-		}
+		//}
 		return htmlLink;
 	}
 
