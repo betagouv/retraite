@@ -47,6 +47,7 @@ module.exports = function (config) {
             'public/javascripts/displaySortieQuestionCarriereLongue.js',
             'public/javascripts/getUserData.js',
             'public/javascripts/infocookie.js',
+            'public/javascripts/printCapture.js',
             'public/javascripts/questions.js',
             'public/javascripts/retraite-analytics.js',
             <!-- endinjector -->
