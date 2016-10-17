@@ -52,5 +52,11 @@
   #imgPrint1 {
   	margin-top: -25px;
   }
+  
+  @-moz-document url-prefix() {
+  	#imgPrint1 {
+  		margin-top: -5px;
+  	}
+  }
 
 }
