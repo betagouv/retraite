@@ -12,7 +12,6 @@
         <select ng-options='departement as departement for departement in departements' ng-model='data.departement' class='form-control xxx-select' ></select>
     </div>
 
-    data.regimes={{data.regimes}}
     <div class='form-group'>
         <label class='control-label'>Liste des régimes :</label>
         <div class='display-inline' ng-dropdown-multiselect="" options="regimes" selected-model="data.regimes" group-by="type" extra-settings='multiselectRegimesSettings' translation-texts='multiselectRegimesTexts'></div>
