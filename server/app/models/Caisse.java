@@ -23,9 +23,17 @@ public class Caisse extends RetraiteModel {
 
 	public String site;
 
-	public String linkLabel;
+	public String linkLabel1;
 
-	public String linkUrl;
+	public String linkUrl1;
+
+	public String linkLabel2;
+
+	public String linkUrl2;
+
+	public String linkLabel3;
+
+	public String linkUrl3;
 
 	@Override
 	public String toString() {
@@ -41,6 +49,12 @@ public class Caisse extends RetraiteModel {
 		result = prime * result + ((adresse3 == null) ? 0 : adresse3.hashCode());
 		result = prime * result + ((adresse4 == null) ? 0 : adresse4.hashCode());
 		result = prime * result + ((fax == null) ? 0 : fax.hashCode());
+		result = prime * result + ((linkLabel1 == null) ? 0 : linkLabel1.hashCode());
+		result = prime * result + ((linkLabel2 == null) ? 0 : linkLabel2.hashCode());
+		result = prime * result + ((linkLabel3 == null) ? 0 : linkLabel3.hashCode());
+		result = prime * result + ((linkUrl1 == null) ? 0 : linkUrl1.hashCode());
+		result = prime * result + ((linkUrl2 == null) ? 0 : linkUrl2.hashCode());
+		result = prime * result + ((linkUrl3 == null) ? 0 : linkUrl3.hashCode());
 		result = prime * result + ((nom == null) ? 0 : nom.hashCode());
 		result = prime * result + ((site == null) ? 0 : site.hashCode());
 		result = prime * result + ((telephone == null) ? 0 : telephone.hashCode());
@@ -80,6 +94,36 @@ public class Caisse extends RetraiteModel {
 			if (other.fax != null)
 				return false;
 		} else if (!fax.equals(other.fax))
+			return false;
+		if (linkLabel1 == null) {
+			if (other.linkLabel1 != null)
+				return false;
+		} else if (!linkLabel1.equals(other.linkLabel1))
+			return false;
+		if (linkLabel2 == null) {
+			if (other.linkLabel2 != null)
+				return false;
+		} else if (!linkLabel2.equals(other.linkLabel2))
+			return false;
+		if (linkLabel3 == null) {
+			if (other.linkLabel3 != null)
+				return false;
+		} else if (!linkLabel3.equals(other.linkLabel3))
+			return false;
+		if (linkUrl1 == null) {
+			if (other.linkUrl1 != null)
+				return false;
+		} else if (!linkUrl1.equals(other.linkUrl1))
+			return false;
+		if (linkUrl2 == null) {
+			if (other.linkUrl2 != null)
+				return false;
+		} else if (!linkUrl2.equals(other.linkUrl2))
+			return false;
+		if (linkUrl3 == null) {
+			if (other.linkUrl3 != null)
+				return false;
+		} else if (!linkUrl3.equals(other.linkUrl3))
 			return false;
 		if (nom == null) {
 			if (other.nom != null)

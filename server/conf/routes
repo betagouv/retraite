@@ -13,12 +13,6 @@ GET     /local/views/							staticDir:../client/app/views
 GET     /local/css/								staticDir:../client/app/css
 GET     /local/fonts/							staticDir:../client/app/fonts
 
-GET     /proto/exploit/lib/                     staticDir:../client/lib/
-GET     /proto/exploit/                         staticDir:../client/exploit/
-GET     /proto/config/lib/                      staticDir:../client/lib/
-GET     /proto/config/                          staticDir:../client/config/
-GET     /proto/                                  staticDir:../client/app/
-
 GET     /config/                                 staticDir:www/
 GET     /public/								staticDir:/public/
 GET     /viewlogs/								staticDir:/logs/
@@ -45,7 +39,7 @@ PUT     /api/caisse/{id}						ApiRestCaisse.saveCaisse
 
 # API WebServices
 GET		/api/inforetraite						ApiInfoRetraite.get
-GET		/api/checklistpublish					ApiChecklistPublish.get
+GET		/api/checklistpublish					ApiChecklistPublish.publish
 
 GET		/ws/caissedepartement/deletedepartement	WsCaisseDepartement.deleteDepartement
 GET		/ws/caissedepartement/adddepartement	WsCaisseDepartement.addDepartement

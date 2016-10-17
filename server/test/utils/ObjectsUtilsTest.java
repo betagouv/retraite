@@ -20,8 +20,8 @@ public class ObjectsUtilsTest {
 		from.adresse2 = "adresse2";
 		from.telephone = "telephone";
 		from.site = "site";
-		from.linkLabel = "linkLabel";
-		from.linkUrl = "linkUrl";
+		from.linkLabel1 = "linkLabel";
+		from.linkUrl1 = "linkUrl";
 		final CaisseForEdition to = new CaisseForEdition();
 
 		ObjectsUtils.copyFields(from, to);
@@ -32,8 +32,8 @@ public class ObjectsUtilsTest {
 		assertThat(to.adresse2).isEqualTo("adresse2");
 		assertThat(to.telephone).isEqualTo("telephone");
 		assertThat(to.site).isEqualTo("site");
-		assertThat(to.linkLabel).isEqualTo("linkLabel");
-		assertThat(to.linkUrl).isEqualTo("linkUrl");
+		assertThat(to.linkLabel1).isEqualTo("linkLabel");
+		assertThat(to.linkUrl1).isEqualTo("linkUrl");
 	}
 
 }

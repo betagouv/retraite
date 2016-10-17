@@ -10,9 +10,17 @@
   body {
     width: auto !important;
     margin: auto !important;
-    font-family: serif;
     font-size: 12pt;
     background-color: #fff !important;
+  }
+  
+  body #screenContent {
+  	display: none;
+  }
+  
+  body #printContent {
+  	display: block;
+  	text-align: center;
   }
 
   /* no orphans, no widows */
@@ -39,5 +47,20 @@
     color: #000 !important;
     text-decoration: underline !important;
   }
+
+  .contenu-texte .box1 .big-chiffre {
+  	display: none !important;  	
+  }
+  
+  #imgPrint1 {
+  	margin-top: -25px;
+  }
+  
+  @-moz-document url-prefix() {
+  	#imgPrint1 {
+  		margin-top: -5px;
+  	}
+  }
+  
 
 }

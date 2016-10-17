@@ -29,7 +29,7 @@ header.entete {
 	.title {
 		background-position: center top;
 	  background-repeat: no-repeat;
-		background-image: url("../../img/sprites/img_header.png");
+		background-image: url("#{$pathImg}/img_header.png");
 		text-align: center;
 		height:148px;
 		cursor:default;
@@ -76,7 +76,6 @@ body .container {
 	cursor:default;
 
 	.wrapper {
-		background: #e7e7e7;
 		padding-bottom: 50px;
 	}
 
@@ -86,14 +85,19 @@ body .container {
 		overflow:hidden;
 		padding-top: 30px;
 	}
+	
+	.padding-top {
+		padding-top: 42px;
+	}
 
 	.contenu {
 		background-color: #fff;
-		margin: 42px auto 10px;
+		margin: 0px auto 10px;
 		box-shadow:0 0 10px 5px #c8c8c8;
 		padding-left:0;
 		padding-right:0;
 		padding-bottom:20px;
+		border: 1px solid #e7e7e7;
 
 		.box {
 			background: #f6f6f6 url("../../img/sprites/border_box.png") left bottom;
@@ -222,6 +226,10 @@ body .container {
 		.text-right {
 			text-align:right;
 		}
+	}
+	
+	.printable .btn {
+		display: none;
 	}
 }
 

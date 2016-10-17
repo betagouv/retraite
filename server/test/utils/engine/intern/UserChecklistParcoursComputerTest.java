@@ -43,8 +43,8 @@ public class UserChecklistParcoursComputerTest {
 			@Override
 			public String answer(final InvocationOnMock invocation) throws Throwable {
 				final String text = invocation.getArgumentAt(0, String.class);
-				// On renvoie le texte sauf dans le cas de "toto" et de "vide" pour les remplacements de variables
-				return (text.replaceAll("toto", "titi").replaceAll("vide", ""));
+				// On renvoie le texte sauf dans le cas de "{{toto}}" et de "vide" pour les remplacements de variables
+				return (text.replaceAll("\\{\\{toto\\}\\}", "titi").replaceAll("\\{\\{vide\\}\\}", ""));
 			}
 		});
 	}
@@ -128,8 +128,10 @@ public class UserChecklistParcoursComputerTest {
 
 		final String result = userChecklistParcoursComputer.compute(before, null, urls);
 
-		assertThat(result).isEqualTo("xxx " + link("http://monsite.com/path/page.html", "ceci est mon texte") + " yyy");
-		assertThat(urls).isNullOrEmpty();
+		assertThat(result).isEqualTo("xxx " + link("http://monsite.com/path/page.html", "ceci est mon texte") + "<sup>1</sup> yyy");
+		assertThat(urls).containsExactly("http://monsite.com/path/page.html");
+		//assertThat(result).isEqualTo("xxx " + link("http://monsite.com/path/page.html", "ceci est mon texte") + " yyy");
+		//assertThat(urls).isNullOrEmpty();
 	}
 
 	@Test
@@ -172,7 +174,7 @@ public class UserChecklistParcoursComputerTest {
 	@Test
 	public void should_replace_vars() {
 
-		final String before = "toto";
+		final String before = "{{toto}}";
 		final List<String> urls = new ArrayList<>();
 
 		final String result = userChecklistParcoursComputer.compute(before, null, urls);
@@ -184,19 +186,19 @@ public class UserChecklistParcoursComputerTest {
 	public void should_log_and_continue_if_error_replacing_vars() {
 		doThrow(new RetraiteException("xxx")).when(variablesReplacerMock).replaceVariables(any(String.class), eq(variables));
 
-		final String before = "toto";
+		final String before = "{{toto}}";
 		final List<String> urls = new ArrayList<>();
 
 		final String result = userChecklistParcoursComputer.compute(before, null, urls);
 
-		assertThat(result).isEqualTo("toto");
+		assertThat(result).isEqualTo("{{toto}}");
 	}
 
 
 	@Test
 	public void should_return_empty_if_empty_vars_only() {
 
-		final String before = "<p>vide</p>";
+		final String before = "<p>{{vide}}</p>";
 		final List<String> urls = new ArrayList<>();
 
 		final String result = userChecklistParcoursComputer.compute(before, null, urls);

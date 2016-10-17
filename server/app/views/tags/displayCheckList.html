@@ -2,7 +2,7 @@
 
 	<div class="contenu col-sm-12">
 
-		<h2 class='intro-checklist'>
+		<h2 class='intro-checklist printable'>
 			${_data.hidden_nir?.startsWith('1') ? 'M.' : 'Mme'} ${_data.hidden_nom}, 
 			<br/>
 			voici la liste de vos démarches à effectuer 
@@ -15,96 +15,99 @@
 				<div class="col-sm-1"></div>
 				<div class="col-sm-11">
 					<p class="bouton">
-						<button class="btn record" ${_noPdfDownload ? "disabled='disabled'" : ""}>Télécharger en PDF</button>
+						<button class="btn print" ${_noPdfDownload ? "disabled='disabled'" : ""} onclick="capture()">Imprimer</button>
 					</p>
 				</div>
 			</div>
 		#{/if}
 
 		#{list items:_data.userChecklist.chapitres, as:'chapitre'}
-			<div class="contenu-titre">
-				#{if !_data.isPDF}
-					<div class="chiffre">${chapitre_index}</div>
-					<div class="boxtitre">
-						<div class="puce"></div>
-						#{if chapitre.delai}
-							<div class="soustitre">
-								${chapitre.delai.raw()}
+			<div class="printable">
+				<div class="contenu-titre">
+					#{if !_data.isPDF}
+						<div class="chiffre">${chapitre_index}</div>
+						<div class="boxtitre">
+							<div class="puce">
+								<img src="@{'/public/img/agnostique/rond_blc.png'}" />
 							</div>
-						#{/if}
-						<div class="titre">
-							<h2>
-								${chapitre.titre}
-							</h2>
-						</div>
-						<!--titre-->
-					</div>
-					<!--boxtitre-->
-				#{/if}
-				#{else}
-					<table class="boxtitre-pdf" width="100%">
-						<tr>
-							<td class="chiffre-pdf">${chapitre_index}</td>
-							<td class="soustitre-pdf" width="25%">${chapitre.delai.raw()}</td>
-							<td class="titre-pdf"><h2>${chapitre.titre}</h2></td>
-						</tr>
-					</table>
-				#{/else}
-			</div>
-			<!--contenu-titre-->
-
-			<div class="contenu-texte">
-				<div class="border-left">
-					<div class="box1">
-						#{if !_data.isPDF}
-							<div class="big-chiffre">${chapitre_index}</div>
-						#{/if}
-						<div class="texte1niv">
-							#{if chapitre.texteActions?.length() > 0}
-								<div class="texte">
-									${chapitre.texteActions?.raw()}
+							#{if chapitre.delai}
+								<div class="soustitre">
+									${chapitre.delai.raw()}
 								</div>
 							#{/if}
-
-							#{if chapitre.texteActions?.length() > 0 && chapitre.texteModalites?.length() > 0}
-								<div class="separation">&nbsp;</div>
-							#{/if}
-
-							#{if chapitre.texteModalites?.length() > 0}
-								<div class="texte">
-									${chapitre.texteModalites?.raw()}
-								</div>
-							#{/if}
-
-						</div>
-						<!--fin texte1niv-->
-					</div>
-					<!--fin box1-->
-					#{if chapitre.texteInfos?.length() > 0}
-						<div class="box2">
-							<div class="texte2niv">
-								<div class="texte">
-									<div class="lettrine">&nbsp;</div>
-									${chapitre.texteInfos?.raw()}
-								</div>
+							<div class="titre">
+								<h2>
+									${chapitre.titre}
+								</h2>
 							</div>
-							<!--fin texte2niv-->
-	
+							<!--titre-->
 						</div>
-						<!--fin box2-->
+						<!--boxtitre-->
 					#{/if}
-
-
-					<div class="links-urls">
-						#{list items:chapitre.urls, as:'url'}
-							<sup>${url_index}</sup> ${url}<br/>
-						#{/list}
-					</div>
+					#{else}
+						<table class="boxtitre-pdf" width="100%">
+							<tr>
+								<td class="chiffre-pdf">${chapitre_index}</td>
+								<td class="soustitre-pdf" width="25%">${chapitre.delai.raw()}</td>
+								<td class="titre-pdf"><h2>${chapitre.titre}</h2></td>
+							</tr>
+						</table>
+					#{/else}
 				</div>
-				<!--fin borderleft-->
+				<!--contenu-titre-->
+	
+				<div class="contenu-texte">
+					<div class="border-left">
+						<div class="box1">
+							#{if !_data.isPDF}
+								<div class="big-chiffre">${chapitre_index}</div>
+							#{/if}
+							<div class="texte1niv">
+								#{if chapitre.texteActions?.length() > 0}
+									<div class="texte">
+										${chapitre.texteActions?.raw()}
+									</div>
+								#{/if}
+	
+								#{if chapitre.texteActions?.length() > 0 && chapitre.texteModalites?.length() > 0}
+									<div class="separation">&nbsp;</div>
+								#{/if}
+	
+								#{if chapitre.texteModalites?.length() > 0}
+									<div class="texte">
+										${chapitre.texteModalites?.raw()}
+									</div>
+								#{/if}
+	
+							</div>
+							<!--fin texte1niv-->
+						</div>
+						<!--fin box1-->
+						#{if chapitre.texteInfos?.length() > 0}
+							<div class="box2">
+								<div class="texte2niv">
+									<div class="texte">
+										<div class="lettrine">&nbsp;</div>
+										${chapitre.texteInfos?.raw()}
+									</div>
+								</div>
+								<!--fin texte2niv-->
+		
+							</div>
+							<!--fin box2-->
+						#{/if}
+	
+	
+						<div class="links-urls">
+							#{list items:chapitre.urls, as:'url'}
+								<sup>${url_index}</sup> ${url}<br/>
+							#{/list}
+						</div>
+					</div>
+					<!--fin borderleft-->
+				</div>
+				<!--contenu-texte-->
 			</div>
-			<!--contenu-texte-->
-
 		#{/list}
 
 		#{if !_data.isPDF}
@@ -112,7 +115,7 @@
 				<div class="col-sm-1"></div>
 				<div class="col-sm-11">
 					<p class="bouton">
-						<button class="btn record" ${_noPdfDownload ? "disabled='disabled'" : ""}>Télécharger en PDF</button>
+						<button class="btn print" ${_noPdfDownload ? "disabled='disabled'" : ""}>Imprimer</button>
 					</p>
 				</div>
 			</div>
