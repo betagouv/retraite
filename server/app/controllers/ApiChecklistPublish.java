@@ -7,8 +7,8 @@ import utils.db.HtmlCleaner;
 
 public class ApiChecklistPublish extends RetraiteController {
 
-	public static void get(final Long id) {
-		Logger.debug("ApiChecklistPublish.get(" + id + ")...");
+	public static void publish(final Long id) {
+		Logger.debug("ApiChecklistPublish.publish(" + id + ")...");
 		new ChecklistPublisher(new DaoChecklist(new HtmlCleaner())).publish(id);
 		ok();
 	}
