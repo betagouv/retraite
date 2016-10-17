@@ -128,8 +128,10 @@ public class UserChecklistParcoursComputerTest {
 
 		final String result = userChecklistParcoursComputer.compute(before, null, urls);
 
-		assertThat(result).isEqualTo("xxx " + link("http://monsite.com/path/page.html", "ceci est mon texte") + " yyy");
-		assertThat(urls).isNullOrEmpty();
+		assertThat(result).isEqualTo("xxx " + link("http://monsite.com/path/page.html", "ceci est mon texte") + "<sup>1</sup> yyy");
+		assertThat(urls).containsExactly("http://monsite.com/path/page.html");
+		//assertThat(result).isEqualTo("xxx " + link("http://monsite.com/path/page.html", "ceci est mon texte") + " yyy");
+		//assertThat(urls).isNullOrEmpty();
 	}
 
 	@Test
