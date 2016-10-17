@@ -27,7 +27,9 @@
 					#{if !_data.isPDF}
 						<div class="chiffre">${chapitre_index}</div>
 						<div class="boxtitre">
-							<div class="puce"></div>
+							<div class="puce">
+								<img src="@{'/public/img/agnostique/rond_blc.png'}" />
+							</div>
 							#{if chapitre.delai}
 								<div class="soustitre">
 									${chapitre.delai.raw()}
