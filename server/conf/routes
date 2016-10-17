@@ -39,7 +39,7 @@ PUT     /api/caisse/{id}						ApiRestCaisse.saveCaisse
 
 # API WebServices
 GET		/api/inforetraite						ApiInfoRetraite.get
-GET		/api/checklistpublish					ApiChecklistPublish.get
+GET		/api/checklistpublish					ApiChecklistPublish.publish
 
 GET		/ws/caissedepartement/deletedepartement	WsCaisseDepartement.deleteDepartement
 GET		/ws/caissedepartement/adddepartement	WsCaisseDepartement.addDepartement
