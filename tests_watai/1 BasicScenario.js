@@ -6,42 +6,26 @@ steps: [
         'HomePageComponent.nextStepButton': disabled
     },
     */
-	HomePageComponent.fill("TOTO", "17/11/1954", "1 22 33 44 555 666"),
+    NextStepComponent.nextStep(),
+	HomePageComponent.fill("BBBB", "17/11/1954", "2000406111111"),
     NextStepComponent.nextStep(),
     {
-        // @Matti : Je préfèrerai juste vérifier que c'est la bonne page
-        // 'QuestionStep2PageComponent.isGoodPage': true,
-        
-		'QuestionStep2PageComponent.title1': "ETES-VOUS DANS L'UNE OU PLUSIEURS DES SITUATIONS SUIVANTES ?",
-        /*'QuestionStep2PageComponent.submitButton': function(nextButton) {
-            // @Matti : quel est le type d'objet reçu ?
-            return nextButton.getAttribute('disabled')
-					.then(function(attribute) {
-                        log(attribute);
-						assert.equal(attribute, 'disabled', 'Expected disabled for next button');
-					});        
-        },*/
-        
-        /* @Matti : ou ici , comment vérifier que la question suivante n'est pas visible (le div est en display=none)
-        */
+		'QuestionStepDatePageComponent.title': "A QUELLE DATE AVEZ-VOUS PRÉVU DE PRENDRE VOTRE RETRAITE ?"
 	},
-    QuestionStep2PageComponent.checkIndepAvant73(),
-    NextStepComponent.nextStep(),
-    {
-		'QuestionStep3PageComponent.title': "A QUELLE DATE AVEZ-VOUS PRÉVU DE PRENDRE VOTRE RETRAITE ?"
-	},
-    QuestionStep3PageComponent.setYear2018(),
+    QuestionStepDatePageComponent.setYear2018(),
     /* @Matti : je préfèrerai faire ça (voir dans QuestionStep3PageComponent)
     QuestionStep3PageComponent.selectYear(2018),
     */
     NextStepComponent.nextStep(),
     {
-		'QuestionStep4PageComponent.title': "AVEZ-VOUS CONSULTÉ VOTRE RELEVÉ DE CARRIÈRE ?"
+		'QuestionStepDepartementPageComponent.title': "OÙ HABITEZ-VOUS ?"
 	},
-    QuestionStep4PageComponent.checkCarriereNon(),
+    QuestionStepDepartementPageComponent.checkDepartement05(),
     NextStepComponent.nextStep(),
     {
-		'QuestionStep5PageComponent.title': "MES DÉMARCHES PAS À PAS",
-		'QuestionStep5PageComponent.paragrapheTitle': "JE PRÉPARE MA CESSATION D’ACTIVITÉ"
+		'QuestionStepChecklistPageComponent.title': new RegExp('^Mme BBBB,'), 
+		'QuestionStepChecklistPageComponent.paragraphe1Chiffre': "1",
+		'QuestionStepChecklistPageComponent.paragraphe1Delai': "LE PLUS TÔT POSSIBLE",
+		'QuestionStepChecklistPageComponent.paragraphe1Titre': "Je créé mon espace personnel"
 	}
 ]
