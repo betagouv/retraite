@@ -73,6 +73,13 @@ public class UserChecklistConditionEvaluator {
 				}
 			}
 			return false;
+		case "regimes-hors-alignes-ou-regimes-compl":
+			for (final Regime aRegime : regimes) {
+				if (aRegime.getType() == BASE_AUTRE || aRegime.getType() == COMPLEMENTAIRE) {
+					return true;
+				}
+			}
+			return false;
 		}
 		Logger.info("Pour la condition 'regimeDetecte', le regime '" + regime + "' n'est pas géré !");
 		return true;
