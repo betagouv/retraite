@@ -4,56 +4,58 @@
     #{script 'displayDepartureDate.js'/}
 #{/set}
 
-<div class="contenu question marg-top col-sm-12 printable">
-	<div class="col-sm-1"></div>
-	<div class="col-sm-10">
-	
-		<h2>A quelle date avez-vous prévu de prendre votre retraite ?</h2>
-	
-		<div class='choice'>
-
-           	#{if look.toString() == 'RSI'}
-           		<div class='form-group'>
-					<input type="radio" id='q1' name='postData.departInconnu' value='false' checked />
-					<label class='label-for-question-choice' for='q1'>
-						 Je prévois de partir au : 
-					</label>
-					#{displaySelectDepartMoisAnnee data:data /}
-           		</div>
-				
-           		<div class='form-group'>
-					<input type="radio" id='q2' name='postData.departInconnu' value='true'/>
-					<label class='label-for-question-choice' for='q2'>
-						 Je ne sais pas
-					</label>
-           		</div>
-           	#{/if}
-           	#{else}
-				<label class='label-for-question-choice' for='q1'>
-					<input type="radio" id='q1' name='postData.departInconnu' value='false' checked /> Je prévois de partir au : 
-					#{displaySelectDepartMoisAnnee data:data /}
-				</label>
-				
-				<label class='label-for-question-choice' for='q2'>
-					<input type="radio" id='q2' name='postData.departInconnu' value='true'/> Je ne sais pas
-				</label>
-           	#{/else}
-
-		</div>
+<div class="col-sm-12 padding-top">
+	<div class="contenu question col-sm-12 printable">
+		<div class="col-sm-1"></div>
+		<div class="col-sm-10">
 		
-		<div>
-			<br/>
-			<label class='label-for-question-choice'>
-				Pour information, pour votre génération, l'age légal de départ est de <b>${data.extras.ageLegalPourPartir.annees} ans 
-				#{if data.extras.ageLegalPourPartir.mois} 
-					et ${data.extras.ageLegalPourPartir.mois} mois
-				#{/if}
-				</b>, soit pour vous à partir du <b>${data.extras.dateDepartPossible}</b>.
-			</label>
-		</div>
+			<h2>A quelle date avez-vous prévu de prendre votre retraite ?</h2>
+		
+			<div class='choice'>
 	
-	</div><!--fin contenu-->
-	<div class="col-sm-1"></div>
+	           	#{if look.toString() == 'RSI'}
+	           		<div class='form-group'>
+						<input type="radio" id='q1' name='postData.departInconnu' value='false' checked />
+						<label class='label-for-question-choice' for='q1'>
+							 Je prévois de partir au : 
+						</label>
+						#{displaySelectDepartMoisAnnee data:data /}
+	           		</div>
+					
+	           		<div class='form-group'>
+						<input type="radio" id='q2' name='postData.departInconnu' value='true'/>
+						<label class='label-for-question-choice' for='q2'>
+							 Je ne sais pas
+						</label>
+	           		</div>
+	           	#{/if}
+	           	#{else}
+					<label class='label-for-question-choice' for='q1'>
+						<input type="radio" id='q1' name='postData.departInconnu' value='false' checked /> Je prévois de partir au : 
+						#{displaySelectDepartMoisAnnee data:data /}
+					</label>
+					
+					<label class='label-for-question-choice' for='q2'>
+						<input type="radio" id='q2' name='postData.departInconnu' value='true'/> Je ne sais pas
+					</label>
+	           	#{/else}
+	
+			</div>
+			
+			<div>
+				<br/>
+				<label class='label-for-question-choice'>
+					Pour information, pour votre génération, l'age légal de départ est de <b>${data.extras.ageLegalPourPartir.annees} ans 
+					#{if data.extras.ageLegalPourPartir.mois} 
+						et ${data.extras.ageLegalPourPartir.mois} mois
+					#{/if}
+					</b>, soit pour vous à partir du <b>${data.extras.dateDepartPossible}</b>.
+				</label>
+			</div>
+		
+		</div><!--fin contenu-->
+		<div class="col-sm-1"></div>
+	</div>
 </div>
 
 #{buttonsPrevNext /}
