@@ -1,5 +1,6 @@
 #{extends 'step.html' /}
 
+<<<<<<< HEAD
 <div class="col-sm-12 printable padding-top">
 	<div class="contenu question col-sm-12">
 		<div class="col-sm-1"></div>
@@ -18,4 +19,22 @@
 			<a href="javascript:history.go(-1)" class="btn btn-success btn-precedente marg-bottom">Etape précédente</a>
 		</div>
 	</div>
+=======
+<div class="contenu question marg-top col-sm-12">
+	<div class="col-sm-1"></div>
+	<div class="label-for-question-choice col-sm-10">
+	
+		#{doLayout /}
+			
+	</div><!--fin contenu-->
+	<div class="col-sm-1"></div>
+</div>
+
+#{if !withoutPageLayout}
+	<div class="form-group row col-sm-12">
+		<div class="col-sm-6">
+			<a href="javascript:history.go(-1)" class="btn btn-success btn-precedente marg-bottom">Etape précédente</a>
+		</div>
+	</div>
+>>>>>>> a2b02a51fe1c51f00808b806c667fe035e442585
 #{/if}

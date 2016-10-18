@@ -15,7 +15,7 @@ module.exports = {
 		// 'chrome.binary':	'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
 	},
     
-    //views: [ 'Verbose', 'PageDump', 'Growl' ],
+    views: [ 'Verbose', 'PageDump', 'Growl' ],
     
     log: function(message) {
         //require('console').log(message);
