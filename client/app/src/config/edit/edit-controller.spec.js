@@ -629,6 +629,17 @@ describe('EditCtrl', function () {
                 expect(str).toEqual("Détecté : Régimes hors alignés et hors AGIRC-ARRCO");
             });
         
+            it('regimes-hors-alignes-ou-regimes-compl', function () {
+
+                var condition = {
+                    props: {
+                        type: 'regimeDetecte',
+                        regime: 'regimes-hors-alignes-ou-regimes-compl'
+                    }
+                };
+                var str = $scope.conditionToHumanStr(condition);
+                expect(str).toEqual("Détecté : Régimes hors alignés ou régimes compl.");
+            });
         });
         
         describe('for statut', function () {

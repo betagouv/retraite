@@ -191,6 +191,49 @@ public class UserChecklistConditionEvaluatorTest {
 		assertThat(isVerified).isFalse();
 	}
 
+	@Test
+	public void test_regimeDetecte_regimes_hors_alignés_ou_compl_true() {
+
+		final Condition condition = new Condition();
+		condition.props.put("type", "regimeDetecte");
+		condition.props.put("regime", "regimes-hors-alignes-ou-regimes-compl");
+
+		{
+			final UserChecklistGenerationData userChecklistGenerationData = UserChecklistGenerationData.create()
+					.withRegimes(RSI, IRCANTEC, CNAV)
+					.get();
+
+			final boolean isVerified = userChecklistConditionEvaluator.isVerified(condition, userChecklistGenerationData);
+
+			assertThat(isVerified).isTrue();
+		}
+		{
+			final UserChecklistGenerationData userChecklistGenerationData = UserChecklistGenerationData.create()
+					.withRegimes(RSI, FSPOEIE, CNAV)
+					.get();
+
+			final boolean isVerified = userChecklistConditionEvaluator.isVerified(condition, userChecklistGenerationData);
+
+			assertThat(isVerified).isTrue();
+		}
+	}
+
+	@Test
+	public void test_regimeDetecte_regimes_hors_alignés_ou_compl_false() {
+
+		final Condition condition = new Condition();
+		condition.props.put("type", "regimeDetecte");
+		condition.props.put("regime", "regimes-hors-alignes-ou-regimes-compl");
+
+		final UserChecklistGenerationData userChecklistGenerationData = UserChecklistGenerationData.create()
+				.withRegimes(RSI, CNAV)
+				.get();
+
+		final boolean isVerified = userChecklistConditionEvaluator.isVerified(condition, userChecklistGenerationData);
+
+		assertThat(isVerified).isFalse();
+	}
+
 	// Tests pour les conditions de type "statut"
 
 	@Test
