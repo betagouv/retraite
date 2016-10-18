@@ -1,6 +1,6 @@
-title:	          '.contenu h2',
+title:	             '.contenu h2',
 departement05Option: { xpath: '//option[contains(text(),"05 - Hautes-Alpes")]' },
     
-checkDepartement05: function () {
+selectDepartement05: function () {
 	return	this.departement05()();
 }
