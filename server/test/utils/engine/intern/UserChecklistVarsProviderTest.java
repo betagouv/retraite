@@ -57,6 +57,9 @@ public class UserChecklistVarsProviderTest {
 				put("regimes_compl_hors_agirc_arrco", "IRCEC (Caisse nationale de retraite complémentaire des artistes auteurs), IRCANTEC");
 				put("regimes_hors_alignes_et_hors_agirc_arrco",
 						"IRCEC (Caisse nationale de retraite complémentaire des artistes auteurs), BFSP (Banque de France), CARCD (Caisse d'assurance retraite des chirurgiens dentistes), IRCANTEC");
+				put("regimes_compl_hors_agirc_arrco", "IRCEC (Caisse nationale de retraite complémentaire des artistes auteurs), IRCANTEC");
+				put("regimes_hors_alignes_ou_regimes_compl",
+						"IRCEC (Caisse nationale de retraite complémentaire des artistes auteurs), BFSP (Banque de France), AGIRC_ARRCO (AGIRC ARRCO), CARCD (Caisse d'assurance retraite des chirurgiens dentistes), IRCANTEC");
 				put("agirc_arrco", true);
 				put("status_nsa", false);
 				put("status_sa", true);
@@ -95,6 +98,8 @@ public class UserChecklistVarsProviderTest {
 				put("regimes_base_hors_alignes", "BFSP (Banque de France), CARCD (Caisse d'assurance retraite des chirurgiens dentistes)");
 				put("regimes_compl_hors_agirc_arrco", "IRCEC (Caisse nationale de retraite complémentaire des artistes auteurs)");
 				put("regimes_hors_alignes_et_hors_agirc_arrco",
+						"IRCEC (Caisse nationale de retraite complémentaire des artistes auteurs), BFSP (Banque de France), CARCD (Caisse d'assurance retraite des chirurgiens dentistes)");
+				put("regimes_hors_alignes_ou_regimes_compl",
 						"IRCEC (Caisse nationale de retraite complémentaire des artistes auteurs), BFSP (Banque de France), CARCD (Caisse d'assurance retraite des chirurgiens dentistes)");
 				put("agirc_arrco", false);
 				put("status_nsa", true);
