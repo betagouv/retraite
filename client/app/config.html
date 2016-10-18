@@ -24,6 +24,7 @@
         <link rel="stylesheet" href="src/config/test/test.css">
         <link rel="stylesheet" href="src/config/utils/retraite-dialog/retraite-dialog.css">
         <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.css">
+<<<<<<< HEAD
         <!-- endinjector -->
     <!-- endbuild -->
     </head>
@@ -55,6 +56,39 @@
 
 
     <!-- build:js js/vendor.js -->
+=======
+        <!-- endinjector -->
+    <!-- endbuild -->
+    </head>
+    
+    <body ng-app="SgmapRetraiteConfig" class='config appid-{{AppId.appId}}' ng-controller='AppIdCtrl as AppId'>
+        
+        <toaster-container toaster-options="{'toaster-id': 'success', 'time-out': 3000}"></toaster-container>
+        <toaster-container toaster-options="{'toaster-id': 'error', 'position-class': 'toast-top-full-width', 'body-output-type': 'trustedHtml', 'time-out': 0}"></toaster-container>
+        <toaster-container toaster-options="{'toaster-id': 'errorTimedout', 'position-class': 'toast-center', 'body-output-type': 'trustedHtml', 'time-out': 3000}"></toaster-container>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/">Accueil</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a ui-sref="configlist">Configuration</a></li>
+                        <li><a ng-click='logout()' href='' ng-controller='LogoutCtrl'>Logout</a></li>
+                    </ul>
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+        </nav>
+
+        <div class="container">
+            <div ui-view=""></div>
+        </div>
+
+
+    <!-- build:js js/vendor.js -->
+>>>>>>> a2b02a51fe1c51f00808b806c667fe035e442585
         <!-- injector:bowerjs -->
         <script src="lib/jquery/dist/jquery.js"></script>
         <script src="lib/bootstrap/dist/js/bootstrap.js"></script>

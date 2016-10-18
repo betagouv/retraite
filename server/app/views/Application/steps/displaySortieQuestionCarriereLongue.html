@@ -4,42 +4,44 @@
     #{script 'displaySortieQuestionCarriereLongue.js'/}
 #{/set}
 
-<div class="contenu question marg-top col-sm-12 printable">
-	<div class="col-sm-1"></div>
-	<div class="label-for-question-choice col-sm-10">
-	
-		<div class='sortie'>
+<div class="col-sm-12 padding-top">
+	<div class="contenu question col-sm-12 printable">
+		<div class="col-sm-1"></div>
+		<div class="label-for-question-choice col-sm-10">
 		
-			<p>Vous avez renseigné une date de départ à la retraite inférieur à #{link url:data.extras.urlAgeDepart,text:"l'âge légal" /}.</p>
+			<div class='sortie'>
 			
-			<p>Vous souhaitez partir au <b>#{dateDepart data:data /}</b>, donc à l'âge de <b>${data.extras.age.annees} ans
-			#{if data.extras.age.mois} 
-				et ${data.extras.age.mois} mois
-			#{/if}
-			</b>, or pour votre génération, l'age légal de départ est de <b>${data.extras.ageLegalPourPartir.annees} ans 
-			#{if data.extras.ageLegalPourPartir.mois} 
-				et ${data.extras.ageLegalPourPartir.mois} mois
-			#{/if}
-			</b>, soit pour vous à la date du <b>${data.extras.dateDepartPossible}</b>.</p>
-	
-			<h1>Avez-vous obtenu votre attestation carrière longue ?</h1>
+				<p>Vous avez renseigné une date de départ à la retraite inférieur à #{link url:data.extras.urlAgeDepart,text:"l'âge légal" /}.</p>
+				
+				<p>Vous souhaitez partir au <b>#{dateDepart data:data /}</b>, donc à l'âge de <b>${data.extras.age.annees} ans
+				#{if data.extras.age.mois} 
+					et ${data.extras.age.mois} mois
+				#{/if}
+				</b>, or pour votre génération, l'age légal de départ est de <b>${data.extras.ageLegalPourPartir.annees} ans 
+				#{if data.extras.ageLegalPourPartir.mois} 
+					et ${data.extras.ageLegalPourPartir.mois} mois
+				#{/if}
+				</b>, soit pour vous à la date du <b>${data.extras.dateDepartPossible}</b>.</p>
+		
+				<h1>Avez-vous obtenu votre attestation carrière longue ?</h1>
+				
+				<p>
+					Si oui, cochez la case ci-dessous et passez à l’ "Etape suivante" :
+				</p>
 			
-			<p>
-				Si oui, cochez la case ci-dessous et passez à l’ "Etape suivante" :
-			</p>
-		
-		    <p class='col-sm-12 text-center choice'>	
-		        <label class='label-for-question-choice label-carriere-longue'><input type="checkbox" class='questions-choice' name='CARRIERE_LONGUE'/>J'ai mon attestation carrière longue</label>
-			</p>
+			    <p class='col-sm-12 text-center choice'>	
+			        <label class='label-for-question-choice label-carriere-longue'><input type="checkbox" class='questions-choice' name='CARRIERE_LONGUE'/>J'ai mon attestation carrière longue</label>
+				</p>
+				
+				<p>
+					ou vérifiez que vous remplissez les #{link url:data.extras.urlDispositifDepartAvantAgeLegal,text:"conditions d’un départ anticipé pour longue carrière" /} puis contactez un conseiller.
+				</p>
 			
-			<p>
-				ou vérifiez que vous remplissez les #{link url:data.extras.urlDispositifDepartAvantAgeLegal,text:"conditions d’un départ anticipé pour longue carrière" /} puis contactez un conseiller.
-			</p>
-		
-		</div>
-		
-	</div><!--fin contenu-->
-	<div class="col-sm-1"></div>
+			</div>
+			
+		</div><!--fin contenu-->
+		<div class="col-sm-1"></div>
+	</div>
 </div>
 
 #{buttonsPrevNext /}

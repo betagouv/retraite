@@ -1,13 +1,15 @@
 #{extends 'step.html' /}
 
-<div class="contenu question marg-top col-sm-12">
-	<div class="col-sm-1"></div>
-	<div class="label-for-question-choice col-sm-10">
-	
-		#{doLayout /}
-			
-	</div><!--fin contenu-->
-	<div class="col-sm-1"></div>
+<div class="col-sm-12 printable padding-top">
+	<div class="contenu question col-sm-12">
+		<div class="col-sm-1"></div>
+		<div class="label-for-question-choice col-sm-10">
+		
+			#{doLayout /}
+				
+		</div><!--fin contenu-->
+		<div class="col-sm-1"></div>
+	</div>
 </div>
 
 #{if !withoutPageLayout}

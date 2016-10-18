@@ -76,16 +76,18 @@ public class UserChecklistVarsProvider {
 		}
 		return result;
 	}
+	
 
 	private String getRegimeHorsAlignesOuCompl(final UserChecklistGenerationData userChecklistGenerationData) {
-
+		
 		Logger.debug("getRegimeHorsAlignesOuCompl");
-
+		
+		
 		String result = "";
 		for (final Regime regime : userChecklistGenerationData.getRegimes()) {
-
+			
 			Logger.debug("regime : " + regime);
-
+			
 			if (regime.getType() == BASE_AUTRE || regime.getType() == RegimeType.COMPLEMENTAIRE) {
 				if (!result.isEmpty()) {
 					result += ", ";
@@ -93,10 +95,9 @@ public class UserChecklistVarsProvider {
 				result += getNameFor(regime);
 			}
 		}
-
+		
 		Logger.debug("result : " + result);
-
+		
 		return result;
 	}
-
 }
