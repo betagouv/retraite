@@ -55,8 +55,14 @@ h2 {
     font-size: 24px;
 }
 
+/* On remet le soulignement par défaut pour tous les liens */
 a {
     text-decoration: underline;    
+}
+
+/* et on remet l'absence de soulignement pour les menus dropdown */
+.dropdown-menu > li > a {
+    text-decoration: none;
 }
 
 .label-published {
