@@ -2,18 +2,16 @@ package utils.engine;
 
 import static utils.JsonUtils.fromJson;
 import static utils.JsonUtils.toJson;
-import static utils.engine.EngineUtils.firstNotNull;
+import static utils.ObjectsUtils.copyHiddenFieldsExceptStep;
+import static utils.ObjectsUtils.synchronizedHiddenAndNotHiddenFields;
 import static utils.engine.data.enums.EcranSortie.ECRAN_SORTIE_PENIBILITE;
 import static utils.wsinforetraite.InfoRetraiteResult.Status.FOUND;
-
-import java.lang.reflect.Field;
 
 import controllers.data.PostData;
 import play.Logger;
 import utils.RetraiteBadNaissanceFormatException;
 import utils.RetraiteException;
 import utils.dao.DaoFakeData;
-import utils.engine.data.CommonExchangeData;
 import utils.engine.data.InfoRetraiteResultRegimeList;
 import utils.engine.data.RenderData;
 import utils.engine.data.enums.RegimeAligne;
@@ -76,7 +74,8 @@ public class RetraiteEngine {
 			return displayWelcome(renderData);
 		}
 
-		copyHiddenFields(postData, renderData);
+		synchronizedHiddenAndNotHiddenFields(postData);
+		copyHiddenFieldsExceptStep(postData, renderData);
 
 		if (postData.hidden_step.equals("welcome")) {
 			return displayGetUserData(renderData);
@@ -167,31 +166,6 @@ public class RetraiteEngine {
 		// Temporaire pour afficher les DataRegime tant qu'on ne peut pas interroger le WS info-retraite
 		renderData.fakeData = daoFakeData.findAll();
 		return renderData;
-	}
-
-	private void copyHiddenFields(final PostData data, final RenderData renderData) {
-		try {
-			for (final Field field : CommonExchangeData.class.getFields()) {
-				final String fieldName = field.getName();
-				if (fieldName.startsWith("hidden_") && !fieldName.toLowerCase().contains("step")) {
-					final Object hiddenData = field.get(data);
-					final Object noHiddenData = tryToGetNoHiddenData(data, fieldName);
-					field.set(renderData, firstNotNull(noHiddenData, hiddenData));
-				}
-			}
-		} catch (final Exception e) {
-			throw new RetraiteException("Error copying hidden fields", e);
-		}
-	}
-
-	private Object tryToGetNoHiddenData(final PostData data, final String fieldName) throws IllegalAccessException {
-		final String noHiddenFieldName = fieldName.substring("hidden_".length());
-		try {
-			final Field fieldInPostData = PostData.class.getField(noHiddenFieldName);
-			return fieldInPostData.get(data);
-		} catch (final NoSuchFieldException e) {
-			return null;
-		}
 	}
 
 }
