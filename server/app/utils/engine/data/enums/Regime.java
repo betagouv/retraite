@@ -86,16 +86,17 @@ public enum Regime {
 	}
 
 	public static Regime valueOfNom(final String nom) {
-		if (nom.equals("AGIRC-ARRCO") || nom.equals("AGIRC ARRCO")) {
+		final String nomTrimed = nom.trim();
+		if (nomTrimed.equals("AGIRC-ARRCO") || nomTrimed.equals("AGIRC ARRCO")) {
 			return AGIRC_ARRCO;
 		}
-		if (nom.equals("CCMSA")) {
+		if (nomTrimed.equals("CCMSA")) {
 			return MSA;
 		}
-		if (nom.equals("ORGANIC") || nom.equals("CANCAVA")) {
+		if (nomTrimed.equals("ORGANIC") || nomTrimed.equals("CANCAVA")) {
 			return RSI;
 		}
-		return valueOf(nom);
+		return valueOf(nomTrimed);
 	}
 
 }
