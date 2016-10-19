@@ -6,8 +6,8 @@
     <span ng-show='countSyntaxErrors() > 0' class='count-syntax-errors'>
         Il y a au moins
         <ng-pluralize count="countSyntaxErrors()"
-                when="{'1': '1 erreur de synthaxe',
-                       'other': '{} erreurs de synthaxe'}">
+                when="{'1': '1 erreur de syntaxe',
+                       'other': '{} erreurs de syntaxe'}">
         </ng-pluralize>
     </span>
 
@@ -105,6 +105,7 @@
                                     <li><a ng-click="addConditionRegimeDetecte(chapitre, 'regimes-base-hors-alignés')" href="">Régimes de base hors alignés</a></li>
                                     <li><a ng-click="addConditionRegimeDetecte(chapitre, 'regimes-complémentaires-hors-agirc-arrco')" href="">Régimes complémentaires hors AGIRC-ARRCO</a></li>
                                     <li><a ng-click="addConditionRegimeDetecte(chapitre, 'regimes-hors-alignés-et-hors-agirc-arrco')" href="">Régimes hors alignés et hors AGIRC-ARRCO</a></li>
+                                    <li><a ng-click="addConditionRegimeDetecte(chapitre, 'regimes-hors-alignes-ou-regimes-compl')" href="">Régimes hors alignés ou régimes complémentaires</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown-submenu" ng-if="checklist.type==='msa' || checklist.type==='rsi'">

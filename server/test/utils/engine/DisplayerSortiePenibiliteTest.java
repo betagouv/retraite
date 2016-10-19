@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import controllers.data.PostData;
 import utils.engine.data.RenderData;
+import utils.engine.data.RetraiteConstants;
 
 public class DisplayerSortiePenibiliteTest {
 
@@ -22,7 +23,7 @@ public class DisplayerSortiePenibiliteTest {
 	}
 
 	@Test
-	public void test() {
+	public void test_avec_regime_liquidateur() {
 
 		final PostData postData = new PostData();
 		postData.hidden_liquidateur = MSA;
@@ -34,6 +35,24 @@ public class DisplayerSortiePenibiliteTest {
 		final Map<String, Object> expectedExtras = new HashMap<String, Object>() {
 			{
 				put("urlInfosPenibilite", MSA.urlInfosPenibilite);
+			}
+		};
+		assertThat(renderData.extras).isEqualTo(expectedExtras);
+	}
+
+	@Test
+	public void test_sans_regime_liquidateur() {
+
+		final PostData postData = new PostData();
+		postData.hidden_liquidateur = null;
+		final RenderData renderData = new RenderData();
+
+		displayerSortiePenibilite.fillData(postData, renderData);
+
+		assertThat(renderData.hidden_step).isEqualTo("displaySortiePenibilite");
+		final Map<String, Object> expectedExtras = new HashMap<String, Object>() {
+			{
+				put("urlInfosPenibilite", RetraiteConstants.URL_PENINILITE_GIP_UR);
 			}
 		};
 		assertThat(renderData.extras).isEqualTo(expectedExtras);

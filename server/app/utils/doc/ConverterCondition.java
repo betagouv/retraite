@@ -29,6 +29,9 @@ public class ConverterCondition {
 			if (regime.equals("regimes-hors-alignés-et-hors-agirc-arrco")) {
 				return "Si régimes hors alignés et hors AGIRC-ARRCO détectés";
 			}
+			if (regime.equals("regimes-hors-alignes-ou-regimes-compl")) {
+				return "Si régimes hors alignés ou régimes complémentaires";
+			}
 			return "Si régimes AGIRC-ARRCO détectés";
 		}
 		if (type.equals("statut")) {

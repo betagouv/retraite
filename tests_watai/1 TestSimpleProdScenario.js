@@ -20,7 +20,7 @@ steps: [
     {
 		'QuestionStepDepartementPageComponent.title': "OÙ HABITEZ-VOUS ?"
 	},
-    QuestionStepDepartementPageComponent.checkDepartement05(),
+    QuestionStepDepartementPageComponent.selectDepartement05(),
     NextStepComponent.nextStep(),
     {
 		'QuestionStepChecklistPageComponent.title': new RegExp('^Mme BBBB,'), 

@@ -1,7 +1,7 @@
 module.exports = {
-	baseURL: 'https://retraite.sgmap.fr',
+	baseURL: 'https://retraite.beta.gouv.fr/?test',
 
-	browser: 'firefox',	// if you’d rather test with Chrome, you will need to install chromedriver
+	browser: 'chrome',	// if you’d rather test with Chrome, you will need to install chromedriver
 						// read more at https://github.com/MattiSG/Watai/wiki/Testing-with-Chrome
 
 	// The above "browser" key is a shortcut, relying on browsers being installed in their default paths, and on a "standard" setup.
@@ -15,7 +15,7 @@ module.exports = {
 		// 'chrome.binary':	'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
 	},
     
-    //views: [ 'Verbose', 'PageDump', 'Growl' ],
+    views: [ 'Verbose', 'PageDump', 'Growl' ],
     
     log: function(message) {
         //require('console').log(message);

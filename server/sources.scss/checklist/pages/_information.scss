@@ -153,12 +153,28 @@ body .container.checklist{
 				top: 1px;
 			}
 		}
-
-	 	a:link,
+		
+		a:link,
 		a:visited {
 			color: $blue;
 			font-weight: bold;
 		}
+
+		/*Hack Firefox pour gérer les liens qui remontent sur le texte avec html2canvas*/
+		@-moz-document url-prefix() {
+	 		a:link,
+			a:visited {
+				color: $blue;
+				font-weight: bold;
+				display: inline-block;
+			}
+		
+			.printable a:link,a:visited  {
+				text-decoration: none;
+				border-bottom: 1px solid $blue;
+				display: inline-block;
+			}
+		}	
 
 		.bg-box {
 			.box-white {
