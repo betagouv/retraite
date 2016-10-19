@@ -139,7 +139,7 @@ public class Application extends RetraiteController {
 			// Redirection pour avoir une URL spécifique pour hotjar
 			redirectToDisplayCheckList(key, test, debug, look, force55);
 		} else {
-			renderTemplate("Application/steps/" + data.hidden_step + ".html", data, test, debug, page, look, force55, actionQueryParams);
+			renderTemplate("Application/steps/" + data.hidden_step + ".html", postData, data, test, debug, page, look, force55, actionQueryParams);
 		}
 	}
 

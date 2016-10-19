@@ -1,5 +1,5 @@
 %{
-	_caller.data.getProperties().each() {
+	_data.getProperties().each() {
 		if (it.getKey().startsWith("hidden_")) {
 }%
 			<input type="hidden" name="postData.${it.getKey()}" value="${it.getValue()}">

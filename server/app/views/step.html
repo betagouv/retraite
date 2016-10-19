@@ -8,7 +8,7 @@
 	<form action='@{Application.pdf}${ actionQueryParams }' method='POST'>
 #{/if}	
 
-	#{stepsHiddenInputs /}
+	#{stepsHiddenInputs data:data /}
 	
 	#{doLayout /}
 
@@ -26,4 +26,8 @@
 			</ul>
 		</div>
 	#{/if}
+</form>
+
+<form id="form-go-prev" action='@{Application.process}${ actionQueryParams }' method='POST'>
+	#{stepsHiddenInputs data:postData /}
 </form>
