@@ -27,7 +27,7 @@ public enum Regime {
 	CNBF(BASE_AUTRE, "Caisse nationale des barreaux français"),
 	CNIEG(BASE_AUTRE, "Caisse nationale des industries électriques et gazières"),
 	CNRACL(BASE_AUTRE, "Régime obligatoire de base des agents des collectivités territoriales"),
-	CPRP(BASE_AUTRE, "SNCF"),
+	CPRPSNCF(BASE_AUTRE, "Caisse de prévoyance et de retraite du personnel de la SNCF"),
 	CRE(BASE_AUTRE, "RATP"),
 	CRN(BASE_AUTRE, "Caisse de retraite des notaires"),
 	CRPCF(BASE_AUTRE, "Comédie française"),
