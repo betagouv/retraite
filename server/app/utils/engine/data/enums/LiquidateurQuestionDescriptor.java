@@ -1,5 +1,7 @@
 package utils.engine.data.enums;
 
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor.QUESTION_C;
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor.QUESTION_D;
 import static utils.engine.data.enums.QuestionChoiceValue.CONJOINT_INDEP;
 import static utils.engine.data.enums.QuestionChoiceValue.DEUX_ACTIVITES;
 import static utils.engine.data.enums.QuestionChoiceValue.INDEP;
@@ -18,8 +20,18 @@ import static utils.engine.data.enums.QuestionMandatoryOrOptionnal.MANDATORY;
 import static utils.engine.data.enums.QuestionMandatoryOrOptionnal.OPTIONNAL;
 import static utils.engine.data.enums.QuestionType.MULTIPLE;
 import static utils.engine.data.enums.QuestionType.SIMPLE;
+import static utils.engine.data.enums.RegimeAligne.CNAV;
+import static utils.engine.data.enums.RegimeAligne.MSA;
+import static utils.engine.data.enums.RegimeAligne.RSI;
+import static utils.engine.EngineUtils.contains;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import controllers.data.PostData;
+import utils.engine.data.CommonExchangeData;
 import utils.engine.data.QuestionChoice;
+import utils.engine.data.RenderData;
 
 public enum LiquidateurQuestionDescriptor {
 
@@ -101,6 +113,10 @@ public enum LiquidateurQuestionDescriptor {
 		return title;
 	}
 
+	public QuestionMandatoryOrOptionnal getQuestionMandatoryOrOptionnal() {
+		return questionMandatoryOrOptionnal;
+	}
+
 	public QuestionChoice[] getQuestionChoices() {
 		return questionChoices;
 	}
@@ -135,5 +151,4 @@ public enum LiquidateurQuestionDescriptor {
 		}
 		return null;
 	}
-
 }

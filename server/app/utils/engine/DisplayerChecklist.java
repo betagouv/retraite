@@ -67,6 +67,8 @@ public class DisplayerChecklist {
 		renderData.userInfos.add("Département de résidence", stepFormsDataProvider.getDepartementName(departement));
 
 		renderData.questionsAndResponses = responsesHistoryToStringsConverter.convert(data.hidden_liquidateurReponsesHistory);
+		
+		renderData.questionsLiquidateur = (new RenderDataHelper(renderData)).getQuestionsList(regimesAlignes);
 	}
 
 }
