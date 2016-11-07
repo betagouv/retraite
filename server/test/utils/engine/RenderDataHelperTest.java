@@ -76,7 +76,7 @@ public class RenderDataHelperTest {
 		List<QuestionChoice> listeQuestions = new ArrayList<>();
 		listeQuestions.add(new QuestionChoice("choix1", QuestionChoiceValue.INDEP));
 		listeQuestions.add(new QuestionChoice("choix2", QuestionChoiceValue.DEUX_ACTIVITES));
-		Mockito.when(liquidateurQuestionChoiceHelperMock.getSpecificsChoices(Mockito.any(RegimeAligne[].class), Mockito.any(CommonExchangeData.class))).thenReturn(listeQuestions);
+		Mockito.when(liquidateurQuestionChoiceHelperMock.getSpecificsChoices(Mockito.any(RegimeAligne[].class), Mockito.any(RegimeAligne.class))).thenReturn(listeQuestions);
 		
 		List<QuestionLiquidateur> questionsList = renderDataHelper.getQuestionsList(regimesAlignes);
 		
@@ -93,11 +93,11 @@ public class RenderDataHelperTest {
 	
 	@Test
 	public void getIsChecked_sould_return_false() {
-		
+		System.out.println("1");
 		List<String> reponses = new ArrayList<>();
 		reponses.add("reponse 1");
 		reponses.add("reponse 2");
-		QuestionAndResponses questionAndResponses = new QuestionAndResponses("QUESTION_A", reponses);
+		QuestionAndResponses questionAndResponses = new QuestionAndResponses("QUESTION_A", reponses, null);
 		QuestionChoice questionChoice = new QuestionChoice("QUESTION_A", QuestionChoiceValue.CONJOINT);
 		
 		RenderDataHelper renderDataHelper = new RenderDataHelper(new RenderData());
@@ -109,10 +109,11 @@ public class RenderDataHelperTest {
 	@Test
 	public void getIsChecked_sould_return_true() {
 		
+		System.out.println("2");
 		List<String> reponses = new ArrayList<>();
 		reponses.add("reponse 1");
 		reponses.add("CONJOINT");
-		QuestionAndResponses questionAndResponses = new QuestionAndResponses("QUESTION_A", reponses);
+		QuestionAndResponses questionAndResponses = new QuestionAndResponses("QUESTION_A", reponses, null);
 		QuestionChoice questionChoice = new QuestionChoice("QUESTION_A", QuestionChoiceValue.CONJOINT);
 		
 		RenderDataHelper renderDataHelper = new RenderDataHelper(new RenderData());

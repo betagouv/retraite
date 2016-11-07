@@ -17,6 +17,10 @@ $(function() {
 					//Capture de la zone
 					var img = canvas.toDataURL( "image/png" );
 					
+					//Disable des input radio dans la checklist
+					$('.checklist').find('input[type="checkbox"]').attr('disabled', true);
+					$('.checklist').find('input[type="radio"]').attr('disabled', true);
+					
 					//Ajout de l'image dans sa div de destination
 					$('#imgPrint'+index).append('<img src="' + img + '" />');
 					

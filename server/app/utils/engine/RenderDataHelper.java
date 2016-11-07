@@ -5,14 +5,12 @@ import static utils.JsonUtils.fromJson;
 import java.util.ArrayList;
 import java.util.List;
 
-import play.Logger;
 import utils.engine.data.QuestionAndResponses;
 import utils.engine.data.QuestionAndResponsesList;
 import utils.engine.data.QuestionChoice;
 import utils.engine.data.QuestionLiquidateur;
 import utils.engine.data.RenderData;
 import utils.engine.data.enums.LiquidateurQuestionDescriptor;
-import utils.engine.data.enums.QuestionChoiceValue;
 import utils.engine.data.enums.RegimeAligne;
 
 public class RenderDataHelper {
@@ -31,16 +29,21 @@ public class RenderDataHelper {
 		if (renderData.hidden_liquidateurReponsesHistory != null && !renderData.hidden_liquidateurReponsesHistory.isEmpty()) {
 			final List<QuestionAndResponses> list = fromJson(renderData.hidden_liquidateurReponsesHistory, QuestionAndResponsesList.class);
 			for (final QuestionAndResponses questionAndResponses : list) {
+				
 				final LiquidateurQuestionDescriptor liquidateurQuestionDescriptor = LiquidateurQuestionDescriptor.valueOf(questionAndResponses.question);
 				
 				QuestionLiquidateur question = new QuestionLiquidateur();
 				question.liquidateurQuestionDescriptor = liquidateurQuestionDescriptor;
-				question.choices = getLiquidateurQuestionDescriptorHelper(liquidateurQuestionDescriptor).getSpecificsChoices(regimesAlignes, renderData); 
+				question.choices = getLiquidateurQuestionDescriptorHelper(liquidateurQuestionDescriptor).getSpecificsChoices(regimesAlignes, questionAndResponses.liquidateur); 
 				
 				//check des questions associées aux réponses
-				//TODO à corriger en validant les TU
 				for (QuestionChoice questionChoice : liquidateurQuestionDescriptor.getQuestionChoices()) {
-					questionChoice.setChecked(questionAndResponses.responses.contains(questionChoice.getText()));
+					questionChoice.setChecked(isChecked(questionChoice, questionAndResponses));
+				}
+				if (question.choices != null) {
+					for (QuestionChoice questionChoice : question.choices) {
+						questionChoice.setChecked(isChecked(questionChoice, questionAndResponses));
+					} 
 				}
 				questionsList.add(question);
 			}
@@ -50,7 +53,7 @@ public class RenderDataHelper {
 	}
 	
 	protected Boolean isChecked(QuestionChoice questionChoice, QuestionAndResponses questionAndResponses) {
-		return Boolean.FALSE;
+		return questionAndResponses.responses.contains(questionChoice.getValue().name());
 	}
 	
 	//Appel au constructeur déporté pour pouvoir mocker dans TU

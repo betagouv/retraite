@@ -102,45 +102,36 @@ public class LiquidateurQuestionDescriptorHelperTest {
 		assertThat(questions).contains(QUESTION_B.getChoice(SALARIE));
 		assertThat(questions).contains(QUESTION_B.getChoice(DEUX_ACTIVITES));
 	}
-
 	
 	@Test
-	public void getSpecificsChoices_QuestionC_liquidateur_CNAV_sould_return_no_choices() {
-		RegimeAligne[] regimesAlignes = new RegimeAligne[] { CNAV };	
-		PostData postData = new PostData();
-		postData.hidden_liquidateur = CNAV; 
-		RenderData renderData = new RenderData();
+	public void getSpecificsChoices_QuestionC_no_liquidateur_sould_return_no_choices() {
+		RegimeAligne[] regimesAlignes = new RegimeAligne[] { CNAV };
+		RegimeAligne liquidateur = null;
 		
 		LiquidateurQuestionDescriptorHelper helper = new LiquidateurQuestionDescriptorHelper(QUESTION_C);
-		List<QuestionChoice> questions =  helper.getSpecificsChoices(regimesAlignes, postData, renderData);
+		List<QuestionChoice> questions =  helper.getSpecificsChoices(regimesAlignes, liquidateur);
 		
 		assertThat(questions).isNull();
 	}
 	
 	@Test
-	public void getSpecificsChoices_QuestionC_liquidateur_RSI_postdata_sould_return_choices() {
-		RegimeAligne[] regimesAlignes = new RegimeAligne[] { CNAV };	
-		PostData postData = new PostData();
-		postData.hidden_liquidateur = RSI; 
-		RenderData renderData = new RenderData();
+	public void getSpecificsChoices_QuestionC_liquidateur_CNAV_sould_return_no_choices() {
+		RegimeAligne[] regimesAlignes = new RegimeAligne[] { CNAV };
+		RegimeAligne liquidateur = CNAV;
 		
 		LiquidateurQuestionDescriptorHelper helper = new LiquidateurQuestionDescriptorHelper(QUESTION_C);
-		List<QuestionChoice> questions =  helper.getSpecificsChoices(regimesAlignes, postData, renderData);
-
-		assertThat(questions.size()).isEqualTo(2);
-		assertThat(questions).contains(QUESTION_C.getChoice(PENIBILITE));
-		assertThat(questions).contains(QUESTION_C.getChoice(INVALIDITE_RSI));
+		List<QuestionChoice> questions =  helper.getSpecificsChoices(regimesAlignes, liquidateur);
+		
+		assertThat(questions).isNull();
 	}
 	
 	@Test
-	public void getSpecificsChoices_QuestionC_liquidateur_RSI_renderdata_sould_return_choices() {
+	public void getSpecificsChoices_QuestionC_liquidateur_RSI_sould_return_choices() {
 		RegimeAligne[] regimesAlignes = new RegimeAligne[] { CNAV };	
-		PostData postData = new PostData();
-		RenderData renderData = new RenderData();
-		renderData.hidden_liquidateur = RSI; 
+		RegimeAligne liquidateur = RSI; 
 		
 		LiquidateurQuestionDescriptorHelper helper = new LiquidateurQuestionDescriptorHelper(QUESTION_C);
-		List<QuestionChoice> questions =  helper.getSpecificsChoices(regimesAlignes, postData, renderData);
+		List<QuestionChoice> questions =  helper.getSpecificsChoices(regimesAlignes, liquidateur);
 
 		assertThat(questions.size()).isEqualTo(2);
 		assertThat(questions).contains(QUESTION_C.getChoice(PENIBILITE));
