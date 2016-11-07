@@ -24,6 +24,8 @@ public class UserChecklistVarsProvider {
 		vars.put("status_sa", userChecklistGenerationData.isSA);
 		vars.put("status_chef", userChecklistGenerationData.isChef);
 		vars.put("status_conjoint", userChecklistGenerationData.isConjointCollaborateur);
+		vars.put("carriere_longue_oui", userChecklistGenerationData.isCarriereLongue);
+		vars.put("carriere_longue_non", !userChecklistGenerationData.isCarriereLongue);
 		return vars;
 	}
 

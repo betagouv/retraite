@@ -47,6 +47,7 @@ public class UserChecklistVarsProviderTest {
 				.withNSA(false)
 				.withConjointCollaborateur(false)
 				.withChef(true)
+				.withCarriereLonge(true)
 				.get();
 
 		final UserChecklistVars vars = userChecklistVarsProvider.provideVars(userChecklistGenerationData);
@@ -65,9 +66,11 @@ public class UserChecklistVarsProviderTest {
 				put("status_sa", true);
 				put("status_chef", true);
 				put("status_conjoint", false);
-
+				put("carriere_longue_oui", true);
+				put("carriere_longue_non", false);
 			}
 		};
+		
 		assertThat(vars.getMapOfValues()).isEqualTo(expectedMap);
 	}
 
@@ -89,6 +92,7 @@ public class UserChecklistVarsProviderTest {
 				.withNSA(true)
 				.withConjointCollaborateur(true)
 				.withChef(false)
+				.withCarriereLonge(false)
 				.get();
 
 		final UserChecklistVars vars = userChecklistVarsProvider.provideVars(userChecklistGenerationData);
@@ -106,6 +110,9 @@ public class UserChecklistVarsProviderTest {
 				put("status_sa", false);
 				put("status_chef", false);
 				put("status_conjoint", true);
+				put("status_conjoint", true);
+				put("carriere_longue_oui", false);
+				put("carriere_longue_non", true);
 
 			}
 		};
