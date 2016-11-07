@@ -74,7 +74,7 @@ public class DisplayerLiquidateurQuestions {
 		if (data.hidden_liquidateurStep != null) {
 			final QuestionAndResponsesList list = listFrom(renderData.hidden_liquidateurReponsesHistory);
 			final List reponse = fromJson(data.liquidateurReponseJsonStr, List.class);
-			list.add(new QuestionAndResponses(data.hidden_liquidateurStep.toString(), reponse));
+			list.add(new QuestionAndResponses(data.hidden_liquidateurStep.toString(), reponse, renderData.hidden_liquidateur));
 			renderData.hidden_liquidateurReponsesHistory = toJson(list);
 		}
 	}
@@ -106,8 +106,7 @@ public class DisplayerLiquidateurQuestions {
 		}
 		if (isBefore(previousStep, QUESTION_C) && contains(regimesAlignes, RSI)) {
 			renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_C;
-			Logger.debug("question_c" + renderData.questionLiquidateur.liquidateurQuestionDescriptor.getQuestionMandatoryOrOptionnal());
-			renderData.questionLiquidateur.choices = (new LiquidateurQuestionDescriptorHelper(QUESTION_C)).getSpecificsChoices(regimesAlignes, data, renderData);
+			renderData.questionLiquidateur.choices = (new LiquidateurQuestionDescriptorHelper(QUESTION_C)).getSpecificsChoices(regimesAlignes, renderData.hidden_liquidateur);
 			return;
 		}
 		if (isBefore(previousStep, QUESTION_D) && isRegimeLiquidateurNotDefined(data, renderData)) {

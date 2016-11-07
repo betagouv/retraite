@@ -44,14 +44,10 @@ public class LiquidateurQuestionDescriptorHelper {
 
 	
 	public List<QuestionChoice> getSpecificsChoices(final RegimeAligne[] regimesAlignes) {
-		return getSpecificsChoices(regimesAlignes, null, null);
+		return getSpecificsChoices(regimesAlignes, null);
 	}
 	
-	public List<QuestionChoice> getSpecificsChoices(final RegimeAligne[] regimesAlignes, CommonExchangeData data) {
-		return getSpecificsChoices(regimesAlignes, data, data);
-	}
-		
-	public List<QuestionChoice> getSpecificsChoices(final RegimeAligne[] regimesAlignes, CommonExchangeData postData, CommonExchangeData renderData) {
+	public List<QuestionChoice> getSpecificsChoices(final RegimeAligne[] regimesAlignes, RegimeAligne liquidateur) {
 		List<QuestionChoice> choices = null;
 		
 		switch (liquidateurQuestionDescriptor) {
@@ -83,7 +79,7 @@ public class LiquidateurQuestionDescriptorHelper {
 				}
 				break;
 			case QUESTION_C:
-				if (RSI == postData.hidden_liquidateur || RSI == renderData.hidden_liquidateur) {
+				if (RSI == liquidateur) {
 					choices = new ArrayList<>();
 					choices.add(QUESTION_C.getChoice(INVALIDITE_RSI));
 					choices.add(QUESTION_C.getChoice(PENIBILITE));

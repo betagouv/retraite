@@ -17,28 +17,9 @@
 	   				<h4>Plusieurs choix possibles</h4>
 	   			</div>
 			#{/if}
-			#{list items:data.questionLiquidateur.choices ? data.questionLiquidateur.choices : data.questionLiquidateur.liquidateurQuestionDescriptor.questionChoices, as:'choice'}
-				<div class='choice'>
-					#{if data.questionLiquidateur.liquidateurQuestionDescriptor.questionType.toString() == "SIMPLE"}
-		            	#{if look.toString() == 'RSI'}
-				   			<input type="radio" class='questions-choice' id="q${choice_index}" name="reponses[${data.questionLiquidateur.liquidateurQuestionDescriptor}]" value="${choice.value}" />
-				   			<label class='label-for-question-choice' for="q${choice_index}">${choice.text}</label>
-		            	#{/if}
-		            	#{else}
-				   			<label class='label-for-question-choice' for="q${choice_index}"><input type="radio" class='questions-choice' id="q${choice_index}" name="reponses[${data.questionLiquidateur.liquidateurQuestionDescriptor}]" value="${choice.value}" />${choice.text}</label>
-		            	#{/else}
-					#{/if}
-					#{else}
-		            	#{if look.toString() == 'RSI'}
-				   			<input type="checkbox" class='questions-choice' id="q${choice_index}" value="${choice.value}" />
-				   			<label class='label-for-question-choice' for="q${choice_index}">${choice.text}</label>
-		            	#{/if}
-		            	#{else}
-				   			<label class='label-for-question-choice' for="q${choice_index}"><input type="checkbox" class='questions-choice' id="q${choice_index}" value="${choice.value}" />${choice.text}</label>
-		            	#{/else}
-					#{/else}
-				</div>
-			#{/list}
+			
+			#{displayLiquidateurQuestionChoices questionLiquidateur:data.questionLiquidateur /}
+			
 		</div>
 		<div class="col-sm-1"></div>
 	</div>
