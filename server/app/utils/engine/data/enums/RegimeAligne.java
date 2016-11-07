@@ -23,7 +23,7 @@ public enum RegimeAligne {
 	RSI(
 			"http://rsi.fr/quand-prendre-sa-retraite",
 			"http://rsi.fr/mon-releve-de-carriere",
-			"http://info-retraite.fr/",
+			"http://www.info-retraite.fr/",
 			"http://rsi.fr/retraite-anticipee.html",
 			"http://rsi.fr/retraite-pour-penibilite",
 			"http://rsi.fr/partir-en-retraite");

@@ -1,7 +1,7 @@
 #{list items:_questionLiquidateur.choices ? _questionLiquidateur.choices : _questionLiquidateur.liquidateurQuestionDescriptor.questionChoices, as:'choice'}
 	<div class='choice'>
 		#{if _questionLiquidateur.liquidateurQuestionDescriptor.questionType.toString() == "SIMPLE"}
-           	#{if look.toString() == 'RSI'}
+           	#{if _look.toString() == 'RSI'}
 	   			<input type="radio" class='questions-choice' id="q${choice_index}" name="reponses[${_questionLiquidateur.liquidateurQuestionDescriptor}]" value="${choice.value}" ${choice.checked && _prechecked?'checked':''}/>
 	   			<label class='label-for-question-choice' for="q${choice_index}">${choice.text}</label>
            	#{/if}
@@ -10,7 +10,7 @@
            	#{/else}
 		#{/if}
 		#{else}
-           	#{if look.toString() == 'RSI'}
+           	#{if _look.toString() == 'RSI'}
 	   			<input type="checkbox" class='questions-choice' id="q${choice_index}" value="${choice.value}" ${choice.checked && _prechecked?'checked':''}/>
 	   			<label class='label-for-question-choice' for="q${choice_index}">${choice.text}</label>
            	#{/if}
