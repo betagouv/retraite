@@ -112,12 +112,12 @@
                                 <a tabindex="-1" href="#">Statut</a>
                                 <ul class="dropdown-menu">
                                     <!-- MSA -->
-                                    <li><a ng-if="checklist.type==='msa'" ng-click="addConditionStatut(chapitre, 'nsa')" href="">NSA</a></li>
-                                    <li><a ng-if="checklist.type==='msa'" ng-click="addConditionStatut(chapitre, 'sa')" href="">SA</a></li>
-                                    <li><a ng-if="checklist.type==='msa'" ng-click="addConditionStatut(chapitre, 'conjoint-collaborateur')" href="">Conjoint collaborateur / aide familial</a></li>
+                                    <li ng-if="checklist.type==='msa'"><a ng-click="addConditionStatut(chapitre, 'nsa')" href="">NSA</a></li>
+                                    <li ng-if="checklist.type==='msa'"><a ng-click="addConditionStatut(chapitre, 'sa')" href="">SA</a></li>
+                                    <li ng-if="checklist.type==='msa'"><a ng-click="addConditionStatut(chapitre, 'conjoint-collaborateur')" href="">Conjoint collaborateur / aide familial</a></li>
                                     <!-- RSI -->
-                                    <li><a ng-if="checklist.type==='rsi'" ng-click="addConditionStatut(chapitre, 'chef-entreprise')" href="">Chef d’entreprise</a></li>
-                                    <li><a ng-if="checklist.type==='rsi'" ng-click="addConditionStatut(chapitre, 'conjoint-collaborateur')" href="">Conjoint collaborateur</a></li>
+                                    <li ng-if="checklist.type==='rsi'"><a ng-click="addConditionStatut(chapitre, 'chef-entreprise')" href="">Chef d’entreprise</a></li>
+                                    <li ng-if="checklist.type==='rsi'"><a ng-click="addConditionStatut(chapitre, 'conjoint-collaborateur')" href="">Conjoint collaborateur</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown-submenu">
