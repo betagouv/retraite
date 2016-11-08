@@ -22,10 +22,11 @@ public class VariablesReplacerMustache implements VariablesReplacer {
 
 		// Handlebars
 		try {
+
 			final Context context = Context.newBuilder(variables).build();
 
 			final Handlebars handlebars = new Handlebars();
-			final Template template = handlebars.compileInline(text);
+			final Template template = handlebars.compileInline(text.replaceAll("(\\{\\{)(?!#|/|\\^)", "{{& ")); //pour escape html chars
 
 			final String result = template.apply(context);
 			context.destroy();
