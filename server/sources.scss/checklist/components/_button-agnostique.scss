@@ -122,7 +122,7 @@
 
 
 /*bouton home/etape/information*/
-input.btn {
+.btn {
   text-transform: uppercase;
   margin-top:15px;
   border-radius: 5px;
@@ -134,18 +134,18 @@ input.btn {
   font-weight: 300;
 }
 
-input.btn:link,
-input.btn:visited{
+.btn:link,
+.btn:visited{
   background-color: $red;
 }
 
-input.btn:hover,
-input.btn:focus {
+.btn:hover,
+.btn:focus {
   background-color: $red-1;
 }
 
 
-input.btn-next {
+.btn-next {
   background: $red url("../../img/sprites/next_white.png") no-repeat right 13px;
   padding-right:30px;
 }
@@ -216,7 +216,7 @@ input.btn-next {
 }
 
 /*bouton home/etape/information*/
-input.btn {
+.btn {
   text-transform: uppercase;
   margin-top:15px;
   border-radius: 5px;
@@ -228,20 +228,14 @@ input.btn {
   font-weight: 300;
 }
 
-input.btn:link,
-input.btn:visited{
+.btn:link,
+.btn:visited{
   background-color: $red;
 }
 
-input.btn:hover,
-input.btn:focus {
+.btn:hover,
+.btn:focus {
   background-color: $red-1;
-}
-
-input.btn-next {
-  background: $red url("../../img/sprites/next_white.png") no-repeat right 13px;
-  padding-right:30px;
-  color: #fff!important;
 }
 
 .btn {
@@ -485,4 +479,10 @@ body .container.checklist .contenu {
       padding-left: 58px;
     }
   }
+
+button.btn-next {
+  background: $red url("../../img/sprites/next_white.png") no-repeat right 13px;
+  padding-right:30px;
+  color: #fff!important;
+}
 
