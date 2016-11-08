@@ -14,7 +14,12 @@
 		   	<h2 class="titre">${data.questionLiquidateur.liquidateurQuestionDescriptor.title}</h2>
 			#{if data.questionLiquidateur.liquidateurQuestionDescriptor.questionType.toString() != "SIMPLE"}
 	   			<div class='question-infos'>
-	   				<h4>Plusieurs choix possibles</h4>
+	   				#{if data.questionLiquidateur.liquidateurQuestionDescriptor.questionMandatoryOrOptionnal.toString() == 'OPTIONNAL'}
+	   					<h4>Aucun, un ou plusieurs choix possibles</h4>
+	   				#{/if}
+	   				#{else}
+	   					<h4>Plusieurs choix possibles</h4>
+	   				#{/else}
 	   			</div>
 			#{/if}
 			

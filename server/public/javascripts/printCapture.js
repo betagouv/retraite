@@ -17,6 +17,10 @@ $(function() {
 					//Capture de la zone
 					var img = canvas.toDataURL( "image/png" );
 					
+					//Suppression des indices et des links-urls
+					$('.checklist a').next('sup').remove();
+					$('.links-urls').remove();
+					
 					//Disable des input radio dans la checklist
 					$('.checklist').find('input[type="checkbox"]').attr('disabled', true);
 					$('.checklist').find('input[type="radio"]').attr('disabled', true);
