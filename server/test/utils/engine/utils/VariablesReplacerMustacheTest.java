@@ -31,11 +31,23 @@ public class VariablesReplacerMustacheTest {
 
 		assertThat(result).isEqualTo("avant toto apres");
 	}
+	
+	@Test
+	public void should_replace_variables_escapde_html() {
+
+		final String text = "avant {{une_variable}} apres";
+		final Map<String, Object> variables = new HashMap<>();
+		variables.put("une_variable", "<li>toto<li>");
+
+		final String result = variablesReplacer.replaceVariables(text, variables);
+
+		assertThat(result).isEqualTo("avant <li>toto<li> apres");
+	}
 
 	@Test
 	public void should_display_conditionnal_sections() {
 
-		final String text = "prefix {{#une_variable}}avant {{une_variable}} apres{{/une_variable}} suffixe{{#un_booleen}} et avant le booléen{{/un_booleen}}";
+		final String text = "prefix {{#une_variable}}avant {{une_variable}} apres{{/une_variable}} suffixe{{#un_booleen}} et avant le booléen{{/un_booleen}}{{^un_booleen}} sans le contraire du booléen{{/un_booleen}}";
 		final Map<String, Object> variables = new HashMap<>();
 		variables.put("une_variable", "toto");
 		variables.put("un_booleen", true);
@@ -48,14 +60,14 @@ public class VariablesReplacerMustacheTest {
 	@Test
 	public void should_not_display_conditionnal_sections() {
 
-		final String text = "prefix {{#une_variable}}avant {{une_variable}} apres{{/une_variable}} suffixe{{#un_booleen}} et avant le booléen{{/un_booleen}}";
+		final String text = "prefix {{#une_variable}}avant {{une_variable}} apres{{/une_variable}} suffixe{{#un_booleen}} et avant le booléen{{/un_booleen}}{{^un_booleen}} avec le contraire du booléen{{/un_booleen}}";
 		final Map<String, Object> variables = new HashMap<>();
 		variables.put("une_autre_variable", "toto");
 		variables.put("un_booleen", false);
 
 		final String result = variablesReplacer.replaceVariables(text, variables);
 
-		assertThat(result).isEqualTo("prefix  suffixe");
+		assertThat(result).isEqualTo("prefix  suffixe avec le contraire du booléen");
 	}
 
 	@Test

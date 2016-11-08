@@ -7,10 +7,10 @@
 				#{list items:_data.questionsLiquidateur, as:'questionLiquidateur'}
 					<div class="row">
 						<div class="col-sm-6 mes-infos-label">
-							${questionLiquidateur.liquidateurQuestionDescriptor.title} :
+							${questionLiquidateur.liquidateurQuestionDescriptor.title?.raw()}
 						</div>
 						<div class="col-sm-6 mes-infos-data">
-							#{displayLiquidateurQuestionChoices questionLiquidateur:questionLiquidateur, prechecked:true /}
+							#{displayLiquidateurQuestionChoices questionLiquidateur:questionLiquidateur, prechecked:true, look:_look /}
 						</div>
 					</div>
 				#{/list}

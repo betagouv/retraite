@@ -24,8 +24,7 @@ public class UserChecklistVarsProvider {
 		vars.put("status_sa", userChecklistGenerationData.isSA);
 		vars.put("status_chef", userChecklistGenerationData.isChef);
 		vars.put("status_conjoint", userChecklistGenerationData.isConjointCollaborateur);
-		vars.put("carriere_longue_oui", userChecklistGenerationData.isCarriereLongue);
-		vars.put("carriere_longue_non", !userChecklistGenerationData.isCarriereLongue);
+		vars.put("carriere_longue", userChecklistGenerationData.isCarriereLongue);
 		return vars;
 	}
 
@@ -37,46 +36,37 @@ public class UserChecklistVarsProvider {
 		String result = "";
 		for (final Regime regime : userChecklistGenerationData.getRegimes()) {
 			if (regime.getType() == BASE_AUTRE) {
-				if (!result.isEmpty()) {
-					result += ", ";
-				}
 				result += getNameFor(regime);
 			}
 		}
-		return result;
+		return buildHtmlList(result);
 	}
 
-	private String getNameFor(final Regime regime) {
+	protected String getNameFor(final Regime regime) {
 		if (regime.toString().equals(regime.getNom())) {
-			return regime.toString();
+			return "<li>" + regime.toString() + "</li>";
 		}
-		return regime.toString() + " (" + regime.getNom() + ")";
+		return "<li>" + regime.toString() + " (" + regime.getNom() + ")</li>";
 	}
 
 	private String getRegimeComplHorsAgircArrco(final UserChecklistGenerationData userChecklistGenerationData) {
 		String result = "";
 		for (final Regime regime : userChecklistGenerationData.getRegimes()) {
 			if (regime.getType() == RegimeType.COMPLEMENTAIRE && regime != regime.AGIRC_ARRCO) {
-				if (!result.isEmpty()) {
-					result += ", ";
-				}
 				result += getNameFor(regime);
 			}
 		}
-		return result;
+		return buildHtmlList(result);
 	}
 
 	private String getRegimeHorsAlignesEtHorsAgircArrco(final UserChecklistGenerationData userChecklistGenerationData) {
 		String result = "";
 		for (final Regime regime : userChecklistGenerationData.getRegimes()) {
 			if (regime.getType() == BASE_AUTRE || (regime.getType() == RegimeType.COMPLEMENTAIRE && regime != regime.AGIRC_ARRCO)) {
-				if (!result.isEmpty()) {
-					result += ", ";
-				}
 				result += getNameFor(regime);
 			}
 		}
-		return result;
+		return buildHtmlList(result);
 	}
 	
 
@@ -91,15 +81,19 @@ public class UserChecklistVarsProvider {
 			Logger.debug("regime : " + regime);
 			
 			if (regime.getType() == BASE_AUTRE || regime.getType() == RegimeType.COMPLEMENTAIRE) {
-				if (!result.isEmpty()) {
-					result += ", ";
-				}
 				result += getNameFor(regime);
 			}
 		}
 		
 		Logger.debug("result : " + result);
 		
-		return result;
+		return buildHtmlList(result);
+	}
+	
+	protected String buildHtmlList(String text) {
+		if (text != null && !text.equals("")) {
+			text = "<ul>" + text + "</ul>";
+		}
+		return text;
 	}
 }
