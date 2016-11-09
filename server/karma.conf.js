@@ -33,7 +33,7 @@ module.exports = function (config) {
             'public/libs/jquery.maskedinput/dist/jquery.maskedinput.js',
             'public/libs/bootstrap-css/js/bootstrap.min.js',
             'public/libs/jquery-ui/jquery-ui.js',
-            'public/libs/html2canvas/dist/html2canvas.js',
+            'public/libs/html2canvas/build/html2canvas.js',
             <!-- endinjector -->
 
             <!-- injector:js -->
