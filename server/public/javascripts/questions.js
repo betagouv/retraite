@@ -37,9 +37,9 @@ var RetraiteQuestions = {};
 	function updateNextButtonState() {
 		if (questionIsOptionnal()) {
 			if (noAnswerChecked()) {
-				$nextButton.val("Aucune de ces situations");
+				$nextButton.text("Aucune de ces situations");
 			} else {
-				$nextButton.val(defaultNextButtonText);
+				$nextButton.text(defaultNextButtonText);
 			}
 			enableNextButton();
 		} else {
@@ -61,7 +61,7 @@ var RetraiteQuestions = {};
 
 		$divQuestion = $('div.question');
 		$nextButton = $(".btn-next");
-		defaultNextButtonText = $nextButton.val();
+		defaultNextButtonText = $nextButton.text();
 
 		$('input.questions-choice').click(function() {
 			// Il faut désynchroniser pour être sûr que les états 'checked' soient fixés (notamment dans le cadre des TU)

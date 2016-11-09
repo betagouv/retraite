@@ -86,7 +86,7 @@ describe('questions', function () {
     }
     
     function expectNextButtonHasText(expectedText) {
-    	expect($(".btn-next").val()).toEqual(expectedText); 
+    	expect($(".btn-next").text()).toEqual(expectedText); 
     }
     
 });
