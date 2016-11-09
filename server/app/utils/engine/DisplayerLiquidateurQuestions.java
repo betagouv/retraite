@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import controllers.data.PostData;
+import play.Logger;
 import utils.engine.data.QuestionAndResponses;
 import utils.engine.data.QuestionAndResponsesList;
 import utils.engine.data.QuestionChoice;
@@ -73,7 +74,7 @@ public class DisplayerLiquidateurQuestions {
 		if (data.hidden_liquidateurStep != null) {
 			final QuestionAndResponsesList list = listFrom(renderData.hidden_liquidateurReponsesHistory);
 			final List reponse = fromJson(data.liquidateurReponseJsonStr, List.class);
-			list.add(new QuestionAndResponses(data.hidden_liquidateurStep.toString(), reponse));
+			list.add(new QuestionAndResponses(data.hidden_liquidateurStep.toString(), reponse, renderData.hidden_liquidateur));
 			renderData.hidden_liquidateurReponsesHistory = toJson(list);
 		}
 	}
@@ -100,19 +101,17 @@ public class DisplayerLiquidateurQuestions {
 		}
 		if (isBefore(previousStep, QUESTION_B) && isRegimeLiquidateurNotDefined(data, renderData)) {
 			renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_B;
-			renderData.questionLiquidateur.choices = generateSpecificChoicesForQuestionB(regimesAlignes);
+			renderData.questionLiquidateur.choices = (new LiquidateurQuestionDescriptorHelper(QUESTION_B)).getSpecificsChoices(regimesAlignes);
 			return;
 		}
 		if (isBefore(previousStep, QUESTION_C) && contains(regimesAlignes, RSI)) {
 			renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_C;
-			if (isLiquidateur(data, renderData, RSI)) {
-				renderData.questionLiquidateur.choices = generateSpecificChoicesForQuestionC();
-			}
+			renderData.questionLiquidateur.choices = (new LiquidateurQuestionDescriptorHelper(QUESTION_C)).getSpecificsChoices(regimesAlignes, renderData.hidden_liquidateur);
 			return;
 		}
 		if (isBefore(previousStep, QUESTION_D) && isRegimeLiquidateurNotDefined(data, renderData)) {
 			renderData.questionLiquidateur.liquidateurQuestionDescriptor = QUESTION_D;
-			renderData.questionLiquidateur.choices = generateSpecificChoicesForQuestionD(regimesAlignes);
+			renderData.questionLiquidateur.choices = (new LiquidateurQuestionDescriptorHelper(QUESTION_D)).getSpecificsChoices(regimesAlignes);
 			return;
 		}
 		if (isBefore(previousStep, QUESTION_E)
@@ -200,58 +199,6 @@ public class DisplayerLiquidateurQuestions {
 
 	private boolean isStatus(final PostData data, final RenderData renderData, final UserStatus status) {
 		return contains(data.hidden_userStatus, status) || contains(renderData.hidden_userStatus, status);
-	}
-
-	private List<QuestionChoice> generateSpecificChoicesForQuestionB(final RegimeAligne[] regimesAlignes) {
-		if (contains(regimesAlignes, MSA, RSI, CNAV)) {
-			// Pas de filtre
-			return null;
-		}
-		final List<QuestionChoice> choices = new ArrayList<>();
-		int cumulableChoices = 0;
-		if (contains(regimesAlignes, CNAV)) {
-			choices.add(QUESTION_B.getChoice(SALARIE));
-			cumulableChoices += 1;
-		}
-		if (contains(regimesAlignes, RSI)) {
-			choices.add(QUESTION_B.getChoice(INDEP));
-			choices.add(QUESTION_B.getChoice(CONJOINT_INDEP));
-			cumulableChoices += 1;
-		}
-		if (contains(regimesAlignes, MSA)) {
-			choices.add(QUESTION_B.getChoice(NSA));
-			choices.add(QUESTION_B.getChoice(SA));
-			cumulableChoices += 2;
-		}
-		if (cumulableChoices >= 2) {
-			choices.add(QUESTION_B.getChoice(DEUX_ACTIVITES));
-		}
-		return choices;
-	}
-
-	private List<QuestionChoice> generateSpecificChoicesForQuestionC() {
-		final List<QuestionChoice> choices = new ArrayList<>();
-		choices.add(QUESTION_C.getChoice(INVALIDITE_RSI));
-		choices.add(QUESTION_C.getChoice(PENIBILITE));
-		return choices;
-	}
-
-	private List<QuestionChoice> generateSpecificChoicesForQuestionD(final RegimeAligne[] regimesAlignes) {
-		if (contains(regimesAlignes, MSA, RSI, CNAV)) {
-			// Pas de filtre
-			return null;
-		}
-		final List<QuestionChoice> choices = new ArrayList<>();
-		if (contains(regimesAlignes, CNAV)) {
-			choices.add(QUESTION_D.getChoice(SANTE_CPAM));
-		}
-		if (contains(regimesAlignes, RSI)) {
-			choices.add(QUESTION_D.getChoice(SANTE_RSI));
-		}
-		if (contains(regimesAlignes, MSA)) {
-			choices.add(QUESTION_D.getChoice(SANTE_MSA));
-		}
-		return choices;
 	}
 
 	private boolean isBefore(final LiquidateurQuestionDescriptor step1, final LiquidateurQuestionDescriptor step2) {

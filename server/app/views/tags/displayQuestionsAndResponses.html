@@ -1,1 +1,21 @@
-#{displayBlocWithStringPairsList title:"Mes réponses aux questions", list:_data.questionsAndResponses, isPDF:_data.isPDF /}
+#{if _data.questionsLiquidateur}
+	<div class="contenu col-sm-12 printable">
+		<div class="question mes-infos">
+			<h2>Mes réponses aux questions :</h2>
+			<div class="bg-box">
+			
+				#{list items:_data.questionsLiquidateur, as:'questionLiquidateur'}
+					<div class="row">
+						<div class="col-sm-6 mes-infos-label">
+							${questionLiquidateur.liquidateurQuestionDescriptor.title?.raw()}
+						</div>
+						<div class="col-sm-6 mes-infos-data">
+							#{displayLiquidateurQuestionChoices questionLiquidateur:questionLiquidateur, prechecked:true, look:_look /}
+						</div>
+					</div>
+				#{/list}
+	
+			</div>
+		</div>
+	</div>
+#{/if}

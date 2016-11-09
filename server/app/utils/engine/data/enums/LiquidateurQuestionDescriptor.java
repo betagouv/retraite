@@ -1,5 +1,7 @@
 package utils.engine.data.enums;
 
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor.QUESTION_C;
+import static utils.engine.data.enums.LiquidateurQuestionDescriptor.QUESTION_D;
 import static utils.engine.data.enums.QuestionChoiceValue.CONJOINT_INDEP;
 import static utils.engine.data.enums.QuestionChoiceValue.DEUX_ACTIVITES;
 import static utils.engine.data.enums.QuestionChoiceValue.INDEP;
@@ -18,15 +20,25 @@ import static utils.engine.data.enums.QuestionMandatoryOrOptionnal.MANDATORY;
 import static utils.engine.data.enums.QuestionMandatoryOrOptionnal.OPTIONNAL;
 import static utils.engine.data.enums.QuestionType.MULTIPLE;
 import static utils.engine.data.enums.QuestionType.SIMPLE;
+import static utils.engine.data.enums.RegimeAligne.CNAV;
+import static utils.engine.data.enums.RegimeAligne.MSA;
+import static utils.engine.data.enums.RegimeAligne.RSI;
+import static utils.engine.EngineUtils.contains;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import controllers.data.PostData;
+import utils.engine.data.CommonExchangeData;
 import utils.engine.data.QuestionChoice;
+import utils.engine.data.RenderData;
 
 public enum LiquidateurQuestionDescriptor {
 
 	// @formatter:off
 
 	QUESTION_A(
-		"Au cours de votre carrière, avez-vous été ?",
+		"Au cours de votre carrière, avez-vous été&#8239?",
 			SIMPLE,
 			MANDATORY,
 			choice("Chef d'exploitation ou d'entreprise agricole", NSA),
@@ -35,7 +47,7 @@ public enum LiquidateurQuestionDescriptor {
 	),
 
 	QUESTION_B(
-		"Quelle est votre activité actuelle ou la dernière activité que vous avez exercée ?",
+		"Quelle est votre activité actuelle ou la dernière activité que vous avez exercée&#8239?",
 			SIMPLE,
 			MANDATORY,
 			choice("Salarié (non agricole)", SALARIE),
@@ -47,7 +59,7 @@ public enum LiquidateurQuestionDescriptor {
 	),
 
 	QUESTION_C(
-		"Êtes-vous dans l'une ou plusieurs des situations suivantes ?",
+		"Êtes-vous dans l'une ou plusieurs des situations suivantes&#8239?",
 			MULTIPLE,
 			OPTIONNAL,
 			choice("J'ai exercé une activité d'indépendant avant 1973", INDEP_AVANT_73),
@@ -56,7 +68,7 @@ public enum LiquidateurQuestionDescriptor {
 	),
 
 	QUESTION_D(
-		"Quel est l'organisme qui vous rembourse vos fais de santé ?",
+		"Quel est l'organisme qui vous rembourse vos fais de santé&#8239?",
 			SIMPLE,
 			MANDATORY,
 			choice("CPAM", SANTE_CPAM),
@@ -65,7 +77,7 @@ public enum LiquidateurQuestionDescriptor {
 	),
 
 	QUESTION_E(
-		"Etes-vous actuellement chef d'exploitation ou d'entreprise agricole ?",
+		"Etes-vous actuellement chef d'exploitation ou d'entreprise agricole&#8239?",
 			SIMPLE,
 			MANDATORY,
 			choice("Oui", OUI),
@@ -73,7 +85,7 @@ public enum LiquidateurQuestionDescriptor {
 	),
 
 	QUESTION_F(
-		"Etes-vous actuellement chef d'entreprise ?",
+		"Etes-vous actuellement chef d'entreprise&#8239?",
 			SIMPLE,
 			MANDATORY,
 			choice("Oui", OUI),
@@ -99,6 +111,10 @@ public enum LiquidateurQuestionDescriptor {
 
 	public String getTitle() {
 		return title;
+	}
+
+	public QuestionMandatoryOrOptionnal getQuestionMandatoryOrOptionnal() {
+		return questionMandatoryOrOptionnal;
 	}
 
 	public QuestionChoice[] getQuestionChoices() {
@@ -135,5 +151,4 @@ public enum LiquidateurQuestionDescriptor {
 		}
 		return null;
 	}
-
 }

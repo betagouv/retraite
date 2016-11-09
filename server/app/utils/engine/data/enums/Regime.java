@@ -27,7 +27,7 @@ public enum Regime {
 	CNBF(BASE_AUTRE, "Caisse nationale des barreaux français"),
 	CNIEG(BASE_AUTRE, "Caisse nationale des industries électriques et gazières"),
 	CNRACL(BASE_AUTRE, "Régime obligatoire de base des agents des collectivités territoriales"),
-	CPRP(BASE_AUTRE, "SNCF"),
+	CPRPSNCF(BASE_AUTRE, "Caisse de prévoyance et de retraite du personnel de la SNCF"),
 	CRE(BASE_AUTRE, "RATP"),
 	CRN(BASE_AUTRE, "Caisse de retraite des notaires"),
 	CRPCF(BASE_AUTRE, "Comédie française"),
@@ -86,16 +86,17 @@ public enum Regime {
 	}
 
 	public static Regime valueOfNom(final String nom) {
-		if (nom.equals("AGIRC-ARRCO") || nom.equals("AGIRC ARRCO")) {
+		final String nomTrimed = nom.trim();
+		if (nomTrimed.equals("AGIRC-ARRCO") || nomTrimed.equals("AGIRC ARRCO")) {
 			return AGIRC_ARRCO;
 		}
-		if (nom.equals("CCMSA")) {
+		if (nomTrimed.equals("CCMSA")) {
 			return MSA;
 		}
-		if (nom.equals("ORGANIC") || nom.equals("CANCAVA")) {
+		if (nomTrimed.equals("ORGANIC") || nomTrimed.equals("CANCAVA")) {
 			return RSI;
 		}
-		return valueOf(nom);
+		return valueOf(nomTrimed);
 	}
 
 }

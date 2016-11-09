@@ -1,10 +1,20 @@
 <div class="form-group row etape col-sm-12">
 	<div class="col-sm-6">
-		<a href="javascript:history.go(-1)" class="btn btn-success btn-precedente marg-bottom">Étape précédente</a>
+	
+		<!--Uniquement pour IE < 10 : retour à la page de démarrage, car IE<10 ne gère pas bien les retours d'historique avec les formulaires postés -->
+		<!--[if lt IE 10]>
+			<a href="javascript:location.href = document.referrer" class="btn btn-success btn-precedente marg-bottom">Retour</a>
+		<![endif]-->    
+
+		<!-- Pour les autres (cette instruction 'if' n'est pas comprise par les autres navigateurs, et plus par IE à partir de la V 10) -->
+		<!--[if !IE]><!-->
+			<a href="javascript:history.go(-1)" class="btn btn-success btn-precedente marg-bottom">Étape précédente</a>
+		<!--<![endif]-->    
+		
 	</div>
 	#{if !_notNext }
 		<div class="col-sm-6 text-right">
-			<input class="btn btn-success btn-next" value="Étape suivante" type="submit">
+			<button class="btn btn-success btn-next" type="submit">Étape suivante</button>
 		</div>
 	#{/if}	
 </div>

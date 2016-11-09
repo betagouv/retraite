@@ -60,13 +60,13 @@ public class ApiChecklistGenerator {
 			return dataWithErrorMessage("Le paramètre 'regimeLiquidateur' est manquant");
 		}
 
-		final RenderData data = new RenderData();
+		final RenderData renderData = new RenderData();
 
-		data.hidden_nom = nom;
-		data.hidden_naissance = dateNaissance;
-		data.hidden_nir = nir;
-		data.hidden_departMois = departMois;
-		data.hidden_departAnnee = departAnnee;
+		renderData.hidden_nom = nom;
+		renderData.hidden_naissance = dateNaissance;
+		renderData.hidden_nir = nir;
+		renderData.hidden_departMois = departMois;
+		renderData.hidden_departAnnee = departAnnee;
 
 		final String regimesInfosJsonStr = JsonUtils.toJson(new FakeRegimeDataProvider().create(regimes));
 
@@ -76,8 +76,8 @@ public class ApiChecklistGenerator {
 				regimesAlignes, regimeLiquidateur, published, isCarriereLongue, userStatus, false, regimesInfosJsonStr);
 		final ChecklistName checklistName = ChecklistName.valueOf(apiUserChecklistParams.regimeLiquidateur);
 
-		data.userChecklist = userChecklistGenerator.generate(checklistName, userChecklistGenerationData);
-		return data;
+		renderData.userChecklist = userChecklistGenerator.generate(checklistName, userChecklistGenerationData);
+		return renderData;
 	}
 
 	private List<UserStatus> asList(final UserStatus userStatus) {

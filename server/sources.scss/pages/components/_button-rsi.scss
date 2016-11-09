@@ -98,15 +98,6 @@
 }
 
 
-/*.btn-x {
-  @include btn-default;
-  @include btn-bigger;
-
-  @include hover {
-
-  }
-}*/
-
 .modal-footer button.btn{
   //background-image: none;
   padding-right: 10px;
@@ -114,101 +105,6 @@
 .modal-content .modal-body {
   font-size: 1.2rem;
 }
-
-
-
-/*bouton home/etape/information*/
-/*input.btn {
-  text-transform: uppercase;
-  margin-top:15px;
-  border-radius: 5px;
-  padding: 10px 10px 10px 10px;
-  color:#fff;
-  box-shadow:0 4px 5px 0 #c8c8c8;
-  font-size: 2.2rem;
-  font-family: $font-stack-alt;
-  font-weight: 300;
-}
-
-input.btn:link,
-input.btn:visited{
-  background-color: $red;
-}
-
-input.btn:hover,
-input.btn:focus {
-  background-color: $red-1;
-}
-
-input.btn-next {
-  background: $red url("../../img/sprites/next_white.png") no-repeat right 13px;
-  padding-right:30px;
-}
-
-.btn {
-  text-transform: uppercase;
-  margin-top:15px;
-  border-radius: 5px;
-  padding: 10px 10px 10px 10px;
-  color:#fff;
-  box-shadow:0 4px 5px 0 #c8c8c8;
-  font-size: 2.2rem;
-  font-family: $font-stack;
-  font-weight: 300;
-}
-
-.btn:link,
-.btn:visited{
-  background-color: $red;
-}
-
-.btn:hover,
-.btn:focus,
-.btn:active {
-  background-color: $red-1;
-}
-
-.btn-next,
-.btn-success {
-  background: $red url("../../img/sprites/next_white.png") no-repeat right 13px;
-  padding-right:30px;
-}
-
-.btn-precedente {
-  background: $red url("../../img/sprites/previous_white.png") no-repeat left 13px;
-  padding-left:30px;
-  float: left;
-  z-index:1;
-}
-
-.btn-precedente:link,
-.btn-precedente:visited{
-  background: $red url("../../img/sprites/previous_white.png") no-repeat left 13px;
-}
-
-.btn-precedente:hover,
-.btn-precedente:focus,
-.btn-precedente:active {
-  background: $red-1 url("../../img/sprites/previous_white.png") no-repeat left 13px;
-}
-
-.btn.active.focus, .btn.active:focus,
-.btn.focus, .btn.focus:active,
-.btn:active:focus, .btn:focus,
-.btn.valid:focus, .btn-valid:focus {
-  outline-style : none;
-}
-
-.btn:active {
-  -webkit-box-shadow: 0px 1px 2px #bbb;
-   -moz-box-shadow: 0px 1px 2px #bbb;
-        box-shadow: 0px 1px 2px #bbb;
-}
-
-.form-group .btn.active.btn-next,
-.form-group .btn:active.btn-next {
-  background: $red-1 url("../../img/sprites/next_white.png") no-repeat right 13px;
-}*/
 
 /*bouton home/etape/information*/
 .btn,
@@ -255,7 +151,31 @@ input.btn-next {
   border: 1px solid #b7b7b7;
 }
 
-input.btn-next[disabled]{
+.btn-next:after {
+	content: '';
+	top: -2px;
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 5px;
+	background: url("#{$pathImg}/arrow-right.png") no-repeat top left;
+	width: 10px;
+	height: 14px; 
+}
+
+.btn-precedente:before {
+	content: '';
+	top: -2px;
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 5px;
+	background: url("#{$pathImg}/arrow-left.png") no-repeat top left;
+	width: 10px;
+	height: 14px; 
+}
+
+.btn-next[disabled]{
 opacity: .65;
 background-color: #fff;
 border: 1px solid #b7b7b7;
@@ -264,9 +184,9 @@ border: 1px solid #b7b7b7;
             border-radius: 2px;
 }
 
-input.btn-next[disabled]:hover,
+.btn-next[disabled]:hover,
 .btn-precedente:active:focus,
-input.btn-next:active:focus {
+.btn-next:active:focus {
     background: #fff; 
     border-color: #b7b7b7;
     transition: none;

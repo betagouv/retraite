@@ -10,4 +10,10 @@ public class QuestionLiquidateur {
 
 	public List<QuestionChoice> choices;
 
+	@Override
+	public String toString() {
+		return "QuestionLiquidateur [liquidateurQuestionDescriptor=" + liquidateurQuestionDescriptor + ", choices="
+				+ choices + "]";
+	}
+
 }

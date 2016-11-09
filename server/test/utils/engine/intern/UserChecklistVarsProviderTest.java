@@ -18,6 +18,7 @@ import utils.engine.data.MonthAndYear;
 import utils.engine.data.UserChecklistGenerationData;
 import utils.engine.data.UserChecklistVars;
 import utils.engine.data.enums.Regime;
+import utils.engine.data.enums.Regime.RegimeType;
 import utils.engine.data.enums.RegimeAligne;
 
 public class UserChecklistVarsProviderTest {
@@ -47,27 +48,29 @@ public class UserChecklistVarsProviderTest {
 				.withNSA(false)
 				.withConjointCollaborateur(false)
 				.withChef(true)
+				.withCarriereLonge(true)
 				.get();
 
 		final UserChecklistVars vars = userChecklistVarsProvider.provideVars(userChecklistGenerationData);
 
 		final Map<String, Object> expectedMap = new HashMap<String, Object>() {
 			{
-				put("regimes_base_hors_alignes", "BFSP (Banque de France), CARCD (Caisse d'assurance retraite des chirurgiens dentistes)");
-				put("regimes_compl_hors_agirc_arrco", "IRCEC (Caisse nationale de retraite complémentaire des artistes auteurs), IRCANTEC");
+				put("regimes_base_hors_alignes", "<ul><li>BFSP (Banque de France)</li><li>CARCD (Caisse d'assurance retraite des chirurgiens dentistes)</li></ul>");
+				put("regimes_compl_hors_agirc_arrco", "<ul><li>IRCEC (Caisse nationale de retraite complémentaire des artistes auteurs)</li><li>IRCANTEC</ul>");
 				put("regimes_hors_alignes_et_hors_agirc_arrco",
-						"IRCEC (Caisse nationale de retraite complémentaire des artistes auteurs), BFSP (Banque de France), CARCD (Caisse d'assurance retraite des chirurgiens dentistes), IRCANTEC");
-				put("regimes_compl_hors_agirc_arrco", "IRCEC (Caisse nationale de retraite complémentaire des artistes auteurs), IRCANTEC");
+						"<ul><li>IRCEC (Caisse nationale de retraite complémentaire des artistes auteurs)</li><li>BFSP (Banque de France)</li><li>CARCD (Caisse d'assurance retraite des chirurgiens dentistes)</li><li>IRCANTEC</li></ul>");
+				put("regimes_compl_hors_agirc_arrco", "<ul><li>IRCEC (Caisse nationale de retraite complémentaire des artistes auteurs)</li><li>IRCANTEC</li></ul>");
 				put("regimes_hors_alignes_ou_regimes_compl",
-						"IRCEC (Caisse nationale de retraite complémentaire des artistes auteurs), BFSP (Banque de France), AGIRC_ARRCO (AGIRC ARRCO), CARCD (Caisse d'assurance retraite des chirurgiens dentistes), IRCANTEC");
+						"<ul><li>IRCEC (Caisse nationale de retraite complémentaire des artistes auteurs)</li><li>BFSP (Banque de France)</li><li>AGIRC_ARRCO (AGIRC ARRCO)</li><li>CARCD (Caisse d'assurance retraite des chirurgiens dentistes)</li><li>IRCANTEC</li></ul>");
 				put("agirc_arrco", true);
 				put("status_nsa", false);
 				put("status_sa", true);
 				put("status_chef", true);
 				put("status_conjoint", false);
-
+				put("carriere_longue", true);
 			}
 		};
+		
 		assertThat(vars.getMapOfValues()).isEqualTo(expectedMap);
 	}
 
@@ -89,26 +92,65 @@ public class UserChecklistVarsProviderTest {
 				.withNSA(true)
 				.withConjointCollaborateur(true)
 				.withChef(false)
+				.withCarriereLonge(false)
 				.get();
 
 		final UserChecklistVars vars = userChecklistVarsProvider.provideVars(userChecklistGenerationData);
 
 		final Map<String, Object> expectedMap = new HashMap<String, Object>() {
 			{
-				put("regimes_base_hors_alignes", "BFSP (Banque de France), CARCD (Caisse d'assurance retraite des chirurgiens dentistes)");
-				put("regimes_compl_hors_agirc_arrco", "IRCEC (Caisse nationale de retraite complémentaire des artistes auteurs)");
+				put("regimes_base_hors_alignes", "<ul><li>BFSP (Banque de France)</li><li>CARCD (Caisse d'assurance retraite des chirurgiens dentistes)</li></ul>");
+				put("regimes_compl_hors_agirc_arrco", "<ul><li>IRCEC (Caisse nationale de retraite complémentaire des artistes auteurs)</li></ul>");
 				put("regimes_hors_alignes_et_hors_agirc_arrco",
-						"IRCEC (Caisse nationale de retraite complémentaire des artistes auteurs), BFSP (Banque de France), CARCD (Caisse d'assurance retraite des chirurgiens dentistes)");
+						"<ul><li>IRCEC (Caisse nationale de retraite complémentaire des artistes auteurs)</li><li>BFSP (Banque de France)</li><li>CARCD (Caisse d'assurance retraite des chirurgiens dentistes)</li></ul>");
 				put("regimes_hors_alignes_ou_regimes_compl",
-						"IRCEC (Caisse nationale de retraite complémentaire des artistes auteurs), BFSP (Banque de France), CARCD (Caisse d'assurance retraite des chirurgiens dentistes)");
+						"<ul><li>IRCEC (Caisse nationale de retraite complémentaire des artistes auteurs)</li><li>BFSP (Banque de France)</li><li>CARCD (Caisse d'assurance retraite des chirurgiens dentistes)</li></ul>");
 				put("agirc_arrco", false);
 				put("status_nsa", true);
 				put("status_sa", false);
 				put("status_chef", false);
 				put("status_conjoint", true);
+				put("status_conjoint", true);
+				put("carriere_longue", false);
 
 			}
 		};
 		assertThat(vars.getMapOfValues()).isEqualTo(expectedMap);
+	}
+
+
+	@Test
+	public void getNameFor_should_return_acronyme_item() {
+		Regime regime = Regime.CNAV;
+		String name = userChecklistVarsProvider.getNameFor(regime);
+		assertThat(name).isEqualTo("<li>" + regime.toString() + "</li>");
+	}
+
+	@Test
+	public void getNameFor_should_return_acronyme_end_name() {
+		Regime regime = Regime.CARCD;
+		String name = userChecklistVarsProvider.getNameFor(regime);
+		assertThat(name).isEqualTo("<li>" + regime.toString() + " (" + regime.getNom() + ")</li>");
+	}
+
+	@Test
+	public void buildHtmlList_should_return_null_with_text_null() {
+		String text = null;		
+		String htmlText = userChecklistVarsProvider.buildHtmlList(text);		
+		assertThat(htmlText).isNull();
+	}
+
+	@Test
+	public void buildHtmlList_should_return_empty_with_empty() {
+		String text = "";		
+		String htmlText = userChecklistVarsProvider.buildHtmlList(text);		
+		assertThat(htmlText).isEqualTo("");
+	}
+
+	@Test
+	public void buildHtmlList_should_return_html_list_with_text_notnull() {
+		String text = "toto";		
+		String htmlText = userChecklistVarsProvider.buildHtmlList(text);		
+		assertThat(htmlText).isEqualTo("<ul>"+text+"</ul>");
 	}
 }

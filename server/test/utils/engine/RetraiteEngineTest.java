@@ -255,6 +255,9 @@ public class RetraiteEngineTest {
 
 		verify(displayerDepartureDateMock).fillData(isA(PostData.class), isA(RenderData.class), eq(allRegimesStr));
 		assertThat(renderData.hidden_liquidateur).isEqualTo(CNAV);
+		assertThat(postData.hidden_step).isEqualTo("getUserData");
+		assertThat(postData.hidden_nom).isEqualTo("DUPONT");
+		assertThat(postData.hidden_naissance).isEqualTo("1/2/3");
 	}
 
 	@Test

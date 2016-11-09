@@ -151,7 +151,31 @@
   border: 1px solid #b7b7b7;
 }
 
-input.btn-next[disabled]{
+.btn-next:after {
+	content: '';
+	top: -2px;
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 5px;
+	background: url("#{$pathImg}/arrow-right.png") no-repeat top left;
+	width: 10px;
+	height: 14px; 
+}
+
+.btn-precedente:before {
+	content: '';
+	top: -2px;
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 5px;
+	background: url("#{$pathImg}/arrow-left.png") no-repeat top left;
+	width: 10px;
+	height: 14px; 
+}
+
+.btn-next[disabled]{
 opacity: .65;
 background-color: #fff;
 border: 1px solid #b7b7b7;

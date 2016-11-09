@@ -40,6 +40,7 @@ public class RegimeTest {
 		assertThat(Regime.valueOfNom("ORGANIC")).isEqualTo(RSI);
 		assertThat(Regime.valueOfNom("CANCAVA")).isEqualTo(RSI);
 
+		assertThat(Regime.valueOfNom(" CIPAV")).isEqualTo(CIPAV);
 	}
 
 }
