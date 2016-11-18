@@ -35,7 +35,7 @@ public class ChecklistPublisher {
 		final Checklist checklistToPublish = prepareToPublish(checklist);
 		deleteExistingPublishedChecklistIfExist(checklist.nom);
 		final Checklist publishedChecklist = checklistToPublish.save();
-		return publishedChecklist.getId();
+		return publishedChecklist.id;
 	}
 
 	// Méthodes privées
