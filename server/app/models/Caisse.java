@@ -1,11 +1,22 @@
 package models;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+
+import play.db.jpa.GenericModel;
 
 @Entity
-public class Caisse extends RetraiteModel {
+public class Caisse extends GenericModel {
 
 	private static final long serialVersionUID = 1L;
+	
+	@Id
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="caisse_generator")
+	@SequenceGenerator(name="caisse_generator", sequenceName="caisse_id_seq")
+	public Long id;
 
 	public String nom;
 
