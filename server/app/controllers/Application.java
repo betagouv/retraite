@@ -10,7 +10,9 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -79,6 +81,15 @@ public class Application extends RetraiteController {
 		final boolean test = params._contains("test");
 		postData.hidden_userStatus = unbind(params.get("postData.hidden_userStatus"));
 		postData.isPDF = true;
+		
+		final String OBFUSCATE_STRING = "OBFUSCATE_STRINGzmlkjerlnxvcnlnqmlsdqds234646###";
+		final String DATA_STRING = "data:image/png;base64,";
+		List<String> imgDatas = new ArrayList<>();
+		
+		for (String imgData : postData.hidden_imgPrintsJsonStr.replaceAll(DATA_STRING, OBFUSCATE_STRING).split(",")) {
+			imgDatas.add(imgData.replaceAll(OBFUSCATE_STRING, DATA_STRING));
+		}
+		
 		final RenderData data = RetraiteEngineFactory.create(test).processToNextStep(postData);
 		data.isPDF = true;
 
@@ -106,7 +117,7 @@ public class Application extends RetraiteController {
 					+ "<td width='30%' align='right'>Page <pagenumber>/<pagecount></td>"
 					+ "</tr></tbody></table>";
 
-			PDF.writePDF(response.out, data, pdfOptions);
+			PDF.writePDF(response.out, imgDatas, pdfOptions);
 
 			// final Map<String, Object> params = new HashMap<String, Object>();
 			// params.put("data", data);

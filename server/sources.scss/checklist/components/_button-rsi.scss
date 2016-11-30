@@ -214,7 +214,7 @@ body .container.checklist .contenu {
     overflow: hidden;
   }
   
-  .record {
+  .print {
     height: 49px;
     padding-left: 46px !important;
 
@@ -226,6 +226,21 @@ body .container.checklist .contenu {
       width: 42px;
       height: 44px;
       background: url("../../img/sprites/print_black.png") no-repeat 2px 1px;
+    }
+  }
+  
+  .record {
+    height: 49px;
+    padding-left: 46px !important;
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 42px;
+      height: 44px;
+      background: url("../../img/sprites/save_black.png") no-repeat 2px 1px;
     }
   }
 

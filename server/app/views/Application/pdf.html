@@ -16,43 +16,10 @@
 
     <body>
 
-        <div class="container padding-bottom checklist">
-
-            <div class="wrapper">
-
-	            <div class="contenu">
-	            <div class="contenu-titre">
-				<table class="boxtitre-pdf" width="100%">
-					<tr>
-						<td class="titre-pdf"><h2>Mes démarches retraite</h2></td>
-					</tr>
-					<tr>
-						<td class="titre-pdf"><h2>Pas à pas</h2></td>
-					</tr>
-				</table>
-				</div>
-				</div>
-				
-				#{displayCheckList data:data /}
-	
-    		</div><!--fin wrapper-->
-
-		</div><!--fin container-->
-
-		<div class="col-sm-12 contenu">
-		    <footer role="contentinfo">
-		        <div class="wrapper-inner">
-		            <nav class="footer-right col-sm-7">
-		                <ul>
-		                    <li><a href="https://www.lassuranceretraite.fr/portail-info/accueil" target="_blank" title="Nouvelle fenêtre"><img src="@{'/public/img/sprites/logo_cnav.png'}" title="cnav" alt="l'assurance retraite"></a></li>
-		                    <li><a href="http://www.msa.fr/lfr" target="_blank" title="Nouvelle fenêtre"><img src="@{'/public/img/sprites/logo_MSA.png'}" title="MSA" alt="santé famille retraite services"></a></li>
-		                    <li><a href="https://www.rsi.fr/" target="_blank" title="Nouvelle fenêtre"><img src="@{'/public/img/sprites/logo_rsi.png'}" title="rsi" alt="régime social des indépendants"></a></li>
-		                </ul>
-		            </nav>
-
-		        </div>
-		    </footer>
-		</div>
+		#{list items:imgDatas, as:'imgData'}
+			<img src="${imgData}" width="100%" />
+		
+		#{/list}
 
     </body>
 </html>
