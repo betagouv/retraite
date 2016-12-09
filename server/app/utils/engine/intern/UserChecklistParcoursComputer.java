@@ -9,6 +9,7 @@ import play.Logger;
 import utils.RetraiteException;
 import utils.RetraiteStringsUtils;
 import utils.engine.data.UserChecklistGenerationData;
+import utils.engine.utils.LinkConverter;
 import utils.engine.utils.VariablesReplacer;
 
 public class UserChecklistParcoursComputer {
@@ -137,14 +138,14 @@ public class UserChecklistParcoursComputer {
 		final String url = linkTrimed.substring(index);
 		String htmlLink = buildLink(url, textForLink);
 		//if (isPDF) {
-			links.add(convertTextForLink(url, Boolean.FALSE));
+			links.add(LinkConverter.convertTextForLink(url, Boolean.FALSE));
 			htmlLink += "<sup>" + links.size() + "</sup>";
 		//}
 		return htmlLink;
 	}
 
 	private String buildLinkSimple(final String link, final boolean isPDF, final List<String> links) {
-		String result = buildLink(link, convertTextForLink(link));
+		String result = buildLink(link, LinkConverter.convertTextForLink(link));
 		if (isPDF) {
 			links.add(link);
 			result += "<sup>" + links.size() + "</sup>";
@@ -156,33 +157,6 @@ public class UserChecklistParcoursComputer {
 		return "<a href='" + url + "' target='_blank' title='Nouvelle fenêtre'>" + textForLink + "</a>";
 	}
 
-	private String convertTextForLink(final String link, Boolean delSuffix) {
-		if (link.toLowerCase().startsWith("http://")) {
-			return convertTextForLink(link.substring("http://".length()), delSuffix);
-		}
-		if (link.toLowerCase().startsWith("https://")) {
-			return convertTextForLink(link.substring("https://".length()), delSuffix);
-		}
-		if (link.toLowerCase().startsWith("www.")) {
-			return convertTextForLink(link.substring("www.".length()), delSuffix);
-		}
-		if (delSuffix) {
-			if (link.toLowerCase().endsWith(".html")) {
-				return convertTextForLink(link.substring(0, link.length() - ".html".length()), delSuffix);
-			}
-			if (link.toLowerCase().endsWith(".htm")) {
-				return convertTextForLink(link.substring(0, link.length() - ".htm".length()), delSuffix);
-			}
-			if (link.toLowerCase().endsWith(".pdf")) {
-				return convertTextForLink(link.substring(0, link.length() - ".pdf".length()), delSuffix);
-			}
-		}
-		return link;
-	}
-	
-	private String convertTextForLink(final String link) {
-		return convertTextForLink(link, Boolean.TRUE);
-	}
 
 	private static enum BeginIndexType {
 		SIMPLE, ADVANCED

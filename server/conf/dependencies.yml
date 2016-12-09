@@ -13,3 +13,4 @@ require:
     - play -> pdf 0.9
     - com.itextpdf -> itextpdf 5.5.8
     - com.itextpdf.tool -> xmlworker 5.5.8 
+    - net.sf.dozer -> dozer 5.2.0

@@ -13,9 +13,9 @@
 			</div>
 		#{/if}
 		
-		#{displayLabelAndLink label:_caisse?.linkLabel1, url:_caisse?.linkUrl1 /}
-		#{displayLabelAndLink label:_caisse?.linkLabel2, url:_caisse?.linkUrl2 /}
-		#{displayLabelAndLink label:_caisse?.linkLabel3, url:_caisse?.linkUrl3 /}
+		#{displayLabelAndLink label:_caisse?.linkLabel1, url:_caisse?.linkUrl1, index:1 /}
+		#{displayLabelAndLink label:_caisse?.linkLabel2, url:_caisse?.linkUrl2, index:2 /}
+		#{displayLabelAndLink label:_caisse?.linkLabel3, url:_caisse?.linkUrl3, index:3 /}
 		
 		*{ Téléphone }*
 		
@@ -43,6 +43,12 @@
 				#{/if}
 			</div>
 		#{/if}
+		
+		<div class="links-urls">
+			#{list items:_caisse?.urls, as:'url'}
+				<sup>${url_index}</sup> ${url}<br/>
+			#{/list}
+		</div>
 	</div>
 </div>
 

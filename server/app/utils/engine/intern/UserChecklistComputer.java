@@ -17,20 +17,22 @@ public class UserChecklistComputer {
 	private final UserChecklistChapitreComputer userChecklistChapitreComputer;
 	private final CaisseDao caisseDao;
 	private final AutreRegimeComputer autreRegimeComputer;
+	private final UserCaisseComputer userCaisseComputer;
 
 	public UserChecklistComputer(final UserChecklistChapitreFilter userChecklistChapitreFilter,
-			final UserChecklistChapitreComputer userChecklistChapitreComputer, final CaisseDao caisseDao, final AutreRegimeComputer autreRegimeComputer) {
+			final UserChecklistChapitreComputer userChecklistChapitreComputer, final CaisseDao caisseDao, final AutreRegimeComputer autreRegimeComputer, final UserCaisseComputer userCaisseComputer) {
 		this.userChecklistChapitreFilter = userChecklistChapitreFilter;
 		this.userChecklistChapitreComputer = userChecklistChapitreComputer;
 		this.caisseDao = caisseDao;
 		this.autreRegimeComputer = autreRegimeComputer;
+		this.userCaisseComputer = userCaisseComputer;
 	}
 
 	public UserChecklist compute(final Checklist checklist, final UserChecklistGenerationData userChecklistGenerationData) {
 		final UserChecklist userChecklist = new UserChecklist();
 		userChecklist.nom = checklist.nom;
 		final ChecklistName checklistName = ChecklistName.valueOf(checklist.nom);
-		userChecklist.caisse = caisseDao.findForDepartment(checklistName, userChecklistGenerationData.getDepartement());
+		userChecklist.caisse = userCaisseComputer.compute(caisseDao.findForDepartment(checklistName, userChecklistGenerationData.getDepartement()));
 		userChecklist.chapitres = compute(checklist.chapitres, userChecklistGenerationData);
 		autreRegimeComputer.compute(userChecklist, userChecklistGenerationData.regimesInfosJsonStr);
 		return userChecklist;

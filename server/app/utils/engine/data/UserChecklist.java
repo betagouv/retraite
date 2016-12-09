@@ -8,7 +8,7 @@ public class UserChecklist {
 
 	public String nom;
 
-	public Caisse caisse;
+	public UserCaisse caisse;
 
 	public InfoRetraiteResultRegimeList autresRegimesDeBase;
 
