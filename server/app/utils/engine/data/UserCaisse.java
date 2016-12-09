@@ -1,7 +1,8 @@
 package utils.engine.data;
 
-import java.math.BigDecimal;
 import java.util.List;
+
+import utils.engine.data.enums.LinkType;
 
 public class UserCaisse {
 
@@ -22,22 +23,19 @@ public class UserCaisse {
 	public String fax;
 
 	public String site;
-
-	public String linkLabel1;
-
-	public String linkUrl1;
-
-	public String linkLabel2;
-
-	public String linkUrl2;
-
-	public String linkLabel3;
-
-	public String linkUrl3;
+	
+	public List<UserLink> linkList;
 
 	public List<String> urls;
 
-	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public String getNom() {
 		return nom;
 	}
@@ -102,52 +100,12 @@ public class UserCaisse {
 		this.site = site;
 	}
 
-	public String getLinkLabel1() {
-		return linkLabel1;
+	public List<UserLink> getLinkList() {
+		return linkList;
 	}
 
-	public void setLinkLabel1(String linkLabel1) {
-		this.linkLabel1 = linkLabel1;
-	}
-
-	public String getLinkUrl1() {
-		return linkUrl1;
-	}
-
-	public void setLinkUrl1(String linkUrl1) {
-		this.linkUrl1 = linkUrl1;
-	}
-
-	public String getLinkLabel2() {
-		return linkLabel2;
-	}
-
-	public void setLinkLabel2(String linkLabel2) {
-		this.linkLabel2 = linkLabel2;
-	}
-
-	public String getLinkUrl2() {
-		return linkUrl2;
-	}
-
-	public void setLinkUrl2(String linkUrl2) {
-		this.linkUrl2 = linkUrl2;
-	}
-
-	public String getLinkLabel3() {
-		return linkLabel3;
-	}
-
-	public void setLinkLabel3(String linkLabel3) {
-		this.linkLabel3 = linkLabel3;
-	}
-
-	public String getLinkUrl3() {
-		return linkUrl3;
-	}
-
-	public void setLinkUrl3(String linkUrl3) {
-		this.linkUrl3 = linkUrl3;
+	public void setLinkList(List<UserLink> linkList) {
+		this.linkList = linkList;
 	}
 
 	public List<String> getUrls() {
@@ -158,12 +116,5 @@ public class UserCaisse {
 		this.urls = urls;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 }
