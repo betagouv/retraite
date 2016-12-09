@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import models.Checklist;
+import play.db.jpa.GenericModel;
 import play.db.jpa.Model;
 import utils.JsonUtils;
 import utils.RetraiteAlreayPublishedChecklistException;
@@ -59,7 +60,7 @@ public class ChecklistPublisher {
 	}
 
 	private void setAllIdsToNull(final Object obj) {
-		if (!(obj instanceof Model)) {
+		if (!(obj instanceof GenericModel)) {
 			return;
 		}
 		try {
