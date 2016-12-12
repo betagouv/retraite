@@ -1,6 +1,7 @@
 package utils.engine.intern;
 
 import static org.fest.assertions.Assertions.assertThat;
+
 import org.junit.Before;
 import org.junit.Test;
 

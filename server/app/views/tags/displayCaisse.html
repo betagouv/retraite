@@ -6,7 +6,7 @@
 		*{ Site internet }*
 		
 		#{if _caisse?.site}
-			<div class="siteinternet">
+			<div class="lienContact">
 				<span class="nuage"></span>
 				<a href='${_caisse?.site}' target='_blank' title="Nouvelle fenêtre">${_caisse?.site}</a>
 				<br/>
@@ -15,8 +15,8 @@
 		
 		
 		#{list items:_caisse?.linkList, as:'link'}
-			<div class="siteinternet">
-				<span class="nuage"></span>
+			<div class="lienContact">
+				<span class="${link?.type?.style}"></span>
 				<a href='${link?.url}' target='_blank' title="Nouvelle fenêtre">${link?.label}</a><sup>${link_index}</sup>
 				<br/>
 			</div>
@@ -25,7 +25,7 @@
 		*{ Téléphone }*
 		
 		#{if _caisse?.telephone}
-			<div class="numerotelephone">
+			<div class="lienContact">
 				<span class="telephone"></span>
 				${_caisse?.telephone}<br/>
 			</div>
@@ -34,7 +34,7 @@
 		*{ Adresse postale }*
 		
 		#{if _caisse?.adresse1}
-			<div class="adresse">
+			<div class="lienContact">
 				<span class="enveloppe"></span>
 				${_caisse?.adresse1}<br/>
 				#{if _caisse?.adresse2}

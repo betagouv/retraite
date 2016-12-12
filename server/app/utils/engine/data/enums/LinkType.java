@@ -2,14 +2,14 @@ package utils.engine.data.enums;
 
 public enum LinkType {
 
-	ADRESSE("enveloppe1.png"),
-	SITE("nuage.png"),
-	TELEPHONE("telephone1.png");
+	ADRESSE("enveloppe"),
+	SITE("nuage"),
+	TELEPHONE("telephone");
 	
-	public final String src;
+	public final String style;
 	
-	private LinkType(final String src) {
-		this.src= src;
+	private LinkType(final String style) {
+		this.style= style;
 	}
 	
 	
