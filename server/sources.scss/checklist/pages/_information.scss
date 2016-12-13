@@ -140,6 +140,16 @@ body .container.checklist{
 				left: -32px;
 				top: 1px;
 			}
+
+			span.cadenas {
+				background: url("#{$pathImg}/lock.png") no-repeat left center; 
+				display: inline-block;
+				height: 26px;
+				width: 26px;
+				position: absolute;
+				left: -32px;
+				top: 1px;
+			}
 		}
 		
 		a:link,

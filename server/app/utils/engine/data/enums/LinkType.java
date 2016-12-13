@@ -4,7 +4,8 @@ public enum LinkType {
 
 	ADRESSE("enveloppe"),
 	SITE("nuage"),
-	TELEPHONE("telephone");
+	TELEPHONE("telephone"),
+	SECURISE("cadenas");
 	
 	public final String style;
 	
