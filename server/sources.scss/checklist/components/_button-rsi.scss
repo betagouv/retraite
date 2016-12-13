@@ -225,8 +225,12 @@ body .container.checklist .contenu {
       top: 0;
       width: 42px;
       height: 44px;
-      background: url("../../img/sprites/print_black.png") no-repeat 2px 1px;
+      background: url("../../img/sprites/print_black.png") no-repeat 8px 8px;
     }
+  }
+  
+  .btn.print {
+  	margin-bottom: 20px;
   }
   
   .record {
@@ -240,7 +244,7 @@ body .container.checklist .contenu {
       top: 0;
       width: 42px;
       height: 44px;
-      background: url("../../img/sprites/save_black.png") no-repeat 2px 1px;
+      background: url("../../img/sprites/save_black.png") no-repeat 8px 8px;
     }
   }
 
