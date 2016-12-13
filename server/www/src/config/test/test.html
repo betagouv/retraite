@@ -1,0 +1,62 @@
+<div class='test-form'>
+    
+    <div class='form-group'>
+        <label class='control-label'>Checklist à tester :</label>
+        <select ng-model='data.regimeLiquidateur' class='form-control'>
+            <option value='CNAV'>CNAV</option>
+            <option value='MSA'>MSA</option>
+            <option value='RSI'>RSI</option>
+        </select>
+
+        <label class='control-label'>Département :</label>
+        <select ng-options='departement as departement for departement in departements' ng-model='data.departement' class='form-control xxx-select' ></select>
+    </div>
+
+    <div class='form-group'>
+        <label class='control-label'>Liste des régimes :</label>
+        <div class='display-inline' ng-dropdown-multiselect="" options="regimes" selected-model="data.regimes" group-by="type" extra-settings='multiselectRegimesSettings' translation-texts='multiselectRegimesTexts'></div>
+    </div>
+
+    <div class='well'>
+        <div class='form-group'>
+            <label class='control-label'>Date de départ souhaitée :</label>
+            <div class=''>
+                <select ng-options='mois.value as mois.label for mois in listeMoisAvecPremier' ng-model='data.departMois' class='form-control xxx-select' ></select>
+                <select ng-options='annee as annee for annee in listeAnneesDepart' ng-model='data.departAnnee' class='form-control xxx-select' ></select>
+            </div>
+        </div>
+
+        <div class='form-group'>
+            <label class='control-label'>Options :</label>
+            <div class='test-options'>
+                <ul>
+                    <li>
+                        <b>Carrière longue</b> : 
+                        <input type='checkbox' ng-model="data.isCarriereLongue" > Oui (a une attestation)
+                    </li>
+                    <li ng-show="data.regimeLiquidateur == 'MSA'">
+                        <b>Statut MSA</b> : 
+                        <input type="radio" ng-model="data.userStatus" value="STATUS_NSA"> NSA
+                        <input type="radio" ng-model="data.userStatus" value="STATUS_SA"> SA
+                        <input type="radio" ng-model="data.userStatus" value="STATUS_CONJOINT_COLLABORATEUR"> Conjoint collaborateur / Aide familial
+                    </li>
+                    <li ng-show="data.regimeLiquidateur == 'RSI'">
+                        <b>Statut MSA</b> : 
+                        <input type="radio" ng-model="data.userStatus" value="STATUS_CHEF"> Chef d'entreprise
+                        <input type="radio" ng-model="data.userStatus" value="STATUS_CONJOINT_COLLABORATEUR"> Conjoint collaborateur
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class=''>
+        <button ng-click='test(false)' class="btn btn-success" type="button">Tester la checklist non publiée</button>
+        <button ng-click='test(true)' class="btn btn-success" type="button">Tester la checklist publiée</button>
+    </div>
+
+</div>
+
+<hr/>
+
+<iframe id='iframe-test-result' iframe-auto-height height='0' ng-src='{{testUrlForIFrame}}' ng-show='testUrlForIFrame'></iframe>

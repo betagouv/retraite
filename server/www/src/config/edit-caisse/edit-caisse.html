@@ -1,0 +1,101 @@
+<div class='edit-caisse'>
+    
+    <div>
+        <label>Nom : </label>
+        <input type='text' ng-model='caisse.nom' class='form-control'>
+    </div>
+
+    <div>
+        <label>Adresse : </label>
+        <input type='text' ng-model='caisse.adresse1' class='form-control'>
+        <input type='text' ng-model='caisse.adresse2' class='form-control'>
+        <input type='text' ng-model='caisse.adresse3' class='form-control'>
+        <input type='text' ng-model='caisse.adresse4' class='form-control'>
+    </div>
+
+    <div>
+        <label>Téléphone : </label>
+        <input type='text' ng-model='caisse.telephone' class='form-control'>
+    </div>
+
+    <div>
+        <label>Fax : </label>
+        <input type='text' ng-model='caisse.fax' class='form-control'>
+    </div>
+
+    <div>
+        <label>Site : </label>
+        <input type='text' ng-model='caisse.site' class='form-control'>
+    </div>
+
+    <div>
+        <label>Lien (Libellé et URL) #1 : </label>
+    	<label class="radio-inline" for="radios-11">
+			<input type="radio" name="radios1" ng-model='caisse.linkType1' id="radios-11" value="SITE">
+			<img src="img/nuage.png" />
+		</label>
+        <label class="radio-inline" for="radios-10">
+			<input type="radio" name="radios1" ng-model='caisse.linkType1' id="radios-10" value="ADRESSE">
+			<img src="img/enveloppe1.png" />
+    	</label>
+		<label class="radio-inline" for="radios-12">
+			<input type="radio" name="radios1" ng-model='caisse.linkType1' id="radios-12" value="TELEPHONE">
+			<img src="img/telephone1.png" />
+		</label>
+		<label class="radio-inline" for="radios-13">
+			<input type="radio" name="radios1" ng-model='caisse.linkType1' id="radios-13" value="SECURISE">
+			<img src="img/lock.png" />
+		</label>
+        <input placeholder='Libellé' type='text' ng-model='caisse.linkLabel1' class='form-control'>
+        <input placeholder='URL' type='text' ng-model='caisse.linkUrl1' class='form-control'>
+    </div>
+
+    <div>
+        <label>Lien (Libellé et URL) #2 : </label>
+    	<label class="radio-inline" for="radios-21">
+			<input type="radio" name="radios2" ng-model='caisse.linkType2' id="radios-21" value="SITE">
+			<img src="img/nuage.png" />
+		</label>
+        <label class="radio-inline" for="radios-20">
+			<input type="radio" name="radios2" ng-model='caisse.linkType2' id="radios-20" value="ADRESSE">
+			<img src="img/enveloppe1.png" />
+    	</label>
+		<label class="radio-inline" for="radios-22">
+			<input type="radio" name="radios2" ng-model='caisse.linkType2' id="radios-22" value="TELEPHONE">
+			<img src="img/telephone1.png" />
+		</label>
+		<label class="radio-inline" for="radios-23">
+			<input type="radio" name="radios2" ng-model='caisse.linkType2' id="radios-23" value="SECURISE">
+			<img src="img/lock.png" />
+		</label>
+        <input placeholder='Libellé' type='text' ng-model='caisse.linkLabel2' class='form-control'>
+        <input placeholder='URL' type='text' ng-model='caisse.linkUrl2' class='form-control'>
+    </div>
+
+    <div>
+        <label>Lien (Libellé et URL) #3 : </label>
+    	<label class="radio-inline" for="radios-31">
+			<input type="radio" name="radios3" ng-model='caisse.linkType3' id="radios-31" value="SITE">
+			<img src="img/nuage.png" />
+		</label>
+        <label class="radio-inline" for="radios-30">
+			<input type="radio" name="radios3" ng-model='caisse.linkType3' id="radios-30" value="ADRESSE">
+			<img src="img/enveloppe1.png" />
+    	</label>
+		<label class="radio-inline" for="radios-32">
+			<input type="radio" name="radios3" ng-model='caisse.linkType3' id="radios-32" value="TELEPHONE">
+			<img src="img/telephone1.png" />
+		</label>
+		<label class="radio-inline" for="radios-33">
+			<input type="radio" name="radios3" ng-model='caisse.linkType3' id="radios-33" value="SECURISE">
+			<img src="img/lock.png" />
+		</label>
+        <input placeholder='Libellé' type='text' ng-model='caisse.linkLabel3' class='form-control'>
+        <input placeholder='URL' type='text' ng-model='caisse.linkUrl3' class='form-control'>
+    </div>
+
+    <div>
+        <button class='btn btn-primary' ng-click='save()'>Enregistrer</button>
+    </div>
+
+</div>
