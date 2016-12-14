@@ -4,15 +4,25 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
+import javax.persistence.SequenceGenerator;
 
 import play.data.validation.Required;
+import play.db.jpa.GenericModel;
 
 @Entity
-public class Checklist extends RetraiteModel implements Cloneable {
+public class Checklist extends GenericModel implements Cloneable {
 
 	private static final long serialVersionUID = 1L;
+	
+	@Id
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="checklist_generator")
+	@SequenceGenerator(name="checklist_generator", sequenceName="checklist_id_seq")
+	public Long id;
 
 	@Required
 	public String nom;

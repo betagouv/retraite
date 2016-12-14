@@ -214,6 +214,25 @@ body .container.checklist .contenu {
     overflow: hidden;
   }
   
+  .print {
+    height: 49px;
+    padding-left: 46px !important;
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 42px;
+      height: 44px;
+      background: url("../../img/sprites/print_black.png") no-repeat 8px 8px;
+    }
+  }
+  
+  .btn.print {
+  	margin-bottom: 20px;
+  }
+  
   .record {
     height: 49px;
     padding-left: 46px !important;

@@ -106,7 +106,7 @@ body .container.checklist{
 			}
 		}
 
-		.adresse {
+		.lienContact {
 			position: relative;
 			margin-top: 10px;
    			margin-bottom: 10px;
@@ -120,12 +120,6 @@ body .container.checklist{
 				left:-32px;
 				top:1px;
 			}
-		}
-
-		.numerotelephone {
-			position: relative;
-			margin-top: 10px;
-   			margin-bottom: 10px;
 
 			span.telephone {
 				background: url("#{$pathImg}/telephone1.png") no-repeat left center;
@@ -136,15 +130,19 @@ body .container.checklist{
 				left: -32px;
 				top: 1px;
 			}
-		}
-			
-		.siteinternet {
-			position: relative;
-			margin-top: 10px;
-   			margin-bottom: 10px;
 
 			span.nuage {
 				background: url("#{$pathImg}/nuage.png") no-repeat left center; 
+				display: inline-block;
+				height: 26px;
+				width: 26px;
+				position: absolute;
+				left: -32px;
+				top: 1px;
+			}
+
+			span.cadenas {
+				background: url("#{$pathImg}/lock.png") no-repeat left center; 
 				display: inline-block;
 				height: 26px;
 				width: 26px;
@@ -157,7 +155,6 @@ body .container.checklist{
 		a:link,
 		a:visited {
 			color: $blue;
-			font-weight: bold;
 		}
 
 		/*Hack Firefox pour gérer les liens qui remontent sur le texte avec html2canvas*/

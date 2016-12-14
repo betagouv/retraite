@@ -1,5 +1,6 @@
 package utils.engine.intern;
 
+
 import static models.Delai.Type.APARTIR;
 import static models.Delai.Type.AUCUN;
 import static models.Delai.Type.AUPLUS;

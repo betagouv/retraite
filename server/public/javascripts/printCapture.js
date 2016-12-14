@@ -27,9 +27,10 @@ $(function() {
 					
 					//Ajout de l'image dans sa div de destination
 					$('#imgPrint'+index).append('<img src="' + img + '" />');
-					
+
 					//Suppression de la classe printable
 					zone.removeClass('printable');
+					
 				},
 				letterRendering: true
 			});

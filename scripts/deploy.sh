@@ -35,32 +35,32 @@ if [[ ($CURRENT_GIT_BRANCH != $ENV) && (($CURRENT_GIT_BRANCH != "master") || ($E
 	exit
 fi
 
-# Génération de l'application cliente
-echo
-echo "Génération de l'application cliente ..."
-echo
-cd client
-grunt build
-if [ $? != 0 ]; then
-    echo
-    echo "Il y a eu une erreur : arrêt du déploiement !"
-    echo
-    exit $?
-fi
-cd ..
+# # Génération de l'application cliente
+# echo
+# echo "Génération de l'application cliente ..."
+# echo
+# cd client
+# grunt build
+# if [ $? != 0 ]; then
+    # echo
+    # echo "Il y a eu une erreur : arrêt du déploiement !"
+    # echo
+    # exit $?
+# fi
+# cd ..
 
-# Copie de l'application client dans le serveur
-echo
-echo "Copie de l'application client dans le serveur..."
-echo
-rm -rf server/www/*
-cp -R client/www/ server/www
-if [ $? != 0 ]; then
-    echo
-    echo "Il y a eu une erreur : arrêt du déploiement !"
-    echo
-    exit $?
-fi
+# # Copie de l'application client dans le serveur
+# echo
+# echo "Copie de l'application client dans le serveur..."
+# echo
+# rm -rf server/www/*
+# cp -R client/www/ server/www
+# if [ $? != 0 ]; then
+    # echo
+    # echo "Il y a eu une erreur : arrêt du déploiement !"
+    # echo
+    # exit $?
+# fi
 
 cd server
 
@@ -99,7 +99,7 @@ if [ $? != 0 ]; then
     echo
     exit $?
 fi
-ssh $REMOTE_USER@$SERVER_NAME "cd /home/$REMOTE_DIR/retraite && source ../set-retraite-env.sh && cat ../mail.log4j.$ENV.properties >> conf/log4j.$ENV.properties && /home/deploy/play-1.4.2/play evolutions:apply --%$ENV && /home/deploy/play-1.4.2/play deps --sync && /home/deploy/play-1.4.2/play restart --%$ENV"
+ssh $REMOTE_USER@$SERVER_NAME "cd /home/$REMOTE_DIR/retraite && source ../set-retraite-env.sh && cat ../mail.new.log4j.$ENV.properties >> conf/log4j.$ENV.properties && /home/deploy/play-1.4.2/play evolutions:apply --%$ENV && /home/deploy/play-1.4.2/play deps --sync && /home/deploy/play-1.4.2/play restart --%$ENV"
 if [ $? != 0 ]; then
     echo
     echo "Il y a eu une erreur : arrêt du déploiement !"

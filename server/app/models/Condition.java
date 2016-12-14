@@ -7,18 +7,28 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import play.db.jpa.GenericModel;
 import utils.JsonExclude;
 
 @Entity
 @Table(name = "ChapitreCondition")
-public class Condition extends RetraiteModel implements Cloneable {
+public class Condition extends GenericModel implements Cloneable {
 
 	private static final long serialVersionUID = 1L;
+	
+	@Id
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="chapitrecondition_generator")
+	@SequenceGenerator(name="chapitrecondition_generator", sequenceName="chapitrecondition_id_seq")
+	public Long id;
 
 	@ManyToOne
 	@JsonExclude

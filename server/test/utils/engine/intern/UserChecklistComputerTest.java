@@ -33,6 +33,7 @@ public class UserChecklistComputerTest {
 	private UserChecklistChapitreComputer userChecklistChapitreComputerMock;
 	private AutreRegimeComputer autreRegimeComputerMock;
 	private CaisseDao caisseDaoMock;
+	private UserCaisseComputer userCaisseComputer;
 
 	private UserChecklistComputer userChecklistComputer;
 
@@ -42,14 +43,16 @@ public class UserChecklistComputerTest {
 		userChecklistChapitreComputerMock = mock(UserChecklistChapitreComputer.class);
 		autreRegimeComputerMock = mock(AutreRegimeComputer.class);
 		caisseDaoMock = mock(CaisseDao.class);
+		userCaisseComputer = new UserCaisseComputer();
 		userChecklistComputer = new UserChecklistComputer(userChecklistChapitreFilterMock, userChecklistChapitreComputerMock, caisseDaoMock,
-				autreRegimeComputerMock);
+				autreRegimeComputerMock, userCaisseComputer);
 	}
 
 	@Test
 	public void test() {
 
 		final Caisse caisse = new Caisse();
+		caisse.id = new Long(2);
 
 		when(caisseDaoMock.findForDepartment(ChecklistName.CNAV, "972")).thenReturn(caisse);
 		// Mock pour le filtrage des chapitres : on exclut le 2e
@@ -74,7 +77,7 @@ public class UserChecklistComputerTest {
 
 		// Vérifications
 		assertThat(userChecklist.nom).isEqualTo(checklist.nom);
-		assertThat(userChecklist.caisse).isEqualTo(caisse);
+		assertThat(userChecklist.caisse.id).isEqualTo(caisse.id);
 		assertThat(userChecklist.chapitres).hasSize(2);
 
 		verify(autreRegimeComputerMock).compute(userChecklist, userChecklistGenerationData.regimesInfosJsonStr);

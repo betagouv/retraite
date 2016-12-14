@@ -9,6 +9,7 @@ import play.Logger;
 import utils.RetraiteException;
 import utils.RetraiteStringsUtils;
 import utils.engine.data.UserChecklistGenerationData;
+import utils.engine.utils.LinkConverter;
 import utils.engine.utils.VariablesReplacer;
 
 public class UserChecklistParcoursComputer {
@@ -137,14 +138,14 @@ public class UserChecklistParcoursComputer {
 		final String url = linkTrimed.substring(index);
 		String htmlLink = buildLink(url, textForLink);
 		//if (isPDF) {
-			links.add(url);
+			links.add(LinkConverter.convertTextForLink(url, Boolean.FALSE));
 			htmlLink += "<sup>" + links.size() + "</sup>";
 		//}
 		return htmlLink;
 	}
 
 	private String buildLinkSimple(final String link, final boolean isPDF, final List<String> links) {
-		String result = buildLink(link, convertTextForLink(link));
+		String result = buildLink(link, LinkConverter.convertTextForLink(link));
 		if (isPDF) {
 			links.add(link);
 			result += "<sup>" + links.size() + "</sup>";
@@ -156,27 +157,6 @@ public class UserChecklistParcoursComputer {
 		return "<a href='" + url + "' target='_blank' title='Nouvelle fenêtre'>" + textForLink + "</a>";
 	}
 
-	private String convertTextForLink(final String link) {
-		if (link.toLowerCase().startsWith("http://")) {
-			return convertTextForLink(link.substring("http://".length()));
-		}
-		if (link.toLowerCase().startsWith("https://")) {
-			return convertTextForLink(link.substring("https://".length()));
-		}
-		if (link.toLowerCase().startsWith("www.")) {
-			return convertTextForLink(link.substring("www.".length()));
-		}
-		if (link.toLowerCase().endsWith(".html")) {
-			return convertTextForLink(link.substring(0, link.length() - ".html".length()));
-		}
-		if (link.toLowerCase().endsWith(".htm")) {
-			return convertTextForLink(link.substring(0, link.length() - ".htm".length()));
-		}
-		if (link.toLowerCase().endsWith(".pdf")) {
-			return convertTextForLink(link.substring(0, link.length() - ".pdf".length()));
-		}
-		return link;
-	}
 
 	private static enum BeginIndexType {
 		SIMPLE, ADVANCED

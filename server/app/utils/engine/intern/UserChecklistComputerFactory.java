@@ -18,6 +18,7 @@ public class UserChecklistComputerFactory {
 								new UserChecklistVarsProvider(),
 								new VariablesReplacerMustache())),
 				new CaisseDao(),
-				new AutreRegimeComputer());
+				new AutreRegimeComputer(),
+				new UserCaisseComputer());
 	}
 }

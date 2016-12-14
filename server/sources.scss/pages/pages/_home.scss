@@ -249,6 +249,10 @@ opacity: .65;
 }
 
 
+	
+.printable .footer-nav {
+	display:none;
+}
 
 footer {
 	padding-left:0;
@@ -274,7 +278,7 @@ footer {
 	}
 
 	.footer-nav {
-			margin-top:23px;
+		margin-top:23px;
 	}
 
 	ul{

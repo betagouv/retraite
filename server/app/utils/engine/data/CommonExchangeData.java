@@ -23,6 +23,7 @@ public class CommonExchangeData {
 	public RegimeAligne hidden_liquidateur;
 	public List<UserStatus> hidden_userStatus;
 	public String hidden_liquidateurReponsesHistory;
+	public String hidden_imgPrintsJsonStr;
 
 	public boolean isPDF;
 

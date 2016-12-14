@@ -26,6 +26,14 @@ $(function() {
 	});
 	
 	$('button.record').click(function(event) {
+		
+		var imgs=[];
+		$('#printContent img').each(function(index) {
+			imgs[index]=$(this).attr('src');
+		});
+		
+		$('input[name="postData.hidden_imgPrintsJsonStr"]').val(imgs);
+		
 		event.preventDefault();
 		sendGoogleAnalyticsEvent('Checklist', 'imprimer/PDF', regimeLiquidateur);
 		$("form").submit();
@@ -35,8 +43,6 @@ $(function() {
 		event.preventDefault();
 		sendGoogleAnalyticsEvent('Checklist', 'print', regimeLiquidateur);
 		window.print();
-		/*$("form").attr("action", "/application/pdf");
-		$("form").submit();*/
 	});
 	
 	function addScrollHandlerToSendEventIfScrollToBottom() {
