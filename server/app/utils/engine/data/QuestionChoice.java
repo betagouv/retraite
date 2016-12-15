@@ -5,6 +5,7 @@ import utils.engine.data.enums.QuestionChoiceValue;
 public class QuestionChoice {
 
 	private final String text;
+	private final String textChecklist;
 	private final QuestionChoiceValue value;
 	
 	private Boolean checked = Boolean.FALSE;
@@ -19,6 +20,13 @@ public class QuestionChoice {
 
 	public QuestionChoice(final String text, final QuestionChoiceValue value) {
 		this.text = text;
+		this.textChecklist = null;
+		this.value = value;
+	}
+	
+	public QuestionChoice(final String text, final String textChecklist, final QuestionChoiceValue value) {
+		this.text = text;
+		this.textChecklist = textChecklist;
 		this.value = value;
 	}
 
@@ -33,6 +41,10 @@ public class QuestionChoice {
 	@Override
 	public String toString() {
 		return "QuestionChoice [text=" + text + ", value=" + value + ", checked=" + checked + "]";
+	}
+
+	public String getTextChecklist() {
+		return textChecklist;
 	}
 
 }

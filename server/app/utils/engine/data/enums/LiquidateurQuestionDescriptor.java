@@ -39,71 +39,79 @@ public enum LiquidateurQuestionDescriptor {
 
 	QUESTION_A(
 		"Au cours de votre carrière, avez-vous été&#8239?",
+		"Professions exercées durant votre carrière&#8239:",
 			SIMPLE,
 			MANDATORY,
 			choice("Chef d'exploitation ou d'entreprise agricole", NSA),
 			choice("Salarié agricole", SA),
-			choice("Les deux", DEUX_ACTIVITES)
+			choice("Les deux", "Salarié agricole et chef d'exploitation ou d'entreprise agricole", DEUX_ACTIVITES)
 	),
 
 	QUESTION_B(
 		"Quelle est votre activité actuelle ou la dernière activité que vous avez exercée&#8239?",
+		"Activité actuelle ou dernière activité exercée&#8239:",
 			SIMPLE,
 			MANDATORY,
 			choice("Salarié (non agricole)", SALARIE),
 			choice("Chef d'exploitation", NSA),
 			choice("Salarié agricole", SA),
-			choice("Artisan ou commerçant", INDEP),
+			choice("Artisan et/ou commerçant", INDEP),
 			choice("Conjoint collaborateur d'un artisan commerçant", CONJOINT_INDEP),
-			choice("Deux de ces activités en même temps", DEUX_ACTIVITES)
+			choice("Deux de ces activités en même temps", "Deux activités en même temps (poly-activité)", DEUX_ACTIVITES)
 	),
 
 	QUESTION_C(
-		"Êtes-vous dans l'une ou plusieurs des situations suivantes&#8239?",
+		"Votre situation :",
+		"",
 			MULTIPLE,
 			OPTIONNAL,
-			choice("J'ai exercé une activité d'indépendant avant 1973", INDEP_AVANT_73),
-			choice("Je reçois une pension d'invalidité versée par le RSI", INVALIDITE_RSI),
-			choice("Je souhaite bénéficier du dispositif de retraite pour pénibilité", PENIBILITE)
+			choice("J'ai exercé une activité d'indépendant avant 1973", "J'ai exercé une activité d'indépendant avant 1973.", INDEP_AVANT_73),
+			choice("Je reçois une pension d'invalidité versée par le RSI", "Je reçois une pension d'invalidité versée par le RSI.", INVALIDITE_RSI),
+			choice("Je souhaite bénéficier du dispositif de retraite pour pénibilité", "Je souhaite bénéficier du dispositif de retraite pour pénibilité.", PENIBILITE)
 	),
 
 	QUESTION_D(
 		"Quel est l'organisme qui vous rembourse vos fais de santé&#8239?",
+		"",
 			SIMPLE,
 			MANDATORY,
-			choice("CPAM", SANTE_CPAM),
-			choice("MSA", SANTE_MSA),
-			choice("RSI", SANTE_RSI)
+			choice("CPAM", "L'organisme qui rembourse mes frais de santé est la CPAM.", SANTE_CPAM),
+			choice("MSA", "L'organisme qui rembourse mes frais de santé est la MSA.", SANTE_MSA),
+			choice("RSI", "L'organisme qui rembourse mes frais de santé est le RSI.", SANTE_RSI)
 	),
 
 	QUESTION_E(
 		"Etes-vous actuellement chef d'exploitation ou d'entreprise agricole&#8239?",
+		"",
 			SIMPLE,
 			MANDATORY,
-			choice("Oui", OUI),
-			choice("Non", NON)
+			choice("Oui", "Actuellement, je suis chef d'exploitation ou d'entreprise agricole.", OUI),
+			choice("Non", "Actuellement, je ne suis pas chef d'exploitation ou d'entreprise agricole.", NON)
 	),
 
 	QUESTION_F(
 		"Etes-vous actuellement chef d'entreprise&#8239?",
+		"",
 			SIMPLE,
 			MANDATORY,
-			choice("Oui", OUI),
-			choice("Non", NON)
+			choice("Oui", "Actuellement, je suis chef d'entreprise.", OUI),
+			choice("Non", "Actuellement, je ne suis pas chef d'entreprise.", NON)
 	);
 
 	// @formatter:on
 
 	private final String title;
+	private final String titleChecklist;
 	@SuppressWarnings("unused")
 	private final QuestionType questionType;
 	@SuppressWarnings("unused")
 	private final QuestionMandatoryOrOptionnal questionMandatoryOrOptionnal;
 	private final QuestionChoice[] questionChoices;
-
-	LiquidateurQuestionDescriptor(final String title, final QuestionType questionType, final QuestionMandatoryOrOptionnal questionMandatoryOrOptionnal,
+		
+	LiquidateurQuestionDescriptor(final String title, final String titleChecklist, final QuestionType questionType, final QuestionMandatoryOrOptionnal questionMandatoryOrOptionnal,
 			final QuestionChoice... questionChoices) {
 		this.title = title;
+		this.titleChecklist = titleChecklist;
 		this.questionType = questionType;
 		this.questionMandatoryOrOptionnal = questionMandatoryOrOptionnal;
 		this.questionChoices = questionChoices;
@@ -120,9 +128,13 @@ public enum LiquidateurQuestionDescriptor {
 	public QuestionChoice[] getQuestionChoices() {
 		return questionChoices;
 	}
-
+	
 	private static QuestionChoice choice(final String text, final QuestionChoiceValue value) {
 		return new QuestionChoice(text, value);
+	}
+
+	private static QuestionChoice choice(final String text, final String textChecklist, final QuestionChoiceValue value) {
+		return new QuestionChoice(text, textChecklist, value);
 	}
 
 	public boolean isLast() {

@@ -2,20 +2,31 @@
 	<div class='choice'>
 		#{if _questionLiquidateur.liquidateurQuestionDescriptor.questionType.toString() == "SIMPLE"}
            	#{if _look.toString() == 'RSI'}
-	   			<input type="radio" class='questions-choice' id="q${choice_index}" name="reponses[${_questionLiquidateur.liquidateurQuestionDescriptor}]" value="${choice.value}" ${choice.checked && _prechecked?'checked':''}/>
+	   			<input type="radio" class='questions-choice' id="q${choice_index}" name="reponses[${_questionLiquidateur.liquidateurQuestionDescriptor}]" value="${choice.value}" />
 	   			<label class='label-for-question-choice' for="q${choice_index}">${choice.text}</label>
            	#{/if}
            	#{else}
-	   			<label class='label-for-question-choice' for="q${choice_index}"><input type="radio" class='questions-choice' id="q${choice_index}" name="reponses[${_questionLiquidateur.liquidateurQuestionDescriptor}]" value="${choice.value}" ${choice.checked && _prechecked?'checked':''}/>${choice.text}</label>
+	   			<label class='label-for-question-choice' for="q${choice_index}"><input type="radio" class='questions-choice' id="q${choice_index}" name="reponses[${_questionLiquidateur.liquidateurQuestionDescriptor}]" value="${choice.value}" />${choice.text}</label>
            	#{/else}
 		#{/if}
 		#{else}
            	#{if _look.toString() == 'RSI'}
-	   			<input type="checkbox" class='questions-choice' id="q${choice_index}" value="${choice.value}" ${choice.checked && _prechecked?'checked':''}/>
-	   			<label class='label-for-question-choice' for="q${choice_index}">${choice.text}</label>
+           		<label class='label-for-question-choice'>${choice.text}</label>
+           		<input type="radio" class='questions-choice' id="q${choice_index}Oui" name="q${choice_index}" value="${choice.value}" />
+	   			<label class='label-for-question-choice col-xs-offset-1' for="q${choice_index}Oui">Oui</label>
+	   			<input type="radio" class='questions-choice' id="q${choice_index}Non" name="q${choice_index}" value="" checked/>
+	   			<label class='label-for-question-choice col-xs-offset-1' for="q${choice_index}Non">Non</label>
            	#{/if}
            	#{else}
-	   			<label class='label-for-question-choice' for="q${choice_index}"><input type="checkbox" class='questions-choice' id="q${choice_index}" value="${choice.value}" ${choice.checked && _prechecked?'checked':''}/>${choice.text}</label>
+         		<label class='label-for-question-choice'>${choice.text}</label> 
+	   			<label class='label-for-question-choice col-xs-offset-1' for="q${choice_index}Oui">
+	   				<input type="radio" class='questions-choice' id="q${choice_index}Oui" name="q${choice_index}" value="${choice.value}" />
+	   				Oui
+	   			</label>
+	   			<label class='label-for-question-choice col-xs-offset-1' for="q${choice_index}Non">
+	   				<input type="radio" class='questions-choice' id="q${choice_index}Non" name="q${choice_index}" value="" checked/>
+	   				Non
+	   			</label>
            	#{/else}
 		#{/else}
 	</div>

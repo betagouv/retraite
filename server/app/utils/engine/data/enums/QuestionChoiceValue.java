@@ -26,7 +26,9 @@ public enum QuestionChoiceValue {
 		final List<String> responses = fromJson(jsonStr, List.class);
 		final List<QuestionChoiceValue> values = new ArrayList<>();
 		for (final String response : responses) {
-			values.add(QuestionChoiceValue.valueOf(response));
+			if (response != null && !response.equals("")) {
+				values.add(QuestionChoiceValue.valueOf(response));
+			}
 		}
 		return values;
 	}

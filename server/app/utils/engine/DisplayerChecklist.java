@@ -25,7 +25,6 @@ public class DisplayerChecklist {
 	private final DateProvider dateProvider;
 	private final CalculateurRegimeAlignes calculateurRegimeAlignes;
 	private final StepFormsDataProvider stepFormsDataProvider;
-	private final ResponsesHistoryToStringsConverter responsesHistoryToStringsConverter;
 
 	public DisplayerChecklist(final UserChecklistGenerationDataBuilder userChecklistGenerationDataBuilder,
 			final UserChecklistGenerator userChecklistGenerator, final DateProvider dateProvider,
@@ -36,7 +35,6 @@ public class DisplayerChecklist {
 		this.dateProvider = dateProvider;
 		this.calculateurRegimeAlignes = calculateurRegimeAlignes;
 		this.stepFormsDataProvider = stepFormsDataProvider;
-		this.responsesHistoryToStringsConverter = responsesHistoryToStringsConverter;
 	}
 
 	public void fillData(final PostData data, final RenderData renderData) {
@@ -65,8 +63,6 @@ public class DisplayerChecklist {
 			renderData.userInfos.add("Date de départ envisagée", "01/" + (departMois.length() == 1 ? "0" : "") + departMois + "/" + departAnnee);
 		}
 		renderData.userInfos.add("Département de résidence", stepFormsDataProvider.getDepartementName(departement));
-
-		renderData.questionsAndResponses = responsesHistoryToStringsConverter.convert(data.hidden_liquidateurReponsesHistory);
 		
 		renderData.questionsLiquidateur = (new RenderDataHelper(renderData)).getQuestionsList(regimesAlignes);
 	}
