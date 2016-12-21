@@ -23,9 +23,13 @@ public class QuestionSolverB implements QuestionSolver {
 			return new RegimeLiquidateurAndUserStatus(CNAV, null);
 		case NSA:
 			return new RegimeLiquidateurAndUserStatus(MSA, STATUS_NSA);
+		case NSA_OLD:
+			return new RegimeLiquidateurAndUserStatus(MSA, STATUS_NSA);
 		case SA:
 			return new RegimeLiquidateurAndUserStatus(MSA, STATUS_SA);
 		case INDEP:
+			return new RegimeLiquidateurAndUserStatus(RSI, STATUS_CHEF);
+		case INDEP_OLD:
 			return new RegimeLiquidateurAndUserStatus(RSI, STATUS_CHEF);
 		case CONJOINT_INDEP:
 			return new RegimeLiquidateurAndUserStatus(RSI, STATUS_CONJOINT_COLLABORATEUR);
