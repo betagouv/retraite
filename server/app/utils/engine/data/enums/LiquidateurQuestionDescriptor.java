@@ -53,7 +53,7 @@ public enum LiquidateurQuestionDescriptor {
 			SIMPLE,
 			MANDATORY,
 			choice("Salarié (non agricole)", SALARIE),
-			choice("Chef d'exploitation", NSA),
+			choice("Chef d'exploitation ou d'entreprise agricole", NSA),
 			choice("Salarié agricole", SA),
 			choice("Artisan et/ou commerçant", INDEP),
 			choice("Conjoint collaborateur d'un artisan commerçant", CONJOINT_INDEP),
