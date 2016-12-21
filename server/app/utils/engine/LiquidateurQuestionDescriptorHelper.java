@@ -15,8 +15,10 @@ import static utils.engine.data.enums.LiquidateurQuestionDescriptor.QUESTION_F;
 import static utils.engine.data.enums.QuestionChoiceValue.CONJOINT_INDEP;
 import static utils.engine.data.enums.QuestionChoiceValue.DEUX_ACTIVITES;
 import static utils.engine.data.enums.QuestionChoiceValue.INDEP;
+import static utils.engine.data.enums.QuestionChoiceValue.INDEP_OLD;
 import static utils.engine.data.enums.QuestionChoiceValue.INVALIDITE_RSI;
 import static utils.engine.data.enums.QuestionChoiceValue.NSA;
+import static utils.engine.data.enums.QuestionChoiceValue.NSA_OLD;
 import static utils.engine.data.enums.QuestionChoiceValue.PENIBILITE;
 import static utils.engine.data.enums.QuestionChoiceValue.SA;
 import static utils.engine.data.enums.QuestionChoiceValue.SALARIE;
@@ -66,11 +68,13 @@ public class LiquidateurQuestionDescriptorHelper {
 				}
 				if (contains(regimesAlignes, RSI)) {
 					choices.add(QUESTION_B.getChoice(INDEP));
+					choices.add(QUESTION_B.getChoice(INDEP_OLD));
 					choices.add(QUESTION_B.getChoice(CONJOINT_INDEP));
 					cumulableChoices += 1;
 				}
 				if (contains(regimesAlignes, MSA)) {
 					choices.add(QUESTION_B.getChoice(NSA));
+					choices.add(QUESTION_B.getChoice(NSA_OLD));
 					choices.add(QUESTION_B.getChoice(SA));
 					cumulableChoices += 2;
 				}
