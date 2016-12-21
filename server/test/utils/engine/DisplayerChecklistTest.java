@@ -39,7 +39,6 @@ public class DisplayerChecklistTest {
 	private UserChecklistGenerationDataBuilder userChecklistGenerationDataBuilderMock;
 	private UserChecklistGenerator userChecklistGeneratorMock;
 	private CalculateurRegimeAlignes calculateurRegimeAlignesMock;
-	private ResponsesHistoryToStringsConverter responsesHistoryToStringsConverterMock;
 
 	private DisplayerChecklist displayerChecklist;
 
@@ -50,9 +49,8 @@ public class DisplayerChecklistTest {
 		userChecklistGeneratorMock = mock(UserChecklistGenerator.class);
 		final DateProvider dateProviderFake = new DateProviderFake(23, 12, 2015);
 		calculateurRegimeAlignesMock = mock(CalculateurRegimeAlignes.class);
-		responsesHistoryToStringsConverterMock = mock(ResponsesHistoryToStringsConverter.class);
 		displayerChecklist = new DisplayerChecklist(userChecklistGenerationDataBuilderMock, userChecklistGeneratorMock, dateProviderFake,
-				calculateurRegimeAlignesMock, new StepFormsDataProvider(dateProviderFake), responsesHistoryToStringsConverterMock);
+				calculateurRegimeAlignesMock, new StepFormsDataProvider(dateProviderFake));
 	}
 
 	@Test
@@ -93,7 +91,6 @@ public class DisplayerChecklistTest {
 				add("b", "y");
 			}
 		};
-		when(responsesHistoryToStringsConverterMock.convert("responses history")).thenReturn(questionsAndResponses);
 
 		final RenderData renderData = new RenderData();
 
