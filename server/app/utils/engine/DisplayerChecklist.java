@@ -28,8 +28,7 @@ public class DisplayerChecklist {
 
 	public DisplayerChecklist(final UserChecklistGenerationDataBuilder userChecklistGenerationDataBuilder,
 			final UserChecklistGenerator userChecklistGenerator, final DateProvider dateProvider,
-			final CalculateurRegimeAlignes calculateurRegimeAlignes, final StepFormsDataProvider stepFormsDataProvider,
-			final ResponsesHistoryToStringsConverter responsesHistoryToStringsConverter) {
+			final CalculateurRegimeAlignes calculateurRegimeAlignes, final StepFormsDataProvider stepFormsDataProvider) {
 		this.userChecklistGenerationDataBuilder = userChecklistGenerationDataBuilder;
 		this.userChecklistGenerator = userChecklistGenerator;
 		this.dateProvider = dateProvider;
