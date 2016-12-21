@@ -1,14 +1,14 @@
 package utils.engine.data.enums;
 
-import static utils.engine.data.enums.LiquidateurQuestionDescriptor.QUESTION_C;
-import static utils.engine.data.enums.LiquidateurQuestionDescriptor.QUESTION_D;
 import static utils.engine.data.enums.QuestionChoiceValue.CONJOINT_INDEP;
 import static utils.engine.data.enums.QuestionChoiceValue.DEUX_ACTIVITES;
 import static utils.engine.data.enums.QuestionChoiceValue.INDEP;
+import static utils.engine.data.enums.QuestionChoiceValue.INDEP_OLD;
 import static utils.engine.data.enums.QuestionChoiceValue.INDEP_AVANT_73;
 import static utils.engine.data.enums.QuestionChoiceValue.INVALIDITE_RSI;
 import static utils.engine.data.enums.QuestionChoiceValue.NON;
 import static utils.engine.data.enums.QuestionChoiceValue.NSA;
+import static utils.engine.data.enums.QuestionChoiceValue.NSA_OLD;
 import static utils.engine.data.enums.QuestionChoiceValue.OUI;
 import static utils.engine.data.enums.QuestionChoiceValue.PENIBILITE;
 import static utils.engine.data.enums.QuestionChoiceValue.SA;
@@ -20,18 +20,8 @@ import static utils.engine.data.enums.QuestionMandatoryOrOptionnal.MANDATORY;
 import static utils.engine.data.enums.QuestionMandatoryOrOptionnal.OPTIONNAL;
 import static utils.engine.data.enums.QuestionType.MULTIPLE;
 import static utils.engine.data.enums.QuestionType.SIMPLE;
-import static utils.engine.data.enums.RegimeAligne.CNAV;
-import static utils.engine.data.enums.RegimeAligne.MSA;
-import static utils.engine.data.enums.RegimeAligne.RSI;
-import static utils.engine.EngineUtils.contains;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import controllers.data.PostData;
-import utils.engine.data.CommonExchangeData;
 import utils.engine.data.QuestionChoice;
-import utils.engine.data.RenderData;
 
 public enum LiquidateurQuestionDescriptor {
 
@@ -53,10 +43,12 @@ public enum LiquidateurQuestionDescriptor {
 			SIMPLE,
 			MANDATORY,
 			choice("Salarié (non agricole)", SALARIE),
-			choice("Chef d'exploitation ou d'entreprise agricole", NSA),
+			choice("Chef d'exploitation ou d'entreprise agricole (en activité)", NSA),
+			choice("Chef d'exploitation ou d'entreprise agricole (plus en activité)", NSA_OLD),
 			choice("Salarié agricole", SA),
-			choice("Artisan et/ou commerçant", INDEP),
-			choice("Conjoint collaborateur d'un artisan commerçant", CONJOINT_INDEP),
+			choice("Chef d’entreprise indépendant (en activité)", INDEP),
+			choice("Chef d’entreprise indépendant (plus en activité)", INDEP_OLD),
+			choice("Conjoint(e) collaborateur(trice) d'un(e) chef d’entreprise indépendant(e)", CONJOINT_INDEP),
 			choice("Deux de ces activités en même temps", "Deux activités en même temps (poly-activité)", DEUX_ACTIVITES)
 	),
 
