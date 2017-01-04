@@ -21,3 +21,5 @@
 /public/stylesheets/pages/
 /public/stylesheets/checklist/
 old.*/
+/target/
+pom.xml

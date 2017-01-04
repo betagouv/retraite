@@ -140,7 +140,7 @@ angular.module('SgmapRetraiteConfig').controller('AppIdCtrl', function (Wrapper,
                    'prod';
 
     //Condition temporaire pour permettre fonctionnement sur environnement SGMAP, à supprimer
-    if (Wrapper.getLocation().pathname.indexOf('passretraite') != -1) {
+    if (Wrapper.getLocation().pathname && Wrapper.getLocation().pathname.indexOf('passretraite') != -1) {
 	    $http({
 	        method : 'GET',
 	        url : '/passretraite-config-rs/api/ng-configuration'
@@ -152,6 +152,9 @@ angular.module('SgmapRetraiteConfig').controller('AppIdCtrl', function (Wrapper,
 	    	}
 	    })
     }
+    /*else {
+    	$rootScope.NG_URL_PASSRETRAITE_WS = 'http://localhost:8090/passretraite-ihm-1.0.0-SNAPSHOT';  
+    }*/
 });
 
 'use strict';
