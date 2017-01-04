@@ -16,7 +16,13 @@
 						#{if _data.userChecklist.autresRegimesDeBase || _data.userChecklist.regimesComplementaires}
 							<td width="50%">
 								#{if _data.userChecklist.autresRegimesDeBase}
-									<h4>Autre retraite :</h4>
+									
+									#{if _data.userChecklist.autresRegimesDeBase.size()==1}
+										<h4>Autre retraite de base :</h4>
+									#{/if}
+									#{else}
+										<h4>Autres retraites de base :</h4>
+									#{/else}
 						        	<ul>
 						        		#{list items:_data.userChecklist.autresRegimesDeBase, as:'regime'}
 						        			<li>
@@ -26,7 +32,12 @@
 						        	</ul>
 								#{/if}
 								#{if _data.userChecklist.regimesComplementaires}
-									<h4>Retraite complémentaire :</h4>
+									#{if _data.userChecklist.regimesComplementaires.size()==1}
+										<h4>Retraite complémentaire :</h4>
+									#{/if}
+									#{else}
+										<h4>Retraites complémentaires :</h4>
+									#{/else}
 						        	<ul class='interlocuteur-autre'>
 						        		#{list items:_data.userChecklist.regimesComplementaires, as:'regime'}
 						        			<li>
