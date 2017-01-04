@@ -21,30 +21,48 @@ public class UserCaisseComputer {
 	
 	public UserCaisse compute(Caisse caisse) {
 
-		UserCaisse userCaisse = dozerBeanMapper.map(caisse, UserCaisse.class);
+		UserCaisse userCaisse = null;
 		
-		List<UserLink> linkList = new ArrayList<UserLink>();
-		if (caisse.linkUrl1 != null && caisse.linkLabel1 != null) {
-			linkList.add(new UserLink(caisse.linkLabel1, caisse.linkUrl1, caisse.linkType1));
+		if (caisse != null) {
+		
+			userCaisse = dozerBeanMapper.map(caisse, UserCaisse.class);
+			
+			List<UserLink> linkList = new ArrayList<UserLink>();
+			if (caisse.linkUrl1 != null && caisse.linkLabel1 != null) {
+				linkList.add(new UserLink(caisse.linkLabel1, caisse.linkUrl1, caisse.linkType1));
+			}
+			if (caisse.linkUrl2 != null && caisse.linkLabel2 != null) {
+				linkList.add(new UserLink(caisse.linkLabel2, caisse.linkUrl2, caisse.linkType2));
+			}
+			if (caisse.linkUrl3 != null && caisse.linkLabel3 != null) {
+				linkList.add(new UserLink(caisse.linkLabel3, caisse.linkUrl3, caisse.linkType3));
+			}
+			userCaisse.setLinkList(linkList);
+			
+			List<String> urls = new ArrayList<String>();
+			
+			for (UserLink userLink : userCaisse.getLinkList()) {
+				urls.add(LinkConverter.convertTextForLink(userLink.getUrl(), Boolean.FALSE));
+			}		
+			
+			userCaisse.urls = urls;
+		
 		}
-		if (caisse.linkUrl2 != null && caisse.linkLabel2 != null) {
-			linkList.add(new UserLink(caisse.linkLabel2, caisse.linkUrl2, caisse.linkType2));
-		}
-		if (caisse.linkUrl3 != null && caisse.linkLabel3 != null) {
-			linkList.add(new UserLink(caisse.linkLabel3, caisse.linkUrl3, caisse.linkType3));
-		}
-		userCaisse.setLinkList(linkList);
-		
-		List<String> urls = new ArrayList<String>();
-		
-		for (UserLink userLink : userCaisse.getLinkList()) {
-			urls.add(LinkConverter.convertTextForLink(userLink.getUrl(), Boolean.FALSE));
-		}		
-		
-		userCaisse.urls = urls;
-		
 		
 		return userCaisse;
+		
+	}
+	
+	public List<UserCaisse> compute (List<Caisse> listCaisse) {
+
+		List<UserCaisse> listUserCaisse = null;
+		if (listCaisse != null) {
+			listUserCaisse = new ArrayList<UserCaisse>();
+			for (Caisse caisse : listCaisse) {
+				listUserCaisse.add(compute(caisse));
+			}
+		}
+		return listUserCaisse;
 		
 	}
 

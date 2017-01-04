@@ -15,15 +15,16 @@ import java.util.Map;
 import controllers.utils.Look;
 import models.Caisse;
 import models.PeriodeDepartLegal;
-import play.Logger;
 import play.mvc.Before;
 import play.templates.Template;
 import play.templates.TemplateLoader;
 import utils.DateUtils;
 import utils.dao.CaisseDao;
 import utils.dao.PeriodeDepartLegalDao;
+import utils.engine.data.UserCaisse;
 import utils.engine.data.enums.ChecklistName;
 import utils.engine.data.enums.RegimeAligne;
+import utils.engine.intern.UserCaisseComputer;
 import utils.engine.utils.AgeLegalEvaluator;
 import utils.wsinforetraite.InfoRetraiteResult.InfoRetraiteResultRegime;
 
@@ -37,6 +38,7 @@ public class Validations extends RetraiteController {
 	public static void caisses() {
 
 		final CaisseDao caisseDao = new CaisseDao();
+		UserCaisseComputer userCaisseComputer = new UserCaisseComputer();
 
 		// Données générales
 		final List<RenderDataParDepartement> data = new ArrayList<>();
@@ -45,15 +47,15 @@ public class Validations extends RetraiteController {
 			final RenderDataParDepartement renderDataParDepartement = new RenderDataParDepartement(departement);
 			data.add(renderDataParDepartement);
 			for (final ChecklistName checklistName : ChecklistName.values()) {
-				final Caisse caisse = caisseDao.findForDepartment(checklistName, departement.numero);
+				final UserCaisse caisse = userCaisseComputer.compute(caisseDao.findForDepartment(checklistName, departement.numero));
 				renderDataParDepartement.set(checklistName, caisse);
 			}
 		}
 
 		// Lsite des caisses
-		final List<Caisse> caissesCNAV = caisseDao.findCaissesList(CNAV);
-		final List<Caisse> caissesMSA = caisseDao.findCaissesList(MSA);
-		final List<Caisse> caissesRSI = caisseDao.findCaissesList(RSI);
+		final List<UserCaisse> caissesCNAV = userCaisseComputer.compute(caisseDao.findCaissesList(CNAV));
+		final List<UserCaisse> caissesMSA = userCaisseComputer.compute(caisseDao.findCaissesList(MSA));
+		final List<UserCaisse> caissesRSI = userCaisseComputer.compute(caisseDao.findCaissesList(RSI));
 
 		// Rendu
 		final Look look = Look.GENERIC;
@@ -159,15 +161,15 @@ public class Validations extends RetraiteController {
 	private static class RenderDataParDepartement {
 
 		private final RenderDepartement departement;
-		private Caisse caisseCNAV;
-		private Caisse caisseMSA;
-		private Caisse caisseRSI;
+		private UserCaisse caisseCNAV;
+		private UserCaisse caisseMSA;
+		private UserCaisse caisseRSI;
 
 		public RenderDataParDepartement(final RenderDepartement departement) {
 			this.departement = departement;
 		}
 
-		public void set(final ChecklistName checklistName, final Caisse caisse) {
+		public void set(final ChecklistName checklistName, final UserCaisse caisse) {
 			switch (checklistName) {
 			case CNAV:
 				this.caisseCNAV = caisse;
