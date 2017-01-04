@@ -15,6 +15,7 @@ import java.util.Map;
 import controllers.utils.Look;
 import models.Caisse;
 import models.PeriodeDepartLegal;
+import play.Logger;
 import play.mvc.Before;
 import play.templates.Template;
 import play.templates.TemplateLoader;
@@ -118,9 +119,9 @@ public class Validations extends RetraiteController {
 		content += renderEcranSortie("Date de départ inconnu", "Application/steps/displaySortieDepartInconnu.html", args);
 		content += renderEcranSortie("Pénibilité", "Application/steps/displaySortiePenibilite.html", args);
 		content += renderEcranSortie("Trop jeune", "Application/steps/displaySortieTropJeune.html", args);
-		content += renderEcranSortie("Age < légal - Carrière longue", "Application/steps/displaySortieQuestionCarriereLongue.html", args);
+		content += renderEcranSortie("Age légal - Carrière longue", "Application/steps/displaySortieQuestionCarriereLongue.html", args);
 
-		render(content, look);
+		render(content, look, regime);
 	}
 
 	// Méthodes privées
@@ -232,6 +233,8 @@ public class Validations extends RetraiteController {
 
 		final Template template = TemplateLoader.load(template(templateName));
 		content += template.render(args);
+		
+		content = content.replaceAll(".printable", "");
 
 		return content;
 	}
