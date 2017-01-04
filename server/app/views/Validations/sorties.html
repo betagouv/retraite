@@ -10,11 +10,11 @@
 	<form>
 		<h1>
 			Ecrans de sortie pour 
-			<select name="regime" onchange='this.form.submit();'>
+			<select name="regime" onchange='this.form.submit();' value="${regime?.raw()}">
 			
-				<option>CNAV</option>
-				<option>MSA</option>
-				<option>RSI</option>
+				<option value="CNAV" ${regime?.toString()=='CNAV'?'selected':''}>CNAV</option>
+				<option value="MSA" ${regime?.toString()=='MSA'?'selected':''}>MSA</option>
+				<option value="RSI" ${regime?.toString()=='RSI'?'selected':''}>RSI</option>
 			</select>
 		</h1>
 	
