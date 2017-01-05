@@ -12,7 +12,14 @@ var RetraiteQuestions = {};
 	
 	function noAnswerChecked() {
 		var $inputsChecked = $divQuestion.find('input:checked');
-		return ($inputsChecked.length === 0); 
+
+		if (questionIsOptionnal()) {
+			var $choices = $divQuestion.find('.choice');
+			return ($inputsChecked.length < $choices.length);
+		}
+		else {
+			return ($inputsChecked.length === 0);
+		}
 	}
 	
 	var updateHiddenDataForResponses = function() {
@@ -35,19 +42,10 @@ var RetraiteQuestions = {};
 	}
 	
 	function updateNextButtonState() {
-		if (questionIsOptionnal()) {
-			if (noAnswerChecked()) {
-				$nextButton.text("Aucune de ces situations");
-			} else {
-				$nextButton.text(defaultNextButtonText);
-			}
-			enableNextButton();
+		if (noAnswerChecked()) {
+			disableNextButton();			
 		} else {
-			if (noAnswerChecked()) {
-				disableNextButton();			
-			} else {
-				enableNextButton();
-			}
+			enableNextButton();
 		}
 	}
 		
