@@ -8,10 +8,14 @@
 					<div class="row">
 					
 						#{if questionLiquidateur.liquidateurQuestionDescriptor.titleChecklist}
-							<div class="col-sm-6 mes-infos-label">
+							#{if _look.toString() == 'RSI'}
+								<div class="col-sm-10">
+							#{/if}
+							#{else}
+								<div class="col-sm-offset-1">
+							#{/else}						
+							<div class="mes-infos-data mes-infos-label">
 								${questionLiquidateur.liquidateurQuestionDescriptor.titleChecklist?.raw()}
-							</div>
-							<div class="col-sm-6 mes-infos-data">
 						#{/if}
 						#{else}
 							#{if _look.toString() == 'RSI'}
@@ -33,6 +37,9 @@
 									</div>
 								#{/if}
 							#{/list}
+							#{if questionLiquidateur.liquidateurQuestionDescriptor.titleChecklist}
+								</div>
+							#{/if}
 						
 						</div>
 					</div>

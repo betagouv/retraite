@@ -46,6 +46,14 @@ body .container.checklist{
 			.mes-infos-data {
 				font-weight: 600;
 			}
+			
+			.mes-infos-data.mes-infos-label {
+				text-align: left;
+			}
+			
+			.mes-infos-data.mes-infos-label > .choice{
+				font-weight: normal;
+			}
 		}
 
 		ul.sanspuce {
