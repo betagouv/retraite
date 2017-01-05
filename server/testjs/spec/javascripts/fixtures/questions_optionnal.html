@@ -1,16 +1,41 @@
 <div id='q1' class='question' data-optionnal='true'>
 	Êtes-vous dans l'une ou plusieurs des situations suivantes ?
 	<div class='question-infos'>Plusieurs choix possibles</div>
-	<div class='choice'>
-		<input type="checkbox" class='questions-choice' name="QUESTION_A" value="INDEP_AVANT_73" /> J'ai exerc&eacute; une activit&eacute;
-		d'ind&eacute;pendant (artisan ou commer&ccedil;ant) avant 1973
+	
+	<div class='choice'>       	
+   		<label class='label-for-question-choice'>J'ai exerc&eacute; une activit&eacute; d'ind&eacute;pendant avant 1973 :</label> 
+		<label class='label-for-question-choice col-xs-offset-1' for="q1Oui">
+			<input type="radio" class='questions-choice' id="q1Oui" name="q1" value="INDEP_AVANT_73" />
+			Oui
+		</label>
+		<label class='label-for-question-choice col-xs-offset-1' for="q1Non">
+			<input type="radio" class='questions-choice' id="q1Non" name="q1N" value=""/>
+			Non
+		</label>		
 	</div>
+
 	<div class='choice'>
-		<input type="checkbox" class='questions-choice' name="QUESTION_A" value="INVALIDITE_RSI" />Je re&ccedil;ois une pension
-		d'invalidit&eacute; vers&eacute;e par le RSI
+		<label class='label-for-question-choice'>Je re&ccedil;ois une pension d'invalidit&eacute; vers&eacute;e par le RSI :</label> 
+		<label class='label-for-question-choice col-xs-offset-1' for="q2Oui">
+			<input type="radio" class='questions-choice' id="q2Oui" name="q2" value="INVALIDITE_RSI" />
+			Oui
+		</label>
+		<label class='label-for-question-choice col-xs-offset-1' for="q2Non">
+			<input type="radio" class='questions-choice' id="q2Non" name="q2" value=""/>
+			Non
+		</label>
 	</div>
+
 	<div class='choice'>
-		<input type="checkbox" class='questions-choice' name="QUESTION_A" value="AUCUNE" />Aucune de ces situations
+		<label class='label-for-question-choice'>Je souhaite b&eacute;n&eacute;ficier du dispositif de retraite pour p&eacute;nibilit&eacute; :</label> 
+		<label class='label-for-question-choice col-xs-offset-1' for="q3Oui">
+			<input type="radio" class='questions-choice' id="q3Oui" name="q3" value="PENIBILITE" />
+			Oui
+		</label>
+		<label class='label-for-question-choice col-xs-offset-1' for="q3Non">
+			<input type="radio" class='questions-choice' id="q3Non" name="q3" value=""/>
+			Non
+		</label>
 	</div>
 </div>
 

@@ -21,7 +21,7 @@ describe('questions', function () {
         	
         	// NDLA : le 'trigger click' devrait peut-être être après le 'on event' ? ...
         	
-        	$('[value=INDEP_AVANT_73]').trigger( "click" );
+        	$('input[value=INDEP_AVANT_73]').trigger( "click" );
     		
         	$(document).on('Retraite:questions:diplayUpdated', function() {
     			// Il faut se désabonner de l'évènement pour éviter le mélange entre chaque TU
@@ -42,39 +42,38 @@ describe('questions', function () {
     	});
     	
     	it('should be disabled initialy', function () {
-    		expectNextButtonIsEnabled();
-    		expectNextButtonHasText("Aucune de ces situations");
+    		expectNextButtonIsDisabled();
+    		//expectNextButtonHasText("Aucune de ces situations");
     	});
     	
-        it('should be enabled if question is checked', function (done) {
+        it('should be disabled if not all questions are checked', function (done) {
     		
-    		$('[value=INDEP_AVANT_73]').trigger( "click" );
+        	$('[value=INDEP_AVANT_73]').trigger( "click" );
+        	$('[value=INVALIDITE_RSI]').trigger( "click" );
+    		
+    		$(document).on('Retraite:questions:diplayUpdated', function() {
+    			// Il faut se désabonner de l'évènement pour éviter le mélange entre chaque TU
+    			$(document).off('Retraite:questions:diplayUpdated');
+    			expectNextButtonIsDisabled();
+    			done();
+    		}); 
+    	});
+    	
+        it('should be enabled if all questions are checked', function (done) {
+    		
+        	$('[value=INDEP_AVANT_73]').trigger( "click" );
+        	$('[value=INVALIDITE_RSI]').trigger( "click" );
+    		$('[value=PENIBILITE]').trigger( "click" );
     		
     		$(document).on('Retraite:questions:diplayUpdated', function() {
     			// Il faut se désabonner de l'évènement pour éviter le mélange entre chaque TU
     			$(document).off('Retraite:questions:diplayUpdated');
     			expectNextButtonIsEnabled(); 
     			expectNextButtonHasText("Étape suivante");
-    			expect($("input#reponseJsonStr").val()).toEqual("[\"INDEP_AVANT_73\"]");
+    			expect($("input#reponseJsonStr").val()).toEqual("[\"INDEP_AVANT_73\",\"INVALIDITE_RSI\",\"PENIBILITE\"]");
     			done();
     		}); 
     	});
-    	
-        it('should be enabled if question is checked and unchecked', function (done) {
-        	
-        	$('[value=INDEP_AVANT_73]').trigger( "click" );
-        	$('[value=INDEP_AVANT_73]').trigger( "click" );
-        	
-        	$(document).on('Retraite:questions:diplayUpdated', function() {
-        		// Il faut se désabonner de l'évènement pour éviter le mélange entre chaque TU
-        		$(document).off('Retraite:questions:diplayUpdated');
-        		expectNextButtonIsEnabled(); 
-        		expectNextButtonHasText("Aucune de ces situations");
-        		expect($("input#reponseJsonStr").val()).toEqual("[]");
-        		done();
-        	}); 
-        });
-        
     });
     
     function expectNextButtonIsDisabled() {
