@@ -152,16 +152,16 @@ body .container.checklist{
 			}
 		}
 		
-		a:link,
+		/*a:link,
 		a:visited {
 			color: $blue;
-		}
+		}*/
 
 		/*Hack Firefox pour gérer les liens qui remontent sur le texte avec html2canvas*/
 		@-moz-document url-prefix() {
 	 		a:link,
 			a:visited {
-				color: $blue;
+				//color: $blue;
 				font-weight: bold;
 				display: inline-block;
 			}
