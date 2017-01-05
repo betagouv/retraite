@@ -57,9 +57,9 @@ public enum LiquidateurQuestionDescriptor {
 		"",
 			MULTIPLE,
 			OPTIONNAL,
-			choice("J'ai exercé une activité d'indépendant avant 1973", "J'ai exercé une activité d'indépendant avant 1973.", INDEP_AVANT_73),
-			choice("Je reçois une pension d'invalidité versée par le RSI", "Je reçois une pension d'invalidité versée par le RSI.", INVALIDITE_RSI),
-			choice("Je souhaite bénéficier du dispositif de retraite pour pénibilité", "Je souhaite bénéficier du dispositif de retraite pour pénibilité.", PENIBILITE)
+			choice("J'ai exercé une activité d'indépendant avant 1973 :", "J'ai exercé une activité d'indépendant avant 1973.", INDEP_AVANT_73),
+			choice("Je reçois une pension d'invalidité versée par le RSI :", "Je reçois une pension d'invalidité versée par le RSI.", INVALIDITE_RSI),
+			choice("Je souhaite bénéficier du dispositif de retraite pour pénibilité :", "Je souhaite bénéficier du dispositif de retraite pour pénibilité.", PENIBILITE)
 	),
 
 	QUESTION_D(
