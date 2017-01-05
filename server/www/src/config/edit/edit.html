@@ -45,7 +45,7 @@
                 <div class="chapitre-title">
                     <span class="sous-chapitre-btn-collapse glyphicon" ng-class="chapitre.closedInEdition ? 'glyphicon-triangle-right' : 'glyphicon-triangle-bottom'" ng-click="chapitre.closedInEdition = !chapitre.closedInEdition"></span>
                     {{$index+1}}. 
-                    <span editable-text="chapitre.titre">{{ chapitre.titre }}</span>
+                    <span editable-text="chapitre.titre">&nbsp;{{ chapitre.titre }}</span>
                 </div>
                 <button type="button" class="btn btn-sm btn-danger chapitre-btn" ng-click="removeChapitre(chapitre)" title="Supprimer">
                     <span class="glyphicon glyphicon-remove"></span>
