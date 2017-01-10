@@ -16,6 +16,7 @@
     "bootstrap-css": "^3.3.6",
     "jquery-ui": "^1.11.4",
     "jquery": "^2.2.0",
-    "html2canvas": "https://github.com/jrivals/html2canvas.git#^0.5.1"
+    "html2canvas": "https://github.com/jrivals/html2canvas.git#^0.5.1",
+    "bluebird": "^3.4.7"
   }
 }
