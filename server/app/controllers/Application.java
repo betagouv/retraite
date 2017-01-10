@@ -144,14 +144,14 @@ public class Application extends RetraiteController {
 		}
 		final RenderData data = RetraiteEngineFactory.create(test).processToNextStep(postData);
 		final String page = getPageNameForGoogleAnalytics(data);
-		if (data.hidden_step.equals("displayCheckList")) {
-			final String key = UUID.randomUUID().toString();
-			putToCache(key, new DisplayCheckListData(data, page, actionQueryParams));
-			// Redirection pour avoir une URL spécifique pour hotjar
-			redirectToDisplayCheckList(key, test, debug, look, force55);
-		} else {
+//		if (data.hidden_step.equals("displayCheckList")) {
+//			final String key = UUID.randomUUID().toString();
+//			putToCache(key, new DisplayCheckListData(data, page, actionQueryParams));
+//			// Redirection pour avoir une URL spécifique pour hotjar
+//			redirectToDisplayCheckList(key, test, debug, look, force55);
+//		} else {
 			renderTemplate("Application/steps/" + data.hidden_step + ".html", data, test, debug, page, look, force55, actionQueryParams);
-		}
+//		}
 	}
 
 	private static String paramsAsStr() {
