@@ -34,6 +34,7 @@ module.exports = function (config) {
             'public/libs/bootstrap-css/js/bootstrap.min.js',
             'public/libs/jquery-ui/jquery-ui.js',
             'public/libs/html2canvas/dist/html2canvas.js',
+            'public/libs/bluebird/js/browser/bluebird.js',
             <!-- endinjector -->
 
             <!-- injector:js -->
