@@ -2,6 +2,10 @@
 	#{stylesheet 'doc.css' /}
 #{/set}
 
+#{set 'moreScripts'}
+    #{script 'displayCheckList.js'/}
+#{/set}
+
 #{set title:'Documentation' /}
 #{set doNotIncludeBootstrap:true /}
 
@@ -9,76 +13,81 @@
 
 <div class="col-sm-12">
 
-<h1>Checklist : ${checklist.nom}</h1>
-
-#{if published}
-	<h1 class='text-green'>Version publiée</h1>
-#{/if}
-#{else}
-	<h1 class='text-red'>Version non publiée</h1>
-#{/else}
-
+<div class="printable">
+	<h1>Checklist : ${checklist.nom}</h1>
+	
+	#{if published}
+		<h1 class='text-green'>Version publiée</h1>
+	#{/if}
+	#{else}
+		<h1 class='text-red'>Version non publiée</h1>
+	#{/else}
+</div>
 #{if !pdf}
-	<div class="text-center">
-		<a class="btn btn-success" href="/application/generateDoc?checklistNom=${checklist.nom}&published=${published}&pdf=true">Télécharger en PDF</a>
-	</div>
+	<form action="/application/generatePdf" method="POST">
+		<input type="hidden" name="postData.hidden_imgPrintsJsonStr"/>
+		<p class="text-center">
+			<button class="btn btn-success record" type="submit">Télécharger en PDF</button>
+		</p>
+	</form>
 #{/if}
 
 
 #{list items:checklist.chapitres, as:'chapitre' }
-    <h2>${chapitre_index} - ${chapitre.titre}</h2>
-    
-    <div class='chapitre'>
-	    <div class='conditions'>
-		    #{list items:chapitre.conditions, as:'condition' }
-		    	<p>${condition.raw()}</p>
-			#{/list}
+	<div class="printable">
+	    <h2>${chapitre_index} - ${chapitre.titre}</h2>
+	    
+	    <div class='chapitre'>
+		    <div class='conditions'>
+			    #{list items:chapitre.conditions, as:'condition' }
+			    	<p>${condition.raw()}</p>
+				#{/list}
+		    </div>
+		    
+			#{if checklist.type == 'msa'}
+			    <div class='delai'>
+			    	<p>Délai NSA : ${chapitre.delai}</p>
+			    </div>
+			    <div class='delai'>
+			    	<p>Délai SA : ${chapitre.delaiSA}</p>
+			    </div>
+			#{/if}
+			#{else}
+			    <div class='delai'>
+			    	<p>Délai : ${chapitre.delai}</p>
+			    </div>
+			#{/else}
+		    
+			#{if chapitre.texteActions?.length() > 0}
+		    	<h3>Actions</h3>
+			    <div class='texteActions'>
+			    	${chapitre.texteActions?.raw()}
+			    </div>
+			#{/if}
+		    
+			#{if chapitre.texteModalites?.length() > 0}
+		    	<h3>Modalités</h3>
+			    <div class='texteModalites'>
+			    	${chapitre.texteModalites?.raw()}
+			    </div>
+			#{/if}
+		    	
+			#{if chapitre.texteInfos?.length() > 0}
+		    	<h3>Infos complémentaires</h3>
+			    <div class='texteInfos'>
+			    	${chapitre.texteInfos?.raw()}
+			    </div>
+			#{/if}
+		    
+		    #{if chapitre.notes}
+			    <div class='notes'>
+			    	<h3>Notes</h3>
+			    	${chapitre.notes?.raw()}
+			    </div>
+		    #{/if}
+		    
 	    </div>
-	    
-		#{if checklist.type == 'msa'}
-		    <div class='delai'>
-		    	<p>Délai NSA : ${chapitre.delai}</p>
-		    </div>
-		    <div class='delai'>
-		    	<p>Délai SA : ${chapitre.delaiSA}</p>
-		    </div>
-		#{/if}
-		#{else}
-		    <div class='delai'>
-		    	<p>Délai : ${chapitre.delai}</p>
-		    </div>
-		#{/else}
-	    
-		#{if chapitre.texteActions?.length() > 0}
-	    	<h3>Actions</h3>
-		    <div class='texteActions'>
-		    	${chapitre.texteActions?.raw()}
-		    </div>
-		#{/if}
-	    
-		#{if chapitre.texteModalites?.length() > 0}
-	    	<h3>Modalités</h3>
-		    <div class='texteModalites'>
-		    	${chapitre.texteModalites?.raw()}
-		    </div>
-		#{/if}
-	    	
-		#{if chapitre.texteInfos?.length() > 0}
-	    	<h3>Infos complémentaires</h3>
-		    <div class='texteInfos'>
-		    	${chapitre.texteInfos?.raw()}
-		    </div>
-		#{/if}
-	    
-	    #{if chapitre.notes}
-		    <div class='notes'>
-		    	<h3>Notes</h3>
-		    	${chapitre.notes?.raw()}
-		    </div>
-	    #{/if}
-	    
     </div>
-    
 #{/list}
 
 </div>
