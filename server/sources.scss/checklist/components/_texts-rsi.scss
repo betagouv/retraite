@@ -716,6 +716,21 @@ span.telephone {
 	    }
 	  }
 	}
+	
+	.mes-infos {
+			
+			.mes-infos-data.mes-infos-label {
+				font-weight: bold;
+				
+				.choice {
+					font-weight: normal;				
+				}
+			}
+			
+			.mes-infos-data {
+				font-weight: bold;
+			}
+		}
 }
 
 body .container.checklist .wrapper{
