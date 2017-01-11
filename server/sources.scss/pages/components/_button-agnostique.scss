@@ -333,11 +333,12 @@
     }
 
     .record {
-      background: $blue-1 url("../../img/sprites/save_white.png") no-repeat 10px 11px;
+      background: $blue-1 url("../../img/sprites/save.png") no-repeat 10px 11px;
       height: 57px;
       overflow: hidden;
-      display:block;
       color: #fff;
+      margin-right: 0px !important;
+      padding-left:50px !important;
     }
 
     .print {
@@ -367,8 +368,9 @@
       background: $blue-dark url("../../img/sprites/save.png") no-repeat 10px 11px;
       height: 57px;
       overflow: hidden;
-      display:block;
       color: #fff;
+      margin-right: 0px;
+      padding-left:50px;
     }
 
     .print:hover,
@@ -431,8 +433,9 @@ body .container.information .contenu {
       background: $blue-1 url("../../img/sprites/save.png") no-repeat 10px 11px;
       height: 57px;
       overflow: hidden;
-      display:block;
       color: #fff;
+      margin-right: 0px !important;
+      padding-left:50px !important;
     }
 
     .print {
@@ -462,8 +465,9 @@ body .container.information .contenu {
       background: $blue-dark url("../../img/sprites/save.png") no-repeat 10px 11px;
       height: 57px;
       overflow: hidden;
-      display:block;
       color: #fff;
+      margin-right: 0px;
+      padding-left:50px;
     }
 
     .print:hover,
