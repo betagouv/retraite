@@ -82,14 +82,6 @@ public class Application extends RetraiteController {
 		postData.hidden_userStatus = unbind(params.get("postData.hidden_userStatus"));
 		postData.isPDF = true;
 		
-		final String OBFUSCATE_STRING = "OBFUSCATE_STRINGzmlkjerlnxvcnlnqmlsdqds234646###";
-		final String DATA_STRING = "data:image/png;base64,";
-		List<String> imgDatas = new ArrayList<>();
-		
-		for (String imgData : postData.hidden_imgPrintsJsonStr.replaceAll(DATA_STRING, OBFUSCATE_STRING).split(",")) {
-			imgDatas.add(imgData.replaceAll(OBFUSCATE_STRING, DATA_STRING));
-		}
-		
 		final RenderData data = RetraiteEngineFactory.create(test).processToNextStep(postData);
 		data.isPDF = true;
 
@@ -117,6 +109,7 @@ public class Application extends RetraiteController {
 					+ "<td width='30%' align='right'>Page <pagenumber>/<pagecount></td>"
 					+ "</tr></tbody></table>";
 
+			List<String> imgDatas =  getImgDatasFromJsonStr(postData.hidden_imgPrintsJsonStr);
 			PDF.writePDF(response.out, imgDatas, pdfOptions);
 
 			// final Map<String, Object> params = new HashMap<String, Object>();
@@ -218,32 +211,50 @@ public class Application extends RetraiteController {
 	}
 
 	public static void generateDoc(final String checklistNom, final boolean published, final boolean pdf, final boolean viewPdfAsHtml) {
+				
 		final Checklist checklistFromBdd = createDaoChecklist().find(checklistNom, published);
 		final ChecklistForDoc checklist = new ChecklistForDocConverter().convert(checklistFromBdd);
 		final Look look = Look.GENERIC;
 		final boolean noInfoCookie = true;
-		if (pdf && !viewPdfAsHtml) {
-			setResponseHeaderForPdfContentType();
-			setResponseHeaderForAttachedPdf("Mes_demarches_retraite_" + checklistNom + "_documentation.pdf");
+		
+		render(checklist, published, look, noInfoCookie);
+	}
+	
+	public static void generatePdf() {
+				
+		final String hidden_imgPrintsJsonStr = params.get("postData.hidden_imgPrintsJsonStr");
 
-			if (RENDER_PDF_WITH_I_TEXT) {
-				final Map<String, Object> params = new HashMap<String, Object>();
-				params.put("checklist", checklist);
-				params.put("published", published);
-				params.put("look", look);
-				params.put("noInfoCookie", noInfoCookie);
-				params.put("pdf", pdf);
+		final PDF.Options pdfOptions = new PDF.Options();
+		pdfOptions.FOOTER = "<table width='100%' style='font-size: 14px;'><tbody><tr>"
+				+ "<td width='30%' align='left'>" + "" + "</td>"
+				+ "<td width='30%' align='center'>Mes démarches retraite, pas à pas</td>"
+				+ "<td width='30%' align='right'>Page <pagenumber>/<pagecount></td>"
+				+ "</tr></tbody></table>";
+		
+		List<String> imgDatas =  getImgDatasFromJsonStr(hidden_imgPrintsJsonStr);
+		
+		setResponseHeaderForPdfContentType();
+		setResponseHeaderForAttachedPdf("Mes_demarches_retraite.pdf");
+				
+		PDF.writePDF(response.out, imgDatas, pdfOptions);
+		
+		ok();
 
-				renderPdfWith_iText("Application/generateDoc.html", params);
-				ok();
-			} else {
-				// PDF.renderPDF() ne peut pas être utilisé car il écrase les headers fixés ci-dessus
-				PDF.writePDF(response.out, checklist, published, look, noInfoCookie, pdf);
-				ok();
+	}
+	
+	protected static List<String> getImgDatasFromJsonStr(String jsonStr) {
+		
+		final String OBFUSCATE_STRING = "OBFUSCATE_STRINGzmlkjerlnxvcnlnqmlsdqds234646###";
+		final String DATA_STRING = "data:image/png;base64,";
+		List<String> imgDatas = new ArrayList<>();
+		
+		if (jsonStr != null) {
+			for (String imgData : jsonStr.replaceAll(DATA_STRING, OBFUSCATE_STRING).split(",")) {
+				imgDatas.add(imgData.replaceAll(OBFUSCATE_STRING, DATA_STRING));
 			}
-		} else {
-			render(checklist, published, look, noInfoCookie);
 		}
+		
+		return imgDatas;
 	}
 
 	private static PDF.Options createPdfOptions() {
