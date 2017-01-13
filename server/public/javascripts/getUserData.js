@@ -6,7 +6,8 @@ var RetraiteGetUserData = {};
 
 	function setInputMasks() {
 		$("#naissance").mask("99/99/9999");
-		$("#nir").mask("9 99 99 99 999 999? 99");
+		$.mask.definitions['d'] = "[A-Ba-b0-9]"
+		$("#nir").mask("9 99 99 9d 999 999 99");
 	}
 	
 	function addKeyEvents() { 
@@ -23,7 +24,7 @@ var RetraiteGetUserData = {};
 
 	var fillForm = function(nom, nir) {
 		$('#nom').val(nom);
-		$('#naissance').val("17/11/1954");
+		$('#naissance').val("17/11/1956");
 		$('#nir').val(nir);
 		updateNextButtonState();
 	};
