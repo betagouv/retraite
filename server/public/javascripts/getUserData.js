@@ -39,7 +39,7 @@ var RetraiteGetUserData = {};
 	}
 	
 	function areAllFieldsFilled() {
-		return isLengthMin('nom', 2) && isLength('naissance', 10, true) && (isLength('nir', 13, true) || isLength('nir', 15, true));
+		return isLengthMin('nom', 2) && isLength('naissance', 10, true) && (isLength('nir', 15, true));
 	}
 	
 	function isLengthMin(id, expected) {
