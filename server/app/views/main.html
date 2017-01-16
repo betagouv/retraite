@@ -86,7 +86,9 @@
 		
 				            <nav class="footer-nav col-sm-5">
 				                <ul>
-				                    <li><a href="mailto:contact@retraite.beta.gouv.fr" title="Contact pour poser une question sur cette application" class="footer-feedback"> Votre avis nous intéresse,<br/>n'hésitez pas à nous transmettre vos retours et suggestions !</a></li>
+				                    #{if data.extras.urlSondage != null && data.extras.txtSondage != null}
+					                    <li><a href="${data.extras.urlSondage}" class="footer-feedback" target="_blank">${data.extras.txtSondage.raw()}</a></li>			  
+					            	#{/if}
 				                </ul>
 				            </nav>
 				
