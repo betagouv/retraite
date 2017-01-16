@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.UUID;
 
 import org.apache.commons.collections4.map.PassiveExpiringMap;
@@ -23,6 +24,7 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
 
+import cnav.architech.usilog.socle.framework.base.properties.PropertiesLoader;
 import controllers.data.PostData;
 import controllers.utils.Look;
 import models.Checklist;
@@ -36,6 +38,7 @@ import utils.doc.ChecklistForDocConverter;
 import utils.engine.RetraiteEngineFactory;
 import utils.engine.data.CommonExchangeData;
 import utils.engine.data.RenderData;
+import utils.engine.utils.RetraiteConstants;
 
 public class Application extends RetraiteController {
 
@@ -123,8 +126,9 @@ public class Application extends RetraiteController {
 	// Méthodes privées
 
 	private static void _process(PostData postData) {
+				
 		if (postData == null) {
-			postData = new PostData();
+			postData = new PostData();			
 		}
 		postData.hidden_userStatus = unbind(params.get("postData.hidden_userStatus"));
 		final boolean test = params._contains("test");
