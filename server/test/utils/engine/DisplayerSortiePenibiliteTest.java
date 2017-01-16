@@ -11,7 +11,8 @@ import org.junit.Test;
 
 import controllers.data.PostData;
 import utils.engine.data.RenderData;
-import utils.engine.data.RetraiteConstants;
+import utils.engine.utils.RetraiteConstants;
+import utils.engine.utils.RetraitePropertiesLoader;
 
 public class DisplayerSortiePenibiliteTest {
 
@@ -52,7 +53,7 @@ public class DisplayerSortiePenibiliteTest {
 		assertThat(renderData.hidden_step).isEqualTo("displaySortiePenibilite");
 		final Map<String, Object> expectedExtras = new HashMap<String, Object>() {
 			{
-				put("urlInfosPenibilite", RetraiteConstants.URL_PENINILITE_GIP_UR);
+				put("urlInfosPenibilite", RetraitePropertiesLoader.getInstance().getProperty("GIP_UR.urlInfosPenibilite"));
 			}
 		};
 		assertThat(renderData.extras).isEqualTo(expectedExtras);

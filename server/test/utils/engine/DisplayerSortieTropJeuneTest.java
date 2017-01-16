@@ -12,7 +12,7 @@ import org.junit.Test;
 import controllers.data.PostData;
 import controllers.utils.Look;
 import utils.engine.data.RenderData;
-import utils.engine.data.RetraiteConstants;
+import utils.engine.utils.RetraitePropertiesLoader;
 
 public class DisplayerSortieTropJeuneTest {
 
@@ -54,8 +54,8 @@ public class DisplayerSortieTropJeuneTest {
 		assertThat(renderData.hidden_step).isEqualTo("displaySortieTropJeune");
 		final Map<String, Object> expectedExtras = new HashMap<String, Object>() {
 			{
-				put("urlDroits", RetraiteConstants.URL_DROITS_GIP_UR);
-				put("urlInfosDepartRetraite", RetraiteConstants.URL_INFOS_DEPART_RETRAITE_GIP_UR);
+				put("urlDroits", RetraitePropertiesLoader.getInstance().getProperty("GIP_UR.urlDroits"));
+				put("urlInfosDepartRetraite", RetraitePropertiesLoader.getInstance().getProperty("GIP_UR.urlInfosDepartRetraite"));
 			}
 		};
 		assertThat(renderData.extras).isEqualTo(expectedExtras);
