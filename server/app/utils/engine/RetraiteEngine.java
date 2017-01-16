@@ -7,6 +7,8 @@ import static utils.ObjectsUtils.synchronizedHiddenAndNotHiddenFields;
 import static utils.engine.data.enums.EcranSortie.ECRAN_SORTIE_PENIBILITE;
 import static utils.wsinforetraite.InfoRetraiteResult.Status.FOUND;
 
+import java.util.HashMap;
+
 import controllers.data.PostData;
 import play.Logger;
 import utils.RetraiteBadNaissanceFormatException;
@@ -18,6 +20,7 @@ import utils.engine.data.enums.RegimeAligne;
 import utils.engine.intern.CalculateurRegimeAlignes;
 import utils.engine.utils.AgeCalculator;
 import utils.engine.utils.AgeLegalEvaluator;
+import utils.engine.utils.RetraitePropertiesLoader;
 import utils.wsinforetraite.InfoRetraite;
 import utils.wsinforetraite.InfoRetraiteResult;
 
@@ -70,6 +73,17 @@ public class RetraiteEngine {
 	public RenderData processToNextStep(final PostData postData) {
 		final RenderData renderData = new RenderData();
 
+		renderData.extras = new HashMap<>();
+		if (postData.look != null) {
+			RetraitePropertiesLoader propertyLoader =  RetraitePropertiesLoader.getInstance();
+			String urlSondage = propertyLoader.getProperty(postData.look.name() + ".urlSondage");
+			String txtSondage = propertyLoader.getProperty(postData.look.name() + ".txtSondage");
+			if (urlSondage != null && txtSondage != null) {
+				renderData.extras.put("urlSondage", urlSondage);
+				renderData.extras.put("txtSondage", txtSondage);
+			}
+		}
+		
 		if (postData.hidden_step == null) {
 			return displayWelcome(renderData);
 		}

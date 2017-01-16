@@ -10,7 +10,10 @@ public class DisplayerSortieDepartInconnu {
 
 	public void fillData(final PostData postData, final RenderData renderData) {
 		renderData.hidden_step = "displaySortieDepartInconnu";
-		renderData.extras = new HashMap<>();
+
+		if (renderData.extras == null) {
+			renderData.extras = new HashMap<>();
+		}
 		final RegimeAligne regimeLiquidateur = postData.hidden_liquidateur;
 		renderData.extras.put("urlAgeDepart", regimeLiquidateur.urlAgeDepart);
 		renderData.extras.put("urlDroits", regimeLiquidateur.urlDroits);

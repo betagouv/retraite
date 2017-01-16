@@ -28,7 +28,9 @@ public class DisplayerDepartureDate {
 		renderData.listeMoisAvecPremier = stepFormsDataProvider.getListMoisAvecPremier();
 		renderData.listeAnneesDepart = stepFormsDataProvider.getListAnneesDepart();
 
-		renderData.extras = new HashMap<>();
+		if (renderData.extras == null) {
+			renderData.extras = new HashMap<>();
+		}
 		final String naissance = firstNotNull(data.hidden_naissance, data.naissance);
 		final AnneesEtMois ageLegalPourPartir = ageLegalEvaluator.getAgeLegalPourPartir(naissance);
 		renderData.extras.put("ageLegalPourPartir", ageLegalPourPartir);

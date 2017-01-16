@@ -1,22 +1,29 @@
 package utils.engine;
 
 import java.util.HashMap;
+import java.util.Properties;
 
+import cnav.architech.usilog.socle.framework.base.properties.PropertiesLoader;
 import controllers.data.PostData;
 import controllers.utils.Look;
 import utils.engine.data.RenderData;
-import utils.engine.data.RetraiteConstants;
 import utils.engine.data.enums.RegimeAligne;
+import utils.engine.utils.RetraiteConstants;
+import utils.engine.utils.RetraitePropertiesLoader;
 
 public class DisplayerSortieTropJeune {
 
 	public void fillData(final PostData postData, final RenderData renderData) {
+		
 		renderData.hidden_step = "displaySortieTropJeune";
-		renderData.extras = new HashMap<>();
+
+		if (renderData.extras == null) {
+			renderData.extras = new HashMap<>();
+		}
 		final RegimeAligne regime = getRegime(postData.look);
 		if (regime == null) {
-			renderData.extras.put("urlDroits", RetraiteConstants.URL_DROITS_GIP_UR);
-			renderData.extras.put("urlInfosDepartRetraite", RetraiteConstants.URL_INFOS_DEPART_RETRAITE_GIP_UR);
+			renderData.extras.put("urlDroits", RetraitePropertiesLoader.getInstance().getProperty("GIP_UR.urlDroits"));
+			renderData.extras.put("urlInfosDepartRetraite", RetraitePropertiesLoader.getInstance().getProperty("GIP_UR.urlInfosDepartRetraite"));
 		} else {
 			renderData.extras.put("urlDroits", regime.urlDroits);
 			renderData.extras.put("urlInfosDepartRetraite", regime.urlInfosDepartRetraite);

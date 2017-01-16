@@ -16,6 +16,7 @@ import utils.engine.utils.AgeCalculator;
 import utils.engine.utils.AgeLegalEvaluator;
 import utils.engine.utils.DateProvider;
 import utils.wsinforetraite.InfoRetraite;
+import utils.wsinforetraite.InfoRetraiteAnnuaireDai;
 import utils.wsinforetraite.InfoRetraiteBdd;
 import utils.wsinforetraite.InfoRetraiteConnector;
 import utils.wsinforetraite.InfoRetraiteDecoder;
@@ -33,9 +34,10 @@ public class RetraiteEngineFactory {
 			testMode ?
 				new InfoRetraiteBdd()
 			:
-				new InfoRetraiteWsUr(
+				new InfoRetraiteAnnuaireDai();
+				/*new InfoRetraiteWsUr(
 						new InfoRetraiteDecoder(),
-						new InfoRetraiteConnector(wsUtils, new InfoRetraiteTokenRecuperator(wsUtils)));
+						new InfoRetraiteConnector(wsUtils, new InfoRetraiteTokenRecuperator(wsUtils)));*/
 		// @formatter:on
 
 		final AgeLegalEvaluator ageLegalEvaluator = new AgeLegalEvaluator(new PeriodeDepartLegalDao());

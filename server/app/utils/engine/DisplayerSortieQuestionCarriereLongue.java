@@ -20,7 +20,10 @@ public class DisplayerSortieQuestionCarriereLongue {
 		renderData.hidden_step = "displaySortieQuestionCarriereLongue";
 		renderData.hidden_departMois = data.departMois != null ? data.departMois : data.hidden_departMois;
 		renderData.hidden_departAnnee = data.departAnnee != null ? data.departAnnee : data.hidden_departAnnee;
-		renderData.extras = new HashMap<>();
+
+		if (renderData.extras == null) {
+			renderData.extras = new HashMap<>();
+		}
 		renderData.extras.put("age",
 				ageLegalEvaluator.calculeAgeADateDonnee(data.hidden_naissance, renderData.hidden_departMois, renderData.hidden_departAnnee));
 		final AnneesEtMois ageLegalPourPartir = ageLegalEvaluator.getAgeLegalPourPartir(data.hidden_naissance);
