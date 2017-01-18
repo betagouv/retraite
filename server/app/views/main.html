@@ -86,7 +86,7 @@
 		
 				            <nav class="footer-nav col-sm-5">
 				                <ul>
-				                    #{if data.extras.urlSondage != null && data.extras.txtSondage != null}
+				                    #{if data != null && data.extras != null && data.extras.urlSondage != null && data.extras.txtSondage != null}
 					                    <li><a href="${data.extras.urlSondage}" class="footer-feedback" target="_blank">${data.extras.txtSondage.raw()}</a></li>			  
 					            	#{/if}
 				                </ul>

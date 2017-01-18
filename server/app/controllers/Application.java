@@ -220,8 +220,9 @@ public class Application extends RetraiteController {
 		final ChecklistForDoc checklist = new ChecklistForDocConverter().convert(checklistFromBdd);
 		final Look look = Look.GENERIC;
 		final boolean noInfoCookie = true;
+		final boolean withoutPageLayout = true;
 		
-		render(checklist, published, look, noInfoCookie);
+		render(checklist, published, look, noInfoCookie, withoutPageLayout);
 	}
 	
 	public static void generatePdf() {

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="AWSNANNUR" targetNamespace="http://interfaceannur.acsia.gip_info_retraite.fr/" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap11-enc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://interfaceannur.acsia.gip_info_retraite.fr/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns0="http://interfaceannur.acsia.gip_info_retraite.fr/types/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
+  <types>
+    <schema elementFormDefault="qualified" targetNamespace="http://interfaceannur.acsia.gip_info_retraite.fr/types/" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:soap11-enc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://interfaceannur.acsia.gip_info_retraite.fr/types/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <import namespace="http://interfaceannur.acsia.gip_info_retraite.fr/"/>
+            <complexType name="NirDate">
+                <sequence>
+                    <element name="nir" nillable="true" type="string"/>
+                    <element name="date" nillable="true" type="string"/>
+                </sequence>
+            </complexType>
+            <complexType name="SarnErreurService">
+                <complexContent>
+                    <extension base="tns:SarnException">
+                        <sequence/>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="SarnException">
+                <sequence>
+                    <element name="codeErreur" nillable="true" type="int"/>
+                    <element name="msgErreur" nillable="true" type="string"/>
+                </sequence>
+            </complexType>
+            <complexType name="SortieAnnuR">
+                <sequence>
+                    <element name="resAppliAnnuR" nillable="true" type="tns:ResAppliAnnuR"/>
+                    <element name="resAnnuR" nillable="true" type="tns:ResAnnuR"/>
+                </sequence>
+            </complexType>
+            <complexType name="ResAppliAnnuR">
+                <sequence>
+                    <element name="libResultatLong" nillable="true" type="string"/>
+                    <element name="codeResultat" type="int"/>
+                    <element name="libResultatCourt" nillable="true" type="string"/>
+                </sequence>
+            </complexType>
+            <complexType name="ResAnnuR">
+                <sequence>
+                    <element name="cdSelec" nillable="true" type="string"/>
+                    <element name="libDifRLibLong" nillable="true" type="string"/>
+                    <element name="codDifR" nillable="true" type="string"/>
+                    <element name="libCertifDcLong" nillable="true" type="string"/>
+                    <element name="dtoAnnR" nillable="true" type="string"/>
+                    <element name="libDifRLibCourt" nillable="true" type="string"/>
+                    <element name="dteDecR" nillable="true" type="string"/>
+                    <element name="libCertifDcCourt" nillable="true" type="string"/>
+                    <element name="libCertifEtaCivLong" nillable="true" type="string"/>
+                    <element name="dteCrea" nillable="true" type="string"/>
+                    <element name="libCdSelecLong" nillable="true" type="string"/>
+                    <element name="nirAnnR" nillable="true" type="string"/>
+                    <element name="prenomR" nillable="true" type="string"/>
+                    <element name="dteNaiR" nillable="true" type="string"/>
+                    <element name="nomPatR" nillable="true" type="string"/>
+                    <element name="libCdSelecCourt" nillable="true" type="string"/>
+                    <element name="nirSngR" nillable="true" type="string"/>
+                    <element name="cdCertiDc" type="int"/>
+                    <element name="cdCertiCl" type="int"/>
+                    <element name="dteMajDiff" nillable="true" type="string"/>
+                    <element name="dtoSngR" nillable="true" type="string"/>
+                    <element maxOccurs="unbounded" minOccurs="0" name="tabAffiliation" nillable="true" type="tns:Affiliation"/>
+                    <element maxOccurs="unbounded" minOccurs="0" name="listeNirDate" nillable="true" type="tns:NirDate"/>
+                    <element name="libCertifEtaCivCourt" nillable="true" type="string"/>
+                </sequence>
+            </complexType>
+            <complexType name="Affiliation">
+                <sequence>
+                    <element name="libOriAfLibLong" nillable="true" type="string"/>
+                    <element name="dtLiq0x" nillable="true" type="string"/>
+                    <element name="libOrEtaLibCourt" nillable="true" type="string"/>
+                    <element name="cdLiq0x" nillable="true" type="string"/>
+                    <element name="libMoALibCourt" nillable="true" type="string"/>
+                    <element name="libAffLibLong" nillable="true" type="string"/>
+                    <element name="orEta0x" nillable="true" type="string"/>
+                    <element name="libGesLibLong" nillable="true" type="string"/>
+                    <element name="libOrEtaLibLong" nillable="true" type="string"/>
+                    <element name="numNs0x" nillable="true" type="string"/>
+                    <element name="oriAf0x" nillable="true" type="string"/>
+                    <element name="libOriAfLibCourt" nillable="true" type="string"/>
+                    <element name="libGesLibCourt" nillable="true" type="string"/>
+                    <element name="libLiqLibCourt" nillable="true" type="string"/>
+                    <element name="dtAff0x" nillable="true" type="string"/>
+                    <element name="cdGes0x" type="int"/>
+                    <element name="libRegLibCourt" nillable="true" type="string"/>
+                    <element name="cdReg0x" nillable="true" type="string"/>
+                    <element name="libAffLibCourt" nillable="true" type="string"/>
+                    <element name="cdAff0x" nillable="true" type="string"/>
+                    <element name="libRegLibLong" nillable="true" type="string"/>
+                    <element name="dtEta0x" nillable="true" type="string"/>
+                    <element name="cdMoa0x" nillable="true" type="string"/>
+                    <element name="libMoALibLong" nillable="true" type="string"/>
+                    <element name="libLiqLibLong" nillable="true" type="string"/>
+                </sequence>
+            </complexType>
+            <element name="SarnErreurServiceElement" type="tns:SarnErreurService"/>
+        </schema>
+    <schema elementFormDefault="qualified" targetNamespace="http://interfaceannur.acsia.gip_info_retraite.fr/" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://interfaceannur.acsia.gip_info_retraite.fr/types/" xmlns:soap11-enc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <import namespace="http://interfaceannur.acsia.gip_info_retraite.fr/types/"/>
+            <element name="rendreAnnuRLstNirElement">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="unbounded" minOccurs="0" name="listeNirDate" nillable="true" type="ns1:NirDate"/>
+                        <element name="cdRegime" type="int"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="rendreAnnuRLstNirResponseElement">
+                <complexType>
+                    <sequence>
+                        <element name="result" nillable="true" type="ns1:SortieAnnuR"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="rendreAnnuRNirElement">
+                <complexType>
+                    <sequence>
+                        <element name="nir" nillable="true" type="string"/>
+                        <element name="nom" nillable="true" type="string"/>
+                        <element name="cdRegime" type="int"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="rendreAnnuRNirResponseElement">
+                <complexType>
+                    <sequence>
+                        <element name="result" nillable="true" type="ns1:SortieAnnuR"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </schema>
+  </types>
+  <message name="SarnErreurService">
+    <part name="SarnErreurServiceElement" element="tns0:SarnErreurServiceElement">
+    </part>
+  </message>
+  <message name="AWSNANNUR_rendreAnnuRNir">
+    <part name="parameters" element="tns:rendreAnnuRNirElement">
+    </part>
+  </message>
+  <message name="AWSNANNUR_rendreAnnuRNirResponse">
+    <part name="parameters" element="tns:rendreAnnuRNirResponseElement">
+    </part>
+  </message>
+  <message name="AWSNANNUR_rendreAnnuRLstNir">
+    <part name="parameters" element="tns:rendreAnnuRLstNirElement">
+    </part>
+  </message>
+  <message name="AWSNANNUR_rendreAnnuRLstNirResponse">
+    <part name="parameters" element="tns:rendreAnnuRLstNirResponseElement">
+    </part>
+  </message>
+  <portType name="AWSNANNUR">
+    <operation name="rendreAnnuRLstNir">
+      <input message="tns:AWSNANNUR_rendreAnnuRLstNir">
+    </input>
+      <output message="tns:AWSNANNUR_rendreAnnuRLstNirResponse">
+    </output>
+      <fault name="SarnErreurService" message="tns:SarnErreurService">
+    </fault>
+    </operation>
+    <operation name="rendreAnnuRNir">
+      <input message="tns:AWSNANNUR_rendreAnnuRNir">
+    </input>
+      <output message="tns:AWSNANNUR_rendreAnnuRNirResponse">
+    </output>
+      <fault name="SarnErreurService" message="tns:SarnErreurService">
+    </fault>
+    </operation>
+  </portType>
+  <binding name="AWSNANNURSoapHttp" type="tns:AWSNANNUR">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="rendreAnnuRLstNir">
+      <soap:operation soapAction="http://interfaceannur.acsia.gip_info_retraite.fr//rendreAnnuRLstNir"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="SarnErreurService">
+        <soap:fault name="SarnErreurService" use="literal" encodingStyle=""/>
+      </fault>
+    </operation>
+    <operation name="rendreAnnuRNir">
+      <soap:operation soapAction="http://interfaceannur.acsia.gip_info_retraite.fr//rendreAnnuRNir"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="SarnErreurService">
+        <soap:fault name="SarnErreurService" use="literal" encodingStyle=""/>
+      </fault>
+    </operation>
+  </binding>
+  <service name="AWSNANNUR">
+    <port name="AWSNANNURSoapHttpPort" binding="tns:AWSNANNURSoapHttp">
+      <soap:address location="${}"/>
+    </port>
+  </service>
+</definitions>

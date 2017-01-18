@@ -13,7 +13,7 @@ GET     /local/views/							staticDir:../client/app/views
 GET     /local/css/								staticDir:../client/app/css
 GET     /local/fonts/							staticDir:../client/app/fonts
 
-GET     /config/                                 staticDir:www/
+GET     /config/                                 staticDir:www/src/config/
 GET     /public/								staticDir:/public/
 GET     /viewlogs/								staticDir:/logs/
 
