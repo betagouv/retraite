@@ -731,6 +731,60 @@ span.telephone {
 				font-weight: bold;
 			}
 		}
+		
+		table.table.table-bordered.table-interlocuteur {
+			.text-left {
+				text-align: left;
+				padding-left:30px;
+			}
+		}
+		
+		.lienContact {
+			position: relative;
+			margin-top: 5px;
+   			margin-bottom: 5px;
+   			font-size: 1.125rem;
+
+			span.enveloppe {
+				background: url("#{$pathImg}/enveloppe1.png") no-repeat left center;
+				display: inline-block;
+				height: 15px;
+				width: 15px;
+				position: absolute;
+				left:-20px;
+				top:1px;
+			}
+
+			span.telephone {
+				background: url("#{$pathImg}/telephone1.png") no-repeat left center;
+				display: inline-block;
+				height: 15px;
+				width: 15px;
+				position: absolute;
+				left: -20px;
+				top: 1px;
+			}
+
+			span.nuage {
+				background: url("#{$pathImg}/nuage.png") no-repeat left center; 
+				display: inline-block;
+				height: 15px;
+				width: 15px;
+				position: absolute;
+				left: -20px;
+				top: 1px;
+			}
+
+			span.cadenas {
+				background: url("#{$pathImg}/lock.png") no-repeat left center; 
+				display: inline-block;
+				height: 15px;
+				width: 15px;
+				position: absolute;
+				left: -20px;
+				top: 1px;
+			}
+		}
 }
 
 body .container.checklist .wrapper{
