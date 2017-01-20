@@ -1,12 +1,18 @@
 package controllers;
 
+import controllers.data.UserData;
+import play.Logger;
 import play.data.validation.Required;
 import play.mvc.Controller;
 import play.mvc.Http;
 
 public class Secure extends Controller {
 
-	public static void authenticate(@Required final String username, final String password, final boolean remember) throws Throwable {
+	public static void authenticate(@Required UserData userData) throws Throwable {
+				
+		String username = userData.username;
+		String password = userData.password;
+		
 		// Check tokens
 		final Boolean allowed = Security.authenticate(username, password);
 		if (validation.hasErrors() || !allowed) {
