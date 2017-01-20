@@ -3,6 +3,7 @@ package utils.wsinforetraite;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +18,7 @@ import utils.RetraiteException;
 import utils.wsinforetraite.InfoRetraiteResult.InfoRetraiteResultRegime;
 
 public class InfoRetraiteAnnuaireDai implements InfoRetraite {
-
+	
 	private static final Logger LOG = LoggerFactory.getLogger(InfoRetraiteResult.class);
 
 	@Override
@@ -30,10 +31,10 @@ public class InfoRetraiteAnnuaireDai implements InfoRetraite {
 			AnnuaireDaiWS stub  = (AnnuaireDaiWS) ((WebServiceWrapper) ServiceLocator.getService("ANNUAIRE-WS")).getWebServiceClient(AnnuaireDaiSimpleFactory.class, "AnnuaireDaiWS");
 			
 			RendreAnnuRNirElement rendreAnnuRNirElement = new RendreAnnuRNirElement();
-			rendreAnnuRNirElement.setNir(nir.replaceAll(" ", ""));
+			rendreAnnuRNirElement.setNir(nir.replaceAll(" ", "").substring(0, 13));
 			rendreAnnuRNirElement.setNom(name);
 			rendreAnnuRNirElement.setCdRegime(2294); //TODO
-					
+			
 			SortieAnnuR resultat = stub.rendreAnnuRNir(rendreAnnuRNirElement).getResult();
 			
 			LOG.debug("appel WS ok");
@@ -44,8 +45,8 @@ public class InfoRetraiteAnnuaireDai implements InfoRetraite {
 				infoRetraiteResultRegimeList = new ArrayList<>();
 				for (Affiliation affiliation : resultat.getResAnnuR().getTabAffiliation()) {
 					InfoRetraiteResultRegime infoRetraiteResultRegime = new InfoRetraiteResultRegime();
-					infoRetraiteResultRegime.regime = affiliation.getCdReg0X();
-					infoRetraiteResultRegime.nom = affiliation.getLibAffLibLong();
+					infoRetraiteResultRegime.regime = StringUtils.leftPad(String.valueOf(affiliation.getCdGes0X()), 4, '0');
+					infoRetraiteResultRegime.nom = affiliation.getLibGesLibLong();
 					infoRetraiteResultRegimeList.add(infoRetraiteResultRegime);
 				}
 				infoRetraiteResult = new InfoRetraiteResult(InfoRetraiteResult.Status.FOUND, infoRetraiteResultRegimeList.toArray(new InfoRetraiteResultRegime[infoRetraiteResultRegimeList.size()]));
