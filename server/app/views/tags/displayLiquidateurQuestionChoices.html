@@ -13,19 +13,19 @@
            	#{if _look.toString() == 'RSI'}
            		<label class='label-for-question-choice'>${choice.text}</label>
            		<input type="radio" class='questions-choice' id="q${choice_index}Oui" name="q${choice_index}" value="${choice.value}" />
-	   			<label class='label-for-question-choice col-xs-offset-1' for="q${choice_index}Oui">Oui</label>
+	   			<label class='label-for-question-choice col-xs-offset-1' for="q${choice_index}Oui">oui</label>
 	   			<input type="radio" class='questions-choice' id="q${choice_index}Non" name="q${choice_index}" value=""/>
-	   			<label class='label-for-question-choice col-xs-offset-2' for="q${choice_index}Non">Non</label>
+	   			<label class='label-for-question-choice col-xs-offset-2' for="q${choice_index}Non">non</label>
            	#{/if}
            	#{else}
          		<label class='label-for-question-choice'>${choice.text}</label> 
 	   			<label class='label-for-question-choice col-xs-offset-1' for="q${choice_index}Oui">
 	   				<input type="radio" class='questions-choice' id="q${choice_index}Oui" name="q${choice_index}" value="${choice.value}" />
-	   				Oui
+	   				oui
 	   			</label>
 	   			<label class='label-for-question-choice col-xs-offset-1' for="q${choice_index}Non">
 	   				<input type="radio" class='questions-choice' id="q${choice_index}Non" name="q${choice_index}" value=""/>
-	   				Non
+	   				non
 	   			</label>
            	#{/else}
 		#{/else}

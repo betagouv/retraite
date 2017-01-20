@@ -1,20 +1,24 @@
 #{extends 'sortie.html' /}
 
+#{set 'moreScripts'}
+    #{script 'displayRegimes.js'/}
+#{/set}
+
 <div class='sortie'>
 
 	<p>Selon nos informations, <b>vous n’avez pas cotisé auprès d'un organisme de retraite en tant que</b> :</p>
 	<ul>
-		<li>salarié;</li>
-		<li>contractuel de la fonction publique;</li>
-		<li>travailleur indépen­dant;</li>
+		<li>salarié,</li>
+		<li>contractuel de la fonction publique,</li>
+		<li>travailleur indépendant,</li>
 		<li>professionnel agricole.</li> 
 	</ul> 
 	
 	<p>Pour demander votre retraite, nous vous invitons à prendre contact avec le/les organismes auxquels vous avez cotisé :</p>
 
-	<ul>
+	<ul id="infosRegimes">
 		#{list items:data.regimesInfosAucunRegimeDeBaseAligne, as:'regimeInfos'}
-			<li>
+			<li  data-reg="${regimeInfos.regime}">
 				${regimeInfos.nom} : ${regimeInfos.regime}<br>
 				#{if regimeInfos.adresse}
 					${regimeInfos.adresse}<br>

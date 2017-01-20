@@ -32,9 +32,9 @@ public enum LiquidateurQuestionDescriptor {
 		"Professions exercées durant votre carrière&#8239:",
 			SIMPLE,
 			MANDATORY,
-			choice("Chef d'exploitation ou d'entreprise agricole", NSA),
-			choice("Salarié agricole", SA),
-			choice("Les deux", "Salarié agricole et chef d'exploitation ou d'entreprise agricole", DEUX_ACTIVITES)
+			choice("chef d'exploitation ou d'entreprise agricole", NSA),
+			choice("salarié agricole", SA),
+			choice("les deux", "salarié agricole et chef d'exploitation ou d'entreprise agricole", DEUX_ACTIVITES)
 	),
 
 	QUESTION_B(
@@ -42,14 +42,14 @@ public enum LiquidateurQuestionDescriptor {
 		"Activité actuelle ou dernière activité exercée&#8239:",
 			SIMPLE,
 			MANDATORY,
-			choice("Salarié (non agricole)", SALARIE),
-			choice("Chef d'exploitation ou d'entreprise agricole (en activité)", NSA),
-			choice("Chef d'exploitation ou d'entreprise agricole (plus en activité)", NSA_OLD),
-			choice("Salarié agricole", SA),
-			choice("Chef d’entreprise indépendant (en activité)", INDEP),
-			choice("Chef d’entreprise indépendant (plus en activité)", INDEP_OLD),
-			choice("Conjoint(e) collaborateur(trice) d'un(e) chef d’entreprise indépendant(e)", CONJOINT_INDEP),
-			choice("Deux de ces activités en même temps", "Deux activités en même temps (poly-activité)", DEUX_ACTIVITES)
+			choice("salarié (non agricole)", SALARIE),
+			choice("chef d'exploitation ou d'entreprise agricole (en activité)", NSA),
+			choice("chef d'exploitation ou d'entreprise agricole (plus en activité)", NSA_OLD),
+			choice("salarié agricole", SA),
+			choice("chef d’entreprise indépendant (en activité)", INDEP),
+			choice("chef d’entreprise indépendant (plus en activité)", INDEP_OLD),
+			choice("conjoint(e) collaborateur(trice) d'un(e) chef d’entreprise indépendant(e)", CONJOINT_INDEP),
+			choice("deux de ces activités en même temps", "deux activités en même temps (poly-activité)", DEUX_ACTIVITES)
 	),
 
 	QUESTION_C(
@@ -77,8 +77,8 @@ public enum LiquidateurQuestionDescriptor {
 		"",
 			SIMPLE,
 			MANDATORY,
-			choice("Oui", "Actuellement, je suis chef d'exploitation ou d'entreprise agricole.", OUI),
-			choice("Non", "Actuellement, je ne suis pas chef d'exploitation ou d'entreprise agricole.", NON)
+			choice("oui", "Actuellement, je suis chef d'exploitation ou d'entreprise agricole.", OUI),
+			choice("non", "Actuellement, je ne suis pas chef d'exploitation ou d'entreprise agricole.", NON)
 	),
 
 	QUESTION_F(
@@ -86,8 +86,8 @@ public enum LiquidateurQuestionDescriptor {
 		"",
 			SIMPLE,
 			MANDATORY,
-			choice("Oui", "Actuellement, je suis chef d'entreprise.", OUI),
-			choice("Non", "Actuellement, je ne suis pas chef d'entreprise.", NON)
+			choice("oui", "Actuellement, je suis chef d'entreprise.", OUI),
+			choice("non", "Actuellement, je ne suis pas chef d'entreprise.", NON)
 	);
 
 	// @formatter:on

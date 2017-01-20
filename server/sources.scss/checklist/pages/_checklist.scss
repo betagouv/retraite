@@ -398,8 +398,8 @@ body .container.checklist .wrapper{
 		padding-left: 36px;
 		overflow:hidden;
 		clear: both;
-		margin-bottom:30px;
-		min-height: 210px;
+		margin-bottom: 30px;
+		min-height: $border-left-min-height;
 	}
 
 	.box1 {
@@ -407,6 +407,7 @@ body .container.checklist .wrapper{
 		clear:both;
 
 		.big-chiffre {
+			display: $big-chiffre-display;
 			font-size: 26rem;
 			color: $grey-7;
 			line-height: 1;
@@ -423,7 +424,7 @@ body .container.checklist .wrapper{
 		 	display: block;
 		 	position:relative;
 		 	overflow: hidden;
-		 	font-size: 1.6rem;
+		 	font-size: 1.8rem;
 		 	max-width:660px;
 		 	z-index:12;
 		}
@@ -445,7 +446,7 @@ body .container.checklist .wrapper{
 		 	display: block;
 		 	position:relative;
 		 	overflow: hidden;
-		 	font-size: 1.2rem;
+		 	font-size: 1.5rem;
 		 	padding-left: 50px;
 		 	max-width:660px;
 		 	margin-bottom: 15px;
