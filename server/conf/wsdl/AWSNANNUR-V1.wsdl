@@ -196,7 +196,7 @@
   </binding>
   <service name="AWSNANNUR">
     <port name="AWSNANNURSoapHttpPort" binding="tns:AWSNANNURSoapHttp">
-      <soap:address location="${}"/>
+      <soap:address location="${url.annuaire.endpoint}"/>
     </port>
   </service>
 </definitions>
