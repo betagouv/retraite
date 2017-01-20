@@ -1096,7 +1096,22 @@ angular.module('SgmapRetraiteConfig').service('UserService', function ($http, ht
     
     this.login = function (user) {
         isLogging = true;
-        return $http.post(HttpContextProvider.getHttpContext() + '/login?username='+user.name+'&password='+user.pass)
+        var data = {
+    		username:user.name,
+    		password:user.pass
+        };
+        return $http({
+        		method: 'POST',
+        	    url: HttpContextProvider.getHttpContext() + '/login',
+        	    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        	    transformRequest: function(obj) {
+        	        var str = [];
+        	        for(var p in obj)
+        	        str.push("userData." + encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        	        return str.join("&");
+        	    },
+        	    data: data
+        	})
             .success(function (response) {
                 isLogging = false;
                 $rootScope.$broadcast('userLogged');
