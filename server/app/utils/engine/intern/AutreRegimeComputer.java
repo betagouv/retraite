@@ -15,9 +15,9 @@ public class AutreRegimeComputer {
 		final InfoRetraiteResultRegimeList list = JsonUtils.fromJson(regimesInfosJsonStr, InfoRetraiteResultRegimeList.class);
 		for (final InfoRetraiteResultRegime infos : list) {
 			final Regime regime = Regime.valueOfNom(infos.nom);
-			if (regime == Regime.AGIRC_ARRCO) {
+			/*if (regime == Regime.AGIRC_ARRCO) {
 				continue;
-			}
+			}*/
 			switch (regime.getType()) {
 			case BASE_ALIGNE:
 				break;
