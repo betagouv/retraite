@@ -14,7 +14,9 @@ import cnav.ods.service.externe.dai.annuaire.SortieAnnuR;
 import cnav.ods.util.ServiceLocator;
 import cnav.ods.util.webservice.WebServiceWrapper;
 import helper.AnnuaireDaiSimpleFactory;
+import models.Regime;
 import utils.RetraiteException;
+import utils.dao.RegimeDao;
 import utils.wsinforetraite.InfoRetraiteResult.InfoRetraiteResultRegime;
 
 public class InfoRetraiteAnnuaireDai implements InfoRetraite {
@@ -44,10 +46,19 @@ public class InfoRetraiteAnnuaireDai implements InfoRetraite {
 			if (resultat.getResAnnuR().getTabAffiliation() != null) {
 				infoRetraiteResultRegimeList = new ArrayList<>();
 				for (Affiliation affiliation : resultat.getResAnnuR().getTabAffiliation()) {
-					InfoRetraiteResultRegime infoRetraiteResultRegime = new InfoRetraiteResultRegime();
-					infoRetraiteResultRegime.regime = StringUtils.leftPad(String.valueOf(affiliation.getCdGes0X()), 4, '0');
-					infoRetraiteResultRegime.nom = affiliation.getLibGesLibLong();
-					infoRetraiteResultRegimeList.add(infoRetraiteResultRegime);
+					
+					RegimeDao regimeDao = new RegimeDao();
+					Regime regime = regimeDao.findWithCode(StringUtils.leftPad(String.valueOf(affiliation.getCdGes0X()), 4, '0'));
+					
+					if (regime != null) {
+						InfoRetraiteResultRegime infoRetraiteResultRegime = new InfoRetraiteResultRegime();
+						infoRetraiteResultRegime.nom = regime.nom;
+						infoRetraiteResultRegime.adresse = regime.adresse;
+						infoRetraiteResultRegime.tel1 = regime.tel;
+						infoRetraiteResultRegime.internet = regime.site;
+						
+						infoRetraiteResultRegimeList.add(infoRetraiteResultRegime);
+					}
 				}
 				infoRetraiteResult = new InfoRetraiteResult(InfoRetraiteResult.Status.FOUND, infoRetraiteResultRegimeList.toArray(new InfoRetraiteResultRegime[infoRetraiteResultRegimeList.size()]));
 			}

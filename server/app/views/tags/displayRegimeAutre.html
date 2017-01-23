@@ -1,14 +1,10 @@
-${_regime.nom}<br/>
-<i>${_regime.regime}</i><br/>
+<i>${_regime.regime}</i>
 #{if _regime.adresse}
-	${_regime.adresse}<br/>
+	${_regime.adresse.raw()}
 #{/if}
 #{if _regime.internet}
-	#{link url:_regime.internet,text:_regime.internet /}<br/>
+	${_regime.internet.raw()}
 #{/if}
 #{if _regime.tel1}
-	Tél : ${_regime.tel1}<br/>
-#{/if}
-#{if _regime.email1}
-	Courriel : ${_regime.email1}<br/>
+	${_regime.tel1.raw()}
 #{/if}

@@ -1,9 +1,5 @@
 #{extends 'sortie.html' /}
 
-#{set 'moreScripts'}
-    #{script 'displayRegimes.js'/}
-#{/set}
-
 <div class='sortie'>
 
 	<p>Selon nos informations, <b>vous n’avez pas cotisé auprès d'un organisme de retraite en tant que</b> :</p>
@@ -18,19 +14,16 @@
 
 	<ul id="infosRegimes">
 		#{list items:data.regimesInfosAucunRegimeDeBaseAligne, as:'regimeInfos'}
-			<li  data-reg="${regimeInfos.regime}">
-				${regimeInfos.nom} : ${regimeInfos.regime}<br>
+			<li>
+				<p class="regime">${regimeInfos.regime}</p>
 				#{if regimeInfos.adresse}
-					${regimeInfos.adresse}<br>
+					${regimeInfos.adresse.raw()}
 				#{/if}
 				#{if regimeInfos.internet}
-					${regimeInfos.internet}<br>
+					${regimeInfos.internet.raw()}
 				#{/if}
 				#{if regimeInfos.tel1}
-					${regimeInfos.tel1}<br>
-				#{/if}
-				#{if regimeInfos.email1}
-					${regimeInfos.email1}<br>
+					${regimeInfos.tel1.raw()}
 				#{/if}
 			</li>
 		#{/list}

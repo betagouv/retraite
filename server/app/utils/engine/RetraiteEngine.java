@@ -112,6 +112,9 @@ public class RetraiteEngine {
 			}
 			final String regimes = renderData.hidden_regimes = regimesInformations.extractRegimes();
 			renderData.hidden_regimesInfosJsonStr = toJson(regimesInformations.regimes);
+			
+			Logger.info("REGEIMES : " + regimes);
+			
 			final RegimeAligne[] regimesAlignes = calculateurRegimeAlignes.getRegimesAlignes(regimes);
 			if (regimesAlignes.length == 0) {
 				return displaySortieAucunRegimeDeBaseAligne(postData, renderData);
