@@ -6,6 +6,7 @@ import static utils.engine.data.enums.Regime.RegimeType.BASE_AUTRE;
 import java.util.Arrays;
 
 import play.Logger;
+import utils.dao.RegimeDao;
 import utils.engine.data.UserChecklistGenerationData;
 import utils.engine.data.UserChecklistVars;
 import utils.engine.data.enums.Regime;
@@ -43,10 +44,13 @@ public class UserChecklistVarsProvider {
 	}
 
 	protected String getNameFor(final Regime regime) {
-		if (regime.toString().equals(regime.getNom())) {
+		RegimeDao regimeDao = new RegimeDao();
+		models.Regime reg = regimeDao.findWithCode(regime.getCode());
+		
+		if (reg == null) {
 			return "<li>" + regime.toString() + "</li>";
 		}
-		return "<li>" + regime.toString() + " (" + regime.getNom() + ")</li>";
+		return "<li>" + regime.toString() + " (" + reg.getNom() + ")</li>";
 	}
 
 	private String getRegimeComplHorsAgircArrco(final UserChecklistGenerationData userChecklistGenerationData) {
