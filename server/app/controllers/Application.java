@@ -58,22 +58,22 @@ public class Application extends RetraiteController {
 		render(look);
 	}
 
-	public static void displayCheckList(final String key, final Boolean test, final Boolean debug, final Look _look, final Boolean force55) {
+	public static void displayCheckList(final String key, final Boolean test, final Boolean debug, final Look _look, final Boolean force67) {
 		final Look look = (_look == null ? GENERIC : _look);
 		final DisplayCheckListData displayCheckListData = getFromCache(key);
 		if (displayCheckListData == null) {
-			displayExpired(test, debug, look, force55);
+			displayExpired(test, debug, look, force67);
 		}
 		final CommonExchangeData data = displayCheckListData.data;
 		final String page = displayCheckListData.page;
 		final String actionQueryParams = displayCheckListData.actionQueryParams;
-		renderTemplate("Application/steps/" + data.hidden_step + ".html", data, test, debug, page, look, force55, actionQueryParams);
+		renderTemplate("Application/steps/" + data.hidden_step + ".html", data, test, debug, page, look, force67, actionQueryParams);
 	}
 
-	public static void displayExpired(final Boolean test, final Boolean debug, final Look _look, final Boolean force55) {
+	public static void displayExpired(final Boolean test, final Boolean debug, final Look _look, final Boolean force67) {
 		final Look look = (_look == null ? GENERIC : _look);
-		final String actionQueryParams = computeActionQueryParams(test, debug, look, force55);
-		render(test, debug, look, force55, actionQueryParams);
+		final String actionQueryParams = computeActionQueryParams(test, debug, look, force67);
+		render(test, debug, look, force67, actionQueryParams);
 	}
 
 	private static final boolean AS_HTML = false;
@@ -133,9 +133,9 @@ public class Application extends RetraiteController {
 		postData.hidden_userStatus = unbind(params.get("postData.hidden_userStatus"));
 		final boolean test = params._contains("test");
 		final boolean debug = params._contains("debug");
-		final boolean force55 = postData.isForce55 = params._contains("force55");
+		final boolean force67 = postData.isForce55 = params._contains("force67");
 		final Look look = postData.look = getLook(params);
-		final String actionQueryParams = computeActionQueryParams(test, debug, look, force55);
+		final String actionQueryParams = computeActionQueryParams(test, debug, look, force67);
 		if (test) {
 			Logger.warn("Traitement des données en mode TEST, recherche des régimes en BDD !");
 		}
@@ -145,9 +145,9 @@ public class Application extends RetraiteController {
 //			final String key = UUID.randomUUID().toString();
 //			putToCache(key, new DisplayCheckListData(data, page, actionQueryParams));
 //			// Redirection pour avoir une URL spécifique pour hotjar
-//			redirectToDisplayCheckList(key, test, debug, look, force55);
+//			redirectToDisplayCheckList(key, test, debug, look, force67);
 //		} else {
-			renderTemplate("Application/steps/" + data.hidden_step + ".html", data, test, debug, page, look, force55, actionQueryParams);
+			renderTemplate("Application/steps/" + data.hidden_step + ".html", data, test, debug, page, look, force67, actionQueryParams);
 //		}
 	}
 
@@ -162,12 +162,12 @@ public class Application extends RetraiteController {
 	/*
 	 * On passe par cette méthode pour pouvoir mettre les paramètres à null si besoin et éviter qu'ils apparaissent dans l'URL de navigation
 	 */
-	private static void redirectToDisplayCheckList(final String key, final boolean _test, final boolean _debug, final Look _look, final boolean _force55) {
+	private static void redirectToDisplayCheckList(final String key, final boolean _test, final boolean _debug, final Look _look, final boolean _force67) {
 		final Boolean test = (_test ? true : null);
 		final Boolean debug = (_debug ? true : null);
 		final Look look = (_look.isNotGeneric() ? _look : null);
-		final Boolean force55 = (_force55 ? true : null);
-		displayCheckList(key, test, debug, look, force55);
+		final Boolean force67 = (_force67 ? true : null);
+		displayCheckList(key, test, debug, look, force67);
 	}
 
 	private static String getPageNameForGoogleAnalytics(final RenderData data) {
