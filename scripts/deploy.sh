@@ -6,7 +6,7 @@ REMOTE_DIR=$ENV
 SERVER_NAME=retraite.infra.beta.gouv.fr
 
 # Vérifications
-if [ "$2" != "--force" ]; then
+if [ "$2" != "--49.3" ]; then
     if [ -n "$(git diff --cached --exit-code)" ]; then
         echo
         git status
