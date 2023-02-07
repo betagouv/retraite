@@ -164,9 +164,9 @@ angular.module('SgmapRetraiteConfig').controller('CaissesCtrl', function ($rootS
     // Actions
     
     $scope.confirmeDepartementDelete = function(caisse, departement) {
-        PromptService.promptQuestion("Confirmation", "Etes-vous sûr de vouloir supprimer ce département ?").then(function() {
+        PromptService.promptQuestion("Confirmation", "Voulez-vous vraiment supprimer ce département ?").then(function() {
             if (caisse.departements.length == 1) {
-                PromptService.promptQuestion("Confirmation", "Attention, sans département, cette caisse sera supprimée. Etes-vous sûr de vouloir continuer ?").then(function() {
+                PromptService.promptQuestion("Confirmation", "Attention, sans département, cette caisse sera supprimée. Voulez-vous vraiment continuer ?").then(function() {
                     deleteDepartement(caisse.id, departement);
                 });
             } else {
@@ -587,7 +587,7 @@ angular.module('SgmapRetraiteConfig').controller('EditCtrl',
     };
     
     $scope.publish = function() {
-        PromptService.promptQuestion("Confirmation", "Etes-vous sûr de vouloir publier cette checklist ?").then(function() {
+        PromptService.promptQuestion("Confirmation", "Voulez-vous vraiment publier cette checklist ?").then(function() {
             CheckList.save($scope.checklist).then(function(checklist) {
                 storeChecklist(checklist, false);
                 ChecklistPublisher.publish($scope.checklist.id).then(function() {
@@ -663,7 +663,7 @@ angular.module('SgmapRetraiteConfig').controller('EditCtrl',
 
     $scope.removeChapitre = function(chapitre) {
         
-        PromptService.promptQuestion("Confirmation", "Etes-vous sûr de vouloir supprimer ce chapitre ?").then(function() {
+        PromptService.promptQuestion("Confirmation", "Voulez-vous vraiment supprimer ce chapitre ?").then(function() {
             var chapitres = $scope.checklist.chapitres;
             for(var i = 0; i < chapitres.length; i++) {
                 if (chapitres[i] == chapitre) {
@@ -748,7 +748,7 @@ angular.module('SgmapRetraiteConfig').controller('EditCtrl',
     // Suppression d'une condition
     
     $scope.removeCondition = function(chapitre, condition) {
-        PromptService.promptQuestion("Confirmation","Etes-vous sûr de vouloir supprimer cette condition ?").then(function() {
+        PromptService.promptQuestion("Confirmation","Voulez-vous vraiment supprimer cette condition ?").then(function() {
             var index = chapitre.conditions.indexOf(condition);
             chapitre.conditions.splice(index, 1);
         });
@@ -856,7 +856,7 @@ angular.module('SgmapRetraiteConfig').controller('EditCtrl',
 
     // Gestion de l'enregistrement et de la sortie de l'écran
     
-    var msgModifiedData = "ATTENTION : les données ont été modifiées. Êtes-vous sûr de vouloir quitter la page ? Les données modifiées seront perdues ! ...";
+    var msgModifiedData = "ATTENTION : les données ont été modifiées. Voulez-vous vraiment quitter la page ? Les données modifiées seront perdues ! ...";
     
     // . Audition sur les navigations "générales" (navigateur)
     $window.onbeforeunload = function(e) {
